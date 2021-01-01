@@ -1,7 +1,7 @@
 name: "braindustry"
-displayName: "Braindustry"
-author: "pixaxeofpixie"
+displayName: "Braindustry Java"
+author: "Braindustry Team & MotrONa & G0rillaGlue"
 main: "Main.Mod"
-version: 1.0
+version: 2.0
 minGameVersion: 122
 
