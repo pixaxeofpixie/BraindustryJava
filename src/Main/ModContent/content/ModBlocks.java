@@ -95,6 +95,7 @@ public class ModBlocks implements ContentList {
     public static Block soul;
     public static Block stinger;
     public static Block synaps;
+    public static Block glory;
     public static Block exoticAlloyWallLarge;
     public static Block exoticAlloyWall;
     public static Block grapheniteWallLarge;
@@ -915,12 +916,12 @@ public class ModBlocks implements ContentList {
                                 this.despawnEffect = Fx.railHit;
                                 this.lifetime = 90;
                                 this.knockback = 1;
-                                this.lightning = 3;//êîëè÷åñòâî ìîëíèé
-                                this.lightningLength = 5;//äëèíà ìîëíèè
-                                this.lightningLengthRand = 15;//ğàíäîìíîå ÷èñëî îò 0 äî 50 áóäåò ïğèáàâëÿòüñÿ ê äëèíå ìîëíèè, òî åñòü ğàíäîìèçàöèÿ äëèíû
-                                this.lightningDamage = 12;//óğîí ìîëíèè
-                                this.lightningAngle = 5;//óãîë íàïğàâëåíèÿ ìîëíèé îòíîñèòåëüíî óãëà ïóëè
-                                this.lightningCone = 45;//ğàíäîìèçàöèÿ óãëà íàïğàâëåíèÿ ìîëíèé
+                                this.lightning = 3;//ÃªÃ®Ã«Ã¨Ã·Ã¥Ã±Ã²Ã¢Ã® Ã¬Ã®Ã«Ã­Ã¨Ã©
+                                this.lightningLength = 5;//Ã¤Ã«Ã¨Ã­Ã  Ã¬Ã®Ã«Ã­Ã¨Ã¨
+                                this.lightningLengthRand = 15;//Ã°Ã Ã­Ã¤Ã®Ã¬Ã­Ã®Ã¥ Ã·Ã¨Ã±Ã«Ã® Ã®Ã² 0 Ã¤Ã® 50 Ã¡Ã³Ã¤Ã¥Ã² Ã¯Ã°Ã¨Ã¡Ã Ã¢Ã«Ã¿Ã²Ã¼Ã±Ã¿ Ãª Ã¤Ã«Ã¨Ã­Ã¥ Ã¬Ã®Ã«Ã­Ã¨Ã¨, Ã²Ã® Ã¥Ã±Ã²Ã¼ Ã°Ã Ã­Ã¤Ã®Ã¬Ã¨Ã§Ã Ã¶Ã¨Ã¿ Ã¤Ã«Ã¨Ã­Ã»
+                                this.lightningDamage = 12;//Ã³Ã°Ã®Ã­ Ã¬Ã®Ã«Ã­Ã¨Ã¨
+                                this.lightningAngle = 5;//Ã³Ã£Ã®Ã« Ã­Ã Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã¬Ã®Ã«Ã­Ã¨Ã© Ã®Ã²Ã­Ã®Ã±Ã¨Ã²Ã¥Ã«Ã¼Ã­Ã® Ã³Ã£Ã«Ã  Ã¯Ã³Ã«Ã¨
+                                this.lightningCone = 45;//Ã°Ã Ã­Ã¤Ã®Ã¬Ã¨Ã§Ã Ã¶Ã¨Ã¿ Ã³Ã£Ã«Ã  Ã­Ã Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã¬Ã®Ã«Ã­Ã¨Ã©
                                 this.lightningColor = Color.valueOf("f1fc58");
                             }
                         }
@@ -1163,12 +1164,12 @@ public class ModBlocks implements ContentList {
                         this.shootEffect = Fx.railShoot;
                         this.despawnEffect = Fx.railHit;
                         this.knockback = 1;
-                        this.lightning = 4;//êîëè÷åñòâî ìîëíèé
-                        this.lightningLength = 30;//äëèíà ìîëíèè
-                        this.lightningLengthRand = 30;//ğàíäîìíîå ÷èñëî îò 0 äî 50 áóäåò ïğèáàâëÿòüñÿ ê äëèíå ìîëíèè, òî åñòü ğàíäîìèçàöèÿ äëèíû
-                        this.lightningDamage = 78;//óğîí ìîëíèè
-                        this.lightningAngle = 15;//óãîë íàïğàâëåíèÿ ìîëíèé îòíîñèòåëüíî óãëà ïóëè
-                        this.lightningCone = 50;//ğàíäîìèçàöèÿ óãëà íàïğàâëåíèÿ ìîëíèé
+                        this.lightning = 4;//ÃªÃ®Ã«Ã¨Ã·Ã¥Ã±Ã²Ã¢Ã® Ã¬Ã®Ã«Ã­Ã¨Ã©
+                        this.lightningLength = 30;//Ã¤Ã«Ã¨Ã­Ã  Ã¬Ã®Ã«Ã­Ã¨Ã¨
+                        this.lightningLengthRand = 30;//Ã°Ã Ã­Ã¤Ã®Ã¬Ã­Ã®Ã¥ Ã·Ã¨Ã±Ã«Ã® Ã®Ã² 0 Ã¤Ã® 50 Ã¡Ã³Ã¤Ã¥Ã² Ã¯Ã°Ã¨Ã¡Ã Ã¢Ã«Ã¿Ã²Ã¼Ã±Ã¿ Ãª Ã¤Ã«Ã¨Ã­Ã¥ Ã¬Ã®Ã«Ã­Ã¨Ã¨, Ã²Ã® Ã¥Ã±Ã²Ã¼ Ã°Ã Ã­Ã¤Ã®Ã¬Ã¨Ã§Ã Ã¶Ã¨Ã¿ Ã¤Ã«Ã¨Ã­Ã»
+                        this.lightningDamage = 78;//Ã³Ã°Ã®Ã­ Ã¬Ã®Ã«Ã­Ã¨Ã¨
+                        this.lightningAngle = 15;//Ã³Ã£Ã®Ã« Ã­Ã Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã¬Ã®Ã«Ã­Ã¨Ã© Ã®Ã²Ã­Ã®Ã±Ã¨Ã²Ã¥Ã«Ã¼Ã­Ã® Ã³Ã£Ã«Ã  Ã¯Ã³Ã«Ã¨
+                        this.lightningCone = 50;//Ã°Ã Ã­Ã¤Ã®Ã¬Ã¨Ã§Ã Ã¶Ã¨Ã¿ Ã³Ã£Ã«Ã  Ã­Ã Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã¬Ã®Ã«Ã­Ã¨Ã©
                         this.lightningColor = Color.valueOf("f1fc58");
                     }
                 };
@@ -1232,12 +1233,12 @@ public class ModBlocks implements ContentList {
                                 this.despawnEffect = Fx.hitLancer;
                                 this.lifetime = 60;
                                 this.knockback = 1;
-                                this.lightning = 3;//êîëè÷åñòâî ìîëíèé
-                                this.lightningLength = 3;//äëèíà ìîëíèè
-                                this.lightningLengthRand = 7;//ğíàäîìíàÿ äëèíà
-                                this.lightningDamage = 20;//óğîí ìîëíèè
-                                this.lightningAngle = 3;//óãîë íàïğàâëåíèÿ ìîëíèé îòíîñèòåëüíî óãëà ïóëè
-                                this.lightningCone = 20;//ğàíäîìèçàöèÿ óãëà íàïğàâëåíèÿ ìîëíèé
+                                this.lightning = 3;//ÃªÃ®Ã«Ã¨Ã·Ã¥Ã±Ã²Ã¢Ã® Ã¬Ã®Ã«Ã­Ã¨Ã©
+                                this.lightningLength = 3;//Ã¤Ã«Ã¨Ã­Ã  Ã¬Ã®Ã«Ã­Ã¨Ã¨
+                                this.lightningLengthRand = 7;//Ã°Ã­Ã Ã¤Ã®Ã¬Ã­Ã Ã¿ Ã¤Ã«Ã¨Ã­Ã 
+                                this.lightningDamage = 20;//Ã³Ã°Ã®Ã­ Ã¬Ã®Ã«Ã­Ã¨Ã¨
+                                this.lightningAngle = 3;//Ã³Ã£Ã®Ã« Ã­Ã Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã¬Ã®Ã«Ã­Ã¨Ã© Ã®Ã²Ã­Ã®Ã±Ã¨Ã²Ã¥Ã«Ã¼Ã­Ã® Ã³Ã£Ã«Ã  Ã¯Ã³Ã«Ã¨
+                                this.lightningCone = 20;//Ã°Ã Ã­Ã¤Ã®Ã¬Ã¨Ã§Ã Ã¶Ã¨Ã¿ Ã³Ã£Ã«Ã  Ã­Ã Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã¬Ã®Ã«Ã­Ã¨Ã©
                                 this.lightningColor = Color.valueOf("f1fc58");
                             }
                         }
@@ -1263,8 +1264,10 @@ public class ModBlocks implements ContentList {
                 this.targetAir = false;
                 this.targetGround = true;
                 this.ammo(
-                        ModItems.exoticAlloy, artilleryExplosive,
-                        Items.surgeAlloy, artilleryIncendiary
+                ModItems.graphenite, Bullets.artilleryDense,
+                ModItems.phaseAlloy, Bullets.artilleryHoming,
+                ModItems.exoticAlloy, Bullets.artilleryExplosive,
+                ModItems.plastic, Bullets.artilleryPlastic
                 );
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.1f).optional(true, true);
                 this.requirements(Category.turret, ItemStack.with(ModItems.exoticAlloy, 400, ModItems.graphenite, 400, Items.plastanium, 250, Items.silicon, 700, Items.surgeAlloy, 250, ModItems.phaseAlloy, 200));
@@ -1434,12 +1437,12 @@ public class ModBlocks implements ContentList {
                                 this.width = 3;
                                 this.lifetime = 45;
                                 this.knockback = -1;
-                                this.lightning = 4;//êîëè÷åñòâî ìîëíèé
-                                this.lightningLength = 2;//äëèíà ìîëíèè
-                                this.lightningLengthRand = 10;//ğàíäîìíîå ÷èñëî îò 0 äî 15 áóäåò ïğèáàâëÿòüñÿ ê äëèíå ìîëíèè, òî åñòü ğàíäîìèçàöèÿ äëèíû
-                                this.lightningDamage = 50;//óğîí ìîëíèè
-                                this.lightningAngle = 6;//óãîë íàïğàâëåíèÿ ìîëíèé îòíîñèòåëüíî óãëà ïóëè
-                                this.lightningCone = 12;//ğàíäîìèçàöèÿ óãëà íàïğàâëåíèÿ ìîëíèé
+                                this.lightning = 4;//ÃªÃ®Ã«Ã¨Ã·Ã¥Ã±Ã²Ã¢Ã® Ã¬Ã®Ã«Ã­Ã¨Ã©
+                                this.lightningLength = 2;//Ã¤Ã«Ã¨Ã­Ã  Ã¬Ã®Ã«Ã­Ã¨Ã¨
+                                this.lightningLengthRand = 10;//Ã°Ã Ã­Ã¤Ã®Ã¬Ã­Ã®Ã¥ Ã·Ã¨Ã±Ã«Ã® Ã®Ã² 0 Ã¤Ã® 15 Ã¡Ã³Ã¤Ã¥Ã² Ã¯Ã°Ã¨Ã¡Ã Ã¢Ã«Ã¿Ã²Ã¼Ã±Ã¿ Ãª Ã¤Ã«Ã¨Ã­Ã¥ Ã¬Ã®Ã«Ã­Ã¨Ã¨, Ã²Ã® Ã¥Ã±Ã²Ã¼ Ã°Ã Ã­Ã¤Ã®Ã¬Ã¨Ã§Ã Ã¶Ã¨Ã¿ Ã¤Ã«Ã¨Ã­Ã»
+                                this.lightningDamage = 50;//Ã³Ã°Ã®Ã­ Ã¬Ã®Ã«Ã­Ã¨Ã¨
+                                this.lightningAngle = 6;//Ã³Ã£Ã®Ã« Ã­Ã Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã¬Ã®Ã«Ã­Ã¨Ã© Ã®Ã²Ã­Ã®Ã±Ã¨Ã²Ã¥Ã«Ã¼Ã­Ã® Ã³Ã£Ã«Ã  Ã¯Ã³Ã«Ã¨
+                                this.lightningCone = 12;//Ã°Ã Ã­Ã¤Ã®Ã¬Ã¨Ã§Ã Ã¶Ã¨Ã¿ Ã³Ã£Ã«Ã  Ã­Ã Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¿ Ã¬Ã®Ã«Ã­Ã¨Ã©
 //                                this.largeHit = true;
                                 this.lightColor = this.lightningColor = Color.valueOf("fbff9e");
                             }
@@ -1449,6 +1452,38 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 120, Items.silicon, 140, Items.lead, 190, Items.titanium, 120));
             }
         };
+//----end
+//start----Ğ£Ğ”ĞĞ›Ğ˜Ğ¨Ğ¬ Ğ­Ğ¢Ğ£ Ğ¢Ğ£Ğ Ğ•Ğ›Ğ¬ Ğ˜ Ğ¯ Ğ¢Ğ¯ Ğ£Ğ‘Ğ® :)
+        gloryTurret = new LaserTurret("glory"){{
+                this.localizedName = "Synaps";
+                this.requirements(Category.turret, with(Items.plastanium, 340, Items.lead, 350, Items.phaseFabric, 260, Items.surgeAlloy, 360, Items.silicon, 390));
+                this.shootEffect = Fx.greenBomb;
+                this.shootCone = 21f;
+                this.recoilAmount = 6f;
+                this.size = 4;
+                this.shootShake = 3f;
+                this.range = 250f;
+                this.reloadTime = 100f;
+                this.firingMoveFract = 0.4f;
+                this.shootDuration = 280f;
+                this.powerUse = 23f;
+                this.shootSound = Sounds.laserblast;
+                this.loopSound = Sounds.lasercharge2;
+                this.loopSoundVolume = 2.4f;
+
+                this.shootType = new ContinuousLaserBulletType(80){{
+                    this.length = 260f;
+                    this.hitEffect = Fx.hitMeltdown;
+                    this.drawSize = 400f;
+
+                    this.incendChance = 0.7f;
+                    this.incendSpread = 9f;
+                    this.incendAmount = 3;
+                }};
+
+                this.health = 240 * size * size;
+                this.consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
+            }};
 //----end
 //start----
 //way content\blocks/walls/exotic-alloy-wall-large.hjson
