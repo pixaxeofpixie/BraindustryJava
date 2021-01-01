@@ -1,0 +1,7 @@
+name: "braindustry"
+displayName: "Braindustry"
+author: "pixaxeofpixie"
+main: "Main.Mod"
+version: 1.0
+minGameVersion: 122
+
