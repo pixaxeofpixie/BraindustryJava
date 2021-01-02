@@ -7,8 +7,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Make gradlew executable
-      run: chmod +x ./gradlew
     - uses: actions/checkout@v1
     - name: Set up PATH
       run: |
@@ -17,6 +15,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 14
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
     - name: Build mod jar
       run: ./gradlew build
     - name: Upload built jar file
