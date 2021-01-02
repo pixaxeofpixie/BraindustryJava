@@ -19,16 +19,6 @@ import mindustry.game.EventType;
 import static braindustry.modVars.modVars.*;
 
 public class modFunc {
-    public static Cubemap loadCubeMap(String base){
-        return new Cubemap(
-                Core.atlas.find(base+"-right").texture.getTextureData(),
-                Core.atlas.find(base + "-left").texture.getTextureData(),
-                Core.atlas.find(base + "-top").texture.getTextureData(),
-                Core.atlas.find(base + "-bottom").texture.getTextureData(),
-                Core.atlas.find(base + "-front").texture.getTextureData(),
-                Core.atlas.find(base + "-back").texture.getTextureData()
-        );
-    }
     public static void inTry(Runnable runnable){
         try{
             runnable.run();
@@ -36,16 +26,16 @@ public class modFunc {
             showException(ex);
         }
     }
-    public static void reTrans(UnlockableContent content){
+    public static void checkTranslate(UnlockableContent content){
         content.localizedName = Core.bundle.get(content.getContentType() + "." + content.name + ".name", content.localizedName);
         content.description = Core.bundle.get(content.getContentType() + "." + content.name + ".description",content.description);
     }
-    public static void addResearch(UnlockableContent researchContent, UnlockableContent unlock){
-        TechTree.TechNode node = new TechTree.TechNode(null, unlock, unlock.researchRequirements());
-        TechTree.TechNode parent = (TechTree.TechNode)TechTree.getNotNull(researchContent);
+    public static void addResearch(UnlockableContent parentContent, UnlockableContent unlock){
+        TechTree.TechNode node = new TechTree.TechNode(TechTree.getNotNull(parentContent), unlock, unlock.researchRequirements());
+        TechTree.TechNode parent = (TechTree.TechNode)TechTree.getNotNull(parentContent);
         if (parent == null) {
 
-            showException(new IllegalArgumentException("Content '" + researchContent.name + "' isn't in the tech tree, but '" + unlock.name + "' requires it to be researched."));
+            showException(new IllegalArgumentException("Content '" + parentContent.name + "' isn't in the tech tree, but '" + unlock.name + "' requires it to be researched."));
 //            throw new IllegalArgumentException("Content '" + researchName + "' isn't in the tech tree, but '" + unlock.name + "' requires it to be researched.");
         } else {
             if (!parent.children.contains(node)) {

@@ -14,7 +14,7 @@ import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
 
-import static braindustry.modVars.modFunc.addResearch;
+import static braindustry.modVars.modFunc.*;
 
 public class DebugBlocks implements ContentList {
     public static Block testBlock1, testBlock2, testBlock3, testBlock4;

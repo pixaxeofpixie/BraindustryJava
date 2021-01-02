@@ -2,33 +2,39 @@ package braindustry.content;
 
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import braindustry.modVars.Classes.TechTreeManager;
+import braindustry.modVars.modVars;
 import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.Objectives;
+import mindustry.mod.Mod;
 import mindustry.type.ItemStack;
 
-import static braindustry.modVars.modFunc.addResearch;
+import static braindustry.modVars.modFunc.*;
 
 public class ModTechTree implements ContentList {
-    static ObjectMap<UnlockableContent, TechTree.TechNode> map = new ObjectMap();
-    static TechTree.TechNode context = null;
-    public static Seq<TechTree.TechNode> all;
-    public static TechTree.TechNode root;
     public ModTechTree(){
         TechTree.class.getClass();
     }
+    public TechTreeManager techTree=new TechTreeManager();
     @Override
     public void load() {
-        setup();
-        node(Blocks.additiveReconstructor,()->{
-            node(ModBlocks.hyperAdditiveReconstructor,()->{
-                node(Blocks.exponentialReconstructor, ()->{
-                    node(ModBlocks.hyperExponentialReconstructor);
-                });
-            });
+        /*
 
+        * */
+        techTree.parentNode(Blocks.router,ModBlocks.smartRouter,Seq.with(new Objectives.Research(Blocks.hyperProcessor),new Objectives.Produce(Items.silicon)),(tree)->{
+            tree.node(ModItems.chromium,Seq.with(new Objectives.Research(Blocks.hyperProcessor),new Objectives.Produce(Items.silicon)),()->{
+                tree.node(ModItems.exoticAlloy);
+                tree.node(ModItems.graphenite);
+            });
         });
+        /**
+         *  smartRouter откроется после изучения hyperProcessor, производства silicon и нужных ресурсов(как обычно) и будет находится после router
+         *  --chromium будет находится после smartRouter и откроеться после изучения hyperProcessor, производства silicon и нужных ресурсов(если есть)
+         *  ---у exoticAlloy и graphenite общий родитель chromium будут открыты после нужных ресурсов(если есть)
+        **/
+        if (true)return;
         addResearch(Items.titanium,ModItems.chromium);
         addResearch(Items.surgeAlloy,ModItems.exoticAlloy);
         addResearch(Items.graphite,ModItems.graphenite);
@@ -106,48 +112,4 @@ public class ModTechTree implements ContentList {
         addResearch(Blocks.swarmer, ModBlocks.stinger);
         addResearch(Blocks.router, ModBlocks.smartRouter);
     }
-    public static void setup() {
-        context = null;
-        map = new ObjectMap();
-        all = new Seq();
-    }
-
-    static TechTree.TechNode node(UnlockableContent content, Runnable children) {
-        return node(content, content.researchRequirements(), children);
-    }
-
-    static TechTree.TechNode node(UnlockableContent content, ItemStack[] requirements, Runnable children) {
-        return node(content, requirements, null, children);
-    }
-
-    static TechTree.TechNode node(UnlockableContent content, ItemStack[] requirements, Seq<Objectives.Objective> objectives, Runnable children) {
-        TechTree.TechNode node = new TechTree.TechNode(context, content, requirements);
-        if (objectives != null) {
-            node.objectives.addAll(objectives);
-        }
-
-        TechTree.TechNode prev = context;
-        context = node;
-        children.run();
-        context = prev;
-        return node;
-    }
-
-    static TechTree.TechNode node(UnlockableContent content, Seq<Objectives.Objective> objectives, Runnable children) {
-        return node(content, content.researchRequirements(), objectives, children);
-    }
-
-    static TechTree.TechNode node(UnlockableContent block) {
-        return node(block, () -> {
-        });
-    }
-
-    static TechTree.TechNode nodeProduce(UnlockableContent content, Seq<Objectives.Objective> objectives, Runnable children) {
-        return node(content, content.researchRequirements(), objectives.and(new Objectives.Produce(content)), children);
-    }
-
-    static TechTree.TechNode nodeProduce(UnlockableContent content, Runnable children) {
-        return nodeProduce(content, new Seq(), children);
-    }
-
 }

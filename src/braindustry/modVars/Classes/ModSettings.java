@@ -1,6 +1,6 @@
 package braindustry.modVars.Classes;
 
-import braindustry.Mod;
+import braindustry.MainModClass;
 import arc.Core;
 import arc.Events;
 import arc.scene.ui.Dialog;
@@ -17,6 +17,7 @@ public class ModSettings {
         addEvent();
     }
     private String full(String name){
+        if (name.equals("cheat"))return "zelConst-"+name;
         return getFullName(name);
     }
     private void put(String name,Object value){
@@ -53,7 +54,7 @@ public class ModSettings {
         Events.on(EventType.ClientLoadEvent.class,(e)->{
             Vars.ui.settings.row();
             Vars.ui.settings.button((button) -> {
-                        button.image(Mod.getIcon()).size(64, 64);
+                        button.image(MainModClass.getIcon()).size(64, 64);
 //                        button.setSize(80f,80f);
                         button.label(() -> Strings.format("@", modInfo.meta.displayName));
                     },

@@ -1,6 +1,8 @@
 package braindustry;
 
 import braindustry.content.*;
+import braindustry.modVars.Classes.ModAtlas;
+import braindustry.modVars.Classes.ModEventType;
 import braindustry.modVars.Classes.UI.ModCheatMenu;
 import braindustry.modVars.modVars;
 import arc.*;
@@ -18,6 +20,7 @@ import mindustry.entities.EntityCollisions;
 import mindustry.game.EventType.*;
 import mindustry.game.Team;
 import mindustry.gen.*;
+import mindustry.mod.Mod;
 import mindustry.type.UnitType;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.*;
@@ -27,11 +30,15 @@ import mindustry.world.meta.BuildVisibility;
 import static braindustry.modVars.modFunc.*;
 import static braindustry.modVars.modVars.*;
 
-public class Mod extends mindustry.mod.Mod {
+public class MainModClass extends Mod {
     public void init() {
+        Events.fire(new ModEventType.ModInit());
         modInfo = Vars.mods.getMod(this.getClass());
     }
     public static TextureRegion getIcon() {
+
+//        if (modInfo==null)modInfo = Vars.mods.getMod(mod.getClass());
+        print("modInfo: @",modInfo);
         if (modInfo.iconTexture == null) return Core.atlas.find("nomap");
         return new TextureRegion(modInfo.iconTexture);
     }
@@ -129,9 +136,9 @@ public class Mod extends mindustry.mod.Mod {
             dialog.show();
         });
     }
-    public Mod() {
+    public MainModClass() {
+        modInfo = Vars.mods.getMod(this.getClass());
         modVars.load();
-//        Core.bundle
         EventOn(ClientLoadEvent.class, (e) -> {
             Blocks.interplanetaryAccelerator.buildVisibility = BuildVisibility.shown;
             Blocks.blockForge.buildVisibility = BuildVisibility.shown;
@@ -142,10 +149,10 @@ public class Mod extends mindustry.mod.Mod {
         });
     }
 
-    @Override
     public void loadContent() {
-//        Call.constructFinish();
         modInfo = Vars.mods.getMod(this.getClass());
+        modAtlas=new ModAtlas();
+        Events.fire(ModEventType.ModContentLoad.class);
 //        loadMaps();
         new ModSounds().load();
         new ModStatusEffects().load();
@@ -153,9 +160,9 @@ public class Mod extends mindustry.mod.Mod {
         new ModLiquids().load();
         new ModUnitTypes().load();
         new ModBlocks().load();
-//        new ModTechTree().load();
+        new ModTechTree().load();
         Vars.content.each((c)->{
-            if (c instanceof UnlockableContent) reTrans((UnlockableContent)c);
+            if (c instanceof UnlockableContent) checkTranslate((UnlockableContent)c);
         });
     }
 
