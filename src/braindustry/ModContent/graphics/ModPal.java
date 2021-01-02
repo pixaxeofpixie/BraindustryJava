@@ -1,8 +1,7 @@
-package Main.ModContent.graphics;
+package braindustry.ModContent.graphics;
 
 import arc.graphics.Color;
 import arc.struct.Seq;
-import mindustry.ctype.ContentList;
 import mindustry.graphics.Pal;
 
 public class ModPal {
