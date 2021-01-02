@@ -1,6 +1,6 @@
 package braindustry;
 
-import braindustry.ModContent.content.*;
+import braindustry.content.*;
 import braindustry.modVars.Classes.UI.ModCheatMenu;
 import braindustry.modVars.modVars;
 import arc.*;
