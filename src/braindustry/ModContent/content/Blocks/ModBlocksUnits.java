@@ -1,8 +1,8 @@
-package Main.ModContent.content.Blocks;
+package braindustry.ModContent.content.Blocks;
 
-import Main.ModContent.content.ModItems;
-import Main.ModContent.content.ModLiquids;
-import Main.ModContent.content.ModUnitTypes;
+import braindustry.ModContent.content.ModItems;
+import braindustry.ModContent.content.ModLiquids;
+import braindustry.ModContent.content.ModUnitTypes;
 import arc.struct.Seq;
 import mindustry.content.Items;
 import mindustry.ctype.ContentList;
@@ -12,7 +12,7 @@ import mindustry.type.UnitType;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 
-import static Main.ModContent.content.ModBlocks.*;
+import static braindustry.ModContent.content.ModBlocks.*;
 public class ModBlocksUnits implements ContentList {
 
     @Override

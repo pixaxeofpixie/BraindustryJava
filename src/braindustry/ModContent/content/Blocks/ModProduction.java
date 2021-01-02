@@ -1,26 +1,22 @@
-package Main.ModContent.content.Blocks;
+package braindustry.ModContent.content.Blocks;
 
-import Main.ModContent.content.ModItems;
-import Main.ModContent.content.ModLiquids;
-import Main.ModContent.world.blocks.production.MultiGenericSmelter;
-import Main.ModContent.world.blocks.production.MultiRotorDrill;
-import arc.math.geom.Vec2;
+import braindustry.ModContent.content.ModItems;
+import braindustry.ModContent.content.ModLiquids;
+import braindustry.ModContent.world.blocks.production.MultiGenericSmelter;
 import arc.math.geom.Vec3;
 import arc.struct.Seq;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
-import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
-import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.GenericSmelter;
 
-import static Main.ModContent.content.ModBlocks.*;
-import static mindustry.content.Bullets.*;
+import static braindustry.ModContent.content.ModBlocks.*;
+
 public class ModProduction implements ContentList {
     @Override
     public void load() {

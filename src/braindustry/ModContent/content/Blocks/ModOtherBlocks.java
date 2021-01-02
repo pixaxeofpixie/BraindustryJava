@@ -1,8 +1,8 @@
-package Main.ModContent.content.Blocks;
+package braindustry.ModContent.content.Blocks;
 
-import Main.ModContent.content.ModItems;
-import Main.ModContent.content.ModLiquids;
-import Main.ModContent.world.blocks.production.MultiRotorDrill;
+import braindustry.ModContent.content.ModItems;
+import braindustry.ModContent.content.ModLiquids;
+import braindustry.ModContent.world.blocks.production.MultiRotorDrill;
 import arc.math.geom.Vec2;
 import mindustry.content.Blocks;
 import mindustry.content.Fx;
@@ -24,7 +24,7 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
 
-import static Main.ModContent.content.ModBlocks.*;
+import static braindustry.ModContent.content.ModBlocks.*;
 public class ModOtherBlocks implements ContentList {
     @Override
     public void load() {

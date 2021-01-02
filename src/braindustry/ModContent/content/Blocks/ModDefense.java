@@ -1,5 +1,5 @@
-package Main.ModContent.content.Blocks;
-import Main.ModContent.content.*;
+package braindustry.ModContent.content.Blocks;
+import braindustry.ModContent.content.*;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
@@ -21,7 +21,7 @@ import mindustry.world.blocks.defense.turrets.LaserTurret;
 import mindustry.world.blocks.defense.turrets.PointDefenseTurret;
 import mindustry.world.blocks.defense.turrets.TractorBeamTurret;
 
-import static Main.ModContent.content.ModBlocks.*;
+import static braindustry.ModContent.content.ModBlocks.*;
 import static mindustry.content.Bullets.*;
 
 public class ModDefense implements ContentList {
