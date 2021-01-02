@@ -3,6 +3,7 @@ package braindustry;
 import braindustry.content.*;
 import braindustry.modVars.Classes.ModAtlas;
 import braindustry.modVars.Classes.ModEventType;
+import braindustry.modVars.Classes.UI.ModCheatItemsMenu;
 import braindustry.modVars.Classes.UI.ModCheatMenu;
 import braindustry.modVars.modVars;
 import arc.*;
@@ -117,16 +118,59 @@ public class MainModClass extends Mod {
         dialog.addCloseButton();
         dialog.show();
     }
+    private void showUnlockDialog(){
+        BaseDialog dialog = new BaseDialog("Unlock content dialog");
+        dialog.cont.table(i -> {
+            i.table(t -> {
+                final int buttonSize = 20;
+                for (Team team : Team.all) {
+                    if (Seq.with(Team.all).indexOf(team) % 20 == 0) t.row();
+                    ImageButton button = new ImageButton(Tex.whitePane, Styles.clearToggleTransi);
+                    button.clearChildren();
+                    Image image = new Image();
+                    button.background(image.getDrawable()).setColor(team.color);
+                    Cell<Image> imageCell = button.add(image).color(team.color).size(buttonSize);
+                    button.clicked(() -> {
+                        try {
+                            Vars.player.team(team);
+                        } catch (Exception exception) {
+                            showException(exception);
+                        }
+                        dialog.hide();
+                    });
+                    t.add(button).color(team.color).width(buttonSize).height(buttonSize).pad(6);
+                }
+            });
+        }).width(360).bottom().center();
+        dialog.addCloseButton();
+        dialog.show();
+    }
     private void constructor() {
         modInfo = Vars.mods.getMod(this.getClass());
-        new ModCheatMenu((t)->{
-            t.button("Change team", () -> {
-                showChooseTeamDialog();
-            });
-            t.button("Change unit", () -> {
-                showUnitChangeDialog();
-            });
-            t.visibility=()-> settings.cheating();
+        new ModCheatMenu((table)->{
+            table.button("Cheat menu",()->{
+                BaseDialog dialog=new BaseDialog("Cheat-menu");
+                dialog.cont.table((t)->{
+                    t.defaults().size(280.0F, 60.0F);
+                    t.button("Change team", () -> {
+                        showChooseTeamDialog();
+                    }).growX().row();
+                    t.button("Change unit", () -> {
+                        showUnitChangeDialog();
+                    }).growX().row();
+                    t.button("Change sandbox", () -> {
+                        Vars.state.rules.infiniteResources=!Vars.state.rules.infiniteResources;
+                    }).growX().row();
+                    t.button("Items manager", () -> {
+                        new ModCheatItemsMenu().show(()->{},()->{});
+                    }).growX().row();
+                });
+                dialog.addCloseListener();
+                dialog.addCloseButton();
+                dialog.show();
+
+            }).size(280.0f/2f, 60.0F);
+            table.visibility=()-> settings.cheating();
         });
         Time.runTask(10f, () -> {
             BaseDialog dialog = new BaseDialog("Welcome");

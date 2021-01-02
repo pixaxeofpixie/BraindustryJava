@@ -1,4 +1,4 @@
-package braindustry.ModContent.world.blocks.sandbox;
+package braindustry.world.blocks.sandbox;
 
 import arc.Core;
 import arc.graphics.Color;
@@ -11,6 +11,7 @@ import arc.struct.Seq;
 import arc.util.Time;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import braindustry.modVars.modVars;
 import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.Building;
@@ -21,6 +22,7 @@ import mindustry.logic.LAccess;
 import mindustry.world.Block;
 import mindustry.world.blocks.ControlBlock;
 import mindustry.world.blocks.power.PowerGraph;
+import mindustry.world.blocks.power.PowerNode;
 
 public class BlockSwitcher extends Block {
     public TextureRegion laser;
@@ -62,7 +64,7 @@ public class BlockSwitcher extends Block {
         float len1 = (float) (size1 * 8) / 2.0F - 1.5F;
         float len2 = (float) (size2 * 8) / 2.0F - 1.5F;
         Draw.color(enable ? Color.green : Pal.redDust);
-        Drawf.laser(team, this.laser, this.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
+        Drawf.laser(team, modVars.modAtlas.laser, modVars.modAtlas.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
     }
 
     public boolean goodBuilding(BlockSwitcherBuild forB, Building other) {
@@ -156,36 +158,58 @@ public class BlockSwitcher extends Block {
             }
         }
 
-
-        public String config() {
+        private Seq<Integer> getPosses(){
             Seq<Integer> posses = new Seq<>();
             links.each((building -> {
                 posses.add(building.pos());
             }));
-            return JsonIO.json().toJson(posses);
+
+            return posses;
+        }
+        private void fromPosses(Seq<Integer> posses){
+            links.clear();
+            posses.each((pos) -> {
+                Building build = Vars.world.build(pos);
+                if (build != null && !linked(build)) links.add(build);
+            });
+        }
+        public Seq<Integer> config() {
+            return getPosses();
         }
 
         protected void readConfig(String config) {
+            Seq<Integer> posses = JsonIO.json().fromJson(Seq.class, config);
+
+            links.clear();
+            posses.each((pos) -> {
+                Building build = Vars.world.build(pos);
+                if (build != null && !linked(build)) links.add(build);
+            });
             onUpdate.add(()->{
-                Seq<Integer> posses = JsonIO.json().fromJson(Seq.class, config);
-                links.clear();
-                posses.each((pos) -> {
-                    Building build = Vars.world.build(pos);
-                    if (build != null && !linked(build)) links.add(build);
-                });
             });
         }
 
         @Override
         public void write(Writes write) {
             super.write(write);
-            write.str(config());
+            if (true)return;
+            Seq<Integer> posses=getPosses();
+            write.i(posses.size);
+            posses.each(pos->{
+                write.i(pos);
+            });
         }
 
         @Override
         public void read(Reads read) {
             super.read(read);
-            readConfig(read.str());
+            if (true)return;
+            int size=read.i();
+            Seq<Integer> posses=new Seq<>(size);
+            for (int i = 0; i < size; i++) {
+                posses.set(i,read.i());
+            }
+            fromPosses(posses);
         }
 
         protected boolean linked(Building other) {

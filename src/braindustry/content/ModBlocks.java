@@ -52,7 +52,7 @@ public class ModBlocks implements ContentList {
                 this.buildCostMultiplier = 4.0F;
             }
         };
-        turretSwitcher = new braindustry.ModContent.world.blocks.sandbox.BlockSwitcher("turret-switcher") {
+        turretSwitcher = new braindustry.world.blocks.sandbox.BlockSwitcher("turret-switcher") {
             {
                 this.size = 2;
                 this.laserRange = 6.0F;

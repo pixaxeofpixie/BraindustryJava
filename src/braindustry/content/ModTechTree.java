@@ -12,6 +12,7 @@ import mindustry.mod.Mod;
 import mindustry.type.ItemStack;
 
 import static braindustry.modVars.modFunc.*;
+//import static mindustry.game.Objectives.*;
 
 public class ModTechTree implements ContentList {
     public ModTechTree(){
@@ -23,10 +24,23 @@ public class ModTechTree implements ContentList {
         /*
 
         * */
-        techTree.parentNode(Blocks.router,ModBlocks.smartRouter,Seq.with(new Objectives.Research(Blocks.hyperProcessor),new Objectives.Produce(Items.silicon)),(tree)->{
-            tree.node(ModItems.chromium,Seq.with(new Objectives.Research(Blocks.hyperProcessor),new Objectives.Produce(Items.silicon)),()->{
-                tree.node(ModItems.exoticAlloy);
-                tree.node(ModItems.graphenite);
+
+        techTree.node(Liquids.slag,()->{
+            techTree.nodeProduce(ModLiquids.magma);
+            techTree.nodeProduce(ModLiquids.thoriumRefrigerant);
+        });
+//        Liquids.cryofluid
+        techTree.parentNode(Blocks.groundFactory,ModBlocks.hyperGroundFactory,()->{
+            techTree.node(ModUnitTypes.ibis,()->{
+                techTree.node(ModUnitTypes.aries, Seq.with(new Objectives.Research(ModBlocks.hyperAdditiveReconstructor)),()->{
+                    techTree.node(ModUnitTypes.capra,Seq.with(new Objectives.Research(ModBlocks.hyperMultiplicativeReconstructor)),()->{
+                        techTree.node(ModUnitTypes.lacerta,Seq.with(new Objectives.Research(ModBlocks.hyperExponentialReconstructor)),()->{
+                            techTree.node(ModUnitTypes.aquila,Seq.with(new Objectives.Research(ModBlocks.hyperTetrativeReconstructor)),()->{
+
+                            });
+                        });
+                    });
+                });
             });
         });
         /**
@@ -42,6 +56,7 @@ public class ModTechTree implements ContentList {
         addResearch(ModItems.exoticAlloy,ModItems.phaseAlloy);
         addResearch(Items.plastanium,ModItems.plastic);
         //=======
+        //========
         addResearch(Liquids.slag, ModLiquids.liquidGraphenite);
         addResearch(Liquids.slag, ModLiquids.magma);
         addResearch(Liquids.cryofluid, ModLiquids.thoriumRefrigerant);
