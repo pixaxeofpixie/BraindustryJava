@@ -5,7 +5,6 @@ import Main.ModContent.content.Blocks.ModDefense;
 import Main.ModContent.content.Blocks.ModOtherBlocks;
 import Main.ModContent.content.Blocks.ModProduction;
 import Main.ModContent.world.blocks.distribution.SmartRouter;
-import Main.ModContent.world.blocks.sandbox.BlockSwitcher;
 import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.type.Category;
