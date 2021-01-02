@@ -8,9 +8,7 @@ import mindustry.type.Liquid;
 import static braindustry.modVars.modFunc.*;
 
 public class ModLiquids implements ContentList {
-    public static Liquid liquidGraphenite;
-    public static Liquid magma;
-    public static Liquid thoriumRefrigerant;
+    public static Liquid liquidGraphenite, magma, thoriumRefrigerant;
 
     @Override
     public void load() {
@@ -24,6 +22,7 @@ public class ModLiquids implements ContentList {
                 addResearch(Liquids.slag, this);
             }
         };
+
         magma = new Liquid("magma") {
             {
                 this.localizedName = "Magma";
@@ -37,6 +36,7 @@ public class ModLiquids implements ContentList {
                 addResearch(Liquids.slag, this);
             }
         };
+
         thoriumRefrigerant = new Liquid("thorium-refrigerant") {
             {
                 this.localizedName = "Thorium Refrigerant";
