@@ -5,7 +5,6 @@ import braindustry.ModContent.content.Blocks.ModDefense;
 import braindustry.ModContent.content.Blocks.ModOtherBlocks;
 import braindustry.ModContent.content.Blocks.ModProduction;
 import braindustry.ModContent.world.blocks.distribution.SmartRouter;
-import braindustry.ModContent.world.blocks.sandbox.BlockSwitcher;
 import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.type.Category;
@@ -88,14 +87,6 @@ public class ModBlocks implements ContentList {
             {
                 this.size = 1;
                 this.requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
-                this.buildCostMultiplier = 4.0F;
-            }
-        };
-        turretSwitcher=new BlockSwitcher("turret-switcher"){
-            {
-                this.size = 2;
-                this.laserRange = 6.0F;
-                this.requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 this.buildCostMultiplier = 4.0F;
             }
         };
