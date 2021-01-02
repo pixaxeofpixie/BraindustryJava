@@ -14,13 +14,15 @@ import mindustry.type.ItemStack;
 import static braindustry.modVars.modFunc.*;
 //import static mindustry.game.Objectives.*;
 
-public class ModTechTree implements ContentList {
+public class ModTechTree  {
     public ModTechTree(){
         TechTree.class.getClass();
     }
     public TechTreeManager techTree=new TechTreeManager();
-    @Override
+    boolean loaded=false;
     public void load() {
+        if (loaded)return;
+        loaded=true;
         /*
 
         * */
@@ -32,10 +34,10 @@ public class ModTechTree implements ContentList {
 //        Liquids.cryofluid
         techTree.parentNode(Blocks.groundFactory,ModBlocks.hyperGroundFactory,()->{
             techTree.node(ModUnitTypes.ibis,()->{
-                techTree.node(ModUnitTypes.aries, Seq.with(new Objectives.Research(ModBlocks.hyperAdditiveReconstructor)),()->{
-                    techTree.node(ModUnitTypes.capra,Seq.with(new Objectives.Research(ModBlocks.hyperMultiplicativeReconstructor)),()->{
-                        techTree.node(ModUnitTypes.lacerta,Seq.with(new Objectives.Research(ModBlocks.hyperExponentialReconstructor)),()->{
-                            techTree.node(ModUnitTypes.aquila,Seq.with(new Objectives.Research(ModBlocks.hyperTetrativeReconstructor)),()->{
+                techTree.node(ModUnitTypes.aries,()->{
+                    techTree.node(ModUnitTypes.capra,()->{
+                        techTree.node(ModUnitTypes.lacerta,()->{
+                            techTree.node(ModUnitTypes.aquila,()->{
 
                             });
                         });

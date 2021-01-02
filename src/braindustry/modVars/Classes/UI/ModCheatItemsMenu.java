@@ -3,11 +3,13 @@ package braindustry.modVars.Classes.UI;
 import arc.Core;
 import arc.func.Boolf;
 import arc.func.Cons;
+import arc.graphics.Color;
 import arc.input.KeyCode;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Strings;
 import arc.util.Structs;
+import braindustry.modVars.modFunc;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
@@ -70,6 +72,10 @@ public class ModCheatItemsMenu extends BaseDialog {
     public void show(Runnable reseter,  Runnable hider) {
         Seq<ItemStack> stacks=new Seq<>();
         CoreBlock.CoreBuild core= Vars.player.team().core();
+        if (core==null){
+            modFunc.getInfoDialog("@error","@error.title","you haven't core", Color.scarlet);
+            return;
+        }
         core.items.each((item,amount)->{
             stacks.add(new ItemStack(item,amount));
         });
