@@ -2,6 +2,6 @@ name: "braindustry-java"
 displayName: "Braindustry Java"
 author: "Braindustry Team & MotrONa & G0rillaGlue"
 main: "braindustry.Mod"
-version: 2.0
+version: 1.6
 minGameVersion: 122
 
