@@ -69,7 +69,7 @@ public class MainModClass extends Mod {
                     Tile tile=Vars.player.tileOn();
                     if (unitType.constructor.get() instanceof UnitWaterMove && !unitType.flying && EntityCollisions.waterSolid(Vars.player.tileX(), Vars.player.tileY())){
                         Color color=Color.valueOf(Strings.format("#@",Color.scarlet.toString()));
-                        getInfoDialog("","Can't spawn water unit!!!","You not over the water",color.lerp(Color.white,0.2f)).show();
+                        getInfoDialog("","Can't spawn water unit!!!","You not on the water",color.lerp(Color.white,0.2f)).show();
                         return;
                     }
                     Unit newUnit = unitType.spawn(Vars.player.x, Vars.player.y);
