@@ -12,28 +12,23 @@ public class ModItems implements ContentList {
         Items.class.isArray();
     }
 
-    public static Item chromium;
-    public static Item exoticAlloy;
-    public static Item graphenite;
-    public static Item odinum;
-    public static Item phaseAlloy;
-    public static Item plastic;
+    public static Item chromium, exoticAlloy, graphenite, odinum, phaseAlloy, plastic;
 
     public void load() {
-        chromium=new Item("chromium"){
+        chromium = new Item("chromium") {
             {
-                this.localizedName="Chromium";
-                this.description="A very infusible resource.";
-                this.hardness=4;
-                this.cost=2;
-                this.color= Color.valueOf("dededf");
+                this.localizedName = "Chromium";
+                this.description = "A very infusible resource.";
+                this.hardness = 4;
+                this.cost = 2;
+                this.color = Color.valueOf("dededf");
                 addResearch(Items.titanium,this);
             }
         };
-        exoticAlloy=new Item("exotic-alloy"){
+
+        exoticAlloy = new Item("exotic-alloy") {
             {
                 this.localizedName="Exo Metal";
-
                 this.description="Heavy organic metal with high durability and low weight.";
                 this.cost = 3;
                 this.alwaysUnlocked = true;
@@ -44,7 +39,8 @@ public class ModItems implements ContentList {
                 addResearch(Items.surgeAlloy,this);
             }
         };
-        graphenite=new Item("graphenite"){
+
+        graphenite = new Item("graphenite") {
             {
                 this.localizedName = "Graphenite";
                 this.description = "Progressed synthetic metal with low weight.";
@@ -57,7 +53,8 @@ public class ModItems implements ContentList {
                 addResearch(Items.graphite,this);
             }
         };
-        odinum=new Item("odinum"){
+
+        odinum = new Item("odinum") {
             {
                 this.localizedName="Odinum";
                 this.description="A radioactive resource.";
@@ -68,20 +65,21 @@ public class ModItems implements ContentList {
                 addResearch(Items.thorium,this);
             }
         };
-        phaseAlloy=new Item("phase-alloy"){
+
+        phaseAlloy = new Item("phase-alloy") {
             {
-                this.localizedName="Phase Alloy";
-                this.description="This alloy combines features of Platanium, Surge Alloy and Phase fabric.";
-                this.flammability=0;
-                this.explosiveness=0;
-                this.radioactivity=0;
-                this.cost=2;
-                this.color=Color.valueOf("FF4F00");
+                this.localizedName = "Phase Alloy";
+                this.description = "This alloy combines features of Platanium, Surge Alloy and Phase fabric.";
+                this.flammability = 0;
+                this.explosiveness = 0;
+                this.radioactivity = 0;
+                this.cost = 2;
+                this.color = Color.valueOf("FF4F00");
                 addResearch(exoticAlloy,this);
             }
         };
 
-        plastic=new Item("plastic"){
+        plastic = new Item("plastic") {
             {
                 this.localizedName="Plastic";
                 this.description="A lightweight and durable material.";
@@ -89,10 +87,9 @@ public class ModItems implements ContentList {
                 this.explosiveness=0;
                 this.radioactivity=0.01f;
                 this.cost=4;
-                this.color=Color.valueOf("f6bfff");
+                this.color = Color.valueOf("f6bfff");
                 addResearch(Items.plastanium,this);
             }
         };
-
     }
 }
