@@ -11,8 +11,6 @@ import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
 
-import static braindustry.modVars.modFunc.addResearch;
-
 public class ModBlocks implements ContentList {
     public static Block smartRouter;
     public static Block armoredPlastaniumConveyor;

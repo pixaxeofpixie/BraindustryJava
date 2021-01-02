@@ -19,7 +19,6 @@ public class ModLiquids implements ContentList {
                 this.temperature = 0.5f;
                 this.viscosity = 1.2f;
                 this.color = Color.valueOf("5b5780");
-                addResearch(Liquids.slag, this);
             }
         };
 
@@ -33,7 +32,6 @@ public class ModLiquids implements ContentList {
                 this.explosiveness = 0;
                 this.viscosity = 0.7f;
                 this.color = Color.valueOf("c9523a");
-                addResearch(Liquids.slag, this);
             }
         };
 
@@ -45,7 +43,6 @@ public class ModLiquids implements ContentList {
                 this.heatCapacity = 1.32f;
                 this.viscosity = 0.9f;
                 this.color = Color.valueOf("dac5fc");
-                addResearch(Liquids.cryofluid, this);
             }
         };
     }

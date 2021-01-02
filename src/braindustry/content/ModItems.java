@@ -22,7 +22,6 @@ public class ModItems implements ContentList {
                 this.hardness = 4;
                 this.cost = 2;
                 this.color = Color.valueOf("dededf");
-                addResearch(Items.titanium,this);
             }
         };
 
@@ -36,7 +35,6 @@ public class ModItems implements ContentList {
                 this.color = Color.valueOf("e2f723");
                 this.radioactivity = 0;
                 this.flammability = 0.06f;
-                addResearch(Items.surgeAlloy,this);
             }
         };
 
@@ -50,7 +48,6 @@ public class ModItems implements ContentList {
                 this.explosiveness = 0;
                 this.radioactivity = 0;
                 this.flammability = 0;
-                addResearch(Items.graphite,this);
             }
         };
 
@@ -62,7 +59,6 @@ public class ModItems implements ContentList {
                 this.hardness=5;
                 this.cost=2;
                 this.color=Color.valueOf("bddedd");
-                addResearch(Items.thorium,this);
             }
         };
 
@@ -75,7 +71,6 @@ public class ModItems implements ContentList {
                 this.radioactivity = 0;
                 this.cost = 2;
                 this.color = Color.valueOf("FF4F00");
-                addResearch(exoticAlloy,this);
             }
         };
 
@@ -88,7 +83,6 @@ public class ModItems implements ContentList {
                 this.radioactivity=0.01f;
                 this.cost=4;
                 this.color = Color.valueOf("f6bfff");
-                addResearch(Items.plastanium,this);
             }
         };
     }

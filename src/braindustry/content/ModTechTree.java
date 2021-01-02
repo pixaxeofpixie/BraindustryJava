@@ -2,9 +2,7 @@ package braindustry.content;
 
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
-import mindustry.content.Blocks;
-import mindustry.content.TechTree;
-import mindustry.content.UnitTypes;
+import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.Objectives;
@@ -22,7 +20,7 @@ public class ModTechTree implements ContentList {
     }
     @Override
     public void load() {
-        /*setup();
+        setup();
         node(Blocks.additiveReconstructor,()->{
             node(ModBlocks.hyperAdditiveReconstructor,()->{
                 node(Blocks.exponentialReconstructor, ()->{
@@ -30,7 +28,18 @@ public class ModTechTree implements ContentList {
                 });
             });
 
-        });*/
+        });
+        addResearch(Items.titanium,ModItems.chromium);
+        addResearch(Items.surgeAlloy,ModItems.exoticAlloy);
+        addResearch(Items.graphite,ModItems.graphenite);
+        addResearch(Items.thorium,ModItems.odinum);
+        addResearch(ModItems.exoticAlloy,ModItems.phaseAlloy);
+        addResearch(Items.plastanium,ModItems.plastic);
+        //=======
+        addResearch(Liquids.slag, ModLiquids.liquidGraphenite);
+        addResearch(Liquids.slag, ModLiquids.magma);
+        addResearch(Liquids.cryofluid, ModLiquids.thoriumRefrigerant);
+        //=======
         addResearch(UnitTypes.poly, ModUnitTypes.armor);
         addResearch(ModUnitTypes.armor, ModUnitTypes.shield);
         addResearch(ModUnitTypes.shield, ModUnitTypes.chestplate);
