@@ -105,8 +105,6 @@ public class ModBlocks implements ContentList {
     public static Block plasticWall;
 
     public void load() {
-//start----
-//way content\blocks/distribution/armored-plastanium-conveyor.hjson
         armoredPlastaniumConveyor = new ArmoredConveyor("armored-plastanium-conveyor") {
             {
                 this.localizedName = "Armored Plastanium Conveyor";
@@ -118,9 +116,7 @@ public class ModBlocks implements ContentList {
                 this.speed = 0.3f;
             }
         };
-//----end
-//start----
-//way content\blocks/distribution/chromium-conduit.hjson
+
         chromiumConduit = new Conduit("chromium-conduit") {
             {
                 this.localizedName = "Chromium Conduit";
@@ -134,9 +130,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.liquid, with(ModItems.chromium, 2, Items.metaglass, 2, Items.thorium, 1));
             }
         };
-//----end
-//start----
-//way content\blocks/distribution/phase-alloy-conveyor.hjson
+
         phaseAlloyConveyor = new ItemBridge("phase-alloy-conveyor") {
             {
                 this.localizedName = "Phase Alloy Conveyor";
@@ -156,9 +150,7 @@ public class ModBlocks implements ContentList {
                 this.consumes.power(0.4f);
             }
         };
-//----end
-//start----
-//way content\blocks/distribution/plastic-conveyor.hjson
+
         plasticConveyor = new Conveyor("plastic-conveyor") {
             {
                 this.localizedName = "Hermetic Plastic Conveyor";
@@ -168,9 +160,7 @@ public class ModBlocks implements ContentList {
                 this.speed = 0.45f;
             }
         };
-//----end
-//start----
-//way content\blocks/distribution/surge-conveyor.hjson
+
         surgeConveyor = new StackConveyor("surge-conveyor") {
             {
                 this.localizedName = "Surge Conveyor";
@@ -180,9 +170,7 @@ public class ModBlocks implements ContentList {
                 this.itemCapacity = 12;
             }
         };
-//----end
-//start----
-//way content\blocks/environment/magma-floor.hjson
+
         magmaFloor = new Floor("magma-floor") {
             {
                 this.localizedName = "Magma";
@@ -198,9 +186,7 @@ public class ModBlocks implements ContentList {
                 this.drownUpdateEffect = Fx.burning;
             }
         };
-//----end
-//start----
-//way content\blocks/environment/obsidian-block.hjson
+
         obsidianBlock = new StaticWall("obsidian-block") {
             {
                 this.localizedName = "Obsidian Block";
@@ -210,34 +196,26 @@ public class ModBlocks implements ContentList {
                 this.variants = 2;
             }
         };
-//----end
-//start----
-//way content\blocks/environment/obsidian-floor.hjson
+
         obsidianFloor = new Floor("obsidian-floor") {
             {
                 this.localizedName = "Obsidian Floor";
                 this.variants = 3;
             }
         };
-//----end
-//start----
-//way content\blocks/environment/ore-chromium.hjson
+
         oreChromium = new OreBlock("ore-chromium") {
             {
                 this.itemDrop = ModItems.chromium;
             }
         };
-//----end
-//start----
-//way content\blocks/environment/ore-odinum.hjson
+
         oreOdinum = new OreBlock("ore-odinum") {
             {
                 this.itemDrop = ModItems.odinum;
             }
         };
-//----end
-//start----
-//way content\blocks/power/differential-magma-generator.hjson
+
         differentialMagmaGenerator = new SingleTypeGenerator("differential-magma-generator") {
             {
                 this.localizedName = "Hyper Magma Generator";
@@ -256,9 +234,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.power, with(ModItems.graphenite, 140, ModItems.chromium, 190, Items.plastanium, 120, Items.titanium, 200, ModItems.odinum, 70));
             }
         };
-//----end
-//start----
-//way content\blocks/power/graphenite-solar-collector-large.hjson
+
         grapheniteSolarCollectorLarge = new SolarGenerator("graphenite-solar-collector-large") {
             {
                 this.localizedName = "Graphenite Solar Collector Large";
@@ -269,9 +245,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.power, with(Items.metaglass, 100, Items.silicon, 40, ModItems.graphenite, 70));
             }
         };
-//----end
-//start----
-//way content\blocks/power/magma-generator.hjson
+
         magmaGenerator = new BurnerGenerator("magma-generator") {
             {
                 this.localizedName = "Magma Generator";
@@ -289,9 +263,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.power, with(ModItems.graphenite, 50, Items.silicon, 80, Items.plastanium, 120, ModItems.chromium, 160));
             }
         };
-//----end
-//start----
-//way content\blocks/power/odinum-reactor.hjson
+
         odinumReactor = new ImpactReactor("odinum-reactor") {
             {
                 this.localizedName = "Odinum Reactor";
@@ -310,9 +282,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.power, with(Items.metaglass, 500, ModItems.odinum, 300, Items.silicon, 400, ModItems.graphenite, 200, Items.plastanium, 200));
             }
         };
-//----end
-//start----
-//way content\blocks/power/phase-alloy-solar-panel.hjson
+
         phaseAlloySolarPanel = new SolarGenerator("phase-alloy-solar-panel") {
             {
                 this.localizedName = "Phase Alloy Solar Panel";
@@ -325,9 +295,7 @@ public class ModBlocks implements ContentList {
                 this.buildCostMultiplier = 1.1f;
             }
         };
-//----end
-//start----
-//way content\blocks/power/phase-tower.hjson
+
         phaseTower = new PowerNode("phase-tower") {
             {
                 this.localizedName = "Phase Tower";
@@ -338,9 +306,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.power, with(ModItems.phaseAlloy, 15, Items.silicon, 20, Items.titanium, 10, Items.lead, 10));
             }
         };
-//----end
-//start----
-//way content\blocks/power/refrigerant-reactor.hjson
+
         refrigerantReactor = new NuclearReactor("refrigerant-reactor") {
             {
                 this.localizedName = "Refrigerant Reactor";
@@ -365,9 +331,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.power, with(Items.metaglass, 300, ModItems.odinum, 100, Items.silicon, 210, ModItems.graphenite, 270, Items.thorium, 200, Items.titanium, 140));
             }
         };
-//----end
-//start----
-//way content\blocks/production/chromium-forge.hjson
+
         chromiumForge = new GenericSmelter("chromium-forge") {
             {
                 this.localizedName = "Chromium Forge";
@@ -386,9 +350,7 @@ public class ModBlocks implements ContentList {
                 this.outputItem = new ItemStack(ModItems.chromium, 1);
             }
         };
-//----end
-//start----
-//way content\blocks/production/exotic-alloy-smelter.hjson
+
         exoticAlloySmelter = new GenericSmelter("exotic-alloy-smelter") {
             {
                 this.localizedName = "Exometal Smelter";
@@ -407,12 +369,7 @@ public class ModBlocks implements ContentList {
                 this.outputItem = new ItemStack(ModItems.exoticAlloy, 2);
             }
         };
-//----end
-//start----
-//way content\blocks/production/geothermic-drill.hjson
-//----end
-//start----
-//way content\blocks/production/graphenite-fluidizer.hjson
+
         grapheniteFluidizer = new GenericCrafter("graphenite-fluidizer") {
             {
                 this.localizedName = "Graphenite Fluidizer";
@@ -430,9 +387,7 @@ public class ModBlocks implements ContentList {
                 this.outputLiquid = new LiquidStack(ModLiquids.liquidGraphenite, 32f);
             }
         };
-//----end
-//start----
-//way content\blocks/production/graphenite-forge.hjson
+
         grapheniteForge = new GenericSmelter("graphenite-forge") {
             {
                 this.localizedName = "Graphenite Forge";
@@ -451,12 +406,7 @@ public class ModBlocks implements ContentList {
                 this.outputItem = new ItemStack(ModItems.graphenite, 1);
             }
         };
-//----end
-//start----
-//way content\blocks/production/graphenite-kiln.hjson
-//----end
-//start----
-//way content\blocks/production/hydraulic-drill.hjson
+
         hydraulicDrill = new Drill("hydraulic-drill") {
             {
                 this.localizedName = "Hydraulic Drill";
@@ -472,9 +422,7 @@ public class ModBlocks implements ContentList {
                 this.ambientSoundVolume = 0.01f;
             }
         };
-//----end
-//start----
-//way content\blocks/production/hyper-alloy-smelter.hjson
+
         hyperAlloySmelter = new GenericSmelter("hyper-alloy-smelter") {
             {
                 this.localizedName = "Hyper Alloy Smelter";
@@ -494,9 +442,7 @@ public class ModBlocks implements ContentList {
                 this.outputItem = new ItemStack(Items.surgeAlloy, 4);
             }
         };
-//----end
-//start----
-//way content\blocks/production/hyper-phase-weaver.hjson
+
         hyperPhaseWeaver = new GenericSmelter("hyper-phase-weaver") {
             {
                 this.localizedName = "Hyper Phase Weaver";
@@ -515,9 +461,7 @@ public class ModBlocks implements ContentList {
                 this.outputItem = new ItemStack(Items.phaseFabric, 3);
             }
         };
-//----end
-//start----
-//way content\blocks/production/magma-mixer.hjson
+
         magmaMixer = new GenericCrafter("magma-mixer") {
             {
                 this.localizedName = "Magma Mixer";
@@ -535,9 +479,7 @@ public class ModBlocks implements ContentList {
                 this.outputLiquid = new LiquidStack(ModLiquids.magma, 26f);
             }
         };
-//----end
-//start----
-//way content\blocks/production/odinum-extractor.hjson
+
         geothermicDrill = new MultiRotorDrill("geothermic-drill") {
             {
                 this.requirements(Category.production, with(
@@ -614,9 +556,7 @@ public class ModBlocks implements ContentList {
                 this.outputItem = new ItemStack(ModItems.odinum, 1);
             }
         };
-//----end
-//start----
-//way content\blocks/production/phase-alloy-smelter.hjson
+
         phaseAlloySmelter = new GenericSmelter("phase-alloy-smelter") {
             {
                 this.localizedName = "Phase Alloy Smelter";
@@ -635,9 +575,7 @@ public class ModBlocks implements ContentList {
                 this.outputItem = new ItemStack(ModItems.phaseAlloy, 2);
             }
         };
-//----end
-//start----
-//way content\blocks/production/plastic-forge.hjson
+
         plasticForge = new GenericSmelter("plastic-forge") {
             {
                 this.localizedName = "Plastic Forge";
@@ -657,9 +595,7 @@ public class ModBlocks implements ContentList {
                 this.outputItem = new ItemStack(ModItems.plastic, 2);
             }
         };
-//----end
-//start----
-//way content\blocks/production/quarry-drill.hjson
+
         quarryDrill = new Drill("quarry-drill") {
             {
                 this.localizedName = "Quarry Drill";
@@ -677,9 +613,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.production, with(ModItems.plastic, 150, ModItems.graphenite, 120, ModItems.odinum, 140, Items.plastanium, 100));
             }
         };
-//----end
-//start----
-//way content\blocks/production/refrigerantmixer.hjson
+
         refrigerantmixer = new GenericSmelter("refrigerantmixer") {
             {
                 this.localizedName = "Thorium Refrigerant Mixer";
@@ -695,9 +629,7 @@ public class ModBlocks implements ContentList {
                 this.updateEffectChance = 0.02f;
             }
         };
-//----end
-//start----
-//way content\blocks/production/unit fabrics/hyper-additive-reconstructor.hjson
+
         hyperAdditiveReconstructor = new Reconstructor("hyper-additive-reconstructor") {
             {
                 this.localizedName = "Hyper Additive Reconstructor";
@@ -713,9 +645,7 @@ public class ModBlocks implements ContentList {
                 );
             }
         };
-//----end
-//start----
-//way content\blocks/production/unit fabrics/hyper-air-factory.hjson
+
         hyperAirFactory = new UnitFactory("hyper-air-factory") {
             {
                 this.localizedName = "Hyper Air Factory";
@@ -727,9 +657,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.units, with(Items.copper, 50, Items.lead, 150, Items.silicon, 70, Items.plastanium, 30, ModItems.odinum, 60));
             }
         };
-//----end
-//start----
-//way content\blocks/production/unit fabrics/hyper-exponential-reconstructor.hjson
+
         hyperExponentialReconstructor = new Reconstructor("hyper-exponential-reconstructor") {
             {
                 this.localizedName = "Hyper Exponential Reconstructor";
@@ -746,9 +674,7 @@ public class ModBlocks implements ContentList {
                 );
             }
         };
-//----end
-//start----
-//way content\blocks/production/unit fabrics/hyper-ground-factory.hjson
+
         hyperGroundFactory = new UnitFactory("hyper-ground-factory") {
             {
                 this.localizedName = "Hyper Ground Factory";
@@ -760,9 +686,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.units, with(Items.copper, 50, Items.lead, 140, Items.silicon, 70, Items.plastanium, 60));
             }
         };
-//----end
-//start----
-//way content\blocks/production/unit fabrics/hyper-multiplicative-reconstructor.hjson
+
         hyperMultiplicativeReconstructor = new Reconstructor("hyper-multiplicative-reconstructor") {
             {
                 this.localizedName = "Hyper Multiplicative Reconstructor";
@@ -778,9 +702,7 @@ public class ModBlocks implements ContentList {
                 );
             }
         };
-//----end
-//start----
-//way content\blocks/production/unit fabrics/hyper-naval-factory.hjson
+
         hyperNavalFactory = new UnitFactory("hyper-naval-factory") {
             {
                 this.localizedName = "Hyper Naval Factory";
@@ -792,9 +714,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.units, with(Items.lead, 150, Items.silicon, 80, Items.plastanium, 25, Items.metaglass, 85, ModItems.odinum, 55));
             }
         };
-//----end
-//start----
-//way content\blocks/production/unit fabrics/hyper-tetrative-reconstructor.hjson
+
         hyperTetrativeReconstructor = new Reconstructor("hyper-tetrative-reconstructor") {
             {
                 this.localizedName = "Hyper Tetrative Reconstructor";
@@ -810,9 +730,7 @@ public class ModBlocks implements ContentList {
                 );
             }
         };
-//----end
-//start----
-//way content\blocks/turrets/axon.hjson
+
         Heartbeat=new ItemTurret("heartbeat"){
             {
 
@@ -882,6 +800,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.turret, with(ModItems.odinum,400, Items.plastanium,350, Items.silicon,800, Items.titanium,420, Items.metaglass,280));
             }
         };
+
         axon = new ItemTurret("axon") {
             {
                 this.health = 2890;
@@ -928,9 +847,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.turret, with(ModItems.odinum, 100, ModItems.graphenite, 200, Items.silicon, 140, Items.metaglass, 70, ModItems.exoticAlloy, 140));
             }
         };
-//----end
-//start----
-//way content\blocks/turrets/blaze.hjson
+
         blaze = new ItemTurret("blaze") {
             {
                 this.localizedName = "Blaze";
@@ -986,10 +903,7 @@ public class ModBlocks implements ContentList {
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.04f).optional(true, true);
             }
         };
-//----end
 
-//start----
-//way content\blocks/turrets/electron.hjson
         brain = new ItemTurret("brain") {
             {
                 this.localizedName = "Brain";
@@ -1045,6 +959,7 @@ public class ModBlocks implements ContentList {
                 this.health = 2500;
             }
         };
+
         mind = new ItemTurret("mind") {
             {
                 this.localizedName = "Mind";
@@ -1116,6 +1031,7 @@ public class ModBlocks implements ContentList {
                 this.health = 2350;
             }
         };
+
         electron = new LaserTurret("electron") {
             {
                 this.localizedName = "Dendrite";
@@ -1176,9 +1092,7 @@ public class ModBlocks implements ContentList {
                 this.reloadTime = 4;
             }
         };
-//----end
-//start----
-//way content\blocks/turrets/fragment.hjson
+
         fragment = new PointDefenseTurret("fragment") {
             {
                 this.localizedName = "Fragment";
@@ -1195,9 +1109,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.turret, with(ModItems.phaseAlloy, 20, Items.silicon, 200, ModItems.odinum, 120));
             }
         };
-//----end
-//start----
-//way content\blocks/turrets/impulse.hjson
+
         impulse = new ItemTurret("impulse") {
             {
                 this.localizedName = "Impulse";
@@ -1245,9 +1157,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.turret, with(Items.silicon, 30, ModItems.graphenite, 20, Items.lead, 60, Items.copper, 70));
             }
         };
-//----end
-//start----
-//way content\blocks/turrets/katana.hjson
+
         katana = new ItemTurret("katana") {
             {
                 this.localizedName = "Katana";
@@ -1272,10 +1182,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.turret, with(ModItems.exoticAlloy, 400, ModItems.graphenite, 400, Items.plastanium, 250, Items.silicon, 700, Items.surgeAlloy, 250, ModItems.phaseAlloy, 200));
             }
         };
-//----end
 
-//start----
-//way content\blocks/turrets/neuron.hjson
         neuron = new ItemTurret("neuron") {
             {
                 this.localizedName = "Neuron";
@@ -1326,9 +1233,7 @@ public class ModBlocks implements ContentList {
                 this.health = 800;
             }
         };
-//----end
-//start----
-//way content\blocks/turrets/perlin.hjson
+
         perlin = new TractorBeamTurret("perlin") {
             {
                 this.localizedName = "Perlin";
@@ -1346,9 +1251,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.turret, with(ModItems.graphenite, 100, Items.thorium, 100, Items.silicon, 180));
             }
         };
-//----end
-//start----
-//way content\blocks/turrets/soul.hjson
+
         soul = new ItemTurret("soul") {
             {
                 this.localizedName = "Soul";
@@ -1379,9 +1282,7 @@ public class ModBlocks implements ContentList {
                 this.health = 1300;
             }
         };
-//----end
-//start----
-//way content\blocks/turrets/stinger.hjson
+
         stinger = new ItemTurret("stinger") {
             {
                 this.localizedName = "Stinger";
@@ -1406,9 +1307,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.turret, with(ModItems.graphenite, 500, Items.plastanium, 250, Items.silicon, 500, ModItems.odinum, 460, Items.phaseFabric, 360));
             }
         };
-//----end
-//start----
-//way content\blocks/turrets/synaps.hjson
+
         synaps = new ItemTurret("synaps") {
             {
                 this.localizedName = "Synaps";
@@ -1451,8 +1350,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.turret, with(ModItems.graphenite, 120, Items.silicon, 140, Items.lead, 190, Items.titanium, 120));
             }
         };
-//----end
-//start----
+
         glory = new LaserTurret("glory"){{
                 this.localizedName = "Synaps";
                 this.requirements(Category.turret, with(Items.plastanium, 340, Items.lead, 350, Items.phaseFabric, 260, Items.surgeAlloy, 360, Items.silicon, 390));
@@ -1483,9 +1381,7 @@ public class ModBlocks implements ContentList {
                 this.health = 240 * size * size;
                 this.consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
             }};
-//----end
-//start----
-//way content\blocks/walls/exotic-alloy-wall-large.hjson
+
         exoticAlloyWallLarge = new Wall("exotic-alloy-wall-large") {
             {
                 this.localizedName = "Exotic Alloy Wall Large";
@@ -1496,9 +1392,7 @@ public class ModBlocks implements ContentList {
                 this.lightningChance = 0.09f;
             }
         };
-//----end
-//start----
-//way content\blocks/walls/exotic-alloy-wall.hjson
+
         exoticAlloyWall = new Wall("exotic-alloy-wall") {
             {
                 this.localizedName = "Exotic Alloy Wall";
@@ -1509,9 +1403,7 @@ public class ModBlocks implements ContentList {
                 this.lightningChance = 0.08f;
             }
         };
-//----end
-//start----
-//way content\blocks/walls/graphenite-wall-large.hjson
+
         grapheniteWallLarge = new Wall("graphenite-wall-large") {
             {
                 this.localizedName = "Large Graphenite Wall";
@@ -1521,7 +1413,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.defense, with(ModItems.graphenite, 20, Items.silicon, 6));
             }
         };
-//----end
+
         grapheniteWall = new Wall("graphenite-wall") {
             {
                 this.localizedName = "Graphenite Wall";
@@ -1532,8 +1424,7 @@ public class ModBlocks implements ContentList {
 
             }
         };
-//start----
-//way content\blocks/walls/odinum-wall-large.hjson
+
         odinumWallLarge = new Wall("odinum-wall-large") {
             {
                 this.localizedName = "Odinum Wall Large";
@@ -1545,7 +1436,7 @@ public class ModBlocks implements ContentList {
                 this.flashHit = true;
             }
         };
-//----end
+
         odinumWall=new Wall("odinum-wall"){
             {
                 this.localizedName = "Odinum Wall";
@@ -1557,8 +1448,7 @@ public class ModBlocks implements ContentList {
                 this.flashHit = true;
             }
         };
-//start----
-//way content\blocks/walls/plastic-wall-large.hjson
+
         plasticWallLarge = new Wall("plastic-wall-large") {
             {
                 this.localizedName = "Plastic Wall Large";
@@ -1570,9 +1460,7 @@ public class ModBlocks implements ContentList {
                 this.absorbLasers = true;
             }
         };
-//----end
-//start----
-//way content\blocks/walls/plastic-wall.hjson
+
         plasticWall = new Wall("plastic-wall") {
             {
                 this.localizedName = "Plastic Wall";
@@ -1584,10 +1472,6 @@ public class ModBlocks implements ContentList {
                 this.absorbLasers = true;
             }
         };
-//----end
-
-//----end
-
 
         smartRouter = new SmartRouter("smart-router") {
             {
