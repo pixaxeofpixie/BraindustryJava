@@ -1,7 +1,7 @@
-package Main.ModContent.content;
+package braindustry.ModContent.content;
 
-import Main.ModContent.entities.DebugEffect;
-import Main.ModContent.graphics.ModPal;
+import braindustry.ModContent.entities.DebugEffect;
+import braindustry.ModContent.graphics.ModPal;
 import arc.Core;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
@@ -12,7 +12,7 @@ import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.graphics.*;
 
-import static Main.modVars.modFunc.*;
+import static braindustry.modVars.modFunc.*;
 
 public class ModFx {
     private static final float Distance = Core.camera.width + Core.camera.height + 30 * Vars.tilesize;
