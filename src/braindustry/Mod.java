@@ -1,13 +1,14 @@
-package braindustry;
+package Main;
 
-import braindustry.ModContent.content.*;
-import braindustry.modVars.Classes.UI.ModCheatMenu;
-import braindustry.modVars.modVars;
+import Main.ModContent.content.*;
+import Main.modVars.Classes.UI.ModCheatMenu;
+import Main.modVars.modVars;
 import arc.*;
 import arc.graphics.Color;
 import arc.graphics.g2d.TextureRegion;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.Cell;
+import arc.scene.ui.layout.Stack;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.*;
@@ -24,17 +25,13 @@ import mindustry.ui.dialogs.*;
 import mindustry.world.Tile;
 import mindustry.world.meta.BuildVisibility;
 
-import static braindustry.modVars.modFunc.*;
-import static braindustry.modVars.modVars.*;
+import static Main.modVars.modFunc.*;
+import static Main.modVars.modVars.*;
 
 public class Mod extends mindustry.mod.Mod {
-    private BaseDialog dialog;
-    private Table cont;
-
     public void init() {
         modInfo = Vars.mods.getMod(this.getClass());
     }
-
     public static TextureRegion getIcon() {
         if (modInfo.iconTexture == null) return Core.atlas.find("nomap");
         return new TextureRegion(modInfo.iconTexture);
@@ -42,7 +39,6 @@ public class Mod extends mindustry.mod.Mod {
     private void showUnitChangeDialog(){
         BaseDialog dialog = new BaseDialog("Choose unit:");
         Table table=new Table();
-//        table.marginRight(24.0F).marginLeft(24.0F);
         final int buttonSize=100;
         ScrollPane pane = new ScrollPane(table);
         pane.setScrollingDisabled(true, false);
@@ -64,7 +60,6 @@ public class Mod extends mindustry.mod.Mod {
 
             if (unitType != UnitTypes.block) {
                 button.clicked(() -> {
-//                                print(Strings.format("-------height: @, width: @,unit: @", button.getHeight(), button.getWidth(), unitType.localizedName));
                     Tile tile=Vars.player.tileOn();
                     if (unitType.constructor.get() instanceof UnitWaterMove && !unitType.flying && EntityCollisions.waterSolid(Vars.player.tileX(), Vars.player.tileY())){
                         Color color=Color.valueOf(Strings.format("#@",Color.scarlet.toString()));
@@ -84,7 +79,7 @@ public class Mod extends mindustry.mod.Mod {
             }
             table.add(button).width(buttonSize).height(buttonSize).pad(6);
         }
-        dialog.cont.add(pane).growY().growX().bottom().center();//.width(360).bottom().center();
+        dialog.cont.add(pane).growY().growX().bottom().center();
 
         dialog.addCloseButton();
         dialog.show();
@@ -96,11 +91,6 @@ public class Mod extends mindustry.mod.Mod {
                 final int buttonSize = 20;
                 for (Team team : Team.all) {
                     if (Seq.with(Team.all).indexOf(team) % 20 == 0) t.row();
-//                    Table cont = new Table();
-//                    Cell<ImageButton> button = t.button(Tex.whiteui, Styles.clearToggleTransi,()->{
-//
-//                    });
-
                     ImageButton button = new ImageButton(Tex.whitePane, Styles.clearToggleTransi);
                     button.clearChildren();
                     Image image = new Image();
@@ -121,7 +111,6 @@ public class Mod extends mindustry.mod.Mod {
         dialog.addCloseButton();
         dialog.show();
     }
-    private boolean pauseButtons=false;
     private void constructor() {
         modInfo = Vars.mods.getMod(this.getClass());
         new ModCheatMenu((t)->{
@@ -134,10 +123,9 @@ public class Mod extends mindustry.mod.Mod {
             t.visibility=()-> settings.cheating();
         });
         Time.runTask(10f, () -> {
-            BaseDialog dialog = new BaseDialog("Tree");
-            dialog.cont.add("behold").row();
-            //mod sprites are prefixed with the mod name (this mod is called 'example-java-mod' in its config)
-            dialog.cont.image(Core.atlas.find(getFullName("treeIcon"))).pad(20f).row();
+            BaseDialog dialog = new BaseDialog("Welcome");
+            dialog.cont.add("Hello it's braindustry java mod").row();
+            dialog.cont.image(Core.atlas.find(getFullName("welcome"))).pad(20f).row();
             dialog.cont.button("Ok", dialog::hide).size(100f, 50f);
             dialog.show();
         });
@@ -166,8 +154,6 @@ public class Mod extends mindustry.mod.Mod {
         new ModLiquids().load();
         new ModUnitTypes().load();
         new ModBlocks().load();
-        new ModPlanets();
-        new ModSectorPresets();
 //        new ModTechTree().load();
         Vars.content.each((c)->{
             if (c instanceof UnlockableContent) reTrans((UnlockableContent)c);
