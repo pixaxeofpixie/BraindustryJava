@@ -1,10 +1,11 @@
-package Main.ModContent.content;
+package braindustry.ModContent.content;
 
-import Main.ModContent.content.Blocks.ModBlocksUnits;
-import Main.ModContent.content.Blocks.ModDefense;
-import Main.ModContent.content.Blocks.ModOtherBlocks;
-import Main.ModContent.content.Blocks.ModProduction;
-import Main.ModContent.world.blocks.distribution.SmartRouter;
+import braindustry.ModContent.content.Blocks.ModBlocksUnits;
+import braindustry.ModContent.content.Blocks.ModDefense;
+import braindustry.ModContent.content.Blocks.ModOtherBlocks;
+import braindustry.ModContent.content.Blocks.ModProduction;
+import braindustry.ModContent.world.blocks.distribution.SmartRouter;
+import braindustry.ModContent.world.blocks.sandbox.BlockSwitcher;
 import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.type.Category;
@@ -12,7 +13,7 @@ import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.meta.BuildVisibility;
 
-import static Main.modVars.modFunc.addResearch;
+import static braindustry.modVars.modFunc.addResearch;
 
 public class ModBlocks implements ContentList {
     public static Block smartRouter;
@@ -90,5 +91,14 @@ public class ModBlocks implements ContentList {
                 this.buildCostMultiplier = 4.0F;
             }
         };
+        turretSwitcher=new BlockSwitcher("turret-switcher"){
+            {
+                this.size = 2;
+                this.laserRange = 6.0F;
+                this.requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
+                this.buildCostMultiplier = 4.0F;
+            }
+        };
+
     }
 }
