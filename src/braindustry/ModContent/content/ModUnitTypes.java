@@ -16,20 +16,10 @@ import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 
 public class ModUnitTypes implements ContentList {
-    public static UnitType aquila;
-    public static UnitType aries;
-    public static UnitType armor;
-    public static UnitType broadsword;
-    public static UnitType capra;
-    public static UnitType cenda;
-    public static UnitType chainmail;
-    public static UnitType chestplate;
-    public static UnitType ibis;
-    public static UnitType lacerta;
-    public static UnitType lyra;
-    public static UnitType shield;
-    public static UnitType tropsy;
-    public static UnitType venti;
+    public static UnitType
+            aquila, aries, armor, broadsword, capra,
+            cenda, chainmail, chestplate, ibis, lacerta,
+            lyra, shield, tropsy, venti;
 
     private static class Types {
         static Prov<? extends Unit> payload = EntityMapping.map("PayloadUnit");
@@ -100,6 +90,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
+
         aries = new UnitType("aries") {
             {
                 this.constructor = Types.legs;
@@ -160,6 +151,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
+
         capra = new UnitType("capra") {
             {
                 this.constructor = Types.legs;
@@ -212,6 +204,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
+
         lacerta = new UnitType("lacerta") {
             {
                 this.constructor = Types.legs;
@@ -306,6 +299,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
+
         aquila = new UnitType("aquila") {
             {
                 this.constructor = Types.legs;
@@ -428,8 +422,8 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        //----
-        armor = new UnitType("armor"){
+
+        armor = new UnitType("armor") {
             {
                 this.constructor = Types.payload;
                 this.localizedName = "Armor";
@@ -442,7 +436,7 @@ public class ModUnitTypes implements ContentList {
                 this.rotateSpeed = 10;
                 this.targetAir = true;
                 this.weapons.add(
-                        new Weapon("armor-weapon"){
+                        new Weapon("armor-weapon") {
                             {
                                 this.x = 0;
                                 this.y = -3f;
@@ -453,7 +447,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet=new SapBulletType(){
+                                this.bullet=new SapBulletType() {
                                     {
                                         this.sapStrength = 0.5f;
                                         this.length = 75;
@@ -472,7 +466,8 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        shield = new UnitType("shield"){
+
+        shield = new UnitType("shield") {
             {
                 this.constructor = Types.payload;
                 this.localizedName = "Shield";
@@ -484,7 +479,7 @@ public class ModUnitTypes implements ContentList {
                 this.engineOffset = 6;
                 this.rotateSpeed = 3;
                 this.weapons.add(
-                        new Weapon("armor-weapon"){
+                        new Weapon("armor-weapon") {
                             {
                                 this.x = 5;
                                 this.y = -4f;
@@ -497,7 +492,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
                                 this.mirror = true;
-                                this.bullet=new SapBulletType(){
+                                this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.8f;
                                         this.length = 90;
@@ -516,11 +511,12 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        chestplate =new UnitType("chestplate"){
+
+        chestplate =new UnitType("chestplate") {
             {
                 this.localizedName = "Chestplate";
                 this.description = "A big T3 defense unit with sap laser guns.";
-                this.constructor=Types.payload;
+                this.constructor = Types.payload;
                 this.speed = 0.6f;
                 this.flying = true;
                 this.hitSize = 12;
@@ -534,7 +530,7 @@ public class ModUnitTypes implements ContentList {
                 this.payloadCapacity = 240;
                 this.buildSpeed = 1.6f;
                 this.weapons.add(
-                        new Weapon("shield-weapon"){
+                        new Weapon("shield-weapon") {
                             {
                                 this.reload = 40;
                                 this.mirror = true;
@@ -545,7 +541,7 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet=Bullets.missileExplosive;
                             }
                         },
-                        new Weapon("chainmail-weapon"){
+                        new Weapon("chainmail-weapon" ){
                             {
                                 this.x = 0;
                                 this.y = -8f;
@@ -556,7 +552,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet=new SapBulletType(){
+                                this.bullet=new SapBulletType() {
                                     {
                                         this.sapStrength = 0.9f;
                                         this.length = 50;
@@ -575,7 +571,8 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        chainmail =new UnitType("chainmail"){
+
+        chainmail =new UnitType("chainmail") {
             {
                 this.localizedName = "Chainmail";
                 this.constructor=Types.payload;
@@ -591,7 +588,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 1.3f;
                 this.commandLimit = 6;
                 this.weapons.add(
-                        new Weapon("bomb-weapon"){
+                        new Weapon("bomb-weapon") {
                             {
                                 this.x = 0;
                                 this.y = -12f;
@@ -599,12 +596,12 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 75;
                                 this.minShootVelocity = 0.02f;
                                 this.shootSound = Sounds.plasmadrop;
-                                this.bullet=new BasicBulletType(){
+                                this.bullet=new BasicBulletType() {
                                     {
                                         this.width = 60;
                                         this.height = 60;
                                         this.maxRange = 30;
-//                                        this.shootCone = 190;
+                                        //this.shootCone = 190;
                                         this.despawnShake = 3;
                                         this.collidesAir = false;
                                         this.lifetime = 30;
@@ -624,7 +621,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("broadsword-weapon"){
+                        new Weapon("broadsword-weapon") {
                             {
                                 this.top = false;
                                 this.y = -3f;
@@ -643,7 +640,8 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        broadsword = new UnitType("broadsword"){
+
+        broadsword = new UnitType("broadsword") {
             {
                 this.constructor = Types.payload;
                 this.localizedName = "Helmet";
@@ -665,7 +663,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 5;
                 this.range = 160;
                 this.weapons.add(
-                        new Weapon("bomb-weapon"){
+                        new Weapon("bomb-weapon") {
                             {
                                 this.x = 12;
                                 this.y = -30f;
@@ -679,9 +677,9 @@ public class ModUnitTypes implements ContentList {
                                         this.width = 45;
                                         this.height = 45;
                                         this.maxRange = 40;
-//                                        this.ignoreRotation = true;
+                                        //this.ignoreRotation = true;
                                         this.hitSound = Sounds.plasmaboom;
-//                                        this.shootCone = 160;
+                                        //this.shootCone = 160;
                                         this.despawnShake = 2.1f;
                                         this.collidesAir = false;
                                         this.lifetime = 20;
@@ -700,7 +698,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("broadsword-weapon"){
+                        new Weapon("broadsword-weapon") {
                             {
                                 this.top = false;
                                 this.y = -4f;
@@ -719,8 +717,8 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        //----
-        venti = new UnitType("venti"){
+
+        venti = new UnitType("venti") {
             {
                 this.localizedName = "Vixy";
                 this.description = "First naval unit, has powerful shrapnel gun but needs support.";
@@ -738,7 +736,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = -5f;
                 this.trailScl = 2.1f;
                 this.weapons.add(
-                        new Weapon("lyra-weapon"){
+                        new Weapon("lyra-weapon") {
                             {
                                 this.x = 0;
                                 this.y = 0;
@@ -748,7 +746,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 0;
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
-                                this.bullet=new ShrapnelBulletType(){
+                                this.bullet=new ShrapnelBulletType() {
                                     {
                                         this.length = 60;
                                         this.damage = 50;
@@ -770,11 +768,12 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        lyra =new UnitType("lyra"){
+
+        lyra =new UnitType("lyra") {
             {
                 this.localizedName = "Lyra";
                 this.description = "A T2 sea unit with shrapnel lasers and rocketguns, good at attacking opponent's base, but needs support.";
-                this.constructor=Types.naval;
+                this.constructor = Types.naval;
                 this.health = 850;
                 this.speed = 0.8f;
                 this.drag = 0.18f;
@@ -788,7 +787,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = -9f;
                 this.trailScl = 1.6f;
                 this.weapons.add(
-                        new Weapon("venti-weapon"){
+                        new Weapon("venti-weapon") {
                             {
                                 this.x = 0;
                                 this.y = 0;
@@ -798,7 +797,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 0;
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
-                                this.bullet=new ShrapnelBulletType(){
+                                this.bullet=new ShrapnelBulletType() {
                                     {
                                         this.length = 60;
                                         this.damage = 100;
@@ -817,7 +816,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("lyra-weapon"){
+                        new Weapon("lyra-weapon") {
                             {
                                 this.x = 5;
                                 this.y = -1f;
@@ -828,7 +827,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shots = 1;
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
-                                this.bullet=new MissileBulletType(){
+                                this.bullet = new MissileBulletType(){
                                     {
                                         this.width = 10;
                                         this.height = 20;
@@ -838,8 +837,8 @@ public class ModUnitTypes implements ContentList {
                                         this.splashDamage = 45;
                                         this.lifetime = 45;
                                         this.hitEffect = Fx.blastExplosion;
-//                                        this.fromColor = Color.valueOf("dbf3ff");
-//                                        this.toColor = Color.valueOf("00ffff");
+                                        //this.fromColor = Color.valueOf("dbf3ff");
+                                        //this.toColor = Color.valueOf("00ffff");
                                         this.shootEffect = Fx.plasticExplosion;
                                         this.smokeEffect = Fx.melting;
                                     }
@@ -849,7 +848,8 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        tropsy = new UnitType("tropsy"){
+
+        tropsy = new UnitType("tropsy") {
             {
                 this.localizedName = "Tropsy";
                 this.description = "An enlarged and improved unit created on the basis of Lyra unit.";
@@ -867,7 +867,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = 11;
                 this.trailScl = 1.8f;
                 this.weapons.add(
-                        new Weapon("cenda-weapon"){
+                        new Weapon("cenda-weapon") {
                             {
                                 this.reload = 60;
                                 this.x = 0;
@@ -904,7 +904,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("lyra-weapon"){
+                        new Weapon("lyra-weapon") {
                             {
                                 this.x = 6;
                                 this.y = 4;
@@ -915,7 +915,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet=new ShrapnelBulletType(){
+                                this.bullet=new ShrapnelBulletType() {
                                     {
                                         this.length = 60;
                                         this.damage = 62;
@@ -937,7 +937,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        cenda = new UnitType("cenda"){
+        cenda = new UnitType("cenda") {
             {
                 this.localizedName = "Cenda";
                 this.description = "A large and heavy attacking naval unit built on the proven \"Tropsy\" design, but with improvements in everything.";
@@ -955,7 +955,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = 18;
                 this.trailScl = 2.8f;
                 this.weapons.add(
-                        new Weapon("cenda-weapon"){
+                        new Weapon("cenda-weapon") {
                             {
                                 this.reload = 35;
                                 this.x = 14;
@@ -968,7 +968,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 1;
                                 this.velocityRnd = 0.1f;
                                 this.shootSound = Sounds.missile;
-                                this.bullet=new MissileBulletType(){
+                                this.bullet=new MissileBulletType() {
                                     {
                                         this.width = 15;
                                         this.height = 21;
@@ -995,7 +995,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("cenda-weapon2"){
+                        new Weapon("cenda-weapon2") {
                             {
                                 this.x = 9;
                                 this.y = 7;
@@ -1006,7 +1006,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet=new ShrapnelBulletType(){
+                                this.bullet=new ShrapnelBulletType() {
                                     {
                                         this.length = 130;
                                         this.damage = 92;
@@ -1028,7 +1028,5 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        //----
-
     }
 }
