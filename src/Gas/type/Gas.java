@@ -12,9 +12,7 @@ public class Gas  extends UnlockableContent {
     public float flammability;
     public float radioactivity;
     public Color barColor;
-    public Color lightColor;
     public float temperature;
-    public float viscosity;
     public StatusEffect effect;
     public Gas(String name) {
         super(name);

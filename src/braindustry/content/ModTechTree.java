@@ -14,7 +14,7 @@ import mindustry.type.ItemStack;
 import static braindustry.modVars.modFunc.*;
 //import static mindustry.game.Objectives.*;
 
-public class ModTechTree  {
+public class ModTechTree  extends TechTreeManager{
     public ModTechTree(){
         TechTree.class.getClass();
     }
@@ -27,17 +27,17 @@ public class ModTechTree  {
 
         * */
 
-        techTree.node(Liquids.slag,()->{
-            techTree.nodeProduce(ModLiquids.magma);
-            techTree.nodeProduce(ModLiquids.thoriumRefrigerant);
+        node(Liquids.slag,()->{
+            nodeProduce(ModLiquids.magma);
+            nodeProduce(ModLiquids.thoriumRefrigerant);
         });
 //        Liquids.cryofluid
-        techTree.parentNode(Blocks.groundFactory,ModBlocks.hyperGroundFactory,()->{
-            techTree.node(ModUnitTypes.ibis,()->{
-                techTree.node(ModUnitTypes.aries,()->{
-                    techTree.node(ModUnitTypes.capra,()->{
-                        techTree.node(ModUnitTypes.lacerta,()->{
-                            techTree.node(ModUnitTypes.aquila,()->{
+        parentNode(Blocks.groundFactory,ModBlocks.hyperGroundFactory,()->{
+            node(ModUnitTypes.ibis,()->{
+                node(ModUnitTypes.aries,()->{
+                    node(ModUnitTypes.capra,()->{
+                        node(ModUnitTypes.lacerta,()->{
+                            node(ModUnitTypes.aquila,()->{
 
                             });
                         });
@@ -50,83 +50,87 @@ public class ModTechTree  {
          *  --chromium будет находится после smartRouter и откроеться после изучения hyperProcessor, производства silicon и нужных ресурсов(если есть)
          *  ---у exoticAlloy и graphenite общий родитель chromium будут открыты после нужных ресурсов(если есть)
         **/
-        if (true)return;
-        addResearch(Items.titanium,ModItems.chromium);
-        addResearch(Items.surgeAlloy,ModItems.exoticAlloy);
-        addResearch(Items.graphite,ModItems.graphenite);
-        addResearch(Items.thorium,ModItems.odinum);
-        addResearch(ModItems.exoticAlloy,ModItems.phaseAlloy);
-        addResearch(Items.plastanium,ModItems.plastic);
+        parentNode(Items.titanium,ModItems.chromium);
+        parentNode(Items.surgeAlloy,ModItems.exoticAlloy);
+        parentNode(Items.graphite,ModItems.graphenite);
+        parentNode(Items.thorium,ModItems.odinum);
+        parentNode(ModItems.exoticAlloy,ModItems.phaseAlloy);
+        parentNode(Items.plastanium,ModItems.plastic);
         //=======
         //========
-        addResearch(Liquids.slag, ModLiquids.liquidGraphenite);
-        addResearch(Liquids.slag, ModLiquids.magma);
-        addResearch(Liquids.cryofluid, ModLiquids.thoriumRefrigerant);
+        parentNode(Liquids.cryofluid, ModLiquids.thoriumRefrigerant);
         //=======
-        addResearch(UnitTypes.poly, ModUnitTypes.armor);
-        addResearch(ModUnitTypes.armor, ModUnitTypes.shield);
-        addResearch(ModUnitTypes.shield, ModUnitTypes.chestplate);
-        addResearch(ModUnitTypes.chestplate, ModUnitTypes.chainmail);
-        addResearch(ModUnitTypes.chainmail, ModUnitTypes.broadsword);
+        parentNode(UnitTypes.poly, ModUnitTypes.armor);
+        parentNode(ModUnitTypes.armor, ModUnitTypes.shield);
+        parentNode(ModUnitTypes.shield, ModUnitTypes.chestplate);
+        parentNode(ModUnitTypes.chestplate, ModUnitTypes.chainmail);
+        parentNode(ModUnitTypes.chainmail, ModUnitTypes.broadsword);
         //
-        addResearch(UnitTypes.risso, ModUnitTypes.venti);
-        addResearch(ModUnitTypes.venti, ModUnitTypes.lyra);
-        addResearch(ModUnitTypes.lyra, ModUnitTypes.tropsy);
-        addResearch(ModUnitTypes.tropsy, ModUnitTypes.cenda);
+        parentNode(UnitTypes.risso, ModUnitTypes.venti);
+        parentNode(ModUnitTypes.venti, ModUnitTypes.lyra);
+        parentNode(ModUnitTypes.lyra, ModUnitTypes.tropsy);
+        parentNode(ModUnitTypes.tropsy, ModUnitTypes.cenda);
 
-        addResearch(Blocks.additiveReconstructor,ModBlocks.hyperAdditiveReconstructor);
-        addResearch(Blocks.airFactory, ModBlocks.hyperAirFactory);
-        addResearch(Blocks.exponentialReconstructor, ModBlocks.hyperExponentialReconstructor);
-        addResearch(Blocks.groundFactory, ModBlocks.hyperGroundFactory);
-        addResearch(Blocks.multiplicativeReconstructor, ModBlocks.hyperMultiplicativeReconstructor);
-        addResearch(Blocks.navalFactory, ModBlocks.hyperNavalFactory);
-        addResearch(Blocks.tetrativeReconstructor, ModBlocks.hyperTetrativeReconstructor);
-        addResearch(Blocks.blastDrill, ModBlocks.geothermicDrill);
-        addResearch(Blocks.surgeSmelter, ModBlocks.grapheniteForge);
-        addResearch(ModBlocks.grapheniteForge, ModBlocks.grapheniteFluidizer);
-        addResearch(ModBlocks.grapheniteForge, ModBlocks.chromiumForge);
-        addResearch(ModBlocks.grapheniteForge, ModBlocks.exoticAlloySmelter);
-        addResearch(ModBlocks.grapheniteForge, ModBlocks.grapheniteKiln);
-        addResearch(Blocks.surgeSmelter, ModBlocks.hyperAlloySmelter);
-        addResearch(Blocks.phaseWeaver, ModBlocks.hyperPhaseWeaver);
-        addResearch(ModBlocks.chromiumForge, ModBlocks.magmaMixer);
-        addResearch(ModBlocks.grapheniteForge, ModBlocks.odinumExtractor);
-        addResearch(ModBlocks.exoticAlloySmelter, ModBlocks.plasticForge);
-        addResearch(ModBlocks.plasticForge, ModBlocks.phaseAlloySmelter);
-        addResearch(Blocks.blastDrill, ModBlocks.quarryDrill);
-        addResearch(ModBlocks.grapheniteFluidizer, ModBlocks.refrigerantmixer);
-        addResearch(Blocks.surgeWall, ModBlocks.exoticAlloyWall);
-        addResearch(ModBlocks.exoticAlloyWall, ModBlocks.exoticAlloyWallLarge);
-        addResearch(Blocks.titaniumWallLarge, ModBlocks.grapheniteWall);
-        addResearch(ModBlocks.grapheniteWall, ModBlocks.grapheniteWallLarge);
-        addResearch(ModBlocks.grapheniteWallLarge, ModBlocks.odinumWall);
-        addResearch(ModBlocks.odinumWall, ModBlocks.odinumWallLarge);
-        addResearch(Blocks.plastaniumWall, ModBlocks.plasticWall);
-        addResearch(Blocks.plastaniumWall, ModBlocks.plasticWallLarge);
-        addResearch(Blocks.armoredConveyor, ModBlocks.armoredPlastaniumConveyor);
-        addResearch(Blocks.pulseConduit, ModBlocks.chromiumConduit);
-        addResearch(Blocks.phaseConveyor, ModBlocks.phaseAlloyConveyor);
-        addResearch(ModBlocks.armoredPlastaniumConveyor, ModBlocks.plasticConveyor);
-        addResearch(ModBlocks.armoredPlastaniumConveyor, ModBlocks.surgeConveyor);
-        addResearch(Blocks.largeSolarPanel, ModBlocks.grapheniteSolarCollectorLarge);
-        addResearch(Blocks.differentialGenerator, ModBlocks.magmaGenerator);
-        addResearch(ModBlocks.magmaGenerator, ModBlocks.differentialMagmaGenerator);
-        addResearch(Blocks.thoriumReactor, ModBlocks.odinumReactor);
-        addResearch(ModBlocks.grapheniteSolarCollectorLarge, ModBlocks.phaseAlloySolarPanel);
-        addResearch(Blocks.surgeTower, ModBlocks.phaseTower);
-        addResearch(Blocks.thoriumReactor, ModBlocks.refrigerantReactor);
-        addResearch(Blocks.arc, ModBlocks.impulse);
-        addResearch(ModBlocks.impulse, ModBlocks.synaps);
-        addResearch(ModBlocks.synaps, ModBlocks.axon);
-        addResearch(Blocks.fuse, ModBlocks.blaze);
-        addResearch(ModBlocks.axon, ModBlocks.electron);
-        addResearch(ModBlocks.synaps, ModBlocks.electron);
-        addResearch(Blocks.segment, ModBlocks.fragment);
-        addResearch(Blocks.lancer, ModBlocks.soul);
-        addResearch(ModBlocks.soul, ModBlocks.mind);
-        addResearch(Blocks.lancer, ModBlocks.neuron);
-        addResearch(Blocks.parallax, ModBlocks.perlin);
-        addResearch(Blocks.swarmer, ModBlocks.stinger);
-        addResearch(Blocks.router, ModBlocks.smartRouter);
+        parentNode(Blocks.additiveReconstructor,ModBlocks.hyperAdditiveReconstructor);
+        parentNode(Blocks.airFactory, ModBlocks.hyperAirFactory);
+        parentNode(Blocks.exponentialReconstructor, ModBlocks.hyperExponentialReconstructor);
+        parentNode(Blocks.groundFactory, ModBlocks.hyperGroundFactory);
+        parentNode(Blocks.multiplicativeReconstructor, ModBlocks.hyperMultiplicativeReconstructor);
+        parentNode(Blocks.navalFactory, ModBlocks.hyperNavalFactory);
+        parentNode(Blocks.tetrativeReconstructor, ModBlocks.hyperTetrativeReconstructor);
+        node(Blocks.blastDrill,()->{
+            node(ModBlocks.geothermicDrill);
+            node(ModBlocks.quarryDrill);
+        });
+        parentNode(Blocks.blastDrill, ModBlocks.geothermicDrill);
+        parentNode(Blocks.blastDrill, ModBlocks.quarryDrill);
+        node(Blocks.surgeSmelter,()->{
+            node(ModBlocks.hyperAlloySmelter);
+            node(ModBlocks.grapheniteForge,()->{
+                node( ModBlocks.grapheniteFluidizer);
+                node( ModBlocks.chromiumForge);
+                node( ModBlocks.exoticAlloySmelter);
+                node( ModBlocks.grapheniteKiln);
+                node( ModBlocks.odinumExtractor);
+            });
+        });
+        parentNode(Blocks.phaseWeaver, ModBlocks.hyperPhaseWeaver);
+        parentNode(ModBlocks.chromiumForge, ModBlocks.magmaMixer);
+        parentNode(ModBlocks.exoticAlloySmelter, ModBlocks.plasticForge);
+        parentNode(ModBlocks.plasticForge, ModBlocks.phaseAlloySmelter);
+        parentNode(ModBlocks.grapheniteFluidizer, ModBlocks.refrigerantmixer);
+        parentNode(Blocks.surgeWall, ModBlocks.exoticAlloyWall);
+        parentNode(ModBlocks.exoticAlloyWall, ModBlocks.exoticAlloyWallLarge);
+        parentNode(Blocks.titaniumWallLarge, ModBlocks.grapheniteWall);
+        parentNode(ModBlocks.grapheniteWall, ModBlocks.grapheniteWallLarge);
+        parentNode(ModBlocks.grapheniteWallLarge, ModBlocks.odinumWall);
+        parentNode(ModBlocks.odinumWall, ModBlocks.odinumWallLarge);
+        parentNode(Blocks.plastaniumWall, ModBlocks.plasticWall);
+        parentNode(Blocks.plastaniumWall, ModBlocks.plasticWallLarge);
+        parentNode(Blocks.armoredConveyor, ModBlocks.armoredPlastaniumConveyor);
+        parentNode(Blocks.pulseConduit, ModBlocks.chromiumConduit);
+        parentNode(Blocks.phaseConveyor, ModBlocks.phaseAlloyConveyor);
+        parentNode(ModBlocks.armoredPlastaniumConveyor, ModBlocks.plasticConveyor);
+        parentNode(ModBlocks.armoredPlastaniumConveyor, ModBlocks.surgeConveyor);
+        parentNode(Blocks.largeSolarPanel, ModBlocks.grapheniteSolarCollectorLarge);
+        parentNode(Blocks.differentialGenerator, ModBlocks.magmaGenerator);
+        parentNode(ModBlocks.magmaGenerator, ModBlocks.differentialMagmaGenerator);
+        parentNode(Blocks.thoriumReactor, ModBlocks.odinumReactor);
+        parentNode(ModBlocks.grapheniteSolarCollectorLarge, ModBlocks.phaseAlloySolarPanel);
+        parentNode(Blocks.surgeTower, ModBlocks.phaseTower);
+        parentNode(Blocks.thoriumReactor, ModBlocks.refrigerantReactor);
+        parentNode(Blocks.arc, ModBlocks.impulse);
+        parentNode(ModBlocks.impulse, ModBlocks.synaps);
+        parentNode(ModBlocks.synaps, ModBlocks.axon);
+        parentNode(Blocks.fuse, ModBlocks.blaze);
+        parentNode(ModBlocks.axon, ModBlocks.electron);
+        parentNode(ModBlocks.synaps, ModBlocks.electron);
+        parentNode(Blocks.segment, ModBlocks.fragment);
+        parentNode(Blocks.lancer, ModBlocks.soul);
+        parentNode(ModBlocks.soul, ModBlocks.mind);
+        parentNode(Blocks.lancer, ModBlocks.neuron);
+        parentNode(Blocks.parallax, ModBlocks.perlin);
+        parentNode(Blocks.swarmer, ModBlocks.stinger);
+        parentNode(Blocks.router, ModBlocks.smartRouter);
     }
 }
