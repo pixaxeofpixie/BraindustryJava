@@ -1,14 +1,13 @@
-package Main;
+package braindustry;
 
-import Main.ModContent.content.*;
-import Main.modVars.Classes.UI.ModCheatMenu;
-import Main.modVars.modVars;
+import braindustry.ModContent.content.*;
+import braindustry.modVars.Classes.UI.ModCheatMenu;
+import braindustry.modVars.modVars;
 import arc.*;
 import arc.graphics.Color;
 import arc.graphics.g2d.TextureRegion;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.Cell;
-import arc.scene.ui.layout.Stack;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.*;
@@ -25,8 +24,8 @@ import mindustry.ui.dialogs.*;
 import mindustry.world.Tile;
 import mindustry.world.meta.BuildVisibility;
 
-import static Main.modVars.modFunc.*;
-import static Main.modVars.modVars.*;
+import static braindustry.modVars.modFunc.*;
+import static braindustry.modVars.modVars.*;
 
 public class Mod extends mindustry.mod.Mod {
     public void init() {
