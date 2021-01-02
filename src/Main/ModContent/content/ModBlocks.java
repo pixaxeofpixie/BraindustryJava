@@ -36,10 +36,12 @@ import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.*;
 import mindustry.world.blocks.units.*;
+import mindustry.world.consumers.ConsumeLiquidFilter;
 
 import static Main.modVars.modFunc.addResearch;
 import static mindustry.content.Bullets.*;
 import static mindustry.type.Category.turret;
+import static mindustry.type.ItemStack.with;
 
 public class ModBlocks implements ContentList {
     public static Block smartRouter;
@@ -115,7 +117,7 @@ public class ModBlocks implements ContentList {
                 this.health = 240;
                 this.hasItems = true;
                 this.itemCapacity = 6;
-                this.requirements(Category.distribution, ItemStack.with(Items.silicon, 2, ModItems.graphenite, 1, Items.metaglass, 1, Items.plastanium, 2));
+                this.requirements(Category.distribution, with(Items.silicon, 2, ModItems.graphenite, 1, Items.metaglass, 1, Items.plastanium, 2));
                 this.speed = 0.3f;
             }
         };
@@ -132,7 +134,7 @@ public class ModBlocks implements ContentList {
                 this.rotate = true;
                 this.solid = false;
                 this.floating = true;
-                this.requirements(Category.liquid, ItemStack.with(ModItems.chromium, 2, Items.metaglass, 2, Items.thorium, 1));
+                this.requirements(Category.liquid, with(ModItems.chromium, 2, Items.metaglass, 2, Items.thorium, 1));
             }
         };
 //----end
@@ -153,7 +155,7 @@ public class ModBlocks implements ContentList {
                 this.hasItems = true;
                 this.itemCapacity = 16;
                 this.hasPower = true;
-                this.requirements(Category.distribution, ItemStack.with(ModItems.phaseAlloy, 5, Items.silicon, 10, ModItems.graphenite, 8, Items.titanium, 10));
+                this.requirements(Category.distribution, with(ModItems.phaseAlloy, 5, Items.silicon, 10, ModItems.graphenite, 8, Items.titanium, 10));
                 this.consumes.power(0.4f);
             }
         };
@@ -165,7 +167,7 @@ public class ModBlocks implements ContentList {
                 this.localizedName = "Hermetic Plastic Conveyor";
                 this.description = "The most fast and durable conveyor!";
                 this.health = 168;
-                this.requirements(Category.distribution, ItemStack.with(Items.silicon, 1, ModItems.graphenite, 1, ModItems.plastic, 1));
+                this.requirements(Category.distribution, with(Items.silicon, 1, ModItems.graphenite, 1, ModItems.plastic, 1));
                 this.speed = 0.45f;
             }
         };
@@ -175,7 +177,7 @@ public class ModBlocks implements ContentList {
         surgeConveyor = new StackConveyor("surge-conveyor") {
             {
                 this.localizedName = "Surge Conveyor";
-                this.requirements(Category.distribution, ItemStack.with(Items.surgeAlloy, 1, Items.silicon, 1, ModItems.graphenite, 1));
+                this.requirements(Category.distribution, with(Items.surgeAlloy, 1, Items.silicon, 1, ModItems.graphenite, 1));
                 this.health = 100;
                 this.speed = 0.12f;
                 this.itemCapacity = 12;
@@ -253,8 +255,8 @@ public class ModBlocks implements ContentList {
                 this.itemDuration = 100;
                 this.powerProduction = 20.6f;
                 this.consumes.liquid(ModLiquids.magma, 0.2f);
-                this.consumes.items(ItemStack.with(Items.pyratite, 3));
-                this.requirements(Category.power, ItemStack.with(ModItems.graphenite, 140, ModItems.chromium, 190, Items.plastanium, 120, Items.titanium, 200, ModItems.odinum, 70));
+                this.consumes.items(with(Items.pyratite, 3));
+                this.requirements(Category.power, with(ModItems.graphenite, 140, ModItems.chromium, 190, Items.plastanium, 120, Items.titanium, 200, ModItems.odinum, 70));
             }
         };
 //----end
@@ -267,7 +269,7 @@ public class ModBlocks implements ContentList {
                 this.powerProduction = 1.6f;
                 this.size = 3;
                 this.health = 210;
-                this.requirements(Category.power, ItemStack.with(Items.metaglass, 100, Items.silicon, 40, ModItems.graphenite, 70));
+                this.requirements(Category.power, with(Items.metaglass, 100, Items.silicon, 40, ModItems.graphenite, 70));
             }
         };
 //----end
@@ -286,8 +288,8 @@ public class ModBlocks implements ContentList {
                 this.itemDuration = 90;
                 this.powerProduction = 8;
                 this.consumes.liquid(ModLiquids.magma, 0.04f);
-                this.consumes.items(ItemStack.with(Items.coal, 1));
-                this.requirements(Category.power, ItemStack.with(ModItems.graphenite, 50, Items.silicon, 80, Items.plastanium, 120, ModItems.chromium, 160));
+                this.consumes.items(with(Items.coal, 1));
+                this.requirements(Category.power, with(ModItems.graphenite, 50, Items.silicon, 80, Items.plastanium, 120, ModItems.chromium, 160));
             }
         };
 //----end
@@ -307,8 +309,8 @@ public class ModBlocks implements ContentList {
                 this.powerProduction = 126;
                 this.consumes.power(9f);
                 this.consumes.liquid(ModLiquids.liquidGraphenite, 0.1f);
-                this.consumes.items(ItemStack.with(ModItems.odinum, 1));
-                this.requirements(Category.power, ItemStack.with(Items.metaglass, 500, ModItems.odinum, 300, Items.silicon, 400, ModItems.graphenite, 200, Items.plastanium, 200));
+                this.consumes.items(with(ModItems.odinum, 1));
+                this.requirements(Category.power, with(Items.metaglass, 500, ModItems.odinum, 300, Items.silicon, 400, ModItems.graphenite, 200, Items.plastanium, 200));
             }
         };
 //----end
@@ -322,7 +324,7 @@ public class ModBlocks implements ContentList {
                 this.size = 5;
                 this.hasPower = true;
                 this.powerProduction = 8.4f;
-                this.requirements(Category.power, ItemStack.with(Items.thorium, 280, Items.silicon, 400, Items.titanium, 90, ModItems.graphenite, 80, ModItems.phaseAlloy, 115));
+                this.requirements(Category.power, with(Items.thorium, 280, Items.silicon, 400, Items.titanium, 90, ModItems.graphenite, 80, ModItems.phaseAlloy, 115));
                 this.buildCostMultiplier = 1.1f;
             }
         };
@@ -336,7 +338,7 @@ public class ModBlocks implements ContentList {
                 this.size = 4;
                 this.maxNodes = 12;
                 this.laserRange = 45;
-                this.requirements(Category.power, ItemStack.with(ModItems.phaseAlloy, 15, Items.silicon, 20, Items.titanium, 10, Items.lead, 10));
+                this.requirements(Category.power, with(ModItems.phaseAlloy, 15, Items.silicon, 20, Items.titanium, 10, Items.lead, 10));
             }
         };
 //----end
@@ -362,8 +364,8 @@ public class ModBlocks implements ContentList {
                 this.coolantPower = 0.9f;
                 this.consumes.power(3f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.1f);
-                this.consumes.items(ItemStack.with(Items.thorium, 3));
-                this.requirements(Category.power, ItemStack.with(Items.metaglass, 300, ModItems.odinum, 100, Items.silicon, 210, ModItems.graphenite, 270, Items.thorium, 200, Items.titanium, 140));
+                this.consumes.items(with(Items.thorium, 3));
+                this.requirements(Category.power, with(Items.metaglass, 300, ModItems.odinum, 100, Items.silicon, 210, ModItems.graphenite, 270, Items.thorium, 200, Items.titanium, 140));
             }
         };
 //----end
@@ -382,8 +384,8 @@ public class ModBlocks implements ContentList {
                 this.craftTime = 90;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(2.5f);
-                this.consumes.items(ItemStack.with(Items.metaglass, 2, Items.titanium, 2));
-                this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 80, Items.titanium, 100, Items.metaglass, 120, Items.silicon, 200, ModItems.graphenite, 200));
+                this.consumes.items(with(Items.metaglass, 2, Items.titanium, 2));
+                this.requirements(Category.crafting, with(Items.plastanium, 80, Items.titanium, 100, Items.metaglass, 120, Items.silicon, 200, ModItems.graphenite, 200));
                 this.outputItem = new ItemStack(ModItems.chromium, 1);
             }
         };
@@ -403,8 +405,8 @@ public class ModBlocks implements ContentList {
                 this.craftTime = 90;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(1.2f);
-                this.consumes.items(ItemStack.with(Items.sporePod, 1, Items.thorium, 2, Items.titanium, 1));
-                this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 40, Items.lead, 100, Items.graphite, 80, ModItems.graphenite, 100, Items.metaglass, 80));
+                this.consumes.items(with(Items.sporePod, 1, Items.thorium, 2, Items.titanium, 1));
+                this.requirements(Category.crafting, with(Items.plastanium, 40, Items.lead, 100, Items.graphite, 80, ModItems.graphenite, 100, Items.metaglass, 80));
                 this.outputItem = new ItemStack(ModItems.exoticAlloy, 2);
             }
         };
@@ -426,8 +428,8 @@ public class ModBlocks implements ContentList {
                 this.updateEffect = Fx.steam;
                 this.consumes.power(4f);
                 this.consumes.liquid(Liquids.water, 0.1f);
-                this.consumes.items(ItemStack.with(ModItems.graphenite, 1));
-                this.requirements(Category.crafting, ItemStack.with(Items.lead, 50, Items.thorium, 80, Items.silicon, 70, Items.titanium, 50, ModItems.graphenite, 85));
+                this.consumes.items(with(ModItems.graphenite, 1));
+                this.requirements(Category.crafting, with(Items.lead, 50, Items.thorium, 80, Items.silicon, 70, Items.titanium, 50, ModItems.graphenite, 85));
                 this.outputLiquid = new LiquidStack(ModLiquids.liquidGraphenite, 32f);
             }
         };
@@ -447,8 +449,8 @@ public class ModBlocks implements ContentList {
                 this.craftTime = 70;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(1.2f);
-                this.consumes.items(ItemStack.with(Items.graphite, 1, Items.silicon, 1, Items.titanium, 1));
-                this.requirements(Category.crafting, ItemStack.with(Items.lead, 100, Items.titanium, 30, Items.thorium, 40, Items.silicon, 70, Items.graphite, 80));
+                this.consumes.items(with(Items.graphite, 1, Items.silicon, 1, Items.titanium, 1));
+                this.requirements(Category.crafting, with(Items.lead, 100, Items.titanium, 30, Items.thorium, 40, Items.silicon, 70, Items.graphite, 80));
                 this.outputItem = new ItemStack(ModItems.graphenite, 1);
             }
         };
@@ -468,7 +470,7 @@ public class ModBlocks implements ContentList {
                 this.hasLiquids = true;
                 this.rotateSpeed = 2;
                 this.drillTime = 245;
-                this.requirements(Category.production, ItemStack.with(Items.plastanium, 15, Items.silicon, 40, Items.graphite, 45, ModItems.odinum, 75));
+                this.requirements(Category.production, with(Items.plastanium, 15, Items.silicon, 40, Items.graphite, 45, ModItems.odinum, 75));
                 this.ambientSound = Sounds.drill;
                 this.ambientSoundVolume = 0.01f;
             }
@@ -490,8 +492,8 @@ public class ModBlocks implements ContentList {
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(9f);
                 this.consumes.liquid(Liquids.oil, 0.2f).optional(false, false);
-                this.consumes.items(ItemStack.with(Items.copper, 4, Items.titanium, 4, Items.lead, 5, Items.silicon, 5));
-                this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 120, Items.titanium, 150, Items.metaglass, 100, Items.silicon, 300, ModItems.graphenite, 170, Items.surgeAlloy, 100));
+                this.consumes.items(with(Items.copper, 4, Items.titanium, 4, Items.lead, 5, Items.silicon, 5));
+                this.requirements(Category.crafting, with(Items.plastanium, 120, Items.titanium, 150, Items.metaglass, 100, Items.silicon, 300, ModItems.graphenite, 170, Items.surgeAlloy, 100));
                 this.outputItem = new ItemStack(Items.surgeAlloy, 4);
             }
         };
@@ -511,8 +513,8 @@ public class ModBlocks implements ContentList {
                 this.craftTime = 90;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(1.2f);
-                this.consumes.items(ItemStack.with(Items.thorium, 3, Items.silicon, 4, Items.sand, 9));
-                this.requirements(Category.crafting, ItemStack.with(Items.metaglass, 200, Items.titanium, 90, Items.phaseFabric, 80, Items.silicon, 200, ModItems.graphenite, 180));
+                this.consumes.items(with(Items.thorium, 3, Items.silicon, 4, Items.sand, 9));
+                this.requirements(Category.crafting, with(Items.metaglass, 200, Items.titanium, 90, Items.phaseFabric, 80, Items.silicon, 200, ModItems.graphenite, 180));
                 this.outputItem = new ItemStack(Items.phaseFabric, 3);
             }
         };
@@ -531,8 +533,8 @@ public class ModBlocks implements ContentList {
                 this.updateEffect = Fx.steam;
                 this.consumes.power(6f);
                 this.consumes.liquid(Liquids.slag, 0.1f);
-                this.consumes.items(ItemStack.with(Items.copper, 4));
-                this.requirements(Category.crafting, ItemStack.with(Items.lead, 150, ModItems.chromium, 200, Items.silicon, 90, Items.metaglass, 100, ModItems.graphenite, 85));
+                this.consumes.items(with(Items.copper, 4));
+                this.requirements(Category.crafting, with(Items.lead, 150, ModItems.chromium, 200, Items.silicon, 90, Items.metaglass, 100, ModItems.graphenite, 85));
                 this.outputLiquid = new LiquidStack(ModLiquids.magma, 26f);
             }
         };
@@ -541,7 +543,7 @@ public class ModBlocks implements ContentList {
 //way content\blocks/production/odinum-extractor.hjson
         geothermicDrill = new MultiRotorDrill("geothermic-drill") {
             {
-                this.requirements(Category.production, ItemStack.with(
+                this.requirements(Category.production, with(
                         ModItems.chromium, 290, Items.titanium, 400,
                         Items.silicon, 300, ModItems.graphenite, 575,
                         ModItems.odinum, 190, Items.plastanium, 120));
@@ -577,7 +579,7 @@ public class ModBlocks implements ContentList {
                 this.craftTime = 90;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(2.2f);
-                this.consumes.items(ItemStack.with(
+                this.consumes.items(with(
                         Items.graphite, 3,
                         Items.silicon, 1,
                         Items.titanium, 1,
@@ -585,7 +587,7 @@ public class ModBlocks implements ContentList {
                 ));
                 this.consumes.liquid(Liquids.oil,
                         0.04f);
-                this.requirements(this.category, ItemStack.with(
+                this.requirements(this.category, with(
                         Items.lead, 240,
                         ModItems.graphenite, 120,
                         Items.titanium, 50,
@@ -610,8 +612,8 @@ public class ModBlocks implements ContentList {
                 this.craftTime = 100;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(3f);
-                this.consumes.items(ItemStack.with(Items.plastanium, 1, Items.thorium, 1, Items.titanium, 1));
-                this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 60, Items.titanium, 100, Items.metaglass, 50, Items.silicon, 150, Items.graphite, 80));
+                this.consumes.items(with(Items.plastanium, 1, Items.thorium, 1, Items.titanium, 1));
+                this.requirements(Category.crafting, with(Items.plastanium, 60, Items.titanium, 100, Items.metaglass, 50, Items.silicon, 150, Items.graphite, 80));
                 this.outputItem = new ItemStack(ModItems.odinum, 1);
             }
         };
@@ -631,8 +633,8 @@ public class ModBlocks implements ContentList {
                 this.craftTime = 90;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(2f);
-                this.consumes.items(ItemStack.with(Items.plastanium, 2, Items.surgeAlloy, 1, Items.phaseFabric, 1));
-                this.requirements(Category.crafting, ItemStack.with(Items.phaseFabric, 100, Items.plastanium, 100, Items.thorium, 400, ModItems.exoticAlloy, 270, ModItems.graphenite, 380));
+                this.consumes.items(with(Items.plastanium, 2, Items.surgeAlloy, 1, Items.phaseFabric, 1));
+                this.requirements(Category.crafting, with(Items.phaseFabric, 100, Items.plastanium, 100, Items.thorium, 400, ModItems.exoticAlloy, 270, ModItems.graphenite, 380));
                 this.outputItem = new ItemStack(ModItems.phaseAlloy, 2);
             }
         };
@@ -653,8 +655,8 @@ public class ModBlocks implements ContentList {
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(2f);
                 this.consumes.liquid(Liquids.oil, 0.1f);
-                this.consumes.items(ItemStack.with(Items.plastanium, 1, Items.thorium, 4));
-                this.requirements(Category.crafting, ItemStack.with(Items.phaseFabric, 100, Items.plastanium, 200, Items.thorium, 300, Items.silicon, 470, ModItems.exoticAlloy, 130, ModItems.graphenite, 380));
+                this.consumes.items(with(Items.plastanium, 1, Items.thorium, 4));
+                this.requirements(Category.crafting, with(Items.phaseFabric, 100, Items.plastanium, 200, Items.thorium, 300, Items.silicon, 470, ModItems.exoticAlloy, 130, ModItems.graphenite, 380));
                 this.outputItem = new ItemStack(ModItems.plastic, 2);
             }
         };
@@ -675,7 +677,7 @@ public class ModBlocks implements ContentList {
                 this.hasLiquids = true;
                 this.liquidCapacity = 60;
                 this.rotateSpeed = 5;
-                this.requirements(Category.production, ItemStack.with(ModItems.plastic, 150, ModItems.graphenite, 120, ModItems.odinum, 140, Items.plastanium, 100));
+                this.requirements(Category.production, with(ModItems.plastic, 150, ModItems.graphenite, 120, ModItems.odinum, 140, Items.plastanium, 100));
             }
         };
 //----end
@@ -689,9 +691,9 @@ public class ModBlocks implements ContentList {
                 this.size = 2;
                 this.consumes.power(3f);
                 this.consumes.liquid(Liquids.cryofluid, 0.1f);
-                this.consumes.items(ItemStack.with(Items.thorium, 1));
+                this.consumes.items(with(Items.thorium, 1));
                 this.outputLiquid = new LiquidStack(ModLiquids.thoriumRefrigerant, 16f);
-                this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 200, Items.thorium, 200, Items.titanium, 100, Items.metaglass, 130, ModItems.graphenite, 190));
+                this.requirements(Category.crafting, with(Items.plastanium, 200, Items.thorium, 200, Items.titanium, 100, Items.metaglass, 130, ModItems.graphenite, 190));
                 this.updateEffect = Fx.purify;
                 this.updateEffectChance = 0.02f;
             }
@@ -704,9 +706,9 @@ public class ModBlocks implements ContentList {
                 this.localizedName = "Hyper Additive Reconstructor";
                 this.size = 3;
                 this.consumes.power(3.2f);
-                this.consumes.items(ItemStack.with(Items.silicon, 35, ModItems.graphenite, 15, Items.thorium, 20, Items.titanium, 20));
+                this.consumes.items(with(Items.silicon, 35, ModItems.graphenite, 15, Items.thorium, 20, Items.titanium, 20));
                 this.constructTime = 900;
-                this.requirements(Category.units, ItemStack.with(Items.copper, 200, ModItems.odinum, 100, Items.titanium, 120, Items.silicon, 90, Items.plastanium, 80));
+                this.requirements(Category.units, with(Items.copper, 200, ModItems.odinum, 100, Items.titanium, 120, Items.silicon, 90, Items.plastanium, 80));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.ibis, ModUnitTypes.aries},
                         new UnitType[]{ModUnitTypes.armor, ModUnitTypes.shield},
@@ -723,9 +725,9 @@ public class ModBlocks implements ContentList {
                 this.size = 3;
                 this.consumes.power(2.2f);
                 this.plans = Seq.with(
-                        new UnitPlan(ModUnitTypes.armor, 600, ItemStack.with(Items.silicon, 15, ModItems.graphenite, 5, Items.lead, 5))
+                        new UnitPlan(ModUnitTypes.armor, 600, with(Items.silicon, 15, ModItems.graphenite, 5, Items.lead, 5))
                 );
-                this.requirements(Category.units, ItemStack.with(Items.copper, 50, Items.lead, 150, Items.silicon, 70, Items.plastanium, 30, ModItems.odinum, 60));
+                this.requirements(Category.units, with(Items.copper, 50, Items.lead, 150, Items.silicon, 70, Items.plastanium, 30, ModItems.odinum, 60));
             }
         };
 //----end
@@ -737,9 +739,9 @@ public class ModBlocks implements ContentList {
                 this.size = 7;
                 this.consumes.power(7f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.1f).optional(false, false);
-                this.consumes.items(ItemStack.with(Items.silicon, 100, ModItems.graphenite, 100, Items.titanium, 125, Items.plastanium, 75, ModItems.exoticAlloy, 40));
+                this.consumes.items(with(Items.silicon, 100, ModItems.graphenite, 100, Items.titanium, 125, Items.plastanium, 75, ModItems.exoticAlloy, 40));
                 this.constructTime = 2100;
-                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 1200, Items.titanium, 900, ModItems.odinum, 500, Items.plastanium, 200, Items.phaseFabric, 300, Items.silicon, 750, ModItems.exoticAlloy, 130));
+                this.requirements(Category.units, with(ModItems.graphenite, 1200, Items.titanium, 900, ModItems.odinum, 500, Items.plastanium, 200, Items.phaseFabric, 300, Items.silicon, 750, ModItems.exoticAlloy, 130));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.capra, ModUnitTypes.lacerta},
                         new UnitType[]{ModUnitTypes.chestplate, ModUnitTypes.chainmail},
@@ -756,9 +758,9 @@ public class ModBlocks implements ContentList {
                 this.size = 3;
                 this.consumes.power(2f);
                 this.plans = Seq.with(
-                        new UnitPlan(ModUnitTypes.ibis, 550, ItemStack.with(Items.silicon, 10, ModItems.graphenite, 5, ModItems.odinum, 5))
+                        new UnitPlan(ModUnitTypes.ibis, 550, with(Items.silicon, 10, ModItems.graphenite, 5, ModItems.odinum, 5))
                 );
-                this.requirements(Category.units, ItemStack.with(Items.copper, 50, Items.lead, 140, Items.silicon, 70, Items.plastanium, 60));
+                this.requirements(Category.units, with(Items.copper, 50, Items.lead, 140, Items.silicon, 70, Items.plastanium, 60));
             }
         };
 //----end
@@ -769,9 +771,9 @@ public class ModBlocks implements ContentList {
                 this.localizedName = "Hyper Multiplicative Reconstructor";
                 this.size = 5;
                 this.consumes.power(6.2f);
-                this.consumes.items(ItemStack.with(Items.silicon, 60, ModItems.graphenite, 50, Items.metaglass, 30, Items.titanium, 30, ModItems.odinum, 30));
+                this.consumes.items(with(Items.silicon, 60, ModItems.graphenite, 50, Items.metaglass, 30, Items.titanium, 30, ModItems.odinum, 30));
                 this.constructTime = 1620;
-                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 600, Items.titanium, 300, Items.silicon, 300, ModItems.odinum, 500, Items.plastanium, 150));
+                this.requirements(Category.units, with(ModItems.graphenite, 600, Items.titanium, 300, Items.silicon, 300, ModItems.odinum, 500, Items.plastanium, 150));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.aries, ModUnitTypes.capra},
                         new UnitType[]{ModUnitTypes.shield, ModUnitTypes.chestplate},
@@ -788,9 +790,9 @@ public class ModBlocks implements ContentList {
                 this.size = 3;
                 this.consumes.power(2.2f);
                 this.plans = Seq.with(
-                        new UnitPlan(ModUnitTypes.venti, 630, ItemStack.with(Items.silicon, 5, ModItems.graphenite, 10, Items.metaglass, 10))
+                        new UnitPlan(ModUnitTypes.venti, 630, with(Items.silicon, 5, ModItems.graphenite, 10, Items.metaglass, 10))
                 );
-                this.requirements(Category.units, ItemStack.with(Items.lead, 150, Items.silicon, 80, Items.plastanium, 25, Items.metaglass, 85, ModItems.odinum, 55));
+                this.requirements(Category.units, with(Items.lead, 150, Items.silicon, 80, Items.plastanium, 25, Items.metaglass, 85, ModItems.odinum, 55));
             }
         };
 //----end
@@ -802,9 +804,9 @@ public class ModBlocks implements ContentList {
                 this.size = 9;
                 this.consumes.power(9f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.3f).optional(false, false);
-                this.consumes.items(ItemStack.with(ModItems.graphenite, 300, Items.surgeAlloy, 300, ModItems.odinum, 200, Items.plastanium, 400, ModItems.exoticAlloy, 200));
+                this.consumes.items(with(ModItems.graphenite, 300, Items.surgeAlloy, 300, ModItems.odinum, 200, Items.plastanium, 400, ModItems.exoticAlloy, 200));
                 this.constructTime = 3600;
-                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, Items.surgeAlloy, 500, ModItems.odinum, 500, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
+                this.requirements(Category.units, with(ModItems.graphenite, 3100, Items.surgeAlloy, 500, ModItems.odinum, 500, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.lacerta, ModUnitTypes.aquila},
                         new UnitType[]{ModUnitTypes.chainmail, ModUnitTypes.broadsword}
@@ -880,7 +882,7 @@ public class ModBlocks implements ContentList {
                         }
                 );
                 this.consumes.liquid(Liquids.cryofluid,0.2f).optional(false,true);
-                this.requirements(Category.turret, ItemStack.with(ModItems.odinum,400, Items.plastanium,350, Items.silicon,800, Items.titanium,420, Items.metaglass,280));
+                this.requirements(Category.turret, with(ModItems.odinum,400, Items.plastanium,350, Items.silicon,800, Items.titanium,420, Items.metaglass,280));
             }
         };
         axon = new ItemTurret("axon") {
@@ -926,7 +928,7 @@ public class ModBlocks implements ContentList {
                             }
                         }
                 );
-                this.requirements(Category.turret, ItemStack.with(ModItems.odinum, 100, ModItems.graphenite, 200, Items.silicon, 140, Items.metaglass, 70, ModItems.exoticAlloy, 140));
+                this.requirements(Category.turret, with(ModItems.odinum, 100, ModItems.graphenite, 200, Items.silicon, 140, Items.metaglass, 70, ModItems.exoticAlloy, 140));
             }
         };
 //----end
@@ -947,7 +949,7 @@ public class ModBlocks implements ContentList {
                 this.shots = 4;
                 this.rotate = true;
                 this.shootSound = Sounds.laser;
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 1000, Items.silicon, 1800, ModItems.chromium, 450, ModItems.odinum, 400));
+                this.requirements(Category.turret, with(ModItems.graphenite, 1000, Items.silicon, 1800, ModItems.chromium, 450, ModItems.odinum, 400));
                 this.ammo(
                         ModItems.chromium, new ShrapnelBulletType() {
                             {
@@ -995,7 +997,7 @@ public class ModBlocks implements ContentList {
             {
                 this.localizedName = "Brain";
                 this.description = "Fires a beam of death at enemies. Requires Phase Alloy to concentrate energy. Total destruction.";
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 570, Items.silicon, 1200, Items.surgeAlloy, 100, Items.thorium, 720, ModItems.phaseAlloy, 230, ModItems.plastic, 350));
+                this.requirements(Category.turret, with(ModItems.graphenite, 570, Items.silicon, 1200, Items.surgeAlloy, 100, Items.thorium, 720, ModItems.phaseAlloy, 230, ModItems.plastic, 350));
                 this.ammo(
                         ModItems.phaseAlloy, new LaserBulletType() {
                             {
@@ -1050,7 +1052,7 @@ public class ModBlocks implements ContentList {
             {
                 this.localizedName = "Mind";
                 this.description = "An alternative to Brain. Fires a splash-damage beam. Requires lightweight Plastic to shoot.";
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 100, Items.silicon, 2000, Items.surgeAlloy, 100, ModItems.odinum, 1150, ModItems.phaseAlloy, 350, ModItems.plastic, 350));
+                this.requirements(Category.turret, with(ModItems.graphenite, 100, Items.silicon, 2000, Items.surgeAlloy, 100, ModItems.odinum, 1150, ModItems.phaseAlloy, 350, ModItems.plastic, 350));
                 this.ammo(
                         ModItems.plastic, new ShrapnelBulletType() {
                             {
@@ -1173,7 +1175,7 @@ public class ModBlocks implements ContentList {
                         this.lightningColor = Color.valueOf("f1fc58");
                     }
                 };
-                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 250, ModItems.exoticAlloy, 400, Items.surgeAlloy, 300, ModItems.chromium, 200, ModItems.odinum, 300, ModItems.graphenite, 420, Items.metaglass, 120));
+                this.requirements(Category.turret, with(ModItems.phaseAlloy, 250, ModItems.exoticAlloy, 400, Items.surgeAlloy, 300, ModItems.chromium, 200, ModItems.odinum, 300, ModItems.graphenite, 420, Items.metaglass, 120));
                 this.reloadTime = 4;
             }
         };
@@ -1193,7 +1195,7 @@ public class ModBlocks implements ContentList {
                 this.reloadTime = 10;
                 this.consumes.power(4.7f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.04f).optional(false, false);
-                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 20, Items.silicon, 200, ModItems.odinum, 120));
+                this.requirements(Category.turret, with(ModItems.phaseAlloy, 20, Items.silicon, 200, ModItems.odinum, 120));
             }
         };
 //----end
@@ -1243,7 +1245,7 @@ public class ModBlocks implements ContentList {
                             }
                         }
                 );
-                this.requirements(Category.turret, ItemStack.with(Items.silicon, 30, ModItems.graphenite, 20, Items.lead, 60, Items.copper, 70));
+                this.requirements(Category.turret, with(Items.silicon, 30, ModItems.graphenite, 20, Items.lead, 60, Items.copper, 70));
             }
         };
 //----end
@@ -1270,7 +1272,7 @@ public class ModBlocks implements ContentList {
                 ModItems.plastic, Bullets.artilleryPlastic
                 );
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.1f).optional(true, true);
-                this.requirements(Category.turret, ItemStack.with(ModItems.exoticAlloy, 400, ModItems.graphenite, 400, Items.plastanium, 250, Items.silicon, 700, Items.surgeAlloy, 250, ModItems.phaseAlloy, 200));
+                this.requirements(Category.turret, with(ModItems.exoticAlloy, 400, ModItems.graphenite, 400, Items.plastanium, 250, Items.silicon, 700, Items.surgeAlloy, 250, ModItems.phaseAlloy, 200));
             }
         };
 //----end
@@ -1281,7 +1283,7 @@ public class ModBlocks implements ContentList {
             {
                 this.localizedName = "Neuron";
                 this.description = "A small turret that fires lasers that do splash damage. Requires power aswell as Exotic Alloy to shoot.";
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 250, Items.silicon, 400, Items.surgeAlloy, 70, Items.plastanium, 120, Items.thorium, 350));
+                this.requirements(Category.turret, with(ModItems.graphenite, 250, Items.silicon, 400, Items.surgeAlloy, 70, Items.plastanium, 120, Items.thorium, 350));
                 this.ammo(
                         ModItems.exoticAlloy, new PointBulletType() {
                             {
@@ -1344,7 +1346,7 @@ public class ModBlocks implements ContentList {
                 this.hasPower = true;
                 this.consumes.power(4.2f);
                 this.consumes.liquid(Liquids.cryofluid, 0.1f).optional(false, false);
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 100, Items.thorium, 100, Items.silicon, 180));
+                this.requirements(Category.turret, with(ModItems.graphenite, 100, Items.thorium, 100, Items.silicon, 180));
             }
         };
 //----end
@@ -1354,7 +1356,7 @@ public class ModBlocks implements ContentList {
             {
                 this.localizedName = "Soul";
                 this.description = "A small, but powerful turret. Requires expensive Surge Alloy to fire. Can literally reap your soul.";
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 340, Items.silicon, 405, Items.surgeAlloy, 100, ModItems.plastic, 270, ModItems.odinum, 420));
+                this.requirements(Category.turret, with(ModItems.graphenite, 340, Items.silicon, 405, Items.surgeAlloy, 100, ModItems.plastic, 270, ModItems.odinum, 420));
                 this.ammo(
                         Items.surgeAlloy, new SapBulletType() {
                             {
@@ -1404,7 +1406,7 @@ public class ModBlocks implements ContentList {
                         ModItems.odinum, missileExplosive
                 );
                 this.consumes.liquid(Liquids.cryofluid, 0.1f).optional(false, true);
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 500, Items.plastanium, 250, Items.silicon, 500, ModItems.odinum, 460, Items.phaseFabric, 360));
+                this.requirements(Category.turret, with(ModItems.graphenite, 500, Items.plastanium, 250, Items.silicon, 500, ModItems.odinum, 460, Items.phaseFabric, 360));
             }
         };
 //----end
@@ -1437,24 +1439,24 @@ public class ModBlocks implements ContentList {
                                 this.width = 3;
                                 this.lifetime = 45;
                                 this.knockback = -1;
-                                this.lightning = 4;//êîëè÷åñòâî ìîëíèé
-                                this.lightningLength = 2;//äëèíà ìîëíèè
-                                this.lightningLengthRand = 10;//ðàíäîìíîå ÷èñëî îò 0 äî 15 áóäåò ïðèáàâëÿòüñÿ ê äëèíå ìîëíèè, òî åñòü ðàíäîìèçàöèÿ äëèíû
-                                this.lightningDamage = 50;//óðîí ìîëíèè
-                                this.lightningAngle = 6;//óãîë íàïðàâëåíèÿ ìîëíèé îòíîñèòåëüíî óãëà ïóëè
-                                this.lightningCone = 12;//ðàíäîìèçàöèÿ óãëà íàïðàâëåíèÿ ìîëíèé
+                                this.lightning = 4;
+                                this.lightningLength = 2;
+                                this.lightningLengthRand = 10;
+                                this.lightningDamage = 50;
+                                this.lightningAngle = 6;
+                                this.lightningCone = 12;
 //                                this.largeHit = true;
                                 this.lightColor = this.lightningColor = Color.valueOf("fbff9e");
                             }
                         }
                 );
 
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 120, Items.silicon, 140, Items.lead, 190, Items.titanium, 120));
+                this.requirements(Category.turret, with(ModItems.graphenite, 120, Items.silicon, 140, Items.lead, 190, Items.titanium, 120));
             }
         };
 //----end
-//start----УДАЛИШЬ ЭТУ ТУРЕЛЬ И Я ТЯ УБЮ :)
-        gloryTurret = new LaserTurret("glory"){{
+//start----
+        glory = new LaserTurret("glory"){{
                 this.localizedName = "Synaps";
                 this.requirements(Category.turret, with(Items.plastanium, 340, Items.lead, 350, Items.phaseFabric, 260, Items.surgeAlloy, 360, Items.silicon, 390));
                 this.shootEffect = Fx.greenBomb;
@@ -1493,7 +1495,7 @@ public class ModBlocks implements ContentList {
                 this.description = "A bigger Exotic Alloy wall, creates lightings when shot.";
                 this.health = 4060;
                 this.size = 2;
-                this.requirements(Category.defense, ItemStack.with(ModItems.exoticAlloy, 22, ModItems.graphenite, 8));
+                this.requirements(Category.defense, with(ModItems.exoticAlloy, 22, ModItems.graphenite, 8));
                 this.lightningChance = 0.09f;
             }
         };
@@ -1506,7 +1508,7 @@ public class ModBlocks implements ContentList {
                 this.description = "An Exotic Alloy wall, creates lightnings when shot.";
                 this.health = 1160;
                 this.size = 1;
-                this.requirements(Category.defense, ItemStack.with(ModItems.exoticAlloy, 6, ModItems.graphenite, 2));
+                this.requirements(Category.defense, with(ModItems.exoticAlloy, 6, ModItems.graphenite, 2));
                 this.lightningChance = 0.08f;
             }
         };
@@ -1519,7 +1521,7 @@ public class ModBlocks implements ContentList {
                 this.description = "A bigger version of standard graphenite wall.";
                 this.health = 2160;
                 this.size = 2;
-                this.requirements(Category.defense, ItemStack.with(ModItems.graphenite, 20, Items.silicon, 6));
+                this.requirements(Category.defense, with(ModItems.graphenite, 20, Items.silicon, 6));
             }
         };
 //----end
@@ -1529,7 +1531,7 @@ public class ModBlocks implements ContentList {
                 this.description = "A purple, medium strength wall.";
                 this.size = 1;
                 this.health = 620;
-                this.requirements(Category.defense, ItemStack.with(ModItems.graphenite, 6, Items.silicon, 2));
+                this.requirements(Category.defense, with(ModItems.graphenite, 6, Items.silicon, 2));
 
             }
         };
@@ -1541,7 +1543,7 @@ public class ModBlocks implements ContentList {
                 this.description = "Bigger Odinum Wall, can deflect bullets.";
                 this.health = 3360;
                 this.size = 2;
-                this.requirements(Category.defense, ItemStack.with(ModItems.odinum, 28));
+                this.requirements(Category.defense, with(ModItems.odinum, 28));
                 this.chanceDeflect = 14;
                 this.flashHit = true;
             }
@@ -1553,7 +1555,7 @@ public class ModBlocks implements ContentList {
                 this.description = "Medium strength wall, a little radioactive.";
                 this.size = 1;
                 this.health = 1020;
-                this.requirements(Category.defense, ItemStack.with(ModItems.odinum,8));
+                this.requirements(Category.defense, with(ModItems.odinum,8));
                 this.chanceDeflect = 12;
                 this.flashHit = true;
             }
@@ -1566,7 +1568,7 @@ public class ModBlocks implements ContentList {
                 this.description = "A bigger Plastic wall, can deflect some bullets.";
                 this.health = 3820;
                 this.size = 2;
-                this.requirements(Category.defense, ItemStack.with(ModItems.plastic, 24, Items.metaglass, 10));
+                this.requirements(Category.defense, with(ModItems.plastic, 24, Items.metaglass, 10));
                 this.insulated = true;
                 this.absorbLasers = true;
             }
@@ -1580,7 +1582,7 @@ public class ModBlocks implements ContentList {
                 this.description = "A Plastic wall, can deflect some bullets.";
                 this.health = 980;
                 this.size = 1;
-                this.requirements(Category.defense, ItemStack.with(ModItems.plastic, 6, Items.metaglass, 4));
+                this.requirements(Category.defense, with(ModItems.plastic, 6, Items.metaglass, 4));
                 this.insulated = true;
                 this.absorbLasers = true;
             }
@@ -1593,7 +1595,7 @@ public class ModBlocks implements ContentList {
         smartRouter = new SmartRouter("smart-router") {
             {
                 this.size = 1;
-                this.requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
+                this.requirements(Category.distribution, with(Items.copper, 3, Items.silicon, 10));
                 this.buildCostMultiplier = 4.0F;
             }
         };
