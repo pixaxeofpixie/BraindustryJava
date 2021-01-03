@@ -1,6 +1,6 @@
 package braindustry.entities;
 
-import braindustry.modVars.modVars;
+import braindustry.modVars.ModVars;
 import arc.func.Cons;
 import arc.graphics.Color;
 import arc.math.geom.Position;
@@ -20,41 +20,41 @@ public class DebugEffect extends Effect {
     }
     @Override
     public void at(float x, float y, float rotation, Color color, Object data) {
-        if(modVars.settings.debug()) super.at(x, y, rotation, color, data);
+        if(ModVars.settings.debug()) super.at(x, y, rotation, color, data);
     }
 
     @Override
     public void at(Position pos) {
-        if(modVars.settings.debug()) super.at(pos);
+        if(ModVars.settings.debug()) super.at(pos);
     }
 
     @Override
     public void at(float x, float y) {
-        if(modVars.settings.debug()) super.at(x, y);
+        if(ModVars.settings.debug()) super.at(x, y);
     }
 
     @Override
     public void at(float x, float y, float rotation) {
-        if(modVars.settings.debug()) super.at(x, y, rotation);
+        if(ModVars.settings.debug()) super.at(x, y, rotation);
     }
 
     @Override
     public void at(Position pos, float rotation) {
-        if(modVars.settings.debug()) super.at(pos, rotation);
+        if(ModVars.settings.debug()) super.at(pos, rotation);
     }
 
     @Override
     public void at(float x, float y, Color color) {
-        if(modVars.settings.debug()) super.at(x, y, color);
+        if(ModVars.settings.debug()) super.at(x, y, color);
     }
 
     @Override
     public void at(float x, float y, float rotation, Color color) {
-        if(modVars.settings.debug()) super.at(x, y, rotation, color);
+        if(ModVars.settings.debug()) super.at(x, y, rotation, color);
     }
 
     @Override
     public void at(float x, float y, float rotation, Object data) {
-        if(modVars.settings.debug()) super.at(x, y, rotation, data);
+        if(ModVars.settings.debug()) super.at(x, y, rotation, data);
     }
 }

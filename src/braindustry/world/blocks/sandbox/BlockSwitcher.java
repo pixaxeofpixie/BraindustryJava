@@ -11,7 +11,7 @@ import arc.struct.Seq;
 import arc.util.Time;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import braindustry.modVars.modVars;
+import braindustry.modVars.ModVars;
 import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.Building;
@@ -22,7 +22,6 @@ import mindustry.logic.LAccess;
 import mindustry.world.Block;
 import mindustry.world.blocks.ControlBlock;
 import mindustry.world.blocks.power.PowerGraph;
-import mindustry.world.blocks.power.PowerNode;
 
 public class BlockSwitcher extends Block {
     public TextureRegion laser;
@@ -64,7 +63,7 @@ public class BlockSwitcher extends Block {
         float len1 = (float) (size1 * 8) / 2.0F - 1.5F;
         float len2 = (float) (size2 * 8) / 2.0F - 1.5F;
         Draw.color(enable ? Color.green : Pal.redDust);
-        Drawf.laser(team, modVars.modAtlas.laser, modVars.modAtlas.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
+        Drawf.laser(team, ModVars.modAtlas.laser, ModVars.modAtlas.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
     }
 
     public boolean goodBuilding(BlockSwitcherBuild forB, Building other) {

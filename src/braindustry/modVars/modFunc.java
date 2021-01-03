@@ -6,7 +6,6 @@ import arc.Events;
 import arc.func.Cons;
 import arc.func.Prov;
 import arc.graphics.Color;
-import arc.graphics.Cubemap;
 import arc.scene.ui.Dialog;
 import arc.struct.Seq;
 import arc.util.Log;
@@ -18,7 +17,7 @@ import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType;
 import mindustry.gen.EntityMapping;
 
-import static braindustry.modVars.modVars.*;
+import static braindustry.modVars.ModVars.*;
 
 public class modFunc {
     public static int addEntityMappingIdMap(Prov prov){

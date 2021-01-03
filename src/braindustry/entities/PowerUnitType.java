@@ -1,26 +1,17 @@
 package braindustry.entities;
 
-import arc.func.Boolf;
 import arc.func.Boolf2;
-import arc.graphics.g2d.Draw;
 import arc.math.Angles;
 import arc.math.Mathf;
-import braindustry.content.ModBlocks;
-import braindustry.modVars.modVars;
+import braindustry.modVars.ModVars;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
-import mindustry.Vars;
-import mindustry.content.Blocks;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
-import mindustry.world.Tile;
-import mindustry.world.blocks.power.PowerBlock;
 import mindustry.world.blocks.power.PowerGraph;
-
-import static braindustry.modVars.modFunc.print;
 
 public abstract class PowerUnitType extends UnitType {
 
@@ -37,7 +28,7 @@ public abstract class PowerUnitType extends UnitType {
         float vy = Mathf.sinDeg(angle1);
         float len1 = (float)(size1 * 8) / 2.0F - 1.5F;
         float len2 = (float)(size2 * 8) / 2.0F - 1.5F;
-        Drawf.laser(team,  modVars.modAtlas.laser, modVars.modAtlas.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
+        Drawf.laser(team,  ModVars.modAtlas.laser, ModVars.modAtlas.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
     }
     Boolf2<Building,Unit> good=((building,unit) -> {
         if (building==null)return false;

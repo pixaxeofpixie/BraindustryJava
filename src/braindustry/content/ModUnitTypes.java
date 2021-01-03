@@ -1,33 +1,22 @@
 package braindustry.content;
 
-import arc.func.Boolf;
 import arc.func.Prov;
 import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.math.Angles;
-import arc.math.Mathf;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedUnitType;
 import braindustry.entities.Advanced.UnitExtensions;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.entities.PowerUnitType;
-import braindustry.modVars.modVars;
-import mindustry.Vars;
 import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.entities.bullet.*;
-import mindustry.game.Team;
-import mindustry.gen.Building;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
 import mindustry.gen.Unit;
-import mindustry.graphics.Drawf;
 import mindustry.type.AmmoTypes;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.world.Block;
-import mindustry.world.Tile;
-import mindustry.world.blocks.power.PowerBlock;
 
 public class ModUnitTypes implements ContentList {
     public static UnitType
