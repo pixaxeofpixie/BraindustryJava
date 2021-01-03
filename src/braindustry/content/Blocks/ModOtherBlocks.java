@@ -13,10 +13,7 @@ import mindustry.gen.Sounds;
 import mindustry.graphics.CacheLayer;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
-import mindustry.world.blocks.distribution.ArmoredConveyor;
-import mindustry.world.blocks.distribution.Conveyor;
-import mindustry.world.blocks.distribution.ItemBridge;
-import mindustry.world.blocks.distribution.StackConveyor;
+import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
@@ -92,7 +89,7 @@ public class ModOtherBlocks implements ContentList {
         surgePayloadConveyor = new PayloadConveyor("surge-payload-conveyor"){
             {
             this.health = 310;
-            this.requirements(Category.distribution, with(Items.graphenite, 10, Items.surge, 5));
+            this.requirements(Category.distribution, ItemStack.with(ModItems.graphenite, 10, Items.surgeAlloy, 5));
             this.canOverdrive = true;
             this.size = 6;
             }
