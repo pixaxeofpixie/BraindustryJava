@@ -18,7 +18,6 @@ import mindustry.world.meta.BuildVisibility;
 public class ModBlocks implements ContentList {
     public static Block
 
-
     armoredPlastaniumConveyor, chromiumConduit, phaseAlloyConveyor, plasticConveyor, surgeConveyor, surgePayloadConveyor,
 
 
@@ -41,7 +40,7 @@ public class ModBlocks implements ContentList {
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
 
 
-    smartRouter, turretSwitcher,dpsMeter,unitGenerator;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator;
 
     public void load() {
         new ModBlocksUnits().load();
@@ -78,6 +77,8 @@ public class ModBlocks implements ContentList {
 //                this.requirements();
             }
         };
+
+
 
     }
 }
