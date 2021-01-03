@@ -19,7 +19,6 @@ import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.world.Block;
 
-import static braindustry.modVars.modFunc.fullName;
 
 public class ModUnitTypes implements ContentList {
     public static UnitType

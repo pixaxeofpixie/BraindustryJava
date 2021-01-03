@@ -22,7 +22,7 @@ import mindustry.ui.Styles;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 
-import static braindustry.modVars.modFunc.*;
+import static braindustry.modVars.ModFunc.*;
 
 public class TestBlock extends Block {
     public TestBlock(String name) {

@@ -1,11 +1,8 @@
 package braindustry.content;
 
 import arc.graphics.Color;
-import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
 import mindustry.type.Liquid;
-
-import static braindustry.modVars.modFunc.*;
 
 public class ModLiquids implements ContentList {
     public static Liquid liquidGraphenite, magma, thoriumRefrigerant;

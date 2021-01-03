@@ -5,8 +5,6 @@ import mindustry.content.Items;
 import mindustry.ctype.ContentList;
 import mindustry.type.Item;
 
-import static braindustry.modVars.modFunc.*;
-
 public class ModItems implements ContentList {
     static {
         Items.class.isArray();
