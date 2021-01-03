@@ -1,22 +1,15 @@
 package braindustry.entities;
 
-import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import braindustry.content.ModBlocks;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import mindustry.Vars;
 import mindustry.gen.Building;
 import mindustry.world.Tile;
 import mindustry.world.blocks.power.PowerGraph;
-
-import java.nio.FloatBuffer;
-
-import static braindustry.modVars.modFunc.print;
 
 public class PowerGeneratorUnit extends AmmoDistributeUnit {
     public static final int classId = 41;

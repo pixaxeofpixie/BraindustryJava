@@ -41,7 +41,7 @@ import mindustry.world.meta.Stats;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static braindustry.modVars.modFunc.*;
+import static braindustry.modVars.ModFunc.*;
 
 public class MultiCrafter extends Block {
     public Seq<Recipe> recipes = new Seq<>();

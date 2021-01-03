@@ -9,7 +9,7 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 
-import static braindustry.modVars.modFunc.getFullName;
+import static braindustry.modVars.ModFunc.getFullName;
 import static braindustry.modVars.ModVars.modInfo;
 
 public class ModSettings {

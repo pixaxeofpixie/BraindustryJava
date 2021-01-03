@@ -5,13 +5,10 @@ import arc.scene.ui.Image;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Cell;
 import arc.struct.Seq;
-import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.Tex;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
-
-import static braindustry.modVars.modFunc.showException;
 
 public class TeamChooseDialog extends BaseDialog {
     public TeamChooseDialog(Cons<Team> confirm){

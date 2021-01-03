@@ -1,32 +1,18 @@
 package braindustry.modVars.Classes.UI.Cheat;
 
-import arc.Core;
 import arc.func.Boolf;
 import arc.graphics.Color;
-import arc.input.KeyCode;
 import arc.scene.ui.Button;
 import arc.scene.ui.Image;
 import arc.scene.ui.ScrollPane;
 import arc.scene.ui.layout.Cell;
 import arc.scene.ui.layout.Table;
-import arc.util.Strings;
 import mindustry.Vars;
 import mindustry.content.UnitTypes;
-import mindustry.entities.EntityCollisions;
-import mindustry.gen.Icon;
-import mindustry.gen.Tex;
-import mindustry.gen.Unit;
-import mindustry.gen.UnitWaterMove;
-import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
-import mindustry.ui.Cicon;
-import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
-import mindustry.world.Tile;
 
-import java.util.Iterator;
-
-import static braindustry.modVars.modFunc.getInfoDialog;
+import static braindustry.modVars.ModFunc.getInfoDialog;
 
 public class UnitChooseDialog extends BaseDialog {
     public UnitChooseDialog(Boolf<UnitType> check) {

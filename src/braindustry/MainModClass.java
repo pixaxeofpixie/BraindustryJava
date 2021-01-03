@@ -25,7 +25,7 @@ import mindustry.ui.dialogs.*;
 import mindustry.world.Tile;
 import mindustry.world.meta.BuildVisibility;
 
-import static braindustry.modVars.modFunc.*;
+import static braindustry.modVars.ModFunc.*;
 import static braindustry.modVars.ModVars.*;
 
 public class MainModClass extends Mod {
