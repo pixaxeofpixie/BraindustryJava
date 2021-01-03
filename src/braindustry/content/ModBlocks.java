@@ -1,5 +1,7 @@
 package braindustry.content;
 
+import Gas.world.GasPowerGenerator;
+import Gas.world.consumers.GasConsumers;
 import braindustry.content.Blocks.ModBlocksUnits;
 import braindustry.content.Blocks.ModDefense;
 import braindustry.content.Blocks.ModOtherBlocks;
@@ -13,6 +15,8 @@ import mindustry.ctype.ContentList;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
+import mindustry.world.blocks.power.BurnerGenerator;
+import mindustry.world.blocks.power.ItemLiquidGenerator;
 import mindustry.world.meta.BuildVisibility;
 
 public class ModBlocks implements ContentList {
@@ -40,7 +44,7 @@ public class ModBlocks implements ContentList {
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
 
 
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator, methaneBurner;
 
     public void load() {
         new ModBlocksUnits().load();
@@ -52,6 +56,7 @@ public class ModBlocks implements ContentList {
                 this.powerProduction=10f;
             }
         };
+
         smartRouter = new SmartRouter("smart-router") {
             {
                 this.size = 1;
@@ -78,7 +83,13 @@ public class ModBlocks implements ContentList {
             }
         };
 
-
-
+        methaneBurner = new GasPowerGenerator("methane-burner") {
+            {
+                update = true;
+                localizedName = "methane burner";
+                description = "burn all you methane";
+                requirements(Category.power, ItemStack.with(Items.silicon, 60, Items.copper, 50, Items.graphite, 90));
+            }
+        };
     }
 }
