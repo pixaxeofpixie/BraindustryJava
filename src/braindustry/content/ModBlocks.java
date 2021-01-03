@@ -35,7 +35,7 @@ public class ModBlocks implements ContentList {
             hyperMultiplicativeReconstructor, hyperNavalFactory, hyperTetrativeReconstructor,
 
 
-    axon, heartbeat, blaze, brain, electron, fragment, impulse, katana, mind, neuron, perlin, soul, stinger, synaps,
+    axon, heartbeat, blaze, brain, electron, fragment, impulse, katana, mind, neuron, perlin, soul, stinger, synaps, gloryTurret,
 
 
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
