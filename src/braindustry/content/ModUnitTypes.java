@@ -10,6 +10,7 @@ import braindustry.entities.PowerUnitType;
 import braindustry.type.ModWeapon;
 import mindustry.content.*;
 import mindustry.ctype.ContentList;
+import mindustry.entities.abilities.UnitSpawnAbility;
 import mindustry.entities.bullet.*;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
@@ -60,7 +61,9 @@ public class ModUnitTypes implements ContentList {
                 this.trailX = 46;
                 this.trailY = 23;
                 this.trailScl = 4f;
-                
+
+                int spawnTime = 1; //why you use no created variables :(
+                int brange = 1; //why you use no created variables :(
                 abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
                 
                 this.weapons.add(
@@ -74,7 +77,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shots = 6;
                                 this.shotDelay = 10;
-                                this.inaccuracy = 1.5;
+                                this.inaccuracy = 1.5f;
                                 this.velocityRnd = 0.5f;
                                 this.shootSound = Sounds.missile;
                                 this.bullet = new MissileBulletType() {
@@ -114,7 +117,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shots = 4;
                                 this.shotDelay = 5;
-                                this.inaccuracy = 0.7;
+                                this.inaccuracy = 0.7f;
                                 this.velocityRnd = 0.1f;
                                 this.shootSound = Sounds.missile;
                                 this.bullet=new MissileBulletType() {
@@ -168,7 +171,7 @@ public class ModUnitTypes implements ContentList {
                                     this.speed = brange;
                                     this.hitShake = 7f;
                                     }
-                                }
+                                };
                             }
                         }
                 );
