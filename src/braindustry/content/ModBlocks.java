@@ -4,7 +4,9 @@ import braindustry.content.Blocks.ModBlocksUnits;
 import braindustry.content.Blocks.ModDefense;
 import braindustry.content.Blocks.ModOtherBlocks;
 import braindustry.content.Blocks.ModProduction;
+import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.distribution.SmartRouter;
+import braindustry.world.blocks.sandbox.BlockSwitcher;
 import mindustry.content.Items;
 import mindustry.ctype.ContentList;
 import mindustry.type.Category;
@@ -32,19 +34,24 @@ public class ModBlocks implements ContentList {
             hyperMultiplicativeReconstructor, hyperNavalFactory, hyperTetrativeReconstructor,
 
 
-    axon, Heartbeat, blaze, brain, electron, fragment, impulse, katana, mind, neuron, perlin, soul, stinger, synaps,
+    axon, heartbeat, blaze, brain, electron, fragment, impulse, katana, mind, neuron, perlin, soul, stinger, synaps,
 
 
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
 
 
-    smartRouter, turretSwitcher;
+    smartRouter, turretSwitcher,unitGenerator;
 
     public void load() {
         new ModBlocksUnits().load();
         new ModProduction().load();
         new ModOtherBlocks().load();
         new ModDefense().load();
+        unitGenerator=new UnitPowerGenerator("unit-generator"){
+            {
+                this.powerProduction=10f;
+            }
+        };
         smartRouter = new SmartRouter("smart-router") {
             {
                 this.size = 1;
@@ -52,7 +59,7 @@ public class ModBlocks implements ContentList {
                 this.buildCostMultiplier = 4.0F;
             }
         };
-        turretSwitcher = new braindustry.world.blocks.sandbox.BlockSwitcher("turret-switcher") {
+        turretSwitcher = new BlockSwitcher("turret-switcher") {
             {
                 this.size = 2;
                 this.laserRange = 6.0F;

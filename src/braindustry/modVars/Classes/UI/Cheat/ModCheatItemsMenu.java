@@ -1,4 +1,4 @@
-package braindustry.modVars.Classes.UI;
+package braindustry.modVars.Classes.UI.Cheat;
 
 import arc.Core;
 import arc.func.Boolf;

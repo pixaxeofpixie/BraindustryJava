@@ -45,7 +45,6 @@ import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Drawf;
-import mindustry.graphics.InverseKinematics;
 import mindustry.graphics.Pal;
 import mindustry.input.InputHandler;
 import mindustry.io.TypeIO;
@@ -58,53 +57,57 @@ import mindustry.world.Tile;
 import mindustry.world.blocks.ConstructBlock;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.payloads.BuildPayload;
+import mindustry.world.blocks.payloads.Payload;
 import mindustry.world.blocks.payloads.UnitPayload;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.units.ResupplyPoint;
 
 import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc, Commanderc, Boundedc, Statusc, Syncc, Minerc, Healthc, Shieldc, Entityc, Teamc, Physicsc, Drawc, Flyingc, Hitboxc, Velc, Rotc, Unitc, Posc, Legsc {
+public class AmmoDistributeUnit extends Unit implements Itemsc, Builderc, Weaponsc, Commanderc, Boundedc, Statusc, Syncc, Minerc, Healthc, Shieldc, Entityc, Teamc, Physicsc, Drawc, Flyingc, Hitboxc, Velc, Rotc, Unitc, Payloadc, Posc, AmmoDistributec {
     public static final Vec2[] vecs = new Vec2[]{new Vec2(), new Vec2(), new Vec2(), new Vec2()};
-    public static int sequenceNum = 0;
-    public static final Seq<FormationMember> members = new Seq<>();
-    public static final Seq<Unit> units = new Seq<>();
+    public static final Seq<FormationMember> members = new Seq();
+    public static final Seq<Unit> units = new Seq();
     public static final float warpDst = 180.0F;
     public static final float hitDuration = 9.0F;
     public static final Vec2 tmp1 = new Vec2();
     public static final Vec2 tmp2 = new Vec2();
-    protected transient boolean isRotate;
-    public Seq<StatusEntry> statuses = new Seq<>();
+    public static int sequenceNum = 0;
+    public transient static int classId = -1;
+    public Seq<StatusEntry> statuses = new Seq();
     public transient Bits applied;
+    public transient boolean added;
+    public transient boolean wasFlying;
+    public UnitController controller;
+    public transient float resupplyTime;
+    public Seq<Payload> payloads;
+    public transient float ammoCooldown;
+    protected transient boolean isRotate;
     protected transient float speedMultiplier;
     protected transient float damageMultiplier;
     protected transient float healthMultiplier;
     protected transient float reloadMultiplier;
-    public transient boolean added;
-    public transient boolean wasFlying;
     private transient float rotation_TARGET_;
     private transient float rotation_LAST_;
-    public UnitController controller;
-    public transient float resupplyTime;
     private transient float x_TARGET_;
     private transient float x_LAST_;
     private transient float y_TARGET_;
     private transient float y_LAST_;
-    public transient Leg[] legs;
-    public transient float totalLength;
-    public transient float moveSpace;
-    public transient float baseRotation;
 
-    public AdvancedLegsUnit() {
-        EntityMapping.class.getClass();
+    public AmmoDistributeUnit() {
         this.applied = new Bits(Vars.content.getBy(ContentType.status).size);
         this.speedMultiplier = 1.0F;
         this.damageMultiplier = 1.0F;
         this.healthMultiplier = 1.0F;
         this.reloadMultiplier = 1.0F;
         this.resupplyTime = Mathf.random(10.0F);
-        this.legs = new Leg[0];
+        this.payloads = new Seq();
+    }
+
+    public static AmmoDistributeUnit create() {
+        return new AmmoDistributeUnit();
     }
 
     public boolean serialize() {
@@ -112,31 +115,27 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
     }
 
     public String toString() {
-        return "AdvancedLegsUnit#" + this.id;
+        return "AmmoDistributeUnit#" + this.id;
     }
 
-    public void drawBuildPlans() {
-        Iterator<BuildPlan> var1 = this.plans.iterator();
-
-        while (true) {
-            BuildPlan plan;
-            do {
-                do {
-                    if (!var1.hasNext()) {
-                        Draw.reset();
-                        return;
-                    }
-
-                    plan = var1.next();
-                } while (plan.progress > 0.01F);
-            } while (this.buildPlan() == plan && plan.initialized && (this.within((float) (plan.x * 8), (float) (plan.y * 8), 220.0F) || Vars.state.isEditor()));
-
-            this.drawPlan(plan, 1.0F);
+    public void move(float cx, float cy) {
+        EntityCollisions.SolidPred check = this.solidity();
+        if (check != null) {
+            Vars.collisions.move(this, cx, cy, check);
+        } else {
+            this.x += cx;
+            this.y += cy;
         }
+
     }
 
-    public int maxAccepted(Item item) {
-        return this.stack.item != item && this.stack.amount > 0 ? 0 : this.itemCapacity() - this.stack.amount;
+    public void damagePierce(float amount, boolean withEffect) {
+        float pre = this.hitTime;
+        this.rawDamage(amount);
+        if (!withEffect) {
+            this.hitTime = pre;
+        }
+
     }
 
     public void lookAt(float angle) {
@@ -178,14 +177,13 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         return this.health / this.maxHealth;
     }
 
-    public void killed() {
-        this.clearCommand();
-        this.health = 0.0F;
-        this.dead = true;
-        if (!this.type.flying) {
-            this.destroy();
-        }
+    public boolean onSolid() {
+        Tile tile = this.tileOn();
+        return tile == null || tile.solid();
+    }
 
+    public boolean isBuilding() {
+        return this.plans.size != 0;
     }
 
     public void writeSync(Writes write) {
@@ -198,11 +196,17 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         write.bool(this.isShooting);
         TypeIO.writeTile(write, this.mineTile);
         TypeIO.writeMounts(write, this.mounts);
-        write.i(this.plans.size);
+        write.i(this.payloads.size);
 
         int INDEX;
+        for (INDEX = 0; INDEX < this.payloads.size; ++INDEX) {
+            TypeIO.writePayload(write, this.payloads.get(INDEX));
+        }
+
+        write.i(this.plans.size);
+
         for (INDEX = 0; INDEX < this.plans.size; ++INDEX) {
-            TypeIO.writeRequest(write, (BuildPlan) this.plans.get(INDEX));
+            TypeIO.writeRequest(write, this.plans.get(INDEX));
         }
 
         write.f(this.rotation);
@@ -212,7 +216,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         write.i(this.statuses.size);
 
         for (INDEX = 0; INDEX < this.statuses.size; ++INDEX) {
-            TypeIO.writeStatuse(write, (StatusEntry) this.statuses.get(INDEX));
+            TypeIO.writeStatuse(write, this.statuses.get(INDEX));
         }
 
         TypeIO.writeTeam(write, this.team);
@@ -227,7 +231,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
     }
 
     public boolean isRemote() {
-        return this instanceof Unitc && ((Unitc) this).isPlayer() && !this.isLocal();
+        return ((Unitc) this).isPlayer() && !this.isLocal();
     }
 
     public void lookAt(Position pos) {
@@ -240,18 +244,12 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         this.controller(this.type.createController());
     }
 
-    public void resetLegs() {
-        float rot = this.baseRotation;
-        int count = this.type.legCount;
-        float legLength = this.type.legLength;
-        this.legs = new Leg[count];
-        float spacing = 360.0F / (float) count;
-
-        for (int i = 0; i < this.legs.length; ++i) {
-            Leg l = new Leg();
-            l.joint.trns((float) i * spacing + rot, legLength / 2.0F + this.type.legBaseOffset).add(this.x, this.y);
-            l.base.trns((float) i * spacing + rot, legLength + this.type.legBaseOffset).add(this.x, this.y);
-            this.legs[i] = l;
+    public void killed() {
+        this.clearCommand();
+        this.health = 0.0F;
+        this.dead = true;
+        if (!this.type.flying) {
+            this.destroy();
         }
 
     }
@@ -282,21 +280,27 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
 
     }
 
-    public void addItem(Item item, int amount) {
-        this.stack.amount = this.stack.item == item ? this.stack.amount + amount : amount;
-        this.stack.item = item;
-        this.stack.amount = Mathf.clamp(this.stack.amount, 0, this.itemCapacity());
+    public void addBuild(BuildPlan place) {
+        this.addBuild(place, true);
+    }
+
+    public boolean canPickup(Building build) {
+        return this.payloadUsed() + (float) (build.block.size * build.block.size * 8 * 8) <= this.type.payloadCapacity + 0.001F && build.canPickup();
     }
 
     public boolean isFlying() {
         return this.elevation >= 0.09F;
     }
 
+    public void approach(Vec2 vector) {
+        this.vel.approachDelta(vector, this.type.accel * this.realSpeed() * this.floorSpeedMultiplier());
+    }
+
     public void getCollisions(Cons<QuadTree> consumer) {
     }
 
     public boolean isLocal() {
-        return this.getPlayer() == Vars.player || ((Unitc) this).controller() == Vars.player;
+        return this.getPlayer() == Vars.player || this instanceof Unitc && ((Unitc) this).controller() == Vars.player;
     }
 
     public void set(UnitType def, UnitController controller) {
@@ -307,8 +311,8 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         this.controller(controller);
     }
 
-    public Building closestEnemyCore() {
-        return Vars.state.teams.closestEnemyCore(this.x, this.y, this.team);
+    public int itemCapacity() {
+        return this.type.itemCapacity;
     }
 
     public void damage(float amount) {
@@ -324,27 +328,26 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
                 var10000 = this.type;
                 break;
             case name:
-                UnitController var7 = this.controller;
+                UnitController var6 = this.controller;
                 Player p;
-                var10000 = var7 instanceof Player && (p = (Player) var7) == (Player) var7 ? p.name : null;
+                var10000 = var6 instanceof Player && (p = (Player) var6) == var6 ? p.name : null;
                 break;
             case firstItem:
                 var10000 = this.stack().amount == 0 ? null : this.item();
                 break;
             case payloadType:
-                Payloadc pay;
-                if (this instanceof Payloadc && (pay = (Payloadc) this) == (Payloadc) this) {
-                    if (pay.payloads().isEmpty()) {
+                if (this instanceof Payloadc && this == this) {
+                    if (this.payloads().isEmpty()) {
                         var10000 = null;
                     } else {
-                        Object var5 = pay.payloads().peek();
+                        Object var5 = this.payloads().peek();
                         UnitPayload p1;
-                        if (var5 instanceof UnitPayload && (p1 = (UnitPayload) var5) == (UnitPayload) var5) {
+                        if (var5 instanceof UnitPayload && (p1 = (UnitPayload) var5) == var5) {
                             var10000 = p1.unit.type;
                         } else {
-                            var5 = pay.payloads().peek();
+                            var5 = this.payloads().peek();
                             BuildPayload p2;
-                            var10000 = var5 instanceof BuildPayload && (p2 = (BuildPayload) var5) == (BuildPayload) var5 ? p2.block() : null;
+                            var10000 = var5 instanceof BuildPayload && (p2 = (BuildPayload) var5) == var5 ? p2.block() : null;
                         }
                     }
                 } else {
@@ -364,6 +367,14 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         } else {
             return this.isBuilding() && this.updateBuilding;
         }
+    }
+
+    public void pickup(Building tile) {
+        tile.pickedUp();
+        tile.tile.remove();
+        this.payloads.add(new BuildPayload(tile));
+        Fx.unitPickup.at(tile);
+        Events.fire(new EventType.PickupEvent(this, tile));
     }
 
     public void damage(float amount, boolean withEffect) {
@@ -389,12 +400,12 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         }
     }
 
-    public float clipSize() {
-        return Math.max((float) this.type.region.width * 2.0F, this.type.clipSize);
+    public boolean damaged() {
+        return this.health < this.maxHealth - 0.001F;
     }
 
-    public boolean validMine(Tile tile, boolean checkDst) {
-        return tile != null && tile.block() == Blocks.air && (this.within(tile.worldx(), tile.worldy(), 70.0F) || !checkDst) && tile.drop() != null && this.canMine(tile.drop());
+    public float clipSize() {
+        return Math.max((float) this.type.region.width * 2.0F, this.type.clipSize);
     }
 
     public void aimLook(Position pos) {
@@ -414,43 +425,43 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         double var10000;
         switch (sensor) {
             case totalItems:
-                var10000 = (double) this.stack().amount;
+                var10000 = this.stack().amount;
                 break;
             case itemCapacity:
-                var10000 = (double) this.type.itemCapacity;
+                var10000 = this.type.itemCapacity;
                 break;
             case rotation:
-                var10000 = (double) this.rotation;
+                var10000 = this.rotation;
                 break;
             case health:
-                var10000 = (double) this.health;
+                var10000 = this.health;
                 break;
             case maxHealth:
-                var10000 = (double) this.maxHealth;
+                var10000 = this.maxHealth;
                 break;
             case ammo:
                 var10000 = !Vars.state.rules.unitAmmo ? (double) this.type.ammoCapacity : (double) this.ammo;
                 break;
             case ammoCapacity:
-                var10000 = (double) this.type.ammoCapacity;
+                var10000 = this.type.ammoCapacity;
                 break;
             case x:
-                var10000 = (double) World.conv(this.x);
+                var10000 = World.conv(this.x);
                 break;
             case y:
-                var10000 = (double) World.conv(this.y);
+                var10000 = World.conv(this.y);
                 break;
             case team:
-                var10000 = (double) this.team.id;
+                var10000 = this.team.id;
                 break;
             case shooting:
                 var10000 = this.isShooting() ? 1.0D : 0.0D;
                 break;
             case shootX:
-                var10000 = (double) World.conv(this.aimX());
+                var10000 = World.conv(this.aimX());
                 break;
             case shootY:
-                var10000 = (double) World.conv(this.aimY());
+                var10000 = World.conv(this.aimY());
                 break;
             case mining:
                 var10000 = this.mining() ? 1.0D : 0.0D;
@@ -471,8 +482,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
                 var10000 = this.controller instanceof FormationAI ? 1.0D : 0.0D;
                 break;
             case payloadCount:
-                Payloadc pay;
-                var10000 = (double) (this instanceof Payloadc && (pay = (Payloadc) this) == (Payloadc) this ? pay.payloads().size : 0);
+                var10000 = this instanceof Payloadc && this == this ? this.payloads().size : 0;
                 break;
             default:
                 var10000 = 0.0D;
@@ -481,8 +491,8 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         return var10000;
     }
 
-    public Tile tileOn() {
-        return Vars.world.tileWorld(this.x, this.y);
+    public void clampHealth() {
+        this.health = Mathf.clamp(this.health, 0.0F, this.maxHealth);
     }
 
     public void setWeaponRotation(float rotation) {
@@ -548,10 +558,8 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         }
 
         weapon.ejectEffect.at(mountX, mountY, rotation * (float) side);
-//        ammo.shootEffect.at(x, y, rotation, parentize ? this : null);
-//        ammo.smokeEffect.at(x, y, rotation, parentize ? this : null);
-        ammo.shootEffect.at(x, y, rotation, this);
-        ammo.smokeEffect.at(x, y, rotation,  this);
+        ammo.shootEffect.at(x, y, rotation, parentize ? this : null);
+        ammo.smokeEffect.at(x, y, rotation, parentize ? this : null);
         this.apply(weapon.shootStatus, weapon.shootStatusDuration);
     }
 
@@ -729,17 +737,12 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         return this.applied.get(effect.id);
     }
 
-    public boolean onSolid() {
-        Tile tile = this.tileOn();
-        return tile == null || tile.solid();
+    public boolean isAI() {
+        return this.controller instanceof AIController;
     }
 
     public Item item() {
         return this.stack.item;
-    }
-
-    public boolean isAI() {
-        return this.controller instanceof AIController;
     }
 
     public float ammof() {
@@ -799,7 +802,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         if (effect != StatusEffects.none && effect != null && !this.isImmune(effect)) {
             if (this.statuses.size > 0) {
                 for (int i = 0; i < this.statuses.size; ++i) {
-                    StatusEntry entry = (StatusEntry) this.statuses.get(i);
+                    StatusEntry entry = this.statuses.get(i);
                     if (entry.effect == effect) {
                         entry.time = Math.max(entry.time, duration);
                         return;
@@ -818,7 +821,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
                 }
             }
 
-            StatusEntry entry = (StatusEntry) Pools.obtain(StatusEntry.class, StatusEntry::new);
+            StatusEntry entry = Pools.obtain(StatusEntry.class, StatusEntry::new);
             entry.set(effect, duration);
             this.statuses.add(entry);
         }
@@ -838,12 +841,32 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
                 this.team.data().updateCount(this.type, -1);
             }
 
-            this.resetLegs();
         }
     }
 
     public EntityCollisions.SolidPred solidity() {
-        return !this.type.allowLegStep ? EntityCollisions::solid : EntityCollisions::legsSolid;
+        return null;
+    }
+
+    public boolean tryDropPayload(Payload payload) {
+        Tile on = this.tileOn();
+        if (Vars.net.client() && payload instanceof UnitPayload) {
+            Vars.netClient.clearRemovedEntity(((UnitPayload) payload).unit.id);
+        }
+
+        if (on != null && on.build != null && on.build.acceptPayload(on.build, payload)) {
+            Fx.unitDrop.at(on.build);
+            on.build.handlePayload(on.build, payload);
+            return true;
+        } else {
+            BuildPayload b;
+            if (payload instanceof BuildPayload && (b = (BuildPayload) payload) == payload) {
+                return this.dropBlock(b);
+            } else {
+                UnitPayload p;
+                return payload instanceof UnitPayload && (p = (UnitPayload) payload) == payload && this.dropUnit(p);
+            }
+        }
     }
 
     public void writeSyncManual(FloatBuffer buffer) {
@@ -852,28 +875,69 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         buffer.put(this.y);
     }
 
+    public int maxAccepted(Item item) {
+        return this.stack.item != item && this.stack.amount > 0 ? 0 : this.itemCapacity() - this.stack.amount;
+    }
+
+    public boolean dropLastPayload() {
+        if (this.payloads.isEmpty()) {
+            return false;
+        } else {
+            Payload load = this.payloads.peek();
+            if (this.tryDropPayload(load)) {
+                this.payloads.pop();
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     public void read(Reads read) {
         short REV = read.s();
+        int payloads_LENGTH;
         int plans_LENGTH;
-        int statuses_LENGTH;
+        Payload payloads_ITEM;
+        BuildPlan plans_ITEM;
         StatusEntry statuses_ITEM;
+        int statuses_LENGTH;
+        int INDEX;
         if (REV == 0) {
             this.ammo = read.f();
             this.armor = read.f();
             this.controller = TypeIO.readController(read, this.controller);
-            read.bool();
             this.elevation = read.f();
             this.health = read.f();
             this.isShooting = read.bool();
             this.mounts = TypeIO.readMounts(read, this.mounts);
+            payloads_LENGTH = read.i();
+            this.payloads.clear();
+
+            for (plans_LENGTH = 0; plans_LENGTH < payloads_LENGTH; ++plans_LENGTH) {
+                payloads_ITEM = TypeIO.readPayload(read);
+                if (payloads_ITEM != null) {
+                    this.payloads.add(payloads_ITEM);
+                }
+            }
+
+            plans_LENGTH = read.i();
+            this.plans.clear();
+
+            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+                plans_ITEM = TypeIO.readRequest(read);
+                if (plans_ITEM != null) {
+                    this.plans.add(plans_ITEM);
+                }
+            }
+
             this.rotation = read.f();
             this.shield = read.f();
             this.spawnedByCore = read.bool();
             this.stack = TypeIO.readItems(read, this.stack);
-            plans_LENGTH = read.i();
+            statuses_LENGTH = read.i();
             this.statuses.clear();
 
-            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+            for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
                 statuses_ITEM = TypeIO.readStatuse(read);
                 if (statuses_ITEM != null) {
                     this.statuses.add(statuses_ITEM);
@@ -881,7 +945,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             }
 
             this.team = TypeIO.readTeam(read);
-            this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
+            this.type = Vars.content.getByID(ContentType.unit, read.s());
             this.x = read.f();
             this.y = read.f();
         } else if (REV == 1) {
@@ -889,17 +953,38 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             this.armor = read.f();
             this.controller = TypeIO.readController(read, this.controller);
             this.elevation = read.f();
+            this.flag = read.d();
             this.health = read.f();
             this.isShooting = read.bool();
             this.mounts = TypeIO.readMounts(read, this.mounts);
+            payloads_LENGTH = read.i();
+            this.payloads.clear();
+
+            for (plans_LENGTH = 0; plans_LENGTH < payloads_LENGTH; ++plans_LENGTH) {
+                payloads_ITEM = TypeIO.readPayload(read);
+                if (payloads_ITEM != null) {
+                    this.payloads.add(payloads_ITEM);
+                }
+            }
+
+            plans_LENGTH = read.i();
+            this.plans.clear();
+
+            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+                plans_ITEM = TypeIO.readRequest(read);
+                if (plans_ITEM != null) {
+                    this.plans.add(plans_ITEM);
+                }
+            }
+
             this.rotation = read.f();
             this.shield = read.f();
             this.spawnedByCore = read.bool();
             this.stack = TypeIO.readItems(read, this.stack);
-            plans_LENGTH = read.i();
+            statuses_LENGTH = read.i();
             this.statuses.clear();
 
-            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+            for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
                 statuses_ITEM = TypeIO.readStatuse(read);
                 if (statuses_ITEM != null) {
                     this.statuses.add(statuses_ITEM);
@@ -907,7 +992,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             }
 
             this.team = TypeIO.readTeam(read);
-            this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
+            this.type = Vars.content.getByID(ContentType.unit, read.s());
             this.x = read.f();
             this.y = read.f();
         } else if (REV == 2) {
@@ -918,15 +1003,36 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             this.flag = read.d();
             this.health = read.f();
             this.isShooting = read.bool();
+            this.mineTile = TypeIO.readTile(read);
             this.mounts = TypeIO.readMounts(read, this.mounts);
+            payloads_LENGTH = read.i();
+            this.payloads.clear();
+
+            for (plans_LENGTH = 0; plans_LENGTH < payloads_LENGTH; ++plans_LENGTH) {
+                payloads_ITEM = TypeIO.readPayload(read);
+                if (payloads_ITEM != null) {
+                    this.payloads.add(payloads_ITEM);
+                }
+            }
+
+            plans_LENGTH = read.i();
+            this.plans.clear();
+
+            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+                plans_ITEM = TypeIO.readRequest(read);
+                if (plans_ITEM != null) {
+                    this.plans.add(plans_ITEM);
+                }
+            }
+
             this.rotation = read.f();
             this.shield = read.f();
             this.spawnedByCore = read.bool();
             this.stack = TypeIO.readItems(read, this.stack);
-            plans_LENGTH = read.i();
+            statuses_LENGTH = read.i();
             this.statuses.clear();
 
-            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+            for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
                 statuses_ITEM = TypeIO.readStatuse(read);
                 if (statuses_ITEM != null) {
                     this.statuses.add(statuses_ITEM);
@@ -934,10 +1040,14 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             }
 
             this.team = TypeIO.readTeam(read);
-            this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
+            this.type = Vars.content.getByID(ContentType.unit, read.s());
             this.x = read.f();
             this.y = read.f();
-        } else if (REV == 3) {
+        } else {
+            if (REV != 3) {
+                throw new IllegalArgumentException("Unknown revision '" + REV + "' for entity type 'oct'");
+            }
+
             this.ammo = read.f();
             this.armor = read.f();
             this.controller = TypeIO.readController(read, this.controller);
@@ -947,14 +1057,34 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             this.isShooting = read.bool();
             this.mineTile = TypeIO.readTile(read);
             this.mounts = TypeIO.readMounts(read, this.mounts);
+            payloads_LENGTH = read.i();
+            this.payloads.clear();
+
+            for (plans_LENGTH = 0; plans_LENGTH < payloads_LENGTH; ++plans_LENGTH) {
+                payloads_ITEM = TypeIO.readPayload(read);
+                if (payloads_ITEM != null) {
+                    this.payloads.add(payloads_ITEM);
+                }
+            }
+
+            plans_LENGTH = read.i();
+            this.plans.clear();
+
+            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+                plans_ITEM = TypeIO.readRequest(read);
+                if (plans_ITEM != null) {
+                    this.plans.add(plans_ITEM);
+                }
+            }
+
             this.rotation = read.f();
             this.shield = read.f();
             this.spawnedByCore = read.bool();
             this.stack = TypeIO.readItems(read, this.stack);
-            plans_LENGTH = read.i();
+            statuses_LENGTH = read.i();
             this.statuses.clear();
 
-            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+            for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
                 statuses_ITEM = TypeIO.readStatuse(read);
                 if (statuses_ITEM != null) {
                     this.statuses.add(statuses_ITEM);
@@ -962,95 +1092,10 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             }
 
             this.team = TypeIO.readTeam(read);
-            this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
+            this.type = Vars.content.getByID(ContentType.unit, read.s());
+            this.updateBuilding = read.bool();
             this.x = read.f();
             this.y = read.f();
-        } else {
-//            StatusEntry statuses_ITEM;
-            BuildPlan plans_ITEM;
-            int INDEX;
-            if (REV == 4) {
-                this.ammo = read.f();
-                this.armor = read.f();
-                this.controller = TypeIO.readController(read, this.controller);
-                this.elevation = read.f();
-                this.flag = read.d();
-                this.health = read.f();
-                this.isShooting = read.bool();
-                this.mineTile = TypeIO.readTile(read);
-                this.mounts = TypeIO.readMounts(read, this.mounts);
-                plans_LENGTH = read.i();
-                this.plans.clear();
-
-                for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
-                    plans_ITEM = TypeIO.readRequest(read);
-                    if (plans_ITEM != null) {
-                        this.plans.add(plans_ITEM);
-                    }
-                }
-
-                this.rotation = read.f();
-                this.shield = read.f();
-                this.spawnedByCore = read.bool();
-                this.stack = TypeIO.readItems(read, this.stack);
-                statuses_LENGTH = read.i();
-                this.statuses.clear();
-
-                for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
-                    statuses_ITEM = TypeIO.readStatuse(read);
-                    if (statuses_ITEM != null) {
-                        this.statuses.add(statuses_ITEM);
-                    }
-                }
-
-                this.team = TypeIO.readTeam(read);
-                this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
-                this.x = read.f();
-                this.y = read.f();
-            } else {
-                if (REV != 5) {
-                    throw new IllegalArgumentException("Unknown revision '" + REV + "' for entity type 'corvus'");
-                }
-
-                this.ammo = read.f();
-                this.armor = read.f();
-                this.controller = TypeIO.readController(read, this.controller);
-                this.elevation = read.f();
-                this.flag = read.d();
-                this.health = read.f();
-                this.isShooting = read.bool();
-                this.mineTile = TypeIO.readTile(read);
-                this.mounts = TypeIO.readMounts(read, this.mounts);
-                plans_LENGTH = read.i();
-                this.plans.clear();
-
-                for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
-                    plans_ITEM = TypeIO.readRequest(read);
-                    if (plans_ITEM != null) {
-                        this.plans.add(plans_ITEM);
-                    }
-                }
-
-                this.rotation = read.f();
-                this.shield = read.f();
-                this.spawnedByCore = read.bool();
-                this.stack = TypeIO.readItems(read, this.stack);
-                statuses_LENGTH = read.i();
-                this.statuses.clear();
-
-                for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
-                    statuses_ITEM = TypeIO.readStatuse(read);
-                    if (statuses_ITEM != null) {
-                        this.statuses.add(statuses_ITEM);
-                    }
-                }
-
-                this.team = TypeIO.readTeam(read);
-                this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
-                this.updateBuilding = read.bool();
-                this.x = read.f();
-                this.y = read.f();
-            }
         }
 
         this.afterRead();
@@ -1060,15 +1105,8 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         return content == this.stack().item ? (double) this.stack().amount : 0.0D;
     }
 
-    public void move(float cx, float cy) {
-        EntityCollisions.SolidPred check = this.solidity();
-        if (check != null) {
-            Vars.collisions.move(this, cx, cy, check);
-        } else {
-            this.x += cx;
-            this.y += cy;
-        }
-
+    public Building closestEnemyCore() {
+        return Vars.state.teams.closestEnemyCore(this.x, this.y, this.team);
     }
 
     public boolean cheating() {
@@ -1098,10 +1136,6 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         }
     }
 
-    public void clampHealth() {
-        this.health = Mathf.clamp(this.health, 0.0F, this.maxHealth);
-    }
-
     public void trns(Position pos) {
         this.trns(pos.getX(), pos.getY());
     }
@@ -1114,12 +1148,26 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         return this.hitSize * 2.0F;
     }
 
-    public boolean isAdded() {
-        return this.added;
+    public void healFract(float amount) {
+        this.heal(amount * this.maxHealth);
     }
 
     public void addItem(Item item) {
         this.addItem(item, 1);
+    }
+
+    public void controlWeapons(boolean rotate, boolean shoot) {
+        WeaponMount[] var3 = this.mounts;
+        int var4 = var3.length;
+
+        for (int var5 = 0; var5 < var4; ++var5) {
+            WeaponMount mount = var3[var5];
+            mount.rotate = rotate;
+            mount.shoot = shoot;
+        }
+
+        this.isRotate = rotate;
+        this.isShooting = shoot;
     }
 
     public void snapInterpolation() {
@@ -1137,8 +1185,8 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         return Units.getCap(this.team);
     }
 
-    public boolean isBuilding() {
-        return this.plans.size != 0;
+    public void trns(float x, float y) {
+        this.set(this.x + x, this.y + y);
     }
 
     public float prefRotation() {
@@ -1152,7 +1200,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
     }
 
     public void write(Writes write) {
-        write.s(5);
+        write.s(3);
         write.f(this.ammo);
         write.f(this.armor);
         TypeIO.writeController(write, this.controller);
@@ -1162,11 +1210,17 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         write.bool(this.isShooting);
         TypeIO.writeTile(write, this.mineTile);
         TypeIO.writeMounts(write, this.mounts);
-        write.i(this.plans.size);
+        write.i(this.payloads.size);
 
         int INDEX;
+        for (INDEX = 0; INDEX < this.payloads.size; ++INDEX) {
+            TypeIO.writePayload(write, this.payloads.get(INDEX));
+        }
+
+        write.i(this.plans.size);
+
         for (INDEX = 0; INDEX < this.plans.size; ++INDEX) {
-            TypeIO.writeRequest(write, (BuildPlan) this.plans.get(INDEX));
+            TypeIO.writeRequest(write, this.plans.get(INDEX));
         }
 
         write.f(this.rotation);
@@ -1176,7 +1230,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         write.i(this.statuses.size);
 
         for (INDEX = 0; INDEX < this.statuses.size; ++INDEX) {
-            TypeIO.writeStatuse(write, (StatusEntry) this.statuses.get(INDEX));
+            TypeIO.writeStatuse(write, this.statuses.get(INDEX));
         }
 
         TypeIO.writeTeam(write, this.team);
@@ -1233,8 +1287,345 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         return (this.isCommanding() ? this.minFormationSpeed * 0.98F : this.type.speed) * strafePenalty;
     }
 
+    public Tile tileOn() {
+        return Vars.world.tileWorld(this.x, this.y);
+    }
+
+    public void clearItem() {
+        this.stack.amount = 0;
+    }
+
+    public void resetController() {
+        this.controller(this.type.createController());
+    }
+
+    public void heal(float amount) {
+        this.health += amount;
+        this.clampHealth();
+    }
+
+    public boolean hasItem() {
+        return this.stack.amount > 0;
+    }
+
+    public void apply(StatusEffect effect) {
+        this.apply(effect, 1.0F);
+    }
+
+    public boolean isNull() {
+        return false;
+    }
+
+    public boolean checkTarget(boolean targetAir, boolean targetGround) {
+        return this.isGrounded() && targetGround || this.isFlying() && targetAir;
+    }
+
+    public void collision(Hitboxc other, float x, float y) {
+    }
+
+    public void addItem(Item item, int amount) {
+        this.stack.amount = this.stack.item == item ? this.stack.amount + amount : amount;
+        this.stack.item = item;
+        this.stack.amount = Mathf.clamp(this.stack.amount, 0, this.itemCapacity());
+    }
+
+    public Building closestCore() {
+        return Vars.state.teams.closestCore(this.x, this.y, this.team);
+    }
+
     public boolean canMine(Item item) {
         return this.type.mineTier >= item.hardness;
+    }
+
+    public boolean isAdded() {
+        return this.added;
+    }
+
+    public UnitController controller() {
+        return this.controller;
+    }
+
+    public boolean hasWeapons() {
+        return this.type.hasWeapons();
+    }
+
+    public void aim(float x, float y) {
+        Tmp.v1.set(x, y).sub(this.x, this.y);
+        if (Tmp.v1.len() < this.type.aimDst) {
+            Tmp.v1.setLength(this.type.aimDst);
+        }
+
+        x = Tmp.v1.x + this.x;
+        y = Tmp.v1.y + this.y;
+        WeaponMount[] var3 = this.mounts;
+        int var4 = var3.length;
+
+        for (int var5 = 0; var5 < var4; ++var5) {
+            WeaponMount mount = var3[var5];
+            mount.aimX = x;
+            mount.aimY = y;
+        }
+
+        this.aimX = x;
+        this.aimY = y;
+    }
+
+    public <T extends Entityc> T self() {
+        return (T) this;
+    }
+
+    private Bullet bullet(Weapon weapon, float x, float y, float angle, float lifescl) {
+        float xr = Mathf.range(weapon.xRand);
+        return weapon.bullet.create(this, this.team(), x + Angles.trnsx(angle, 0.0F, xr), y + Angles.trnsy(angle, 0.0F, xr), angle, 1.0F - weapon.velocityRnd + Mathf.random(weapon.velocityRnd), lifescl);
+    }
+
+    public void addPayload(Payload load) {
+        this.payloads.add(load);
+    }
+
+    public void addBuild(BuildPlan place, boolean tail) {
+        if (this.canBuild()) {
+            BuildPlan replace = null;
+            Iterator var4 = this.plans.iterator();
+
+            while (var4.hasNext()) {
+                BuildPlan request = (BuildPlan) var4.next();
+                if (request.x == place.x && request.y == place.y) {
+                    replace = request;
+                    break;
+                }
+            }
+
+            if (replace != null) {
+                this.plans.remove(replace);
+            }
+
+            Tile tile = Vars.world.tile(place.x, place.y);
+            if (tile != null) {
+                Building var6 = tile.build;
+                ConstructBlock.ConstructBuild cons;
+                if (var6 instanceof ConstructBlock.ConstructBuild && (cons = (ConstructBlock.ConstructBuild) var6) == var6) {
+                    place.progress = cons.progress;
+                }
+            }
+
+            if (tail) {
+                this.plans.addLast(place);
+            } else {
+                this.plans.addFirst(place);
+            }
+
+        }
+    }
+
+    public void hitboxTile(Rect rect) {
+        float size = Math.min(this.hitSize * 0.66F, 7.9F);
+        rect.setCentered(this.x, this.y, size, size);
+    }
+
+    public <T> T with(Cons<T> cons) {
+        cons.get((T) this);
+        return (T) this;
+    }
+
+    public boolean validMine(Tile tile, boolean checkDst) {
+        return tile != null && tile.block() == Blocks.air && (this.within(tile.worldx(), tile.worldy(), 70.0F) || !checkDst) && tile.drop() != null && this.canMine(tile.drop());
+    }
+
+    public void drawBuildPlans() {
+        Iterator var1 = this.plans.iterator();
+
+        while (true) {
+            BuildPlan plan;
+            do {
+                do {
+                    if (!var1.hasNext()) {
+                        Draw.reset();
+                        return;
+                    }
+
+                    plan = (BuildPlan) var1.next();
+                } while (plan.progress > 0.01F);
+            } while (this.buildPlan() == plan && plan.initialized && (this.within((float) (plan.x * 8), (float) (plan.y * 8), 220.0F) || Vars.state.isEditor()));
+
+            this.drawPlan(plan, 1.0F);
+        }
+    }
+
+    public boolean offloadImmediately() {
+        return this.isPlayer();
+    }
+
+    public float payloadUsed() {
+        return this.payloads.sumf((p) -> {
+            return p.size() * p.size();
+        });
+    }
+
+    public void hitbox(Rect rect) {
+        rect.setCentered(this.x, this.y, this.hitSize, this.hitSize);
+    }
+
+    public boolean canPickupPayload(Payload pay) {
+        return this.payloadUsed() + pay.size() * pay.size() <= this.type.payloadCapacity + 0.001F;
+    }
+
+    public void controlWeapons(boolean rotateShoot) {
+        this.controlWeapons(rotateShoot, rotateShoot);
+    }
+
+    public boolean isGrounded() {
+        return this.elevation < 0.001F;
+    }
+
+    public void pickup(Unit unit) {
+        unit.remove();
+        this.payloads.add(new UnitPayload(unit));
+        Fx.unitPickup.at(unit);
+        if (Vars.net.client()) {
+            Vars.netClient.clearRemovedEntity(unit.id);
+        }
+
+        Events.fire(new EventType.PickupEvent(this, unit));
+    }
+
+    public int pathType() {
+        return 0;
+    }
+
+    public boolean dropUnit(UnitPayload payload) {
+        Unit u = payload.unit;
+        if (!u.canPass(this.tileX(), this.tileY())) {
+            return false;
+        } else {
+            Fx.unitDrop.at(this);
+            if (Vars.net.client()) {
+                return true;
+            } else {
+                u.set(this);
+                u.trns(Tmp.v1.rnd(Mathf.random(2.0F)));
+                u.rotation(this.rotation);
+                u.id = EntityGroup.nextId();
+                if (!u.isAdded()) {
+                    u.team.data().updateCount(u.type, -1);
+                }
+
+                u.add();
+                return true;
+            }
+        }
+    }
+
+    public boolean isBoss() {
+        return this.hasEffect(StatusEffects.boss);
+    }
+
+    public boolean dropBlock(BuildPayload payload) {
+        Building tile = payload.build;
+        int tx = World.toTile(this.x - tile.block.offset);
+        int ty = World.toTile(this.y - tile.block.offset);
+        Tile on = Vars.world.tile(tx, ty);
+        if (on != null && Build.validPlace(tile.block, tile.team, tx, ty, tile.rotation, false)) {
+            int rot = (int) ((this.rotation + 45.0F) / 90.0F) % 4;
+            payload.place(on, rot);
+            if (this.isPlayer()) {
+                payload.build.lastAccessed = this.getPlayer().name;
+            }
+
+            Fx.unitDrop.at(tile);
+            Fx.placeBlock.at(on.drawx(), on.drawy(), (float) on.block().size);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean canPass(int tileX, int tileY) {
+        EntityCollisions.SolidPred s = this.solidity();
+        return s == null || !s.solid(tileX, tileY);
+    }
+
+    public boolean validMine(Tile tile) {
+        return this.validMine(tile, true);
+    }
+
+    public void clearCommand() {
+        Iterator var1 = this.controlling.iterator();
+
+        while (var1.hasNext()) {
+            Unit unit = (Unit) var1.next();
+            if (unit.controller().isBeingControlled(this)) {
+                unit.controller(unit.type.createController());
+            }
+        }
+
+        this.controlling.clear();
+        this.formation = null;
+    }
+
+    public boolean hasPayload() {
+        return this.payloads.size > 0;
+    }
+
+    public boolean canPassOn() {
+        return this.canPass(this.tileX(), this.tileY());
+    }
+
+    public void interpolate() {
+        if (this.lastUpdated != 0L && this.updateSpacing != 0L) {
+            float timeSinceUpdate = (float) Time.timeSinceMillis(this.lastUpdated);
+            float alpha = Math.min(timeSinceUpdate / (float) this.updateSpacing, 2.0F);
+            this.rotation = Mathf.slerp(this.rotation_LAST_, this.rotation_TARGET_, alpha);
+            this.x = Mathf.lerp(this.x_LAST_, this.x_TARGET_, alpha);
+            this.y = Mathf.lerp(this.y_LAST_, this.y_TARGET_, alpha);
+        } else if (this.lastUpdated != 0L) {
+            this.rotation = this.rotation_TARGET_;
+            this.x = this.x_TARGET_;
+            this.y = this.y_TARGET_;
+        }
+
+    }
+
+    public void impulseNet(Vec2 v) {
+        this.impulse(v.x, v.y);
+        if (this.isRemote()) {
+            float mass = this.mass();
+            this.move(v.x / mass, v.y / mass);
+        }
+
+    }
+
+    public boolean inRange(Position other) {
+        return this.within(other, this.type.range);
+    }
+
+    public void setType(UnitType type) {
+        this.type = type;
+        this.maxHealth = type.health;
+        this.drag = type.drag;
+        this.armor = type.armor;
+        this.hitSize = type.hitSize;
+        this.hovering = type.hovering;
+        if (this.controller == null) {
+            this.controller(type.createController());
+        }
+
+        if (this.mounts().length != type.weapons.size) {
+            this.setupWeapons(type);
+        }
+
+        if (this.abilities.size != type.abilities.size) {
+            this.abilities = type.abilities.map(Ability::copy);
+        }
+
+    }
+
+    public boolean moving() {
+        return !this.vel.isZero(0.01F);
+    }
+
+    public void impulse(Vec2 v) {
+        this.impulse(v.x, v.y);
     }
 
     public void update() {
@@ -1242,41 +1633,40 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         this.vel.scl(Mathf.clamp(1.0F - this.drag * Time.delta));
         this.stack.amount = Mathf.clamp(this.stack.amount, 0, this.itemCapacity());
         this.itemTime = Mathf.lerpDelta(this.itemTime, (float) Mathf.num(this.hasItem()), 0.05F);
-        float rot;
+        float offset;
         if (this.updateBuilding && this.canBuild()) {
-            rot = Vars.state.rules.infiniteResources ? 3.4028235E38F : 220.0F;
+            offset = Vars.state.rules.infiniteResources ? 3.4028235E38F : 220.0F;
             boolean infinite = Vars.state.rules.infiniteResources || this.team().rules().infiniteResources;
             Iterator it = this.plans.iterator();
 
-            label650:
+            label590:
             while (true) {
                 BuildPlan req;
-                Tile tile;
+                Tile tileR;
                 do {
                     if (!it.hasNext()) {
                         Building core = this.core();
                         if (this.buildPlan() != null) {
-//                            BuildPlan req;
                             if (this.plans.size > 1) {
-                                for (int total = 0; (this.dst((req = this.buildPlan()).tile()) > rot || this.shouldSkip(req, core)) && total < this.plans.size; ++total) {
+                                for (int total = 0; (this.dst((req = this.buildPlan()).tile()) > offset || this.shouldSkip(req, core)) && total < this.plans.size; ++total) {
                                     this.plans.removeFirst();
                                     this.plans.addLast(req);
                                 }
                             }
 
                             BuildPlan current = this.buildPlan();
-                            if (this.within(current.tile(), rot)) {
-                                tile = Vars.world.tile(current.x, current.y);
+                            if (this.within(current.tile(), offset)) {
+                                Tile tile = Vars.world.tile(current.x, current.y);
                                 Building var8 = tile.build;
                                 ConstructBlock.ConstructBuild entity;
-                                if (var8 instanceof ConstructBlock.ConstructBuild && (entity = (ConstructBlock.ConstructBuild) var8) == (ConstructBlock.ConstructBuild) var8) {
+                                if (var8 instanceof ConstructBlock.ConstructBuild && (entity = (ConstructBlock.ConstructBuild) var8) == var8) {
                                     if (tile.team() != this.team && tile.team() != Team.derelict || !current.breaking && entity.cblock != current.block) {
                                         this.plans.removeFirst();
-                                        break label650;
+                                        break label590;
                                     }
                                 } else if (!current.initialized && !current.breaking && Build.validPlace(current.block, this.team, current.x, current.y, current.rotation)) {
-                                    boolean hasAll = infinite || current.isRotation(this.team) || !Structs.contains(current.block.requirements, (ix) -> {
-                                        return core != null && !core.items.has(ix.item);
+                                    boolean hasAll = infinite || current.isRotation(this.team) || !Structs.contains(current.block.requirements, (i) -> {
+                                        return core != null && !core.items.has(i.item);
                                     });
                                     if (hasAll) {
                                         Call.beginPlace(this, current.block, this.team, current.x, current.y, current.rotation);
@@ -1286,23 +1676,22 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
                                 } else {
                                     if (current.initialized || !current.breaking || !Build.validBreak(this.team, current.x, current.y)) {
                                         this.plans.removeFirst();
-                                        break label650;
+                                        break label590;
                                     }
 
                                     Call.beginBreak(this, this.team, current.x, current.y);
                                 }
 
                                 if (tile.build instanceof ConstructBlock.ConstructBuild && !current.initialized) {
-                                    Tile nTile = tile;
                                     Core.app.post(() -> {
-                                        Events.fire(new EventType.BuildSelectEvent(nTile, this.team, this, current.breaking));
+                                        Events.fire(new EventType.BuildSelectEvent(tile, this.team, this, current.breaking));
                                     });
                                     current.initialized = true;
                                 }
 
                                 if (core != null || infinite) {
                                     var8 = tile.build;
-                                    if (var8 instanceof ConstructBlock.ConstructBuild && (entity = (ConstructBlock.ConstructBuild) var8) == (ConstructBlock.ConstructBuild) var8) {
+                                    if (var8 instanceof ConstructBlock.ConstructBuild && (entity = (ConstructBlock.ConstructBuild) var8) == var8) {
                                         if (current.breaking) {
                                             entity.deconstruct(this, core, 1.0F / entity.buildCost * Time.delta * this.type.buildSpeed * Vars.state.rules.buildSpeedMultiplier);
                                         } else {
@@ -1315,34 +1704,31 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
                                 }
                             }
                         }
-                        break label650;
+                        break label590;
                     }
 
                     req = (BuildPlan) it.next();
-                    tile = Vars.world.tile(req.x, req.y);
-                } while (tile != null && (!req.breaking || tile.block() != Blocks.air) && (req.breaking || (tile.build == null || tile.build.rotation != req.rotation) && req.block.rotate || tile.block() != req.block));
+                    tileR = Vars.world.tile(req.x, req.y);
+                } while (tileR != null && (!req.breaking || tileR.block() != Blocks.air) && (req.breaking || (tileR.build == null || tileR.build.rotation != req.rotation) && req.block.rotate || tileR.block() != req.block));
 
                 it.remove();
             }
         }
 
         boolean can = this.canShoot();
-        WeaponMount[] var24 = this.mounts;
-        int var27 = var24.length;
+        WeaponMount[] var18 = this.mounts;
+        int var21 = var18.length;
 
-        float dstRot;
-        float stageF;
-        int div;
-        for (div = 0; div < var27; ++div) {
-            WeaponMount mount = var24[div];
+        for (int var28 = 0; var28 < var21; ++var28) {
+            WeaponMount mount = var18[var28];
             Weapon weapon = mount.weapon;
             mount.reload = Math.max(mount.reload - Time.delta * this.reloadMultiplier, 0.0F);
             float weaponRotation = this.rotation - 90.0F + (weapon.rotate ? mount.rotation : 0.0F);
             float mountX = this.x + Angles.trnsx(this.rotation - 90.0F, weapon.x, weapon.y);
-            dstRot = this.y + Angles.trnsy(this.rotation - 90.0F, weapon.x, weapon.y);
+            float mountY = this.y + Angles.trnsy(this.rotation - 90.0F, weapon.x, weapon.y);
             float shootX = mountX + Angles.trnsx(weaponRotation, weapon.shootX, weapon.shootY);
-            float shootY = dstRot + Angles.trnsy(weaponRotation, weapon.shootX, weapon.shootY);
-            stageF = weapon.rotate ? weaponRotation + 90.0F : Angles.angle(shootX, shootY, mount.aimX, mount.aimY) + (this.rotation - this.angleTo(mount.aimX, mount.aimY));
+            float shootY = mountY + Angles.trnsy(weaponRotation, weapon.shootX, weapon.shootY);
+            float shootAngle = weapon.rotate ? weaponRotation + 90.0F : Angles.angle(shootX, shootY, mount.aimX, mount.aimY) + (this.rotation - this.angleTo(mount.aimX, mount.aimY));
             if (weapon.continuous && mount.bullet != null) {
                 if (mount.bullet.isAdded() && mount.bullet.time < mount.bullet.lifetime && mount.bullet.type == weapon.bullet) {
                     mount.bullet.rotation(weaponRotation + 90.0F);
@@ -1382,7 +1768,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             }
 
             if (mount.shoot && can && (this.ammo > 0.0F || !Vars.state.rules.unitAmmo || this.team().rules().infiniteAmmo) && (!weapon.alternate || mount.side == weapon.flipSprite) && (this.vel.len() >= mount.weapon.minShootVelocity || Vars.net.active() && !this.isLocal()) && mount.reload <= 1.0E-4F && Angles.within(weapon.rotate ? mount.rotation : this.rotation, mount.targetRotation, mount.weapon.shootCone)) {
-                this.shoot(mount, shootX, shootY, mount.aimX, mount.aimY, mountX, dstRot, stageF, Mathf.sign(weapon.x));
+                this.shoot(mount, shootX, shootY, mount.aimX, mount.aimY, mountX, mountY, shootAngle, Mathf.sign(weapon.x));
                 mount.reload = weapon.reload;
                 --this.ammo;
                 if (this.ammo < 0.0F) {
@@ -1403,7 +1789,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
                 if (!u.dead) {
                     UnitController ai$temp = u.controller();
                     FormationAI ai;
-                    if (ai$temp instanceof FormationAI && (ai = (FormationAI) ai$temp) == (FormationAI) ai$temp && ai.leader == this) {
+                    if (ai$temp instanceof FormationAI && (ai = (FormationAI) ai$temp) == ai$temp && ai.leader == this) {
                         var10000 = false;
                         return var10000;
                     }
@@ -1457,14 +1843,14 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         if (!this.statuses.isEmpty()) {
             accepted = 0;
 
-            label514:
+            label455:
             while (true) {
                 while (true) {
                     if (accepted >= this.statuses.size) {
-                        break label514;
+                        break label455;
                     }
 
-                    StatusEntry entry = (StatusEntry) this.statuses.get(accepted++);
+                    StatusEntry entry = this.statuses.get(accepted++);
                     entry.time = Math.max(entry.time - Time.delta, 0.0F);
                     if (entry.effect != null && (entry.time > 0.0F || entry.effect.permanent)) {
                         this.applied.set(entry.effect.id);
@@ -1578,28 +1964,27 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         }
 
         if (this.abilities.size > 0) {
-            Iterator var26 = this.abilities.iterator();
+            Iterator var20 = this.abilities.iterator();
 
-            while (var26.hasNext()) {
-                Ability a = (Ability) var26.next();
+            while (var20.hasNext()) {
+                Ability a = (Ability) var20.next();
                 a.update(this);
             }
         }
 
         this.drag = this.type.drag * (this.isGrounded() ? this.floorOn().dragMultiplier : 1.0F);
         if (this.team != Vars.state.rules.waveTeam && Vars.state.hasSpawns() && (!Vars.net.client() || this.isLocal())) {
-            rot = Vars.state.rules.dropZoneRadius + this.hitSize / 2.0F + 1.0F;
-            Iterator var36 = Vars.spawner.getSpawns().iterator();
+            offset = Vars.state.rules.dropZoneRadius + this.hitSize / 2.0F + 1.0F;
+            Iterator var29 = Vars.spawner.getSpawns().iterator();
 
-            while (var36.hasNext()) {
-                Tile spawn = (Tile) var36.next();
-                if (this.within(spawn.worldx(), spawn.worldy(), rot)) {
-                    this.vel().add(Tmp.v1.set(this).sub(spawn.worldx(), spawn.worldy()).setLength(1.1F - this.dst(spawn) / rot).scl(0.45F * Time.delta));
+            while (var29.hasNext()) {
+                Tile spawn = (Tile) var29.next();
+                if (this.within(spawn.worldx(), spawn.worldy(), offset)) {
+                    this.vel().add(Tmp.v1.set(this).sub(spawn.worldx(), spawn.worldy()).setLength(1.1F - this.dst(spawn) / offset).scl(0.45F * Time.delta));
                 }
             }
         }
 
-        float legLength;
         if (this.dead || this.health <= 0.0F) {
             this.drag = 0.01F;
             if (Mathf.chanceDelta(0.1D)) {
@@ -1608,9 +1993,9 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             }
 
             if (Mathf.chanceDelta(0.2D)) {
-                rot = this.type.engineOffset / 2.0F + this.type.engineOffset / 2.0F * this.elevation;
-                legLength = Mathf.range(this.type.engineSize);
-                this.type.fallThrusterEffect.at(this.x + Angles.trnsx(this.rotation + 180.0F, rot) + Mathf.range(legLength), this.y + Angles.trnsy(this.rotation + 180.0F, rot) + Mathf.range(legLength), Mathf.random());
+                offset = this.type.engineOffset / 2.0F + this.type.engineOffset / 2.0F * this.elevation;
+                float range = Mathf.range(this.type.engineSize);
+                this.type.fallThrusterEffect.at(this.x + Angles.trnsx(this.rotation + 180.0F, offset) + Mathf.range(range), this.y + Angles.trnsy(this.rotation + 180.0F, offset) + Mathf.range(range), Mathf.random());
             }
 
             this.elevation -= this.type.fallSpeed * Time.delta;
@@ -1620,7 +2005,6 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         }
 
         Tile tile = this.tileOn();
-        floor = this.floorOn();
         if (tile != null && this.isGrounded() && !this.type.hovering) {
             if (tile.build != null) {
                 tile.build.unitOn(this);
@@ -1651,357 +2035,16 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             Call.unitDespawn(this);
         }
 
-        if (Mathf.dst(this.deltaX(), this.deltaY()) > 0.001F) {
-            this.baseRotation = Angles.moveToward(this.baseRotation, Mathf.angle(this.deltaX(), this.deltaY()), this.type.rotateSpeed);
+        if (this.ammoCooldown > 0.0F) {
+            this.ammoCooldown -= Time.delta;
         }
 
-        rot = this.baseRotation;
-        legLength = this.type.legLength;
-        if (this.legs.length != this.type.legCount) {
-            this.resetLegs();
+        if (this.ammo > 0.0F && this.ammoCooldown <= 0.0F && ResupplyPoint.resupply(this.team, this.x, this.y, this.type.ammoResupplyRange, Math.min((float) this.type.ammoResupplyAmount, this.ammo), this.type.ammoType.color, (u) -> {
+            return u != this;
+        })) {
+            this.ammo -= Math.min((float) this.type.ammoResupplyAmount, this.ammo);
+            this.ammoCooldown = 5.0F;
         }
-
-        float moveSpeed = this.type.legSpeed;
-        div = Math.max(this.legs.length / this.type.legGroupSize, 2);
-        this.moveSpace = legLength / 1.6F / ((float) div / 2.0F) * this.type.legMoveSpace;
-        this.totalLength += Mathf.dst(this.deltaX(), this.deltaY());
-        float trns = this.moveSpace * 0.85F * this.type.legTrns;
-        Vec2 moveOffset = Tmp.v4.trns(rot, trns);
-        boolean moving = this.moving();
-
-        for (int i = 0; i < this.legs.length; ++i) {
-            dstRot = this.legAngle(rot, i);
-            Vec2 baseOffset = Tmp.v5.trns(dstRot, this.type.legBaseOffset).add(this.x, this.y);
-            Leg l = this.legs[i];
-            l.joint.sub(baseOffset).limit(this.type.maxStretch * legLength / 2.0F).add(baseOffset);
-            l.base.sub(baseOffset).limit(this.type.maxStretch * legLength).add(baseOffset);
-            stageF = (this.totalLength + (float) i * this.type.legPairOffset) / this.moveSpace;
-            int stage = (int) stageF;
-            int group = stage % div;
-            boolean move = i % div == group;
-            boolean side = i < this.legs.length / 2;
-            boolean backLeg = Math.abs((float) i + 0.5F - (float) this.legs.length / 2.0F) <= 0.501F;
-            if (backLeg && this.type.flipBackLegs) {
-                side = !side;
-            }
-
-            l.moving = move;
-            l.stage = moving ? stageF % 1.0F : Mathf.lerpDelta(l.stage, 0.0F, 0.1F);
-            if (l.group != group) {
-                if (!move && i % div == l.group) {
-                    floor = Vars.world.floorWorld(l.base.x, l.base.y);
-                    if (floor.isLiquid) {
-                        floor.walkEffect.at(l.base.x, l.base.y, this.type.rippleScale, floor.mapColor);
-                        floor.walkSound.at(this.x, this.y, 1.0F, floor.walkSoundVolume);
-                    } else {
-                        Fx.unitLandSmall.at(l.base.x, l.base.y, this.type.rippleScale, floor.mapColor);
-                    }
-
-                    if (this.type.landShake > 0.0F) {
-                        Effect.shake(this.type.landShake, this.type.landShake, l.base);
-                    }
-
-                    if (this.type.legSplashDamage > 0.0F) {
-                        Damage.damage(this.team(), l.base.x, l.base.y, this.type.legSplashRange, this.type.legSplashDamage, false, true);
-                    }
-                }
-
-                l.group = group;
-            }
-
-            Vec2 legDest = Tmp.v1.trns(dstRot, legLength * this.type.legLengthScl).add(baseOffset).add(moveOffset);
-            Vec2 jointDest = Tmp.v2;
-            InverseKinematics.solve(legLength / 2.0F, legLength / 2.0F, Tmp.v6.set(l.base).sub(baseOffset), side, jointDest);
-            jointDest.add(baseOffset);
-            jointDest.lerp(Tmp.v6.set(baseOffset).lerp(l.base, 0.5F), 1.0F - this.type.kinematicScl);
-            if (move) {
-                float moveFract = stageF % 1.0F;
-                l.base.lerpDelta(legDest, moveFract);
-                l.joint.lerpDelta(jointDest, moveFract / 2.0F);
-            }
-
-            l.joint.lerpDelta(jointDest, moveSpeed / 4.0F);
-        }
-
-    }
-
-    public void clearItem() {
-        this.stack.amount = 0;
-    }
-
-    public void resetController() {
-        this.controller(this.type.createController());
-    }
-
-    public void heal(float amount) {
-        this.health += amount;
-        this.clampHealth();
-    }
-
-    public boolean hasItem() {
-        return this.stack.amount > 0;
-    }
-
-    public void apply(StatusEffect effect) {
-        this.apply(effect, 1.0F);
-    }
-
-    public boolean isNull() {
-        return false;
-    }
-
-    public boolean checkTarget(boolean targetAir, boolean targetGround) {
-        return this.isGrounded() && targetGround || this.isFlying() && targetAir;
-    }
-
-    public void collision(Hitboxc other, float x, float y) {
-    }
-
-    public boolean damaged() {
-        return this.health < this.maxHealth - 0.001F;
-    }
-
-    public Building closestCore() {
-        return Vars.state.teams.closestCore(this.x, this.y, this.team);
-    }
-
-    public float legAngle(float rotation, int index) {
-        return rotation + 360.0F / (float) this.legs.length * (float) index + 360.0F / (float) this.legs.length / 2.0F;
-    }
-
-    public void approach(Vec2 vector) {
-        this.vel.approachDelta(vector, this.type.accel * this.realSpeed() * this.floorSpeedMultiplier());
-    }
-
-    public UnitController controller() {
-        return this.controller;
-    }
-
-    public boolean hasWeapons() {
-        return this.type.hasWeapons();
-    }
-
-    public void aim(float x, float y) {
-        Tmp.v1.set(x, y).sub(this.x, this.y);
-        if (Tmp.v1.len() < this.type.aimDst) {
-            Tmp.v1.setLength(this.type.aimDst);
-        }
-
-        x = Tmp.v1.x + this.x;
-        y = Tmp.v1.y + this.y;
-        WeaponMount[] var3 = this.mounts;
-        int var4 = var3.length;
-
-        for (int var5 = 0; var5 < var4; ++var5) {
-            WeaponMount mount = var3[var5];
-            mount.aimX = x;
-            mount.aimY = y;
-        }
-
-        this.aimX = x;
-        this.aimY = y;
-    }
-
-    public <T extends Entityc> T self() {
-        return (T) this;
-    }
-
-    private Bullet bullet(Weapon weapon, float x, float y, float angle, float lifescl) {
-        float xr = Mathf.range(weapon.xRand);
-        return weapon.bullet.create(this, this.team(), x + Angles.trnsx(angle, 0.0F, xr), y + Angles.trnsy(angle, 0.0F, xr), angle, 1.0F - weapon.velocityRnd + Mathf.random(weapon.velocityRnd), lifescl);
-    }
-
-    public void set(float x, float y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void addBuild(BuildPlan place, boolean tail) {
-        if (this.canBuild()) {
-            BuildPlan replace = null;
-            Iterator var4 = this.plans.iterator();
-
-            while (var4.hasNext()) {
-                BuildPlan request = (BuildPlan) var4.next();
-                if (request.x == place.x && request.y == place.y) {
-                    replace = request;
-                    break;
-                }
-            }
-
-            if (replace != null) {
-                this.plans.remove(replace);
-            }
-
-            Tile tile = Vars.world.tile(place.x, place.y);
-            if (tile != null) {
-                Building var6 = tile.build;
-                ConstructBlock.ConstructBuild cons;
-                if (var6 instanceof ConstructBlock.ConstructBuild && (cons = (ConstructBlock.ConstructBuild) var6) == (ConstructBlock.ConstructBuild) var6) {
-                    place.progress = cons.progress;
-                }
-            }
-
-            if (tail) {
-                this.plans.addLast(place);
-            } else {
-                this.plans.addFirst(place);
-            }
-
-        }
-    }
-
-    public void hitboxTile(Rect rect) {
-        float size = Math.min(this.hitSize * 0.66F, 7.9F);
-        rect.setCentered(this.x, this.y, size, size);
-    }
-
-    public <T> T with(Cons<T> cons) {
-        cons.get((T) this);
-        return (T) this;
-    }
-
-    public void addBuild(BuildPlan place) {
-        this.addBuild(place, true);
-    }
-
-    public boolean offloadImmediately() {
-        return this.isPlayer();
-    }
-
-    public int tileY() {
-        return World.toTile(this.y);
-    }
-
-    public void hitbox(Rect rect) {
-        rect.setCentered(this.x, this.y, this.hitSize, this.hitSize);
-    }
-
-    public int itemCapacity() {
-        return this.type.itemCapacity;
-    }
-
-    public void controlWeapons(boolean rotateShoot) {
-        this.controlWeapons(rotateShoot, rotateShoot);
-    }
-
-    public boolean isGrounded() {
-        return this.elevation < 0.001F;
-    }
-
-    public void damagePierce(float amount, boolean withEffect) {
-        float pre = this.hitTime;
-        this.rawDamage(amount);
-        if (!withEffect) {
-            this.hitTime = pre;
-        }
-
-    }
-
-    public void controlWeapons(boolean rotate, boolean shoot) {
-        WeaponMount[] var3 = this.mounts;
-        int var4 = var3.length;
-
-        for (int var5 = 0; var5 < var4; ++var5) {
-            WeaponMount mount = var3[var5];
-            mount.rotate = rotate;
-            mount.shoot = shoot;
-        }
-
-        this.isRotate = rotate;
-        this.isShooting = shoot;
-    }
-
-    public boolean isBoss() {
-        return this.hasEffect(StatusEffects.boss);
-    }
-
-    public void healFract(float amount) {
-        this.heal(amount * this.maxHealth);
-    }
-
-    public boolean canPass(int tileX, int tileY) {
-        EntityCollisions.SolidPred s = this.solidity();
-        return s == null || !s.solid(tileX, tileY);
-    }
-
-    public boolean validMine(Tile tile) {
-        return this.validMine(tile, true);
-    }
-
-    public void clearCommand() {
-        Iterator var1 = this.controlling.iterator();
-
-        while (var1.hasNext()) {
-            Unit unit = (Unit) var1.next();
-            if (unit.controller().isBeingControlled(this)) {
-                unit.controller(unit.type.createController());
-            }
-        }
-
-        this.controlling.clear();
-        this.formation = null;
-    }
-
-    public boolean canPassOn() {
-        return this.canPass(this.tileX(), this.tileY());
-    }
-
-    public void interpolate() {
-        if (this.lastUpdated != 0L && this.updateSpacing != 0L) {
-            float timeSinceUpdate = (float) Time.timeSinceMillis(this.lastUpdated);
-            float alpha = Math.min(timeSinceUpdate / (float) this.updateSpacing, 2.0F);
-            this.rotation = Mathf.slerp(this.rotation_LAST_, this.rotation_TARGET_, alpha);
-            this.x = Mathf.lerp(this.x_LAST_, this.x_TARGET_, alpha);
-            this.y = Mathf.lerp(this.y_LAST_, this.y_TARGET_, alpha);
-        } else if (this.lastUpdated != 0L) {
-            this.rotation = this.rotation_TARGET_;
-            this.x = this.x_TARGET_;
-            this.y = this.y_TARGET_;
-        }
-
-    }
-
-    public void impulseNet(Vec2 v) {
-        this.impulse(v.x, v.y);
-        if (this.isRemote()) {
-            float mass = this.mass();
-            this.move(v.x / mass, v.y / mass);
-        }
-
-    }
-
-    public boolean inRange(Position other) {
-        return this.within(other, this.type.range);
-    }
-
-    public void setType(UnitType type) {
-        this.type = type;
-        this.maxHealth = type.health;
-        this.drag = type.drag;
-        this.armor = type.armor;
-        this.hitSize = type.hitSize;
-        this.hovering = type.hovering;
-        if (this.controller == null) {
-            this.controller(type.createController());
-        }
-
-        if (this.mounts().length != type.weapons.size) {
-            this.setupWeapons(type);
-        }
-
-        if (this.abilities.size != type.abilities.size) {
-            this.abilities = type.abilities.map(Ability::copy);
-        }
-
-    }
-
-    public boolean moving() {
-        return !this.vel.isZero(0.01F);
-    }
-
-    public void impulse(Vec2 v) {
-        this.impulse(v.x, v.y);
     }
 
     public boolean collides(Hitboxc other) {
@@ -2078,6 +2121,31 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         this.plans.clear();
     }
 
+    public int tileY() {
+        return World.toTile(this.y);
+    }
+
+    public float floorSpeedMultiplier() {
+        Floor on = !this.isFlying() && !this.hovering ? this.floorOn() : Blocks.air.asFloor();
+        return on.speedMultiplier * this.speedMultiplier;
+    }
+
+    public void unapply(StatusEffect effect) {
+        this.statuses.remove((e) -> {
+            if (e.effect == effect) {
+                Pools.free(e);
+                return true;
+            } else {
+                return false;
+            }
+        });
+    }
+
+    public void heal() {
+        this.dead = false;
+        this.health = this.maxHealth;
+    }
+
     public void readSync(Reads read) {
         if (this.lastUpdated != 0L) {
             this.updateSpacing = Time.timeSinceMillis(this.lastUpdated);
@@ -2109,7 +2177,17 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
             TypeIO.readMounts(read);
         }
 
+        int payloads_LENGTH = read.i();
+        this.payloads.clear();
+
         int statuses_LENGTH;
+        for (statuses_LENGTH = 0; statuses_LENGTH < payloads_LENGTH; ++statuses_LENGTH) {
+            Payload payloads_ITEM = TypeIO.readPayload(read);
+            if (payloads_ITEM != null) {
+                this.payloads.add(payloads_ITEM);
+            }
+        }
+
         int INDEX;
         if (!islocal) {
             statuses_LENGTH = read.i();
@@ -2152,7 +2230,7 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         }
 
         this.team = TypeIO.readTeam(read);
-        this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
+        this.type = Vars.content.getByID(ContentType.unit, read.s());
         if (!islocal) {
             this.updateBuilding = read.bool();
         } else {
@@ -2178,35 +2256,6 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         }
 
         this.afterSync();
-    }
-
-    public void damagePierce(float amount) {
-        this.damagePierce(amount, true);
-    }
-
-    public float floorSpeedMultiplier() {
-        Floor on = !this.isFlying() && !this.hovering ? this.floorOn() : Blocks.air.asFloor();
-        return on.speedMultiplier * this.speedMultiplier;
-    }
-
-    public void unapply(StatusEffect effect) {
-        this.statuses.remove((e) -> {
-            if (e.effect == effect) {
-                Pools.free(e);
-                return true;
-            } else {
-                return false;
-            }
-        });
-    }
-
-    public void heal() {
-        this.dead = false;
-        this.health = this.maxHealth;
-    }
-
-    public void trns(float x, float y) {
-        this.set(this.x + x, this.y + y);
     }
 
     public int tileX() {
@@ -2249,6 +2298,10 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         return this.controller instanceof Player;
     }
 
+    public boolean canPickup(Unit unit) {
+        return this.payloadUsed() + unit.hitSize * unit.hitSize <= this.type.payloadCapacity + 0.001F && unit.team == this.team() && unit.isAI();
+    }
+
     public float mass() {
         return this.hitSize * this.hitSize * 3.1415927F;
     }
@@ -2259,27 +2312,28 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
     }
 
     public BuildPlan buildPlan() {
-        return this.plans.size == 0 ? null : (BuildPlan) this.plans.first();
+        return this.plans.size == 0 ? null : this.plans.first();
     }
 
     public float range() {
         return this.type.range;
     }
 
-    public int pathType() {
-        return 1;
+    public void damagePierce(float amount) {
+        this.damagePierce(amount, true);
     }
 
     public boolean canBuild() {
         return this.type.buildSpeed > 0.0F;
     }
 
-    public static AdvancedLegsUnit create() {
-        return new AdvancedLegsUnit();
+    public void set(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 
     public int classId() {
-        return 24;
+        return classId;
     }
 
     public ItemStack stack() {
@@ -2634,6 +2688,14 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
         this.abilities = abilities;
     }
 
+    public Seq<Payload> payloads() {
+        return this.payloads;
+    }
+
+    public void payloads(Seq<Payload> payloads) {
+        this.payloads = payloads;
+    }
+
     public float x() {
         return this.x;
     }
@@ -2648,37 +2710,5 @@ public class AdvancedLegsUnit extends Unit implements Itemsc, Builderc, Weaponsc
 
     public void y(float y) {
         this.y = y;
-    }
-
-    public Leg[] legs() {
-        return this.legs;
-    }
-
-    public void legs(Leg[] legs) {
-        this.legs = legs;
-    }
-
-    public float totalLength() {
-        return this.totalLength;
-    }
-
-    public void totalLength(float totalLength) {
-        this.totalLength = totalLength;
-    }
-
-    public float moveSpace() {
-        return this.moveSpace;
-    }
-
-    public void moveSpace(float moveSpace) {
-        this.moveSpace = moveSpace;
-    }
-
-    public float baseRotation() {
-        return this.baseRotation;
-    }
-
-    public void baseRotation(float baseRotation) {
-        this.baseRotation = baseRotation;
     }
 }

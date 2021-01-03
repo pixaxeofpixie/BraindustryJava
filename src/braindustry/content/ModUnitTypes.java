@@ -1,25 +1,37 @@
 package braindustry.content;
 
+import arc.func.Boolf;
 import arc.func.Prov;
 import arc.graphics.Color;
-import mindustry.content.Bullets;
-import mindustry.content.Fx;
-import mindustry.content.StatusEffects;
-import mindustry.content.UnitTypes;
+import arc.graphics.g2d.Draw;
+import arc.math.Angles;
+import arc.math.Mathf;
+import braindustry.entities.PowerGeneratorUnit;
+import braindustry.entities.PowerUnitType;
+import braindustry.modVars.modVars;
+import mindustry.Vars;
+import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.entities.bullet.*;
+import mindustry.game.Team;
+import mindustry.gen.Building;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
 import mindustry.gen.Unit;
+import mindustry.graphics.Drawf;
 import mindustry.type.AmmoTypes;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
+import mindustry.world.Block;
+import mindustry.world.Tile;
+import mindustry.world.blocks.power.PowerBlock;
 
 public class ModUnitTypes implements ContentList {
     public static UnitType
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
-            lyra, shield, tropsy, venti;
+            lyra, shield, tropsy, venti,
+            powerUnit;
 
     private static class Types {
         static Prov<? extends Unit> payload = EntityMapping.map("PayloadUnit");
@@ -33,6 +45,79 @@ public class ModUnitTypes implements ContentList {
 
     @Override
     public void load() {
+        powerUnit = new PowerUnitType("power-unit") {
+            public Block getGeneratorBlock(){
+                return ModBlocks.unitGenerator;
+            }
+            {
+                this.range=18;
+                this.constructor = ()->new PowerGeneratorUnit();
+                this.localizedName = "Atomic";
+                this.description = "Power Generator";
+                this.speed = 0.9f;
+                this.flying = true;
+                this.hitSize = 27;
+                this.engineSize = 7;
+                this.armor = 12;
+                this.health = 10000;
+                this.rotateSpeed = 1.2f;
+                this.targetAir = true;
+                this.payloadCapacity = 300;
+                this.buildSpeed = 1.3f;
+                this.commandLimit = 6;
+                this.weapons.add(
+                        new Weapon("bomb-weapon") {
+                            {
+                                this.x = 0;
+                                this.y = -12f;
+                                this.mirror = false;
+                                this.reload = 75;
+                                this.minShootVelocity = 0.02f;
+                                this.shootSound = Sounds.plasmadrop;
+                                this.bullet=new BasicBulletType() {
+                                    {
+                                        this.width = 60;
+                                        this.height = 60;
+                                        this.maxRange = 30;
+                                        //this.shootCone = 190;
+                                        this.despawnShake = 3;
+                                        this.collidesAir = false;
+                                        this.lifetime = 30;
+                                        this.despawnEffect = ModFx.yellowBomb;
+                                        this.hitEffect = Fx.massiveExplosion;
+                                        this.hitSound = Sounds.plasmaboom;
+                                        this.keepVelocity = false;
+                                        this.spin = 1;
+                                        this.shrinkX = 0.6f;
+                                        this.shrinkY = 0.6f;
+                                        this.speed = 0.002f;
+                                        this.collides = false;
+                                        this.healPercent = 15;
+                                        this.splashDamage = 450;
+                                        this.splashDamageRadius = 220;
+                                    }
+                                };
+                            }
+                        },
+                        new Weapon("broadsword-weapon") {
+                            {
+                                this.top = false;
+                                this.y = -3f;
+                                this.x = 32;
+                                this.reload = 40;
+                                this.recoil = 2;
+                                this.shootSound = Sounds.missile;
+                                this.shots = 5;
+                                this.inaccuracy = 0.4f;
+                                this.velocityRnd = 0.2f;
+                                this.alternate = true;
+                                this.mirror = true;
+                                this.bullet=Bullets.missileExplosive;
+                            }
+                        }
+                );
+            }
+        };
         ibis = new UnitType("ibis") {
             {
                 this.constructor = Types.legs;

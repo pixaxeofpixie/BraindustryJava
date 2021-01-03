@@ -67,8 +67,10 @@ public class TechTreeManager {
     }
 
     public TechTree.TechNode node(UnlockableContent content, ItemStack[] requirements, Seq<Objectives.Objective> objectives, Runnable children) {
-        TechTree.TechNode node = TechTree.get(content);
-        if (node == null) {
+        TechTree.TechNode node;
+        try {
+            node = TechTree.getNotNull(content);
+        } catch (RuntimeException runtimeException){
             node = new TechTree.TechNode(context, content, requirements);
             if (objectives != null) {
                 node.objectives.addAll(objectives);

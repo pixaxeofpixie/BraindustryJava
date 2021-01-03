@@ -5,6 +5,7 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.util.Tmp;
+import braindustry.entities.bullets.ReflectionBullet;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -13,6 +14,7 @@ import mindustry.ctype.ContentList;
 import mindustry.entities.bullet.*;
 import mindustry.gen.Bullet;
 import mindustry.gen.Sounds;
+import mindustry.graphics.Pal;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.blocks.defense.Wall;
@@ -28,9 +30,9 @@ public class ModDefense implements ContentList {
 
     @Override
     public void load() {
-        Heartbeat=new ItemTurret("heartbeat"){
+        heartbeat =new ItemTurret("heartbeat"){
             {
-
+                this.localizedName="Heartbeat";
                 this.range = 400;
 //                this.recoilAmount = 28;
                 this.reloadTime = 15;
@@ -70,11 +72,12 @@ public class ModDefense implements ContentList {
 //                                this.length = 4;
                                 this.hittable = true;
                                 this.ammoMultiplier = 1;
-                                this.backColor=Color.gray;
+                                this.backColor= Pal.lancerLaser;
                                 this.frontColor=Color.white;
                                 this.hitColor=this.trailColor=this.lightColor=this.lightningColor=Color.gray;
                             }
                         },
+                        Items.copper, new ReflectionBullet(),
                         Items.surgeAlloy, new SapBulletType(){
                             {
                                 this.sapStrength = 1.2f;

@@ -166,50 +166,30 @@ public class BlockSwitcher extends Block {
 
             return posses;
         }
-        private void fromPosses(Seq<Integer> posses){
-            links.clear();
-            posses.each((pos) -> {
-                Building build = Vars.world.build(pos);
-                if (build != null && !linked(build)) links.add(build);
-            });
-        }
-        public Seq<Integer> config() {
-            return getPosses();
-        }
-
-        protected void readConfig(String config) {
-            Seq<Integer> posses = JsonIO.json().fromJson(Seq.class, config);
-
-            links.clear();
-            posses.each((pos) -> {
-                Building build = Vars.world.build(pos);
-                if (build != null && !linked(build)) links.add(build);
-            });
-            onUpdate.add(()->{
-            });
+        public String config() {
+            return JsonIO.json().toJson(getPosses());
         }
 
         @Override
         public void write(Writes write) {
             super.write(write);
-            if (true)return;
-            Seq<Integer> posses=getPosses();
-            write.i(posses.size);
-            posses.each(pos->{
-                write.i(pos);
+            write.str(config());
+        }
+        public void handleString(String value) {
+            Seq<Integer> posses = JsonIO.json().fromJson(Seq.class, value);
+
+            onUpdate.add(()->{
+                links.clear();
+                posses.each((pos) -> {
+                    Building build = Vars.world.build(pos);
+                    if (build != null && !linked(build)) links.add(build);
+                });
             });
         }
-
         @Override
-        public void read(Reads read) {
-            super.read(read);
-            if (true)return;
-            int size=read.i();
-            Seq<Integer> posses=new Seq<>(size);
-            for (int i = 0; i < size; i++) {
-                posses.set(i,read.i());
-            }
-            fromPosses(posses);
+        public void read(Reads read, byte revision) {
+            super.read(read, revision);
+            handleString(read.str());
         }
 
         protected boolean linked(Building other) {

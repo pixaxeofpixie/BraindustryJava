@@ -4,6 +4,7 @@ package braindustry.modVars;
 import arc.Core;
 import arc.Events;
 import arc.func.Cons;
+import arc.func.Prov;
 import arc.graphics.Color;
 import arc.graphics.Cubemap;
 import arc.scene.ui.Dialog;
@@ -15,10 +16,20 @@ import mindustry.Vars;
 import mindustry.content.TechTree;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType;
+import mindustry.gen.EntityMapping;
 
 import static braindustry.modVars.modVars.*;
 
 public class modFunc {
+    public static int addEntityMappingIdMap(Prov prov){
+        for (int i = 0; i < EntityMapping.idMap.length; i++) {
+            if (EntityMapping.idMap[i]==null){
+                EntityMapping.idMap[i]=prov;
+                return i;
+            }
+        }
+        return -1;
+    }
     public static void inTry(Runnable runnable){
         try{
             runnable.run();

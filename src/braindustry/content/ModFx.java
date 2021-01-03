@@ -8,7 +8,7 @@ import arc.graphics.g2d.*;
 import arc.math.Angles;
 import arc.math.Mathf;
 import mindustry.Vars;
-import mindustry.content.*;
+import mindustry.content.Fx;
 import mindustry.entities.*;
 import mindustry.graphics.*;
 
@@ -16,24 +16,6 @@ import static braindustry.modVars.modFunc.*;
 
 public class ModFx {
     private static final float Distance = Core.camera.width + Core.camera.height + 30 * Vars.tilesize;
-
-    private static Effect newSwEff(float lifetime, float startSize, float multiplier, Color color1, Color color2, float finion) {
-        Effect effect = new Effect(lifetime, e -> {
-            Draw.color(color1, color2, e.fout());
-            Lines.stroke(startSize + multiplier * e.fout());
-            Lines.swirl(e.x, e.y, startSize + multiplier * e.fin(), finion, 0);
-        });
-        return effect;
-    }
-
-    private static Effect newCiEff(float lifetime, float startSize, float multiplier, Color color1, Color color2) {
-        Effect effect = new Effect(lifetime, e -> {
-            Draw.color(color1, color2, e.fout());
-            Fill.circle(e.x, e.y, startSize + e.fout() * multiplier);
-        });
-        return effect;
-    }
-
     private static final Color[] gemColors = {ModPal.rubyLight, ModPal.emeraldLight, ModPal.sapphireUnitDecalLight, ModPal.angel, ModPal.topazLight, ModPal.amethystLight};
     private static Color[] gemColorsBack = {ModPal.rubyDark, ModPal.emeraldDark, ModPal.sapphireUnitDecalDark, ModPal.angelDark, ModPal.topazDark, ModPal.amethystDark};
     private static final float[] energyShootsAngle = {-50, -25, 25, 50},
@@ -43,7 +25,11 @@ public class ModFx {
             spikeTurretShootsWidth = {7.6f, 9.8f, 9.8f, 7.6f},
             spikeTurretShootsHeight = {16.2f, 26.0f, 26.0f, 16.2f};
 
-    public static final Effect magicTrailSwirl = newSwEff(15, 0.3f, 2.2f, ModPal.magicLight, ModPal.magic, 10);
+    public static final Effect magicTrailSwirl = new Effect((float) 15, e -> {
+        Draw.color(ModPal.magicLight, ModPal.magic, e.fout());
+        Lines.stroke((float) 0.3 + (float) 2.2 * e.fout());
+        Lines.swirl(e.x, e.y, (float) 0.3 + (float) 2.2 * e.fin(), (float) 10, 0);
+    });;
     public static final Effect magicBulletTrail = new Effect(30, Distance, e -> {
         Draw.color(ModPal.magicLight, ModPal.magic, e.fout());
         Lines.stroke(e.fout() * 2);
