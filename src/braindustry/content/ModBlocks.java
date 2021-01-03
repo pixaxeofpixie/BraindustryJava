@@ -1,6 +1,9 @@
 package braindustry.content;
 
+import Gas.GasItemLiquidGenerator;
+import Gas.type.Gas;
 import Gas.world.GasPowerGenerator;
+import Gas.world.consumers.ConsumeGasses;
 import Gas.world.consumers.GasConsumers;
 import braindustry.content.Blocks.ModBlocksUnits;
 import braindustry.content.Blocks.ModDefense;
@@ -17,6 +20,7 @@ import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.power.BurnerGenerator;
 import mindustry.world.blocks.power.ItemLiquidGenerator;
+import mindustry.world.consumers.Consume;
 import mindustry.world.meta.BuildVisibility;
 
 public class ModBlocks implements ContentList {
@@ -83,11 +87,17 @@ public class ModBlocks implements ContentList {
             }
         };
 
-        methaneBurner = new GasPowerGenerator("methane-burner") {
+        methaneBurner = new GasItemLiquidGenerator("methane-burner") {
             {
                 update = true;
+                hasPower = true;
+                hasGas = true;
                 localizedName = "methane burner";
                 description = "burn all you methane";
+                powerProduction = 5f;
+                gasCapacity = 5f;
+                size = 2;
+                consumes.add(new ConsumeGasses(ModGasses.methane, 1));
                 requirements(Category.power, ItemStack.with(Items.silicon, 60, Items.copper, 50, Items.graphite, 90));
             }
         };
