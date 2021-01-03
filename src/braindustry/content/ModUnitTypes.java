@@ -34,7 +34,7 @@ public class ModUnitTypes implements ContentList {
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
             lyra, shield, tropsy, venti,
-            powerUnit;
+            vyvna;
 
     private static class Types {
         static Prov<? extends Unit> payload = EntityMapping.map("PayloadUnit");
@@ -48,7 +48,7 @@ public class ModUnitTypes implements ContentList {
 
     @Override
     public void load() {
-        powerUnit = new PowerUnitType("power-unit") {
+        vyvna = new PowerUnitType("vyvna") {
             public Block getGeneratorBlock(){
                 return ModBlocks.unitGenerator;
             }
@@ -57,65 +57,87 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = ()->new PowerGeneratorUnit();
                 this.localizedName = "Atomic";
                 this.description = "Power Generator";
-                this.speed = 0.9f;
-                this.flying = true;
-                this.hitSize = 27;
-                this.engineSize = 7;
-                this.armor = 12;
-                this.health = 10000;
-                this.rotateSpeed = 1.2f;
-                this.targetAir = true;
-                this.payloadCapacity = 300;
-                this.buildSpeed = 1.3f;
-                this.commandLimit = 6;
+                this.health = 5300;
+                this.speed = 0.6f;
+                this.accel = 0.13f;
+                this.rotateSpeed = 1.3f;
+                this.drag = 0.23f;
+                this.hitSize = 38;
+                this.armor = 10;
+                this.rotateShooting = false;
+                this.trailLength = 43;
+                this.trailX = 12;
+                this.trailY = 18;
+                this.trailScl = 2.8f;
                 this.weapons.add(
-                        new Weapon("bomb-weapon") {
+                        new Weapon("cenda-weapon") {
                             {
-                                this.x = 0;
-                                this.y = -12f;
-                                this.mirror = false;
-                                this.reload = 75;
-                                this.minShootVelocity = 0.02f;
-                                this.shootSound = Sounds.plasmadrop;
-                                this.bullet=new BasicBulletType() {
+                                this.reload = 35;
+                                this.x = 14;
+                                this.y = -17f;
+                                this.shadow = 8;
+                                this.rotateSpeed = 0.5f;
+                                this.rotate = true;
+                                this.shots = 9;
+                                this.shotDelay = 15;
+                                this.inaccuracy = 1;
+                                this.velocityRnd = 0.1f;
+                                this.shootSound = Sounds.missile;
+                                this.bullet=new MissileBulletType() {
                                     {
-                                        this.width = 60;
-                                        this.height = 60;
-                                        this.maxRange = 30;
-                                        //this.shootCone = 190;
-                                        this.despawnShake = 3;
-                                        this.collidesAir = false;
-                                        this.lifetime = 30;
-                                        this.despawnEffect = ModFx.yellowBomb;
-                                        this.hitEffect = Fx.massiveExplosion;
-                                        this.hitSound = Sounds.plasmaboom;
-                                        this.keepVelocity = false;
-                                        this.spin = 1;
-                                        this.shrinkX = 0.6f;
-                                        this.shrinkY = 0.6f;
-                                        this.speed = 0.002f;
-                                        this.collides = false;
-                                        this.healPercent = 15;
-                                        this.splashDamage = 450;
-                                        this.splashDamageRadius = 220;
+                                        this.width = 15;
+                                        this.height = 21;
+                                        this.shrinkY = 0.3f;
+                                        this.speed = 2.9f;
+                                        this.drag = -0.01f;
+                                        this.splashDamageRadius = 30;
+                                        this.splashDamage = 22;
+                                        this.hitEffect = Fx.blastExplosion;
+                                        this.despawnEffect = Fx.blastExplosion;
+                                        this.homingPower = 0.1f;
+                                        this.lightningDamage = 6;
+                                        this.lightning = 8;
+                                        this.lightningLength = 5;
+                                        this.makeFire = true;
+                                        this.status = StatusEffects.burning;
+                                        this.lifetime = 85;
+                                        this.trailColor = Color.valueOf("b3bee0");
+                                        this.backColor = Color.valueOf("7bafc4");
+                                        this.frontColor = Color.valueOf("b5eff4");
+                                        this.weaveScale = 3;
+                                        this.weaveMag = 6;
                                     }
                                 };
                             }
                         },
-                        new Weapon("broadsword-weapon") {
+                        new Weapon("cenda-weapon2") {
                             {
-                                this.top = false;
-                                this.y = -3f;
-                                this.x = 32;
-                                this.reload = 40;
+                                this.x = 9;
+                                this.y = 7;
+                                this.shootY = -1f;
+                                this.reload = 50;
+                                this.ejectEffect = Fx.none;
                                 this.recoil = 2;
-                                this.shootSound = Sounds.missile;
-                                this.shots = 5;
-                                this.inaccuracy = 0.4f;
-                                this.velocityRnd = 0.2f;
+                                this.rotate = true;
+                                this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.mirror = true;
-                                this.bullet=Bullets.missileExplosive;
+                                this.bullet=new ShrapnelBulletType() {
+                                    {
+                                        this.length = 130;
+                                        this.damage = 92;
+                                        this.width = 58;
+                                        this.lifetime = 20;
+                                        this.serrationLenScl = 2;
+                                        this.serrationSpaceOffset = 1;
+                                        this.serrationFadeOffset = 0;
+                                        this.serrations = 16;
+                                        this.serrationWidth = 51;
+                                        this.fromColor = Color.valueOf("995ce8");
+                                        this.toColor = Color.valueOf("00ffff");
+                                        this.shootEffect = Fx.sparkShoot;
+                                        this.smokeEffect = Fx.sparkShoot;
+                                    }
+                                };
                             }
                         }
                 );
@@ -511,7 +533,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-
+        //===========================
         armor = new UnitType("armor") {
             {
                 this.constructor = Types.payload;
@@ -807,6 +829,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
+        //===========================
         venti = new UnitType("venti") {
             {
                 this.localizedName = "Vixy";

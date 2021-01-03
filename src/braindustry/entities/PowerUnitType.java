@@ -1,34 +1,59 @@
 package braindustry.entities;
 
-import arc.func.Boolf;
+import arc.Core;
 import arc.func.Boolf2;
+import arc.graphics.Blending;
+import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.TextureRegion;
 import arc.math.Angles;
 import arc.math.Mathf;
-import braindustry.content.ModBlocks;
+import arc.struct.Seq;
+import arc.util.Time;
 import braindustry.modVars.modVars;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
-import mindustry.Vars;
-import mindustry.content.Blocks;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
-import mindustry.world.Tile;
-import mindustry.world.blocks.power.PowerBlock;
 import mindustry.world.blocks.power.PowerGraph;
-
-import static braindustry.modVars.modFunc.print;
 
 public abstract class PowerUnitType extends UnitType {
 
     public abstract Block getGeneratorBlock();
-     boolean loaded=false;
+    public TextureRegion bottomRegion;
+    public TextureRegion light;
+    public TextureRegion[] plasmaRegions;
+    public Color plasma1,plasma2;
+    public void drawReactor(Unit unit){
+        Draw.rect(this.bottomRegion, unit.x, unit.y);
+
+        for(int i = 0; i < this.plasmaRegions.length; ++i) {
+            float r = (float)(this.hitSize * 8) - 3.0F + Mathf.absin(Time.time, 2.0F + (float)i * 1.0F, 5.0F - (float)i * 0.5F);
+            Draw.color(this.plasma1, this.plasma2, (float)i / (float)this.plasmaRegions.length);
+            Draw.alpha((0.3F + Mathf.absin(Time.time, 2.0F + (float)i * 2.0F, 0.3F + (float)i * 0.05F)) * 1);
+            Draw.blend(Blending.additive);
+            Draw.rect(this.plasmaRegions[i], unit.x, unit.y, r, r, Time.time * (12.0F + (float)i * 6.0F) * 1);
+            Draw.blend();
+        }
+
+        Draw.color();
+        Draw.rect(this.region, unit.x, unit.y);
+        Draw.color();
+    }
     @Override
     public void load() {
         super.load();
+        this.bottomRegion = Core.atlas.find(this.name+"-bottom");
+        this.light= Core.atlas.find(this.name+"-light");
+        Seq<TextureRegion> plasmas=new Seq<>();
+        int i=0;
+        for (TextureRegion plasma=Core.atlas.find(this.name+"-plasma-"+i);Core.atlas.isFound(plasma);plasma=Core.atlas.find(this.name+"-plasma-"+(++i))){
+            plasmas.add(plasma);
+        }
+        this.plasmaRegions =plasmas.toArray();
     }
 
     protected void drawLaser(Team team, float x1, float y1, float x2, float y2, int size1, int size2) {
@@ -45,18 +70,7 @@ public abstract class PowerUnitType extends UnitType {
     });
     public void draw(PowerGeneratorUnit unit) {
         super.draw(unit);
-
-        /*for (int x = (int) ((float) tile.x - this.range); (float) x <= (float) tile.x + this.range; ++x) {
-            for (int y = (int) ((float) tile.y - this.range); (float) y <= (float) tile.y + this.range; ++y) {
-                Building link = Vars.world.build(x, y);
-                boolean linked = good.get(link,unit);
-                if (linked) {
-                    Draw.z(z-0.1f);
-                    drawLaser(unit.team,unit.x,unit.y,link.x,link.y,1,link.block.size);
-                }
-
-            }
-        }*/
+        drawReactor(unit);
     }
     public boolean goodBuilding(BlockSwitcher.BlockSwitcherBuild forB, Building other) {
         return other.dst(forB) <= (range + other.block.size+Mathf.ceil(forB.block.size/2f)) * 8f && forB != other && forB.isValid() && other.isValid();
@@ -75,6 +89,8 @@ public abstract class PowerUnitType extends UnitType {
 
     public PowerUnitType(String name) {
         super(name);
+        this.plasma1 = Color.valueOf("ffd06b");
+        this.plasma2 = Color.valueOf("ff361b");
     }
 
     @Override
