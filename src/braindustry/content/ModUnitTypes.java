@@ -44,48 +44,91 @@ public class ModUnitTypes implements ContentList {
                 return ModBlocks.unitGenerator;
             }
             {
-                this.range=18;
+                this.range = 18;
                 this.constructor = ()->new PowerGeneratorUnit();
-                this.localizedName = "Atomic";
-                this.description = "Power Generator";
-                this.health = 5300;
+                this.localizedName = "Vyvna";
+                this.description = "Giant atomic cruiser, produce energy and fires from railguns and rocket launchers.";
+                this.health = 21900;
                 this.speed = 0.6f;
-                this.accel = 0.13f;
-                this.rotateSpeed = 1.3f;
+                this.accel = 0.1f;
+                this.rotateSpeed = 1.0f;
                 this.drag = 0.23f;
-                this.hitSize = 38;
+                this.hitSize = 82;
                 this.armor = 10;
                 this.rotateShooting = false;
-                this.trailLength = 43;
-                this.trailX = 12;
-                this.trailY = 18;
-                this.trailScl = 2.8f;
+                this.trailLength = 90;
+                this.trailX = 46;
+                this.trailY = 23;
+                this.trailScl = 4f;
+                
+                abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
+                
                 this.weapons.add(
                         new ModWeapon("cenda-weapon") {
                             {
-                                this.reload = 35;
-                                this.x = 14;
-                                this.y = -17f;
-                                this.shadow = 8;
-                                this.rotateSpeed = 0.5f;
+                                this.reload =60;
+                                this.x = 27;
+                                this.y = 5f;
+                                this.shadow = 15;
+                                this.rotateSpeed = 0.4f;
                                 this.rotate = true;
-                                this.shots = 9;
-                                this.shotDelay = 15;
-                                this.inaccuracy = 1;
+                                this.shots = 6;
+                                this.shotDelay = 10;
+                                this.inaccuracy = 1.5;
+                                this.velocityRnd = 0.5f;
+                                this.shootSound = Sounds.missile;
+                                this.bullet = new MissileBulletType() {
+                                    {
+                                        this.width = 15;
+                                        this.height = 25;
+                                        this.shrinkY = 0.1f;
+                                        this.speed = 2.5f;
+                                        this.drag = 0f;
+                                        this.splashDamageRadius = 50;
+                                        this.splashDamage = 30;
+                                        this.hitEffect = Fx.blastExplosion;
+                                        this.despawnEffect = Fx.blastExplosion;
+                                        this.homingPower = 0.5f;
+                                        this.lightningDamage = 10;
+                                        this.lightning = 4;
+                                        this.lightningLength = 10;
+                                        this.makeFire = true;
+                                        this.status = StatusEffects.burning;
+                                        this.lifetime = 100;
+                                        this.trailColor = Color.valueOf("f2e2ff");
+                                        this.backColor = Color.valueOf("c496d3");
+                                        this.frontColor = Color.valueOf("f2c9ff");
+                                        this.weaveScale = 1;
+                                        this.weaveMag = 3;
+                                    }
+                                };
+                            }
+                        },
+                        new ModWeapon("cenda-weapon") {
+                                {
+                                this.reload = 80;
+                                this.x = 14;
+                                this.y = 2f;
+                                this.shadow = 12;
+                                this.rotateSpeed = 0.6f;
+                                this.rotate = true;
+                                this.shots = 4;
+                                this.shotDelay = 5;
+                                this.inaccuracy = 0.7;
                                 this.velocityRnd = 0.1f;
                                 this.shootSound = Sounds.missile;
                                 this.bullet=new MissileBulletType() {
                                     {
                                         this.width = 15;
-                                        this.height = 21;
-                                        this.shrinkY = 0.3f;
-                                        this.speed = 2.9f;
-                                        this.drag = -0.01f;
+                                        this.height = 15;
+                                        this.shrinkY = 0.1f;
+                                        this.speed = 3.0f;
+                                        this.drag = 0.01f;
                                         this.splashDamageRadius = 30;
-                                        this.splashDamage = 22;
+                                        this.splashDamage = 52;
                                         this.hitEffect = Fx.blastExplosion;
                                         this.despawnEffect = Fx.blastExplosion;
-                                        this.homingPower = 0.1f;
+                                        this.homingPower = 0.2f;
                                         this.lightningDamage = 6;
                                         this.lightning = 8;
                                         this.lightningLength = 5;
@@ -101,34 +144,31 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("cenda-weapon2") {
+                        new ModWeapon("vyvna-weapon") {
                             {
-                                this.x = 9;
-                                this.y = 7;
-                                this.shootY = -1f;
-                                this.reload = 50;
+                                this.x = 25;
+                                this.y = -30;
+                                this.shootY = -3f;
+                                this.reload = 105;
                                 this.ejectEffect = Fx.none;
-                                this.recoil = 2;
+                                this.recoil = 5;
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet=new ShrapnelBulletType() {
+                                this.bullet = new PointBulletType(){
                                     {
-                                        this.length = 130;
-                                        this.damage = 92;
-                                        this.width = 58;
-                                        this.lifetime = 20;
-                                        this.serrationLenScl = 2;
-                                        this.serrationSpaceOffset = 1;
-                                        this.serrationFadeOffset = 0;
-                                        this.serrations = 16;
-                                        this.serrationWidth = 51;
-                                        this.fromColor = Color.valueOf("995ce8");
-                                        this.toColor = Color.valueOf("00ffff");
-                                        this.shootEffect = Fx.sparkShoot;
-                                        this.smokeEffect = Fx.sparkShoot;
+                                    this.shootEffect = Fx.instShoot;
+                                    this.hitEffect = Fx.instHit;
+                                    this.smokeEffect = Fx.smokeCloud;
+                                    this.trailEffect = Fx.instTrail;
+                                    this.despawnEffect = Fx.instBomb;
+                                    this.trailSpacing = 15f;
+                                    this.damage = 1240;
+                                    this.buildingDamageMultiplier = 0.4f;
+                                    this.speed = brange;
+                                    this.hitShake = 7f;
                                     }
-                                };
+                                }
                             }
                         }
                 );
