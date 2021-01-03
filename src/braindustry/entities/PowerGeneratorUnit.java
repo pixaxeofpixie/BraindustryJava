@@ -15,10 +15,6 @@ import mindustry.gen.UnitWaterMove;
 import mindustry.world.Tile;
 import mindustry.world.blocks.power.PowerGraph;
 
-import java.nio.FloatBuffer;
-
-import static braindustry.modVars.modFunc.print;
-
 public class PowerGeneratorUnit extends UnitWaterMove {
     public static final int classId = 41;
     public int classId() {

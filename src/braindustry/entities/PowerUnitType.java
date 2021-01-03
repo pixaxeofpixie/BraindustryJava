@@ -10,7 +10,8 @@ import arc.math.Angles;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Time;
-import braindustry.modVars.modVars;
+import braindustry.modVars.ModVars;
+import braindustry.modVars.ModVars;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import mindustry.game.Team;
 import mindustry.gen.Building;
@@ -65,7 +66,7 @@ public abstract class PowerUnitType extends UnitType {
         float vy = Mathf.sinDeg(angle1);
         float len1 = (float)(size1 * 8) / 2.0F - 1.5F;
         float len2 = (float)(size2 * 8) / 2.0F - 1.5F;
-        Drawf.laser(team,  modVars.modAtlas.laser, modVars.modAtlas.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
+        Drawf.laser(team, ModVars.modAtlas.laser, ModVars.modAtlas.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
     }
     Boolf2<Building,Unit> good=((building,unit) -> {
         if (building==null)return false;

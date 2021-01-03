@@ -34,7 +34,7 @@ public class TestBlock extends Block {
     @Override
     public void load() {
 
-        Core.atlas.addRegion(this.name,Core.atlas.find(fullName("testBlock")));
+        Core.atlas.addRegion(this.name,Core.atlas.find(getFullName("testBlock")));
         super.load();
 //        this.region=Core.atlas.find(getFullName("testBlock"));
     }

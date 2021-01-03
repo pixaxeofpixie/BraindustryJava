@@ -9,8 +9,8 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 
-import static braindustry.modVars.modFunc.fullName;
-import static braindustry.modVars.modVars.modInfo;
+import static braindustry.modVars.ModFunc.getFullName;
+import static braindustry.modVars.ModVars.modInfo;
 
 public class ModSettings {
     public ModSettings(){
@@ -18,7 +18,7 @@ public class ModSettings {
     }
     private String full(String name){
         if (name.equals("cheat"))return "zelConst-"+name;
-        return fullName(name);
+        return getFullName(name);
     }
     private void put(String name,Object value){
         if (Core.settings.has(full(name))){

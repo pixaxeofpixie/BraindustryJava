@@ -120,7 +120,7 @@ public class MainModClass extends Mod {
         Time.runTask(10f, () -> {
             BaseDialog dialog = new BaseDialog("Welcome");
             dialog.cont.add("Hello it's braindustry java mod").row();
-            dialog.cont.image(Core.atlas.find(fullName("welcome"))).pad(20f).row();
+            dialog.cont.image(Core.atlas.find(getFullName("welcome"))).pad(20f).row();
             dialog.cont.button("Ok", dialog::hide).size(100f, 50f);
             dialog.show();
         });
