@@ -1,5 +1,7 @@
 ![alt tag](https://psv4.userapi.com/c856420/u543027815/docs/d1/eb89c90bbca0/aaa1.png?extra=oJqQZNKnpklrwgBHtkPO9bvcxeBmI4eERHLKW7VzCci07KtJmn1TFHe9QHqEiA8owdiHwz1v_xWbyxBLWerhaNJ3O4hnxgYsfzshL96HmbJIAy9dJLtVftrjB7i_xaIF-93lK2ofgP9xMaGk-qir_kiJ "Screenshot")
-Mindustry Java Mod
+Mindustry Java Mod By Braindustry Team 
+
+![](https://psv4.userapi.com/c856536/u543027815/docs/d16/68103b9d8180/vyfyvfyv.png?extra=JyuGfOYCY-kvsuW4f8495blCjHRUei2LdIembdofNVT8lMUWK3u5gag3nfxegcLET_sjlKOp4M6Rb7n4yVRnFAEJQ2A_NwQb5h3rdI5J5o2HB5EYHd_QqTFSUxmE8pqNirVyE3NaudFz64oyeIhAMFL0)
 
 [Trello Board](https://trello.com/b/ZapdrgJm/braindustry)
 
