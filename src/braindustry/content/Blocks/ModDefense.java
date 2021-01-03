@@ -1,4 +1,5 @@
 package braindustry.content.Blocks;
+import arc.struct.Seq;
 import braindustry.content.*;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
@@ -23,6 +24,7 @@ import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LaserTurret;
 import mindustry.world.blocks.defense.turrets.PointDefenseTurret;
 import mindustry.world.blocks.defense.turrets.TractorBeamTurret;
+import mindustry.world.consumers.ConsumeLiquidFilter;
 
 import static braindustry.content.ModBlocks.*;
 import static mindustry.content.Bullets.*;
@@ -657,7 +659,7 @@ public class ModDefense implements ContentList {
         };
         gloryTurret = new LaserTurret("glory"){{
                 this.localizedName = "Synaps";
-                this.requirements(Category.turret, with(Items.plastanium, 340, Items.lead, 350, Items.phaseFabric, 260, Items.surgeAlloy, 360, Items.silicon, 390));
+                this.requirements(Category.turret, ItemStack.with(Items.plastanium, 340, Items.lead, 350, Items.phaseFabric, 260, Items.surgeAlloy, 360, Items.silicon, 390));
                 this.shootEffect = Fx.greenBomb;
                 this.shootCone = 21f;
                 this.recoilAmount = 6f;

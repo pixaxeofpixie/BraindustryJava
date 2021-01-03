@@ -10,9 +10,15 @@ import mindustry.gen.Unit;
 
 public class UnitExtensions {
     public static UnitExtensions blink = new UnitExtensions((unit) -> {
+        if (unit.isShooting){
+            unit.health+=0.01f;
+        }
     }, (unit) -> {
-//        Draw.alpha(unit.healthf());
-        Draw.alpha(Mathf.absin(Time.time+Mathf.randomSeed(unit.id,0,1000000), 1f, 4.0F) / 8f+0.5f);
+        if (unit.isShooting){
+            Draw.alpha(unit.healthf());
+        } else {
+            Draw.alpha(Mathf.absin(Time.time + Mathf.randomSeed(unit.id, 0, 1000000), 1f, 4.0F) / 8f + 0.5f);
+        }
     });
     ;
     public Cons<Unit> update;
