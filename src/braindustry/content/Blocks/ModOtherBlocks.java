@@ -89,6 +89,14 @@ public class ModOtherBlocks implements ContentList {
                 this.itemCapacity = 12;
             }
         };
+        surgePayloadConveyor = new PayloadConveyor("surge-payload-conveyor"){
+            {
+            this.health = 310;
+            this.requirements(Category.distribution, with(Items.graphenite, 10, Items.surge, 5));
+            this.canOverdrive = true;
+            this.size = 6;
+            }
+        };
         magmaFloor = new Floor("magma-floor") {
             {
                 this.localizedName = "Magma";
