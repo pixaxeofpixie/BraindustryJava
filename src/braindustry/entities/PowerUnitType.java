@@ -31,7 +31,7 @@ public abstract class PowerUnitType extends UnitType {
         Draw.rect(this.bottomRegion, unit.x, unit.y);
 
         for(int i = 0; i < this.plasmaRegions.length; ++i) {
-            float r = (float)(this.hitSize * 8) - 3.0F + Mathf.absin(Time.time, 2.0F + (float)i * 1.0F, 5.0F - (float)i * 0.5F);
+            float r = (float)(this.hitSize) - 3.0F + Mathf.absin(Time.time, 2.0F + (float)i * 1.0F, 5.0F - (float)i * 0.5F);
             Draw.color(this.plasma1, this.plasma2, (float)i / (float)this.plasmaRegions.length);
             Draw.alpha((0.3F + Mathf.absin(Time.time, 2.0F + (float)i * 2.0F, 0.3F + (float)i * 0.05F)) * 1);
             Draw.blend(Blending.additive);
@@ -39,8 +39,8 @@ public abstract class PowerUnitType extends UnitType {
             Draw.blend();
         }
 
-        Draw.color();
-        Draw.rect(this.region, unit.x, unit.y);
+        this.applyColor(unit);
+        Draw.rect(this.region, unit.x, unit.y,unit.rotation - 90.0F);
         Draw.color();
     }
     @Override
@@ -53,7 +53,10 @@ public abstract class PowerUnitType extends UnitType {
         for (TextureRegion plasma=Core.atlas.find(this.name+"-plasma-"+i);Core.atlas.isFound(plasma);plasma=Core.atlas.find(this.name+"-plasma-"+(++i))){
             plasmas.add(plasma);
         }
-        this.plasmaRegions =plasmas.toArray();
+        this.plasmaRegions =new TextureRegion[plasmas.size];
+        for (int j = 0; j < plasmaRegions.length; j++) {
+            plasmaRegions[j]=plasmas.get(j);
+        }
     }
 
     protected void drawLaser(Team team, float x1, float y1, float x2, float y2, int size1, int size2) {
@@ -68,9 +71,16 @@ public abstract class PowerUnitType extends UnitType {
         if (building==null)return false;
         return building.block.hasPower && building.team==unit.team;
     });
-    public void draw(PowerGeneratorUnit unit) {
-        super.draw(unit);
+
+    @Override
+    public void drawBody(Unit unit) {
+//        super.drawBody(unit);
         drawReactor(unit);
+    }
+
+    public void draw(Unit unit) {
+        super.draw(unit);
+//        drawReactor(unit);
     }
     public boolean goodBuilding(BlockSwitcher.BlockSwitcherBuild forB, Building other) {
         return other.dst(forB) <= (range + other.block.size+Mathf.ceil(forB.block.size/2f)) * 8f && forB != other && forB.isValid() && other.isValid();

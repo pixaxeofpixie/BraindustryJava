@@ -3,7 +3,7 @@ package braindustry.entities.Advanced;
 import mindustry.gen.PayloadUnit;
 
 public class AdvancedPayloadUnit extends PayloadUnit {
-    public static final int classId = 42;
+    public static final int classId = 43;
     @Override
     public String toString() {
         return "Advanced"+super.toString();

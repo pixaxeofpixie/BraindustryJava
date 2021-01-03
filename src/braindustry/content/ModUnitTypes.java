@@ -1,33 +1,25 @@
 package braindustry.content;
 
-import arc.func.Boolf;
 import arc.func.Prov;
 import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.math.Angles;
-import arc.math.Mathf;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedUnitType;
 import braindustry.entities.Advanced.UnitExtensions;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.entities.PowerUnitType;
-import braindustry.modVars.modVars;
-import mindustry.Vars;
+import braindustry.type.ModWeapon;
 import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.entities.bullet.*;
-import mindustry.game.Team;
-import mindustry.gen.Building;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
 import mindustry.gen.Unit;
-import mindustry.graphics.Drawf;
 import mindustry.type.AmmoTypes;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
 import mindustry.world.Block;
-import mindustry.world.Tile;
-import mindustry.world.blocks.power.PowerBlock;
+
+import static braindustry.modVars.modFunc.fullName;
 
 public class ModUnitTypes implements ContentList {
     public static UnitType
@@ -70,7 +62,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = 18;
                 this.trailScl = 2.8f;
                 this.weapons.add(
-                        new Weapon("cenda-weapon") {
+                        new ModWeapon("cenda-weapon") {
                             {
                                 this.reload = 35;
                                 this.x = 14;
@@ -110,7 +102,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("cenda-weapon2") {
+                        new ModWeapon("cenda-weapon2") {
                             {
                                 this.x = 9;
                                 this.y = 7;
@@ -171,7 +163,7 @@ public class ModUnitTypes implements ContentList {
                 this.mechStepParticles = true;
                 this.speed = 1;
                 this.weapons.add(
-                        new Weapon("ibis-weapon") {
+                        new ModWeapon("ibis-weapon") {
                             {
                                 this.x = 3;
                                 this.y = -1.5f;
@@ -229,7 +221,7 @@ public class ModUnitTypes implements ContentList {
                 this.visualElevation = 0.65f;
                 this.immunities.addAll(StatusEffects.burning);
                 this.weapons.add(
-                        new Weapon("ibis-weapon") {
+                        new ModWeapon("ibis-weapon") {
                             {
                                 this.x = 3;
                                 this.y = -1.5f;
@@ -285,7 +277,7 @@ public class ModUnitTypes implements ContentList {
                 this.allowLegStep = true;
                 this.visualElevation = 0.4f;
                 this.weapons.add(
-                        new Weapon("capra-weapon") {
+                        new ModWeapon("capra-weapon") {
                             {
                                 this.reload = 120;
                                 this.rotate = true;
@@ -340,7 +332,7 @@ public class ModUnitTypes implements ContentList {
                 this.mechStepShake = 0.15f;
                 this.mechStepParticles = true;
                 this.weapons.add(
-                        new Weapon("lacerta-weapon") {
+                        new ModWeapon("lacerta-weapon") {
                             {
                                 this.x = 0;
                                 this.y = -5f;
@@ -381,7 +373,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("capra-weapon") {
+                        new ModWeapon("capra-weapon") {
                             {
                                 this.reload = 20;
                                 this.rotate = true;
@@ -437,7 +429,7 @@ public class ModUnitTypes implements ContentList {
                 this.legSplashDamage = 160;
                 this.legSplashRange = 50;
                 this.weapons.add(
-                        new Weapon("aquila-equip1") {
+                        new ModWeapon("aquila-equip1") {
                             {
                                 this.reload = 60;
                                 this.rotate = true;
@@ -463,7 +455,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("aquila-equip2") {
+                        new ModWeapon("aquila-equip2") {
                             {
                                 this.reload = 75;
                                 this.rotate = true;
@@ -489,7 +481,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("lacerta-weapon") {
+                        new ModWeapon("lacerta-weapon") {
                             {
                                 this.x = 0;
                                 this.y = 2;
@@ -547,7 +539,7 @@ public class ModUnitTypes implements ContentList {
                 this.rotateSpeed = 10;
                 this.targetAir = true;
                 this.weapons.add(
-                        new Weapon("armor-weapon") {
+                        new ModWeapon("armor-weapon") {
                             {
                                 this.x = 0;
                                 this.y = -3f;
@@ -590,7 +582,7 @@ public class ModUnitTypes implements ContentList {
                 this.engineOffset = 6;
                 this.rotateSpeed = 3;
                 this.weapons.add(
-                        new Weapon("armor-weapon") {
+                        new ModWeapon("armor-weapon") {
                             {
                                 this.x = 5;
                                 this.y = -4f;
@@ -641,7 +633,7 @@ public class ModUnitTypes implements ContentList {
                 this.payloadCapacity = 240;
                 this.buildSpeed = 1.6f;
                 this.weapons.add(
-                        new Weapon("shield-weapon") {
+                        new ModWeapon("shield-weapon") {
                             {
                                 this.reload = 40;
                                 this.mirror = true;
@@ -652,7 +644,7 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet=Bullets.missileExplosive;
                             }
                         },
-                        new Weapon("chainmail-weapon" ){
+                        new ModWeapon("chainmail-weapon" ){
                             {
                                 this.x = 0;
                                 this.y = -8f;
@@ -699,7 +691,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 1.3f;
                 this.commandLimit = 6;
                 this.weapons.add(
-                        new Weapon("bomb-weapon") {
+                        new ModWeapon("bomb-weapon") {
                             {
                                 this.x = 0;
                                 this.y = -12f;
@@ -732,7 +724,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("broadsword-weapon") {
+                        new ModWeapon("broadsword-weapon") {
                             {
                                 this.top = false;
                                 this.y = -3f;
@@ -774,7 +766,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 5;
                 this.range = 160;
                 this.weapons.add(
-                        new Weapon("bomb-weapon") {
+                        new ModWeapon("bomb-weapon") {
                             {
                                 this.x = 12;
                                 this.y = -30f;
@@ -809,7 +801,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("broadsword-weapon") {
+                        new ModWeapon("broadsword-weapon") {
                             {
                                 this.top = false;
                                 this.y = -4f;
@@ -848,7 +840,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = -5f;
                 this.trailScl = 2.1f;
                 this.weapons.add(
-                        new Weapon("lyra-weapon") {
+                        new ModWeapon("lyra-weapon") {
                             {
                                 this.x = 0;
                                 this.y = 0;
@@ -899,7 +891,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = -9f;
                 this.trailScl = 1.6f;
                 this.weapons.add(
-                        new Weapon("venti-weapon") {
+                        new ModWeapon("venti-weapon") {
                             {
                                 this.x = 0;
                                 this.y = 0;
@@ -928,7 +920,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("lyra-weapon") {
+                        new ModWeapon("lyra-weapon") {
                             {
                                 this.x = 5;
                                 this.y = -1f;
@@ -979,7 +971,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = 11;
                 this.trailScl = 1.8f;
                 this.weapons.add(
-                        new Weapon("cenda-weapon") {
+                        new ModWeapon("cenda-weapon") {
                             {
                                 this.reload = 60;
                                 this.x = 0;
@@ -1016,7 +1008,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("lyra-weapon") {
+                        new ModWeapon("lyra-weapon") {
                             {
                                 this.x = 6;
                                 this.y = 4;
@@ -1067,7 +1059,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = 18;
                 this.trailScl = 2.8f;
                 this.weapons.add(
-                        new Weapon("cenda-weapon") {
+                        new ModWeapon("cenda-weapon") {
                             {
                                 this.reload = 35;
                                 this.x = 14;
@@ -1107,7 +1099,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new Weapon("cenda-weapon2") {
+                        new ModWeapon("cenda-weapon2") {
                             {
                                 this.x = 9;
                                 this.y = 7;

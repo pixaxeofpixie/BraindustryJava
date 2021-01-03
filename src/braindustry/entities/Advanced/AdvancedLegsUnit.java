@@ -66,7 +66,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public class AdvancedLegsUnit extends LegsUnit {
-    public static final int classId = 41;
+    public static final int classId = 42;
     public int classId() {
         return classId;
     }

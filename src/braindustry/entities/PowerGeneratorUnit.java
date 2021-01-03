@@ -11,6 +11,7 @@ import braindustry.content.ModBlocks;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import mindustry.Vars;
 import mindustry.gen.Building;
+import mindustry.gen.UnitWaterMove;
 import mindustry.world.Tile;
 import mindustry.world.blocks.power.PowerGraph;
 
@@ -18,8 +19,11 @@ import java.nio.FloatBuffer;
 
 import static braindustry.modVars.modFunc.print;
 
-public class PowerGeneratorUnit extends AmmoDistributeUnit {
+public class PowerGeneratorUnit extends UnitWaterMove {
     public static final int classId = 41;
+    public int classId() {
+        return classId;
+    }
     public Seq<Building> links=new Seq<>();
     public Seq<PowerGraph> graphs=new Seq<>();
     public UnitPowerGenerator.UnitPowerGeneratorBuild generatorBuilding;
@@ -58,7 +62,7 @@ public class PowerGeneratorUnit extends AmmoDistributeUnit {
         super.draw();
         Tile tile=this.tileOn();
         float z = this.elevation > 0.5F ? (this.type.lowAltitude ? 90.0F : 115.0F) : this.type.groundLayer + Mathf.clamp(this.type.hitSize / 4000.0F, 0.0F, 0.01F);
-        Draw.z(z-0.1f);
+        Draw.z(z+0.1f);
         this.links.each(link->{
             ((PowerUnitType)this.type).drawLaser(this.team,this.x,this.y,link.x,link.y,1,link.block.size);
         });
@@ -120,9 +124,6 @@ public class PowerGeneratorUnit extends AmmoDistributeUnit {
         return true;
     }
 
-    public int classId() {
-        return 41;
-    }
     public void resetLinks(){
         if (links==null)links=new Seq<>();
         this.links.each((b)->{

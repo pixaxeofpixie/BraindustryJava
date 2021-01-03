@@ -6,7 +6,6 @@ import arc.Events;
 import arc.func.Cons;
 import arc.func.Prov;
 import arc.graphics.Color;
-import arc.graphics.Cubemap;
 import arc.scene.ui.Dialog;
 import arc.struct.Seq;
 import arc.util.Log;
@@ -59,7 +58,7 @@ public class modFunc {
     public static void addResearch(String researchName, UnlockableContent unlock){
         TechTree.TechNode node = new TechTree.TechNode(null, unlock, unlock.researchRequirements());
         TechTree.TechNode parent = (TechTree.TechNode)TechTree.all.find((t) -> {
-            return t.content.name.equals(researchName) || t.content.name.equals(getFullName(researchName));
+            return t.content.name.equals(researchName) || t.content.name.equals(fullName(researchName));
         });
         if (parent == null) {
 
@@ -73,7 +72,7 @@ public class modFunc {
             node.parent = parent;
         }
     }
-    public static String getFullName(String name){
+    public static String fullName(String name){
         return Strings.format("@-@",modInfo.name,name);
     }
     public static Dialog getInfoDialog(String title, String subTitle, String message, Color lineColor){

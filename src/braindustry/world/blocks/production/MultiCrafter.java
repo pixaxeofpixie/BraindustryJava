@@ -95,7 +95,7 @@ public class MultiCrafter extends Block {
             itemsTexture = new TextureRegion[this.recipes.size];
             for (int i = 0; i < itemsTexture.length; i++) {
                 String itemName = this.recipes.get(i).outputItem.item.name;
-                if (itemName.startsWith(getFullName(""))) itemName = itemName.split(getFullName(""), 2)[1];
+                if (itemName.startsWith(fullName(""))) itemName = itemName.split(fullName(""), 2)[1];
 //                print("load: @",this.name+"-"+itemName);
                 itemsTexture[i] = Core.atlas.find(this.name + "-" + itemName, this.region);
             }

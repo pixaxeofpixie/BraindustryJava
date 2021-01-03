@@ -341,7 +341,7 @@ public class ModFx {
         Draw.color(Color.valueOf("FFFFFF44"));
         Draw.alpha(e.fout() * 0.3f);
         Draw.blend(Blending.additive);
-        Draw.rect(getFullName("smoke"), e.x, e.y, e.fin() * 800, e.fin() * 800 * Mathf.random(1.5f, 2.0f));
+        Draw.rect(fullName("smoke"), e.x, e.y, e.fin() * 800, e.fin() * 800 * Mathf.random(1.5f, 2.0f));
         Draw.blend();
     });
 
@@ -349,7 +349,7 @@ public class ModFx {
         Draw.color(Color.valueOf("FFFFFF44"));
         Draw.alpha(e.fout() * 1);
         Draw.blend(Blending.additive);
-        Draw.rect(getFullName("smoke"), e.x, e.y, 50, 50);
+        Draw.rect(fullName("smoke"), e.x, e.y, 50, 50);
         Draw.blend();
     });
 
@@ -357,7 +357,7 @@ public class ModFx {
         Draw.color(Color.valueOf("FFFFFF44"));
         Draw.alpha(e.fout() * 1);
         Draw.blend(Blending.additive);
-        Draw.rect(getFullName("smoke"), e.x, e.y, 800 * e.fin(), 800 * e.fin());
+        Draw.rect(fullName("smoke"), e.x, e.y, 800 * e.fin(), 800 * e.fin());
         Draw.blend();
     });
 
