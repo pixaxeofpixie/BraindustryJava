@@ -6,6 +6,7 @@ import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.util.Tmp;
 import braindustry.entities.bullets.ReflectionBullet;
+import braindustry.entities.bullets.SpikeCircleOrbonBullet;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -69,6 +70,7 @@ public class ModDefense implements ContentList {
 //                                this.bulletSprite = wave;
                                 this.pierce = true;
                                 this.width = 120;
+                                this.buildingDamageMultiplier = 0.3f;
 //                                this.length = 4;
                                 this.hittable = true;
                                 this.ammoMultiplier = 1;
@@ -78,11 +80,13 @@ public class ModDefense implements ContentList {
                             }
                         },
                         Items.copper, new ReflectionBullet(),
+                        Items.lead, new SpikeCircleOrbonBullet(),
                         Items.surgeAlloy, new SapBulletType(){
                             {
                                 this.sapStrength = 1.2f;
                                 this.length = 240;
                                 this.damage = 40;
+                                this.buildingDamageMultiplier = 0.3f;
                                 this.shootEffect = ModFx.shootSmall;
                                 this.hitColor = Color.valueOf("e88ec9");
                                 this.color = Color.valueOf("e88ec9");

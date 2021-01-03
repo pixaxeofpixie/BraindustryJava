@@ -7,6 +7,7 @@ import braindustry.content.Blocks.ModProduction;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
+import braindustry.world.blocks.sandbox.DpsMeter;
 import mindustry.content.Items;
 import mindustry.ctype.ContentList;
 import mindustry.type.Category;
@@ -40,7 +41,7 @@ public class ModBlocks implements ContentList {
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
 
 
-    smartRouter, turretSwitcher,unitGenerator;
+    smartRouter, turretSwitcher,dpsMeter,unitGenerator;
 
     public void load() {
         new ModBlocksUnits().load();
@@ -65,6 +66,16 @@ public class ModBlocks implements ContentList {
                 this.laserRange = 6.0F;
                 this.requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 this.buildCostMultiplier = 4.0F;
+            }
+        };
+        dpsMeter=new DpsMeter("dps-meter"){
+            {
+                this.category=Category.effect;
+//                this.alwaysUnlocked=true;
+                this.buildVisibility=BuildVisibility.sandboxOnly;
+                this.health=Integer.MAX_VALUE;
+                this.size=3;
+//                this.requirements();
             }
         };
 

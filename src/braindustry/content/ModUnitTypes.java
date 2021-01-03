@@ -6,6 +6,9 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.math.Angles;
 import arc.math.Mathf;
+import braindustry.entities.Advanced.AdvancedLegsUnit;
+import braindustry.entities.Advanced.AdvancedUnitType;
+import braindustry.entities.Advanced.UnitExtensions;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.entities.PowerUnitType;
 import braindustry.modVars.modVars;
@@ -385,9 +388,10 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        aquila = new UnitType("aquila") {
+        aquila = new AdvancedUnitType("aquila") {
             {
-                this.constructor = Types.legs;
+                this.extensions(UnitExtensions.blink);
+                this.constructor = AdvancedLegsUnit::new;
                 this.groundLayer = 75.0F;
                 this.localizedName = "Aquila";
                 this.description = "Fires a Sap bullets and big large laser.";

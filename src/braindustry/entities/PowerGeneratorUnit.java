@@ -18,7 +18,8 @@ import java.nio.FloatBuffer;
 
 import static braindustry.modVars.modFunc.print;
 
-public class PowerGeneratorUnit extends AmmoDistributeUnit{
+public class PowerGeneratorUnit extends AmmoDistributeUnit {
+    public static final int classId = 41;
     public Seq<Building> links=new Seq<>();
     public Seq<PowerGraph> graphs=new Seq<>();
     public UnitPowerGenerator.UnitPowerGeneratorBuild generatorBuilding;
@@ -119,6 +120,9 @@ public class PowerGeneratorUnit extends AmmoDistributeUnit{
         return true;
     }
 
+    public int classId() {
+        return 41;
+    }
     public void resetLinks(){
         if (links==null)links=new Seq<>();
         this.links.each((b)->{

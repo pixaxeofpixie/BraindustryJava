@@ -66,7 +66,9 @@ import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class AmmoDistributeUnit extends Unit implements Itemsc, Builderc, Weaponsc, Commanderc, Boundedc, Statusc, Syncc, Minerc, Healthc, Shieldc, Entityc, Teamc, Physicsc, Drawc, Flyingc, Hitboxc, Velc, Rotc, Unitc, Payloadc, Posc, AmmoDistributec {
+public class AmmoDistributeUnit extends Unit implements  Itemsc, Builderc, Weaponsc, Commanderc, Boundedc, Statusc, Syncc, Minerc, Healthc, Shieldc, Entityc, Teamc, Physicsc, Drawc, Flyingc, Hitboxc, Velc, Rotc, Unitc, Payloadc, Posc, AmmoDistributec {
+
+    public static final int classId = 40;
     public static final Vec2[] vecs = new Vec2[]{new Vec2(), new Vec2(), new Vec2(), new Vec2()};
     public static final Seq<FormationMember> members = new Seq();
     public static final Seq<Unit> units = new Seq();
@@ -75,7 +77,6 @@ public class AmmoDistributeUnit extends Unit implements Itemsc, Builderc, Weapon
     public static final Vec2 tmp1 = new Vec2();
     public static final Vec2 tmp2 = new Vec2();
     public static int sequenceNum = 0;
-    public transient static int classId = -1;
     public Seq<StatusEntry> statuses = new Seq();
     public transient Bits applied;
     public transient boolean added;
@@ -2333,7 +2334,7 @@ public class AmmoDistributeUnit extends Unit implements Itemsc, Builderc, Weapon
     }
 
     public int classId() {
-        return classId;
+        return 40;
     }
 
     public ItemStack stack() {
