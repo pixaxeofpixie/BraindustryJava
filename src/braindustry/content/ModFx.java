@@ -544,8 +544,22 @@ public class ModFx {
             if (!(e.data instanceof Color)) return;
             secondColor = (Color) e.data;
         }
+
         Draw.color(secondColor, e.color, e.fin());
         Draw.alpha(e.fout());
+        Fill.square(e.x, e.y, 4.0F * e.rotation);
+    });
+    public static final Effect debugSelectSecond = new DebugEffect(40.0F, (e) -> {
+        Color secondColor;
+        if (e.data == null) {
+            secondColor = e.color;
+        } else {
+            if (!(e.data instanceof Color)) return;
+            secondColor = (Color) e.data;
+        }
+
+        Draw.color(secondColor, e.color, e.fin());
+        Draw.alpha(e.color.a);
         Fill.square(e.x, e.y, 4.0F * e.rotation);
     });
 }

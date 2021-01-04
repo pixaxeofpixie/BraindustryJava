@@ -12,6 +12,8 @@ import mindustry.world.consumers.ConsumeType;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.Stats;
 
+import static braindustry.ModVars.modFunc.print;
+
 public class ConsumeGasses extends GasConsume {
     public final Gas gas;
     public final float amount;
@@ -32,8 +34,10 @@ public class ConsumeGasses extends GasConsume {
         this((Gas) null, 0.0F);
     }
 
-    public void applyLiquidFilter(Bits filter) {
-        filter.set(this.gas.id);
+    @Override
+    public void applyGasFilter(Bits filter) {
+        print("--@--","am");
+        filter.set(this.gas.id,true);
     }
 
     public void build(Building tile, Table table) {

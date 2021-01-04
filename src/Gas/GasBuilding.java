@@ -3,14 +3,29 @@ package Gas;
 import Gas.entities.Clouds;
 import Gas.type.Gas;
 import Gas.world.GasBlock;
+import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.util.Time;
+import braindustry.content.ModFx;
 import mindustry.Vars;
 import mindustry.content.Fx;
+import mindustry.core.World;
+import mindustry.entities.Damage;
+import mindustry.entities.Effect;
+import mindustry.entities.Puddles;
 import mindustry.game.Team;
 import mindustry.gen.Building;
+import mindustry.logic.LAccess;
+import mindustry.type.Item;
+import mindustry.type.Liquid;
 import mindustry.world.Block;
 import mindustry.world.Tile;
+import mindustry.world.blocks.ControlBlock;
+import mindustry.world.consumers.ConsumeType;
+
+import java.util.Iterator;
+
+import static braindustry.ModVars.modFunc.print;
 
 public class GasBuilding extends Building {
     public GasModule gasses;
@@ -21,7 +36,169 @@ public class GasBuilding extends Building {
     }
 
     public boolean acceptGas(Building source, Gas gas) {
+        print("accept: ");
         return this.block.hasGas && this.block.consumes.gasFilter.get(gas.id);
+    }
+
+    @Override
+    public boolean acceptLiquid(Building source, Liquid liquid) {
+        return this.block.hasLiquids && this.block.consumes.liquidfilters.get(liquid.id);
+    }
+
+    public double sense(LAccess sensor) {
+        double var10000;
+        switch(sensor) {
+            case x:
+                var10000 = (double) World.conv(this.x);
+                break;
+            case y:
+                var10000 = (double)World.conv(this.y);
+                break;
+            case team:
+                var10000 = (double)this.team.id;
+                break;
+            case health:
+                var10000 = (double)this.health;
+                break;
+            case maxHealth:
+                var10000 = (double)this.maxHealth;
+                break;
+            case efficiency:
+                var10000 = (double)this.efficiency();
+                break;
+            case rotation:
+                var10000 = (double)this.rotation;
+                break;
+            case totalItems:
+                var10000 = this.items == null ? 0.0D : (double)this.items.total();
+                break;
+            case totalLiquids:
+                var10000 = this.liquids == null ? 0.0D : (double)this.liquids.total();
+                break;
+            case totalPower:
+                var10000 = this.power != null && this.block.consumes.hasPower() ? (double)(this.power.status * (this.block.consumes.getPower().buffered ? this.block.consumes.getPower().capacity : 1.0F)) : 0.0D;
+                break;
+            case itemCapacity:
+                var10000 = this.block.hasItems ? (double)this.block.itemCapacity : 0.0D;
+                break;
+            case liquidCapacity:
+                var10000 = this.block.hasLiquids ? (double)this.block.liquidCapacity : 0.0D;
+                break;
+            case powerCapacity:
+                var10000 = this.block.consumes.hasPower() ? (double)this.block.consumes.getPower().capacity : 0.0D;
+                break;
+            case powerNetIn:
+                var10000 = this.power == null ? 0.0D : (double)(this.power.graph.getLastScaledPowerIn() * 60.0F);
+                break;
+            case powerNetOut:
+                var10000 = this.power == null ? 0.0D : (double)(this.power.graph.getLastScaledPowerOut() * 60.0F);
+                break;
+            case powerNetStored:
+                var10000 = this.power == null ? 0.0D : (double)this.power.graph.getLastPowerStored();
+                break;
+            case powerNetCapacity:
+                var10000 = this.power == null ? 0.0D : (double)this.power.graph.getLastCapacity();
+                break;
+            case enabled:
+                var10000 = this.enabled ? 1.0D : 0.0D;
+                break;
+            case controlled:
+                ControlBlock c;
+                var10000 = (double)(this instanceof ControlBlock && (c = (ControlBlock)this) == (ControlBlock)this ? (c.isControlled() ? 1 : 0) : 0);
+                break;
+            case payloadCount:
+                var10000 = this.getPayload() != null ? 1.0D : 0.0D;
+                break;
+            default:
+                var10000 = 0.0D;
+        }
+
+        return var10000;
+    }
+    @Override
+    public boolean acceptItem(Building source, Item item) {
+        return this.block.consumes.itemFilters.get(item.id) && this.items.get(item) < this.getMaximumAccepted(item);
+    }
+    @Override
+    public void onDestroyed() {
+        float explosiveness = this.block.baseExplosiveness;
+        float flammability = 0.0F;
+        float power = 0.0F;
+        Item item;
+        int amount;
+        if (this.block.hasItems) {
+            for(Iterator<Item> var4 = Vars.content.items().iterator(); var4.hasNext(); flammability += item.flammability * (float)amount) {
+                item = var4.next();
+                amount = this.items.get(item);
+                explosiveness += item.explosiveness * (float)amount;
+            }
+        }
+
+        if (this.block.hasLiquids) {
+            flammability += this.liquids.sum((liquid, amountx) -> {
+                return liquid.flammability * amountx / 2.0F;
+            });
+            explosiveness += this.liquids.sum((liquid, amountx) -> {
+                return liquid.explosiveness * amountx / 2.0F;
+            });
+        }
+
+        if (this.block.hasGas) {
+            flammability += this.gasses.sum((gas, amountx) -> {
+                return gas.flammability * amountx / 2.0F;
+            });
+            explosiveness += this.gasses.sum((gas, amountx) -> {
+                return gas.explosiveness * amountx / 2.0F;
+            });
+        }
+
+        if (this.block.consumes.hasPower() && this.block.consumes.getPower().buffered) {
+            power += this.power.status * this.block.consumes.getPower().capacity;
+        }
+
+        if (this.block.hasLiquids && Vars.state.rules.damageExplosions) {
+            this.liquids.each((liquid, amountx) -> {
+                float splash = Mathf.clamp(amountx / 4.0F, 0.0F, 10.0F);
+                for(int i = 0; (float)i < Mathf.clamp(amountx / 5.0F, 0.0F, 30.0F); ++i) {
+                    Time.run((float)i / 2.0F, () -> {
+                        Tile other = Vars.world.tile(this.tileX() + Mathf.range(this.block.size / 2), this.tileY() + Mathf.range(this.block.size / 2));
+                        if (other != null) {
+                            Puddles.deposit(other, liquid, splash);
+                        }
+
+                    });
+                }
+
+            });
+        }
+        if (this.block.hasGas && Vars.state.rules.damageExplosions) {
+            this.gasses.each((gas, amountx) -> {
+                float splash = Mathf.clamp(amountx / 4.0F, 0.0F, 10.0F);
+                for(int i = 0; (float)i < Mathf.clamp(amountx / 5.0F, 0.0F, 30.0F); ++i) {
+                    Time.run((float)i / 2.0F, () -> {
+                        Tile other = Vars.world.tile(this.tileX() + Mathf.range(this.block.size / 2), this.tileY() + Mathf.range(this.block.size / 2));
+                        if (other != null) {
+                            Clouds.deposit(other, gas, splash);
+                        }
+
+                    });
+                }
+
+            });
+        }
+
+        Damage.dynamicExplosion(this.x, this.y, flammability, explosiveness * 3.5F, power, (float)(8 * this.block.size) / 2.0F, Vars.state.rules.damageExplosions);
+        if (!this.floor().solid && !this.floor().isLiquid) {
+            Effect.rubble(this.x, this.y, this.block.size);
+        }
+
+    }
+    public float efficiency() {
+        if (!this.enabled) {
+            return 0.0F;
+        } else {
+            return this.power != null && this.block.consumes.has(ConsumeType.power) && !this.block.consumes.getPower().buffered ? this.power.status : 1.0F;
+        }
     }
 
     public GasModule gasses() {
@@ -84,11 +261,15 @@ public class GasBuilding extends Building {
 
         }
     }
+    public String lastAccessed="";
+    @Override
+    public String toString() {
+        lastAccessed="GasBuilding#" + this.id;
+        return "GasBuilding#" + this.id;
+    }
 
     public float moveGas(Building n, Gas gas) {
-        if (n == null || !(n instanceof GasBuilding)) {
-            return 0.0F;
-        } else {
+        if (n instanceof GasBuilding) {
             GasBuilding next = (GasBuilding) n;
             next = next.getGasDestination(this, gas);
             if (next.team == this.team && next.block.hasGas && this.gasses.get(gas) > 0.0F) {
@@ -99,9 +280,11 @@ public class GasBuilding extends Building {
                 if (flow > 0.0F && ofract <= fract && next.acceptGas(this, gas)) {
                     next.handleGas(this, gas, flow);
                     this.gasses.remove(gas, flow);
+                    ModFx.debugSelectSecond.at(n.x, n.y, n.block.size, Color.green.cpy().a(0.1f));
                     return flow;
                 }
-
+                print("flow: @, ofract: @, fract: @, accept: @,name: @, l: @", flow, ofract, fract, next.acceptGas(this, gas),n.toString(),n.lastAccessed);
+                ModFx.debugSelectSecond.at(n.x, n.y, n.block.size, Color.red.cpy().a(0.1f));
                 if (next.gasses.currentAmount() / next.block.gasCapacity > 0.1F && fract > 0.1F) {
                     float fx = (this.x + next.x) / 2.0F;
                     float fy = (this.y + next.y) / 2.0F;
@@ -121,13 +304,8 @@ public class GasBuilding extends Building {
                 }
             }
 
-            return 0.0F;
         }
-    }
-
-    @Override
-    public void onDestroyed() {
-        super.onDestroyed();
+        return 0.0F;
     }
 
     public float moveGasForward(boolean leaks, Gas gas) {

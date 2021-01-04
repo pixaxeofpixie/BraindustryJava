@@ -35,9 +35,9 @@ public class DebugBlocks {
                this.localizedName = "methane burner";
                this.description = "burn all you methane";
                this.powerProduction = 5f;
-               this.gasCapacity = 5f;
+               this.gasCapacity = 11f;
                this.size = 2;
-               this.consumes.add(new ConsumeGasses(Gasses.methane, 1));
+               this.consumes.addGas(new ConsumeGasses(Gasses.methane, 1));
                this.requirements(Category.power, ItemStack.with(Items.silicon, 60, Items.copper, 50, Items.graphite, 90));
             }
         };

@@ -16,7 +16,7 @@ public class BasicBlocks {
             {
                 this.size = 1;
                 this.buildVisibility = BuildVisibility.sandboxOnly;
-                this.requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
+                this.requirements(Category.liquid, ItemStack.with(Items.copper, 3, Items.silicon, 10));
             }
         };
         gasConduit = new GasConduit("gas-conduit") {

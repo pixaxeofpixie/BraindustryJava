@@ -9,6 +9,6 @@ import mindustry.world.meta.Stats;
 public class GasStats extends Stats {
 
     public void add(Stat stat, Gas gas, float amount, boolean perSecond) {
-        this.add(stat, (StatValue)(new GasValue(gas, amount, perSecond)));
+        this.add(stat, (new GasValue(gas, amount, perSecond)));
     }
 }

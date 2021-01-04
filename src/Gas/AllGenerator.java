@@ -16,6 +16,7 @@ import mindustry.entities.Effect;
 import mindustry.graphics.Drawf;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
+import mindustry.world.blocks.power.ItemLiquidGenerator;
 import mindustry.world.consumers.ConsumeItemFilter;
 import mindustry.world.consumers.ConsumeLiquidFilter;
 import mindustry.world.meta.Stat;
@@ -57,7 +58,7 @@ public class AllGenerator extends GasPowerGenerator {
         this.explodeEffect = Fx.generatespark;
         this.heatColor = Color.valueOf("ff9b59");
         this.randomlyExplode = true;
-        this.defaults = false;
+        this.setDefaults();
     }
 
     @Override
