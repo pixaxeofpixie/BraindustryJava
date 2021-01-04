@@ -25,7 +25,7 @@ public class GasBuilding extends Building {
         return this.gasses;
     }
 
-    public void liquids(GasModule gasses) {
+    public void gasses(GasModule gasses) {
         this.gasses = gasses;
     }
     public GasBuilding getGasDestination(Building from, Gas gas) {

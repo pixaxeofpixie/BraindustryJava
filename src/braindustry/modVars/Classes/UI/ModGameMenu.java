@@ -11,7 +11,7 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.ui.Styles;
 
-import static braindustry.modVars.ModFunc.*;
+import static braindustry.modVars.modFunc.*;
 
 public class ModGameMenu {
     static Seq<Cons<Table>> conses = new Seq<>();

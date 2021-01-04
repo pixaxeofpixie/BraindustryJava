@@ -12,7 +12,7 @@ import mindustry.content.UnitTypes;
 import mindustry.type.UnitType;
 import mindustry.ui.dialogs.BaseDialog;
 
-import static braindustry.modVars.ModFunc.getInfoDialog;
+import static braindustry.modVars. modFunc.getInfoDialog;
 
 public class UnitChooseDialog extends BaseDialog {
     public UnitChooseDialog(Boolf<UnitType> check) {

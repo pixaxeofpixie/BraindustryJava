@@ -9,7 +9,7 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Strings;
 import arc.util.Structs;
-import braindustry.modVars.ModFunc;
+import braindustry.modVars.modFunc;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
@@ -73,7 +73,7 @@ public class ModCheatItemsMenu extends BaseDialog {
         Seq<ItemStack> stacks=new Seq<>();
         CoreBlock.CoreBuild core= Vars.player.team().core();
         if (core==null){
-            ModFunc.getInfoDialog("@error","@error.title","you haven't core", Color.scarlet);
+            modFunc.getInfoDialog("@error","@error.title","you haven't core", Color.scarlet);
             return;
         }
         core.items.each((item,amount)->{

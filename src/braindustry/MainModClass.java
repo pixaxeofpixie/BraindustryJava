@@ -5,7 +5,7 @@ import braindustry.content.*;
 import braindustry.modVars.Classes.ModAtlas;
 import braindustry.modVars.Classes.ModEventType;
 import braindustry.modVars.Classes.UI.Cheat.*;
-import braindustry.modVars.ModVars;
+import braindustry.modVars.modVars;
 import arc.*;
 import arc.graphics.g2d.TextureRegion;
 import arc.scene.ui.*;
@@ -25,8 +25,8 @@ import mindustry.ui.dialogs.*;
 import mindustry.world.Tile;
 import mindustry.world.meta.BuildVisibility;
 
-import static braindustry.modVars.ModFunc.*;
-import static braindustry.modVars.ModVars.*;
+import static braindustry.modVars.modFunc.*;
+import static braindustry.modVars.modVars.*;
 
 public class MainModClass extends Mod {
     public void init() {
@@ -127,7 +127,7 @@ public class MainModClass extends Mod {
     }
     public MainModClass() {
         modInfo = Vars.mods.getMod(this.getClass());
-        ModVars.load();
+        modVars.load();
         EventOn(ClientLoadEvent.class, (e) -> {
             Blocks.interplanetaryAccelerator.buildVisibility = BuildVisibility.shown;
             Blocks.blockForge.buildVisibility = BuildVisibility.shown;

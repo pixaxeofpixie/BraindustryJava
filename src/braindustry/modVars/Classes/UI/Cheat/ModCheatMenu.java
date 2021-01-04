@@ -10,7 +10,7 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.ui.Styles;
 
-import static braindustry.modVars.ModVars.*;
+import static braindustry.modVars.modVars.*;
 
 public class ModCheatMenu {
 

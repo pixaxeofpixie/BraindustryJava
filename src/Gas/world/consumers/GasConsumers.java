@@ -10,7 +10,7 @@ import mindustry.world.consumers.Consumers;
 import java.util.Objects;
 
 public class GasConsumers extends Consumers {
-    protected ConsumeGasses[] map = new ConsumeGasses[ConsumeType.values().length];
+    protected ConsumeGasses[] map = new ConsumeGasses[ConsumeType.values().length+1];
     protected ConsumeGasses[] results;
     protected ConsumeGasses[] optionalResults;
     public final Bits gasFilter;
@@ -34,8 +34,11 @@ public class GasConsumers extends Consumers {
         }
     }
 
+    public boolean hasGas() {
+        return this.map[3] != null;
+    }
     public ConsumeGasses getGas() {
-        return (ConsumeGasses)this.get(2);
+        return (ConsumeGasses)this.get(3);
     }
 
     public Object get(int type) {

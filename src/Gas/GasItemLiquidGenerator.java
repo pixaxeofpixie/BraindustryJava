@@ -1,45 +1,48 @@
 package Gas;
 
+import Gas.type.Gas;
 import Gas.world.GasPowerGenerator;
+import Gas.world.consumers.ConsumeGasFilter;
 import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.util.Time;
-import braindustry.modVars.ModVars;
 import mindustry.Vars;
 import mindustry.content.Fx;
+import mindustry.ctype.ContentType;
 import mindustry.entities.Effect;
 import mindustry.graphics.Drawf;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
 import mindustry.world.blocks.power.ItemLiquidGenerator;
-import mindustry.world.blocks.power.PowerGenerator;
 import mindustry.world.consumers.ConsumeItemFilter;
 import mindustry.world.consumers.ConsumeLiquidFilter;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
-
-import java.util.Iterator;
 
 public class GasItemLiquidGenerator extends GasPowerGenerator {
     public float minItemEfficiency;
     public float itemDuration;
     public float minLiquidEfficiency;
     public float maxLiquidGenerate;
+    public float minGasEfficiency;
+    public float maxGasGenerate;
     public Effect generateEffect;
     public Effect explodeEffect;
     public Color heatColor;
     public TextureRegion topRegion;
     public TextureRegion liquidRegion;
+    public TextureRegion gasRegion;
     public boolean randomlyExplode;
     public boolean defaults;
 
-    public GasItemLiquidGenerator(boolean hasItems, boolean hasLiquids, String name) {
+    public GasItemLiquidGenerator(boolean hasItems, boolean hasLiquids, boolean hasGas, String name) {
         this(name);
         this.hasItems = hasItems;
         this.hasLiquids = hasLiquids;
+        this.hasGas = hasGas;
         this.setDefaults();
     }
 
@@ -48,7 +51,9 @@ public class GasItemLiquidGenerator extends GasPowerGenerator {
         this.minItemEfficiency = 0.2F;
         this.itemDuration = 70.0F;
         this.minLiquidEfficiency = 0.2F;
+        this.minGasEfficiency = 0.2F;
         this.maxLiquidGenerate = 0.4F;
+        this.maxGasGenerate = 0.4F;
         this.generateEffect = Fx.generatespark;
         this.explodeEffect = Fx.generatespark;
         this.heatColor = Color.valueOf("ff9b59");
@@ -57,31 +62,30 @@ public class GasItemLiquidGenerator extends GasPowerGenerator {
     }
 
     protected void setDefaults() {
+        if (defaults) return;
         if (this.hasItems) {
-            ((ConsumeItemFilter)this.consumes.add(new ConsumeItemFilter((item) -> {
+            (this.consumes.add(new ConsumeItemFilter((item) -> {
                 return this.getItemEfficiency(item) >= this.minItemEfficiency;
             }))).update(false).optional(true, false);
         }
 
         if (this.hasLiquids) {
-            ((ConsumeLiquidFilter)this.consumes.add(new ConsumeLiquidFilter((liquid) -> {
+            (this.consumes.add(new ConsumeLiquidFilter((liquid) -> {
                 return this.getLiquidEfficiency(liquid) >= this.minLiquidEfficiency;
             }, this.maxLiquidGenerate))).update(false).optional(true, false);
         }
 
-//        if (this.hasGas) {
-//            ((ConsumeItemFilter)this.consumes.add(new ConsumeItemFilter((item) -> {
-//                return this.getItemEfficiency(item) >= this.minItemEfficiency;
-//            }))).update(false).optional(true, false);
-//        }
+        if (this.hasGas) {
+            this.consumes.add(new ConsumeGasFilter((gas) -> {
+                return this.getGasEfficiency(gas) >= this.minGasEfficiency;
+            }, this.maxLiquidGenerate)).update(false).optional(true, false);
+        }
 
         this.defaults = true;
     }
 
     public void init() {
-        if (!this.defaults) {
-            this.setDefaults();
-        }
+        this.setDefaults();
 
         super.init();
     }
@@ -99,6 +103,10 @@ public class GasItemLiquidGenerator extends GasPowerGenerator {
     }
 
     protected float getLiquidEfficiency(Liquid liquid) {
+        return 0.0F;
+    }
+
+    protected float getGasEfficiency(Gas gas) {
         return 0.0F;
     }
 
@@ -121,25 +129,41 @@ public class GasItemLiquidGenerator extends GasPowerGenerator {
             if (!this.consValid()) {
                 this.productionEfficiency = 0.0F;
             } else {
-                Liquid liquid = null;
-                Iterator var3 = Vars.content.liquids().iterator();
+                Gas gas = null;
 
-                while(var3.hasNext()) {
-                    Liquid other = (Liquid)var3.next();
+                Liquid liquid = null;
+
+                for (Liquid other : Vars.content.liquids()) {
                     if (GasItemLiquidGenerator.this.hasLiquids && this.liquids.get(other) >= 0.001F && GasItemLiquidGenerator.this.getLiquidEfficiency(other) >= GasItemLiquidGenerator.this.minLiquidEfficiency) {
                         liquid = other;
                         break;
                     }
                 }
 
+                for (Gas other : Vars.content.<Gas>getBy(ContentType.typeid_UNUSED)) {
+                    if (GasItemLiquidGenerator.this.hasGas && this.gasses.get(other) >= 0.001F && GasItemLiquidGenerator.this.getGasEfficiency(other) >= GasItemLiquidGenerator.this.minGasEfficiency) {
+                        gas = other;
+                        break;
+                    }
+                }
+
                 this.totalTime += this.heat * Time.delta;
-                if (GasItemLiquidGenerator.this.hasLiquids && liquid != null && this.liquids.get(liquid) >= 0.001F) {
+                if (GasItemLiquidGenerator.this.hasGas && gas != null && this.gasses.get(gas) >= 0.001F) {
+                    float baseLiquidEfficiency = GasItemLiquidGenerator.this.getGasEfficiency(gas);
+                    float maximumPossible = GasItemLiquidGenerator.this.maxGasGenerate * calculationDelta;
+                    float used = Math.min(this.gasses.get(gas) * calculationDelta, maximumPossible);
+                    this.gasses.remove(gas, used * this.power.graph.getUsageFraction());
+                    this.productionEfficiency = baseLiquidEfficiency * used / maximumPossible;
+                    if (used > 0.001F && Mathf.chance(0.05D * (double) this.delta())) {
+                        GasItemLiquidGenerator.this.generateEffect.at(this.x + Mathf.range(3.0F), this.y + Mathf.range(3.0F));
+                    }
+                } else if (GasItemLiquidGenerator.this.hasLiquids && liquid != null && this.liquids.get(liquid) >= 0.001F) {
                     float baseLiquidEfficiency = GasItemLiquidGenerator.this.getLiquidEfficiency(liquid);
                     float maximumPossible = GasItemLiquidGenerator.this.maxLiquidGenerate * calculationDelta;
                     float used = Math.min(this.liquids.get(liquid) * calculationDelta, maximumPossible);
                     this.liquids.remove(liquid, used * this.power.graph.getUsageFraction());
                     this.productionEfficiency = baseLiquidEfficiency * used / maximumPossible;
-                    if (used > 0.001F && Mathf.chance(0.05D * (double)this.delta())) {
+                    if (used > 0.001F && Mathf.chance(0.05D * (double) this.delta())) {
                         GasItemLiquidGenerator.this.generateEffect.at(this.x + Mathf.range(3.0F), this.y + Mathf.range(3.0F));
                     }
                 } else if (GasItemLiquidGenerator.this.hasItems) {
@@ -153,10 +177,10 @@ public class GasItemLiquidGenerator extends GasPowerGenerator {
 
                     if (this.generateTime > 0.0F) {
                         this.generateTime -= Math.min(1.0F / GasItemLiquidGenerator.this.itemDuration * this.delta() * this.power.graph.getUsageFraction(), this.generateTime);
-                        if (GasItemLiquidGenerator.this.randomlyExplode && Vars.state.rules.reactorExplosions && Mathf.chance((double)this.delta() * 0.06D * (double)Mathf.clamp(this.explosiveness - 0.5F))) {
+                        if (GasItemLiquidGenerator.this.randomlyExplode && Vars.state.rules.reactorExplosions && Mathf.chance((double) this.delta() * 0.06D * (double) Mathf.clamp(this.explosiveness - 0.5F))) {
                             Core.app.post(() -> {
                                 this.damage(Mathf.random(11.0F));
-                                GasItemLiquidGenerator.this.explodeEffect.at(this.x + Mathf.range((float)(GasItemLiquidGenerator.this.size * 8) / 2.0F), this.y + Mathf.range((float)(GasItemLiquidGenerator.this.size * 8) / 2.0F));
+                                GasItemLiquidGenerator.this.explodeEffect.at(this.x + Mathf.range((float) (GasItemLiquidGenerator.this.size * 8) / 2.0F), this.y + Mathf.range((float) (GasItemLiquidGenerator.this.size * 8) / 2.0F));
                             });
                         }
                     } else {
@@ -164,6 +188,11 @@ public class GasItemLiquidGenerator extends GasPowerGenerator {
                     }
                 }
             }
+        }
+
+
+        public void drawLight() {
+            Drawf.light(this.team, this.x, this.y, (60.0F + Mathf.absin(10.0F, 5.0F)) * (float) GasItemLiquidGenerator.this.size, Color.orange, 0.5F * this.heat);
         }
 
         public void draw() {
@@ -179,13 +208,9 @@ public class GasItemLiquidGenerator extends GasPowerGenerator {
                 Drawf.liquid(GasItemLiquidGenerator.this.liquidRegion, this.x, this.y, this.liquids.total() / GasItemLiquidGenerator.this.liquidCapacity, this.liquids.current().color);
             }
 
-//            if (GasItemLiquidGenerator.this.hasGas) {
-//                Drawf.liquid(GasItemLiquidGenerator.this.liquidRegion, this.x, this.y, this.liquids.total() / GasItemLiquidGenerator.this.liquidCapacity, this.liquids.current().color);
-//            }
-        }
-
-        public void drawLight() {
-            Drawf.light(this.team, this.x, this.y, (60.0F + Mathf.absin(10.0F, 5.0F)) * (float)GasItemLiquidGenerator.this.size, Color.orange, 0.5F * this.heat);
+            if (GasItemLiquidGenerator.this.hasGas) {
+                Drawf.liquid(GasItemLiquidGenerator.this.gasRegion, this.x, this.y, this.gasses.total() / GasItemLiquidGenerator.this.gasCapacity, this.gasses.current().color);
+            }
         }
     }
 }

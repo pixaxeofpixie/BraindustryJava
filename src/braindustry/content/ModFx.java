@@ -12,7 +12,7 @@ import mindustry.content.Fx;
 import mindustry.entities.*;
 import mindustry.graphics.*;
 
-import static braindustry.modVars.ModFunc.*;
+import static braindustry.modVars.modFunc.*;
 
 public class ModFx {
     private static final float Distance = Core.camera.width + Core.camera.height + 30 * Vars.tilesize;
