@@ -37,7 +37,7 @@ public class MainModClass extends Mod {
     public static TextureRegion getIcon() {
 
 //        if (modInfo==null)modInfo = Vars.mods.getMod(mod.getClass());
-        print("modInfo: @",modInfo);
+//        print("modInfo: @",modInfo);
         if (modInfo.iconTexture == null) return Core.atlas.find("nomap");
         return new TextureRegion(modInfo.iconTexture);
     }

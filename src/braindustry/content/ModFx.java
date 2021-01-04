@@ -487,7 +487,6 @@ public class ModFx {
 
     });
     public static final Effect lacertaLaserCharge = new Effect(80.0F, 100.0F, (e) -> {
-        print("e.data: @", e.data);
         Color color = Color.valueOf("d5b2ed");
         Draw.color(color);
         Lines.stroke(e.fin() * 2.0F);

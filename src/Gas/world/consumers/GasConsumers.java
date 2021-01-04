@@ -23,20 +23,16 @@ public class GasConsumers extends Consumers {
         this.gasFilter=new Bits(Vars.content.getBy(ContentType.typeid_UNUSED).size);
     }
     public void init() {
-        print("GasConsumers");
         this.results =  Structs.filter(Consume.class, this.map, Objects::nonNull);
         this.optionalResults = Structs.filter(Consume.class, this.map, (m) -> {
             return m != null && m.isOptional();
         });
-        print("results: @,optionalResults: @",results.length,optionalResults.length);
         for(Consume cons:this.results) {
             cons.applyItemFilter(this.itemFilters);
             cons.applyLiquidFilter(this.liquidfilters);
             if (cons instanceof GasConsume) {
-                print("good class: @",cons.getClass().getName());
                 ((GasConsume) cons).applyGasFilter(this.gasFilter);
             } else {
-                print("class: @",cons.getClass().getName());
             }
         }
     }

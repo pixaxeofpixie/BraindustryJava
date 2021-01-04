@@ -36,7 +36,6 @@ public class ConsumeGasses extends GasConsume {
 
     @Override
     public void applyGasFilter(Bits filter) {
-        print("--@--","am");
         filter.set(this.gas.id,true);
     }
 

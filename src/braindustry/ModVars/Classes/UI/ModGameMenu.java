@@ -27,9 +27,9 @@ public class ModGameMenu {
         return Vars.state.isPlaying() || Vars.state.isPaused();
     }
     private static void loadEvent() {
-        print("loadEvent:");
+//        print("loadEvent:");
         if (!event) {
-            print("event add:");
+//            print("event add:");
             event = true;
             Events.on(EventType.Trigger.class, (e) -> {
                 if (!add && isPlay()){
@@ -45,7 +45,7 @@ public class ModGameMenu {
                     table.act(0.0F);
                     Core.scene.root.addChildAt(0, table);
                     ((Element)table.getChildren().first()).act(0.0F);
-                    print("add:");
+//                    print("add:");
                     add=true;
                 } else if (add && !isPlay()){
                     add=false;

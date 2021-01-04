@@ -36,7 +36,6 @@ public class GasBuilding extends Building {
     }
 
     public boolean acceptGas(Building source, Gas gas) {
-        print("accept: ");
         return this.block.hasGas && this.block.consumes.gasFilter.get(gas.id);
     }
 
@@ -261,10 +260,8 @@ public class GasBuilding extends Building {
 
         }
     }
-    public String lastAccessed="";
     @Override
     public String toString() {
-        lastAccessed="GasBuilding#" + this.id;
         return "GasBuilding#" + this.id;
     }
 
@@ -283,7 +280,6 @@ public class GasBuilding extends Building {
                     ModFx.debugSelectSecond.at(n.x, n.y, n.block.size, Color.green.cpy().a(0.1f));
                     return flow;
                 }
-                print("flow: @, ofract: @, fract: @, accept: @,name: @, l: @", flow, ofract, fract, next.acceptGas(this, gas),n.toString(),n.lastAccessed);
                 ModFx.debugSelectSecond.at(n.x, n.y, n.block.size, Color.red.cpy().a(0.1f));
                 if (next.gasses.currentAmount() / next.block.gasCapacity > 0.1F && fract > 0.1F) {
                     float fx = (this.x + next.x) / 2.0F;
