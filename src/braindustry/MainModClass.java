@@ -1,5 +1,6 @@
 package braindustry;
 
+import Gas.GasInit;
 import arc.graphics.Color;
 import braindustry.content.*;
 import braindustry.modVars.Classes.ModAtlas;
@@ -120,7 +121,7 @@ public class MainModClass extends Mod {
         Time.runTask(10f, () -> {
             BaseDialog dialog = new BaseDialog("Welcome");
             dialog.cont.add("Hello it's braindustry java mod").row();
-            dialog.cont.image(Core.atlas.find(getFullName("welcome"))).pad(20f).row();
+            dialog.cont.image(Core.atlas.find(fullName("welcome"))).pad(20f).row();
             dialog.cont.button("Ok", dialog::hide).size(100f, 50f);
             dialog.show();
         });
@@ -143,6 +144,7 @@ public class MainModClass extends Mod {
         modAtlas=new ModAtlas();
         Events.fire(ModEventType.ModContentLoad.class);
 //        loadMaps();
+        GasInit.init(true);
         new ModSounds().load();
         new ModStatusEffects().load();
         new ModItems().load();

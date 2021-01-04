@@ -1,6 +1,5 @@
 package braindustry.content;
 
-import Gas.GasItemLiquidGenerator;
 import Gas.type.Gas;
 import Gas.world.GasPowerGenerator;
 import Gas.world.consumers.ConsumeGasses;
@@ -87,19 +86,6 @@ public class ModBlocks implements ContentList {
             }
         };
 
-        methaneBurner = new GasItemLiquidGenerator("methane-burner") {
-            {
-                update = true;
-                hasPower = true;
-                hasGas = true;
-                localizedName = "methane burner";
-                description = "burn all you methane";
-                powerProduction = 5f;
-                gasCapacity = 5f;
-                size = 2;
-                consumes.add(new ConsumeGasses(ModGasses.methane, 1));
-                requirements(Category.power, ItemStack.with(Items.silicon, 60, Items.copper, 50, Items.graphite, 90));
-            }
-        };
+
     }
 }

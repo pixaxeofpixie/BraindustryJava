@@ -17,9 +17,9 @@ import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType;
 import mindustry.gen.EntityMapping;
 
-import static braindustry.modVars.ModVars.*;
+import static braindustry.modVars.modVars.*;
 
-public class ModFunc {
+public class modFunc {
     public static int addEntityMappingIdMap(Prov prov) {
         for (int i = 0; i < EntityMapping.idMap.length; i++) {
             if (EntityMapping.idMap[i] == null){
@@ -61,7 +61,7 @@ public class ModFunc {
     public static void addResearch(String researchName, UnlockableContent unlock){
         TechTree.TechNode node = new TechTree.TechNode(null, unlock, unlock.researchRequirements());
         TechTree.TechNode parent = TechTree.all.find((t) -> {
-            return t.content.name.equals(researchName) || t.content.name.equals(getFullName(researchName));
+            return t.content.name.equals(researchName) || t.content.name.equals(fullName(researchName));
         });
 
         if (parent == null) {
@@ -76,7 +76,7 @@ public class ModFunc {
         }
     }
 
-    public static String getFullName(String name){
+    public static String fullName(String name){
         return Strings.format("@-@",modInfo.name,name);
     }
 

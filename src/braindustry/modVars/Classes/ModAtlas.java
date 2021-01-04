@@ -3,7 +3,7 @@ package braindustry.modVars.Classes;
 import arc.Core;
 import arc.graphics.g2d.TextureRegion;
 
-import static braindustry.modVars.ModFunc.getFullName;
+import static braindustry.modVars.modFunc.*;
 
 public class ModAtlas {
     public TextureRegion laser, laserEnd;
@@ -11,7 +11,7 @@ public class ModAtlas {
         this.load();
     }
     public void load(){
-        laser = Core.atlas.find(getFullName("laser"),"laser");
-        laserEnd = Core.atlas.find(getFullName("laser-end"),"laser-end");
+        laser = Core.atlas.find(fullName("laser"),"laser");
+        laserEnd = Core.atlas.find(fullName("laser-end"),"laser-end");
     }
 }
