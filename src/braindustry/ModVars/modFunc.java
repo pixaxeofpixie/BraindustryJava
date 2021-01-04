@@ -1,4 +1,4 @@
-package braindustry.modVars;
+package braindustry.ModVars;
 
 
 import arc.Core;
@@ -17,7 +17,7 @@ import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType;
 import mindustry.gen.EntityMapping;
 
-import static braindustry.modVars.modVars.*;
+import static braindustry.ModVars.modVars.*;
 
 public class modFunc {
     public static int addEntityMappingIdMap(Prov prov) {
@@ -57,7 +57,9 @@ public class modFunc {
             node.parent = parent;
         }
     }
+    public static void inspectBuilding(){
 
+    }
     public static void addResearch(String researchName, UnlockableContent unlock){
         TechTree.TechNode node = new TechTree.TechNode(null, unlock, unlock.researchRequirements());
         TechTree.TechNode parent = TechTree.all.find((t) -> {

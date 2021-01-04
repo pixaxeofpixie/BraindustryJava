@@ -12,7 +12,7 @@ import mindustry.world.consumers.ConsumeType;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.Stats;
 
-public class ConsumeGasses extends GasConsumerBase {
+public class ConsumeGasses extends GasConsume {
     public final Gas gas;
     public final float amount;
 

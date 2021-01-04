@@ -14,8 +14,22 @@ public class Gas  extends UnlockableContent {
     public Color barColor;
     public float temperature;
     public StatusEffect effect;
+    public Color lightColor;
+    public float viscosity=0.1f;
+    public float transparency=1f;
+
     public Gas(String name) {
         super(name);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        if (color==null && barColor!=null)color=barColor;
+        if (color==null && lightColor!=null)color=lightColor;
+        if (color==null)color=Color.black.cpy();
+        if (lightColor==null)lightColor=Color.black.cpy();
+        if (barColor==null)barColor=color;
     }
 
     @Override
@@ -26,6 +40,7 @@ public class Gas  extends UnlockableContent {
         this.stats.addPercent(Stat.explosiveness, this.explosiveness);
         this.stats.addPercent(Stat.flammability, this.flammability);
         this.stats.addPercent(Stat.radioactivity, this.radioactivity);
+        this.stats.addPercent(Stat.viscosity, this.viscosity);
     }
 
     public Color barColor() {

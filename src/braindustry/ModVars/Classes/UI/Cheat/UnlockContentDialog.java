@@ -1,25 +1,19 @@
-package braindustry.modVars.Classes.UI.Cheat;
+package braindustry.ModVars.Classes.UI.Cheat;
 
 import arc.Core;
 import arc.graphics.Color;
 import arc.input.KeyCode;
 import arc.scene.ui.Image;
 import arc.scene.ui.ImageButton;
-import arc.scene.ui.layout.Cell;
 import arc.scene.ui.layout.Table;
 import mindustry.Vars;
-import mindustry.content.Blocks;
 import mindustry.ctype.UnlockableContent;
-import mindustry.gen.Icon;
 import mindustry.gen.Tex;
-import mindustry.type.ItemStack;
 import mindustry.ui.Cicon;
-import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.meta.BuildVisibility;
 
-import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UnlockContentDialog extends BaseDialog {

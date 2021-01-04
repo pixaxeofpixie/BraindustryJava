@@ -2,6 +2,7 @@ package Gas.world.blocks.power;
 
 import Gas.AllGenerator;
 import Gas.type.Gas;
+import arc.Core;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import mindustry.graphics.Drawf;
@@ -17,6 +18,22 @@ public class AllBurnerGenerator extends AllGenerator {
 
     public AllBurnerGenerator(boolean hasItems, boolean hasLiquids, boolean hasGas, String name) {
         super(hasItems, hasLiquids, hasGas, name);
+    }
+
+    public AllBurnerGenerator(String name) {
+        super(name);
+    }
+
+    @Override
+    public void load() {
+        super.load();
+        this.turbineRegions = new TextureRegion[2];
+
+        for(int i = 0; i < 2; ++i) {
+            this.turbineRegions[i] = Core.atlas.find(this.name + "-turbine" + i + "");
+        }
+
+        this.capRegion = Core.atlas.find(this.name + "-cap");
     }
 
     protected float getLiquidEfficiency(Liquid liquid) {

@@ -5,7 +5,7 @@ import mindustry.gen.Building;
 import mindustry.world.consumers.Consume;
 import mindustry.world.consumers.ConsumeType;
 
-public abstract class ConsumeGasBase extends Consume {
+public abstract class ConsumeGasBase extends GasConsume {
     public final float amount;
 
     public ConsumeGasBase(float amount) {

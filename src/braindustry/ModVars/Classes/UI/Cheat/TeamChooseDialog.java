@@ -1,4 +1,4 @@
-package braindustry.modVars.Classes.UI.Cheat;
+package braindustry.ModVars.Classes.UI.Cheat;
 
 import arc.func.Cons;
 import arc.scene.ui.Image;

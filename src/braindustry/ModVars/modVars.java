@@ -1,4 +1,4 @@
-package braindustry.modVars;
+package braindustry.ModVars;
 
 import arc.struct.ObjectMap;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
@@ -6,8 +6,8 @@ import braindustry.entities.Advanced.AdvancedPayloadUnit;
 import braindustry.entities.Advanced.AdvancedUnitWaterMove;
 import braindustry.entities.AmmoDistributeUnit;
 import braindustry.entities.PowerGeneratorUnit;
-import braindustry.modVars.Classes.ModAtlas;
-import braindustry.modVars.Classes.ModSettings;
+import braindustry.ModVars.Classes.ModAtlas;
+import braindustry.ModVars.Classes.ModSettings;
 import mindustry.gen.EntityMapping;
 import mindustry.mod.Mods;
 

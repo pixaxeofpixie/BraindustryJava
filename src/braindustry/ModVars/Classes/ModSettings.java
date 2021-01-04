@@ -1,4 +1,4 @@
-package braindustry.modVars.Classes;
+package braindustry.ModVars.Classes;
 
 import braindustry.MainModClass;
 import arc.Core;
@@ -9,8 +9,8 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 
-import static braindustry.modVars.modFunc.*;
-import static braindustry.modVars.modVars.*;
+import static braindustry.ModVars.modFunc.*;
+import static braindustry.ModVars.modVars.*;
 
 public class ModSettings {
     public ModSettings(){

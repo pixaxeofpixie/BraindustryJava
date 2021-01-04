@@ -7,21 +7,22 @@ import mindustry.ctype.ContentType;
 
 public class Gasses implements ContentList {
     public static Gas oxygen;
-    public static Gas none;
+    public static Gas methane;
     public void load() {
-        none=new Gas("none"){
-
-            @Override
-            public ContentType getContentType() {
-                return ContentType.mech_UNUSED;
-            }
+        oxygen =new Gas("oxygen"){
             {
-                this.color=new Color(0,0,0,0);
+                this.explosiveness=0.1f;
+                this.flammability=1;
+                this.localizedName="Oxygen";
+                this.color=Color.valueOf("70FFF8");
             }
         };
-        oxygen =new Gas("Oxygen"){
+        methane =new Gas("methane"){
             {
-                this.color=Color.valueOf("70FFF8");
+                this.localizedName="Methane";
+                this.color= Color.valueOf("bcf9ff");
+                this.flammability=0.7f;
+                this.explosiveness=0.9f;
             }
         };
     }

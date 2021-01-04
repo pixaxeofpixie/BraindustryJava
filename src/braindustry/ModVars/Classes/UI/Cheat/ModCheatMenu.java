@@ -1,4 +1,4 @@
-package braindustry.modVars.Classes.UI.Cheat;
+package braindustry.ModVars.Classes.UI.Cheat;
 
 import arc.Core;
 import arc.Events;
@@ -10,7 +10,7 @@ import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.ui.Styles;
 
-import static braindustry.modVars.ModVars.*;
+import static braindustry.ModVars.modVars.*;
 
 public class ModCheatMenu {
 

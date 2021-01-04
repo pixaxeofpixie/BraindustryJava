@@ -1,5 +1,6 @@
 package Gas;
 
+import Gas.entities.Clouds;
 import Gas.type.Gas;
 import Gas.world.GasBlock;
 import arc.math.Mathf;
@@ -14,9 +15,11 @@ import mindustry.world.Tile;
 public class GasBuilding extends Building {
     public GasModule gasses;
     public GasBlock block;
+
     public void handleGas(Building source, Gas gas, float amount) {
         this.gasses.add(gas, amount);
     }
+
     public boolean acceptGas(Building source, Gas gas) {
         return this.block.hasGas && this.block.consumes.gasFilter.get(gas.id);
     }
@@ -28,15 +31,18 @@ public class GasBuilding extends Building {
     public void gasses(GasModule gasses) {
         this.gasses = gasses;
     }
+
     public GasBuilding getGasDestination(Building from, Gas gas) {
         return this;
     }
+
     public boolean canDumpGas(Building to, Gas gas) {
         return true;
     }
+
     public void transferGas(Building n, float amount, Gas gas) {
-        if (!(n instanceof GasBuilding))return;
-        GasBuilding next=(GasBuilding)n;
+        if (!(n instanceof GasBuilding)) return;
+        GasBuilding next = (GasBuilding) n;
         float flow = Math.min(next.block.gasCapacity - next.gasses.get(gas), amount);
         if (next.acceptGas(this, gas)) {
             next.handleGas(this, gas, flow);
@@ -46,8 +52,8 @@ public class GasBuilding extends Building {
 
     @Override
     public GasBuilding create(Block block, Team team) {
-        GasBuilding out= (GasBuilding) super.create(block, team);
-        this.block=(GasBlock) this.block();
+        GasBuilding out = (GasBuilding) super.create(block, team);
+        this.block = (GasBlock) this.block();
         if (this.block.hasGas) {
             this.gasses = new GasModule();
         }
@@ -61,11 +67,11 @@ public class GasBuilding extends Building {
                 gas.unlock();
             }
 
-            for(int i = 0; i < this.proximity.size; ++i) {
+            for (int i = 0; i < this.proximity.size; ++i) {
                 this.incrementDump(this.proximity.size);
                 Building o = this.proximity.get((i + dump) % this.proximity.size);
-                if (!(o instanceof GasBuilding))continue;
-                GasBuilding other=(GasBuilding)o;
+                if (!(o instanceof GasBuilding)) continue;
+                GasBuilding other = (GasBuilding) o;
                 other = other.getGasDestination(this, gas);
                 if (other != null && other.team == this.team && other.block.hasGas && this.canDumpGas(other, gas) && other.gasses != null) {
                     float ofract = other.gasses.get(gas) / other.block.gasCapacity;
@@ -78,11 +84,12 @@ public class GasBuilding extends Building {
 
         }
     }
+
     public float moveGas(Building n, Gas gas) {
         if (n == null || !(n instanceof GasBuilding)) {
             return 0.0F;
         } else {
-            GasBuilding next=(GasBuilding)n;
+            GasBuilding next = (GasBuilding) n;
             next = next.getGasDestination(this, gas);
             if (next.team == this.team && next.block.hasGas && this.gasses.get(gas) > 0.0F) {
                 float ofract = next.gasses.get(gas) / next.block.gasCapacity;
@@ -102,12 +109,12 @@ public class GasBuilding extends Building {
                     if (other.flammability > 0.3F && gas.temperature > 0.7F || gas.flammability > 0.3F && other.temperature > 0.7F) {
                         this.damage(1.0F * Time.delta);
                         next.damage(1.0F * Time.delta);
-                        if (Mathf.chance(0.1D * (double)Time.delta)) {
+                        if (Mathf.chance(0.1D * (double) Time.delta)) {
                             Fx.fire.at(fx, fy);
                         }
                     } else if (gas.temperature > 0.7F && other.temperature < 0.55F || other.temperature > 0.7F && gas.temperature < 0.55F) {
                         this.gasses.remove(gas, Math.min(this.gasses.get(gas), 0.7F * Time.delta));
-                        if (Mathf.chance((double)(0.2F * Time.delta))) {
+                        if (Mathf.chance((double) (0.2F * Time.delta))) {
                             Fx.steam.at(fx, fy);
                         }
                     }
@@ -117,20 +124,24 @@ public class GasBuilding extends Building {
             return 0.0F;
         }
     }
-    public float moveGasForward(boolean leaks, Gas gas) {
-        Tile next = this.tile.nearby(this.rotation);
-        if (next == null) {
-            return 0.0F;
-        } else if (next.build != null) {
-            return this.moveGas(next.build, gas);
-        } else {
-            if (leaks && !next.block().solid && !next.block().hasLiquids) {
-                float leakAmount = this.gasses.get(gas) / 1.5F;
-//                Puddles.deposit(next, this.tile, gas, leakAmount);
-                this.gasses.remove(gas, leakAmount);
-            }
 
-            return 0.0F;
+    @Override
+    public void onDestroyed() {
+        super.onDestroyed();
+    }
+
+    public float moveGasForward(boolean leaks, Gas gas) {
+        Building next = this.front();
+        Tile nextTile = this.tile.nearby(this.rotation);
+        if ((next instanceof GasBuilding)) {
+            return this.moveGas(next, gas);
         }
+        if (nextTile != null && leaks && !nextTile.block().solid && !nextTile.block().hasLiquids) {
+            float leakAmount = this.gasses.get(gas) / 1.5F;
+
+            Clouds.deposit(nextTile, this.tile, gas, leakAmount);
+            this.gasses.remove(gas, leakAmount);
+        }
+        return 0.0F;
     }
 }

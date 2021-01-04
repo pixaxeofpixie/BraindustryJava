@@ -14,7 +14,7 @@ import mindustry.world.consumers.ConsumeType;
 
 public class GasBlock extends Block {
     public boolean hasGas=false;
-    public float gasCapacity =0;
+    public float gasCapacity ;
     public boolean outputsGas = false;
     public final GasConsumers consumes = new GasConsumers();
 //    4a4b53
@@ -29,7 +29,7 @@ public class GasBlock extends Block {
         if (this.hasGas) {
             Func<GasBuilding, Gas> current;
             if (this.consumes.hasGas() && this.consumes.getGas() instanceof ConsumeGasses) {
-                Gas gas = (this.consumes.getGas()).gas;
+                Gas gas = ((ConsumeGasses)this.consumes.getGas()).gas;
                 current = (entity) -> {
                     return gas;
                 };

@@ -1,43 +1,28 @@
 package Gas.content;
 
-import Gas.AllGenerator;
-import Gas.world.consumers.ConsumeGasses;
-import braindustry.content.ModGasses;
-import mindustry.content.Blocks;
+import Gas.world.blocks.gas.*;
 import mindustry.content.Items;
-import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
-import mindustry.world.blocks.power.BurnerGenerator;
+import mindustry.world.meta.BuildVisibility;
 
 public class BasicBlocks {
-    static {
-        Blocks.class.getClass();
-    }
-    public static Block gasGenerator,methaneBurner;
+    public static Block gasSource;
+    public static Block gasConduit;
+
     public void load(){
-        gasGenerator = new AllGenerator("combustion-generator") {
+        gasSource = new GasSource("gas-source") {
             {
-                this.requirements(Category.power, ItemStack.with(new Object[]{Items.copper, 25, Items.lead, 15}));
-                this.powerProduction = 1.0F;
-                this.itemDuration = 120.0F;
-                this.ambientSound = Sounds.smelter;
-                this.ambientSoundVolume = 0.03F;
+                this.size = 1;
+                this.buildVisibility = BuildVisibility.sandboxOnly;
+                this.requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
             }
         };
-        methaneBurner = new AllGenerator("methane-burner") {
+        gasConduit = new GasConduit("gas-conduit") {
             {
-               this.update = true;
-               this.hasPower = true;
-               this.hasGas = true;
-               this.localizedName = "methane burner";
-               this.description = "burn all you methane";
-               this.powerProduction = 5f;
-               this.gasCapacity = 5f;
-               this.size = 2;
-               this.consumes.add(new ConsumeGasses(ModGasses.methane, 1));
-               this.requirements(Category.power, ItemStack.with(Items.silicon, 60, Items.copper, 50, Items.graphite, 90));
+                this.size = 1;
+                this.requirements(Category.liquid, ItemStack.with(Items.copper, 3, Items.silicon, 10));
             }
         };
     }

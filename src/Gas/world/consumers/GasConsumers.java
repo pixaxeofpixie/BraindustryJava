@@ -4,41 +4,41 @@ import arc.struct.Bits;
 import arc.util.Structs;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
+import mindustry.world.consumers.Consume;
 import mindustry.world.consumers.ConsumeType;
 import mindustry.world.consumers.Consumers;
 
 import java.util.Objects;
 
 public class GasConsumers extends Consumers {
-    protected ConsumeGasses[] map = new ConsumeGasses[ConsumeType.values().length+1];
-    protected ConsumeGasses[] results;
-    protected ConsumeGasses[] optionalResults;
+    protected Consume[] map = new GasConsume[ConsumeType.values().length+1];
+    protected Consume[] results;
+    protected Consume[] optionalResults;
     public final Bits gasFilter;
     public GasConsumers() {
         super();
         this.gasFilter=new Bits(Vars.content.getBy(ContentType.typeid_UNUSED).size);
     }
     public void init() {
-        this.results =  Structs.filter(ConsumeGasses.class, this.map, Objects::nonNull);
-        this.optionalResults = Structs.filter(ConsumeGasses.class, this.map, (m) -> {
+        this.results =  Structs.filter(Consume.class, this.map, Objects::nonNull);
+        this.optionalResults = Structs.filter(Consume.class, this.map, (m) -> {
             return m != null && m.isOptional();
         });
-        GasConsumerBase[] var1 = this.results;
-        int var2 = var1.length;
-
-        for(int var3 = 0; var3 < var2; ++var3) {
-            GasConsumerBase cons = var1[var3];
+        for(Consume cons:this.results) {
             cons.applyItemFilter(this.itemFilters);
             cons.applyLiquidFilter(this.liquidfilters);
-            cons.applyGasFilter(this.gasFilter);
+            if (cons instanceof GasConsume){
+
+                ((GasConsume)cons).applyGasFilter(this.gasFilter);
+            }
         }
     }
 
     public boolean hasGas() {
         return this.map[3] != null;
     }
-    public ConsumeGasses getGas() {
-        return (ConsumeGasses)this.get(3);
+    public Consume getGas() {
+        return (Consume) this.get(3);
     }
 
     public Object get(int type) {
@@ -47,5 +47,10 @@ public class GasConsumers extends Consumers {
         } else {
             return this.map[type];
         }
+    }
+
+    public <T extends Consume> T addGas(T consume) {
+        this.map[3] = consume;
+        return consume;
     }
 }

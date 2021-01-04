@@ -1,7 +1,7 @@
 package braindustry.content;
 
 import arc.struct.Seq;
-import braindustry.modVars.Classes.TechTreeManager;
+import braindustry.ModVars.Classes.TechTreeManager;
 import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.Liquids;

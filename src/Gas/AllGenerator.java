@@ -60,6 +60,12 @@ public class AllGenerator extends GasPowerGenerator {
         this.defaults = false;
     }
 
+    @Override
+    public void load() {
+        super.load();
+        this.gasRegion = Core.atlas.find(this.name+"-gas");
+    }
+
     protected void setDefaults() {
         if (defaults) return;
         if (this.hasItems) {
@@ -75,7 +81,7 @@ public class AllGenerator extends GasPowerGenerator {
         }
 
         if (this.hasGas) {
-            this.consumes.add(new ConsumeGasFilter((gas) -> {
+            this.consumes.addGas(new ConsumeGasFilter((gas) -> {
                 return this.getGasEfficiency(gas) >= this.minGasEfficiency;
             }, this.maxLiquidGenerate)).update(false).optional(true, false);
         }

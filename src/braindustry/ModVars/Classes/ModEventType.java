@@ -1,6 +1,4 @@
-package braindustry.modVars.Classes;
-
-import mindustry.game.EventType;
+package braindustry.ModVars.Classes;
 
 public class ModEventType {
     public ModEventType(){

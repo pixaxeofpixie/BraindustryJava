@@ -41,8 +41,8 @@ import mindustry.world.meta.Stats;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static braindustry.modVars.modFunc.*;
-import static braindustry.modVars.ModFunc.getInfoDialog;
+import static braindustry.ModVars.modFunc.*;
+import static braindustry.ModVars.modFunc.getInfoDialog;
 
 public class MultiCrafter extends Block {
     public Seq<Recipe> recipes = new Seq<>();
@@ -96,7 +96,7 @@ public class MultiCrafter extends Block {
             itemsTexture = new TextureRegion[this.recipes.size];
             for (int i = 0; i < itemsTexture.length; i++) {
                 String itemName = this.recipes.get(i).outputItem.item.name;
-                if (itemName.startsWith(getFullName(""))) itemName = itemName.split(getFullName(""), 2)[1];
+                if (itemName.startsWith(fullName(""))) itemName = itemName.split(fullName(""), 2)[1];
 //                print("load: @",this.name+"-"+itemName);
                 itemsTexture[i] = Core.atlas.find(this.name + "-" + itemName, this.region);
             }
