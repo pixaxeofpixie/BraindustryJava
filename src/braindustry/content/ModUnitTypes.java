@@ -44,6 +44,11 @@ public class ModUnitTypes implements ContentList {
             public Block getGeneratorBlock(){
                 return ModBlocks.unitGenerator;
             }
+            public void init(){
+                int spawnTime = 1300; //why you use no created variables :(
+                abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
+                super.init();
+            }
             {
                 this.range = 18;
                 this.constructor = ()->new PowerGeneratorUnit();
@@ -54,17 +59,16 @@ public class ModUnitTypes implements ContentList {
                 this.accel = 0.1f;
                 this.rotateSpeed = 1.0f;
                 this.drag = 0.23f;
-                this.hitSize = 82;
+                this.hitSize = 100.0F;
                 this.armor = 10;
                 this.rotateShooting = false;
-                this.trailLength = 90;
-                this.trailX = 46;
+                this.trailLength = 180;
+                this.trailX = 28;
                 this.trailY = 23;
-                this.trailScl = 4f;
+                this.trailScl = 2f;
 
-                int spawnTime = 1; //why you use no created variables :(
                 int brange = 1; //why you use no created variables :(
-                abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
+
                 
                 this.weapons.add(
                         new ModWeapon("cenda-weapon") {
