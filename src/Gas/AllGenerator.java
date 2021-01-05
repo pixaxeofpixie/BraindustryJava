@@ -40,6 +40,7 @@ public class AllGenerator extends GasPowerGenerator {
 
     public AllGenerator(boolean hasItems, boolean hasLiquids, boolean hasGas, String name) {
         this(name);
+        this.update = true;
         this.hasItems = hasItems;
         this.hasLiquids = hasLiquids;
         this.hasGas = hasGas;

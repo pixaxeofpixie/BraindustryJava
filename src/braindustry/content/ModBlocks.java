@@ -1,31 +1,28 @@
 package braindustry.content;
 
-import Gas.type.Gas;
-import Gas.world.GasPowerGenerator;
-import Gas.world.consumers.ConsumeGasses;
-import Gas.world.consumers.GasConsumers;
 import braindustry.content.Blocks.ModBlocksUnits;
 import braindustry.content.Blocks.ModDefense;
 import braindustry.content.Blocks.ModOtherBlocks;
 import braindustry.content.Blocks.ModProduction;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.distribution.SmartRouter;
+import braindustry.world.blocks.production.MultiCrafter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
+import mindustry.content.Blocks;
 import mindustry.content.Items;
+import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
-import mindustry.world.blocks.power.BurnerGenerator;
-import mindustry.world.blocks.power.ItemLiquidGenerator;
-import mindustry.world.consumers.Consume;
 import mindustry.world.meta.BuildVisibility;
+import mindustryAddition.type.ModLiquidStack;
 
 public class ModBlocks implements ContentList {
     public static Block
 
-    armoredPlastaniumConveyor, chromiumConduit, phaseAlloyConveyor, plasticConveyor, surgeConveyor, surgePayloadConveyor,
+            armoredPlastaniumConveyor, chromiumConduit, phaseAlloyConveyor, plasticConveyor, surgeConveyor, surgePayloadConveyor,
 
 
     magmaFloor, obsidianBlock, obsidianFloor, oreChromium, oreOdinum, differentialMagmaGenerator,
@@ -47,16 +44,38 @@ public class ModBlocks implements ContentList {
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
 
 
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator, methaneBurner;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator, multiCrafter;
 
     public void load() {
         new ModBlocksUnits().load();
         new ModProduction().load();
         new ModOtherBlocks().load();
         new ModDefense().load();
-        unitGenerator=new UnitPowerGenerator("unit-generator"){
+        multiCrafter = new MultiCrafter("multi-crafter") {
             {
-                this.powerProduction=10f;
+                this.size = 1;
+                this.update = true;
+                this.destructible = true;
+                this.hasLiquids=true;
+                this.hasShadow = false;
+
+                this.health = 360;
+                this.category = Category.units;
+                dynamicItem = true;
+                dynamicLiquid=true;
+//                this.changeTexture = true;
+                recipes(Recipe.with(new ItemStack(Items.copper, 1), ModLiquidStack.with(Liquids.water, 1, Liquids.slag, 1),120),
+                        Recipe.with(new ItemStack(Items.lead, 1),ItemStack.with(Items.copper,2), ModLiquidStack.with(Liquids.water, 3, Liquids.slag, 3), 120),
+                        Recipe.with(new ItemStack(Items.titanium, 1), ModLiquidStack.with(Liquids.water, 20, Liquids.slag, 20), 120),
+                        Recipe.with(new ItemStack(Items.thorium, 1), ModLiquidStack.with(Liquids.water, 20, Liquids.slag, 20, Liquids.oil, 20, Liquids.cryofluid, 20), 120)
+                );
+                this.requirements(this.category, ItemStack.with(Items.lead, 12));
+//                addResearch(Blocks.mechanicalDrill, this);
+            }
+        };
+        unitGenerator = new UnitPowerGenerator("unit-generator") {
+            {
+                this.powerProduction = 10f;
             }
         };
 
@@ -75,13 +94,13 @@ public class ModBlocks implements ContentList {
                 this.buildCostMultiplier = 4.0F;
             }
         };
-        dpsMeter=new DpsMeter("dps-meter"){
+        dpsMeter = new DpsMeter("dps-meter") {
             {
-                this.category=Category.effect;
+                this.category = Category.effect;
 //                this.alwaysUnlocked=true;
-                this.buildVisibility=BuildVisibility.sandboxOnly;
-                this.health=Integer.MAX_VALUE;
-                this.size=3;
+                this.buildVisibility = BuildVisibility.sandboxOnly;
+                this.health = Integer.MAX_VALUE;
+                this.size = 3;
 //                this.requirements();
             }
         };

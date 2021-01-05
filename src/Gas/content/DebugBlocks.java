@@ -29,7 +29,6 @@ public class DebugBlocks {
         };
         methaneBurner = new AllBurnerGenerator("methane-burner") {
             {
-               this.update = true;
                this.hasPower = true;
                this.hasGas = true;
                this.localizedName = "methane burner";
