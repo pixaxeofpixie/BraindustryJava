@@ -1,0 +1,7 @@
+name: "braindustry-java"
+displayName: "Braindustry Java"
+author: "Braindustry Team & MotrONa & G0rillaGlue"
+main: "braindustry.MainModClass"
+version: 1.6
+minGameVersion: 122
+
