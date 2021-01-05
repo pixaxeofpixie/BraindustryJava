@@ -133,7 +133,7 @@ public class Cloud implements Pool.Poolable, Entityc, Drawc, Posc {
             for(int var5 = 0; var5 < var4; ++var5) {
                 Point2 point = var3[var5];
                 Tile other = Vars.world.tile(this.tile.x + point.x, this.tile.y + point.y);
-                if (other != null && other.block() == Blocks.air) {
+                if (other != null) {
                     Clouds.deposit(other, this.tile, this.gas, deposited, this.generation + 1);
                     this.amount -= deposited / 2.0F;
                 }
