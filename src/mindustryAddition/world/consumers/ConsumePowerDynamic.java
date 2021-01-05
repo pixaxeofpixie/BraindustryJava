@@ -4,12 +4,13 @@ import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
 import mindustry.gen.Building;
 import mindustry.world.consumers.Consume;
+import mindustry.world.consumers.ConsumePower;
 import mindustry.world.consumers.ConsumeType;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 import mindustry.world.meta.Stats;
 
-public class ConsumePowerDynamic extends Consume {
+public class ConsumePowerDynamic extends ConsumePower {
     public final float usage;
     public final float capacity;
     public final boolean buffered;
@@ -47,7 +48,7 @@ public class ConsumePowerDynamic extends Consume {
         if (this.buffered) {
             return true;
         } else {
-            return entity.power.status > 0.0F;
+            return entity.power.status > usage;
         }
     }
 
@@ -61,7 +62,7 @@ public class ConsumePowerDynamic extends Consume {
     }
 
     public float requestedPower(Building entity) {
-        if (entity.tile().build == null) {
+        if (entity.tile().build == null || !valid(entity)) {
             return 0.0F;
         } else if (this.buffered) {
             return (1.0F - entity.power.status) * this.capacity;

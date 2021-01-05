@@ -121,7 +121,7 @@ public class Cloud implements Pool.Poolable, Entityc, Drawc, Posc {
 
     public void update() {
 //        print("up: amount: @ name: @",amount,toString());
-        float addSpeed = this.accepting > 0.0F ? 3.0F : 0.0F;
+        float addSpeed = this.accepting*2f;
         this.amount -= Time.delta * (1.0F - this.gas.viscosity) / (5.0F + addSpeed);
         this.amount += this.accepting;
         this.accepting = 0.0F;
