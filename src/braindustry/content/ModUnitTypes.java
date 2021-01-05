@@ -26,12 +26,13 @@ public class ModUnitTypes implements ContentList {
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
             lyra, shield, tropsy, venti,
-            vyvna;
+            vyvna, tyzen;
 
     private static class Types {
         static Prov<? extends Unit> payload = EntityMapping.map("PayloadUnit");
         static Prov<? extends Unit> naval = EntityMapping.map("UnitWaterMove");
         static Prov<? extends Unit> legs = EntityMapping.map("LegsUnit");
+        static Prov<? extends Unit> mech = EntityMapping.map("MechUnit");
     }
 
     public ModUnitTypes() {
@@ -137,8 +138,8 @@ public class ModUnitTypes implements ContentList {
                                         this.despawnEffect = Fx.blastExplosion;
                                         this.homingPower = 0.2f;
                                         this.lightningDamage = 6f;
-                                        this.lightning = 8f;
-                                        this.lightningLength = 5f;
+                                        this.lightning = 8;
+                                        this.lightningLength = 5;
                                         this.makeFire = true;
                                         this.status = StatusEffects.burning;
                                         this.lifetime = 85f;
@@ -1177,6 +1178,15 @@ public class ModUnitTypes implements ContentList {
                             }
                         }
                 );
+            }
+        };
+        tyzen = new UnitType("tyzen") {
+            {
+            this.constructor=Types.mech;
+            this.speed = 0.6f;
+            this.hitSize = 8;
+            this.health = 310;
+
             }
         };
     }
