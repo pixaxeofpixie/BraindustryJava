@@ -17,6 +17,39 @@ public class ModBlocksUnits implements ContentList {
 
     @Override
     public void load() {
+        hyperAirFactory = new UnitFactory("hyper-air-factory") {
+            {
+                this.localizedName = "Hyper Air Factory";
+                this.size = 3;
+                this.consumes.power(2.2f);
+                this.plans = Seq.with(
+                        new UnitPlan(ModUnitTypes.armor, 600, ItemStack.with(Items.silicon, 15, ModItems.graphenite, 5, Items.lead, 5))
+                );
+                this.requirements(Category.units, ItemStack.with(Items.copper, 50, Items.lead, 150, Items.silicon, 70, Items.plastanium, 30, ModItems.odinum, 60));
+            }
+        };
+        hyperGroundFactory = new UnitFactory("hyper-ground-factory") {
+            {
+                this.localizedName = "Hyper Ground Factory";
+                this.size = 3;
+                this.consumes.power(2f);
+                this.plans = Seq.with(
+                        new UnitPlan(ModUnitTypes.ibis, 550, ItemStack.with(Items.silicon, 10, ModItems.graphenite, 5, ModItems.odinum, 5))
+                );
+                this.requirements(Category.units, ItemStack.with(Items.copper, 50, Items.lead, 140, Items.silicon, 70, Items.plastanium, 60));
+            }
+        };
+        hyperNavalFactory = new UnitFactory("hyper-naval-factory") {
+            {
+                this.localizedName = "Hyper Naval Factory";
+                this.size = 3;
+                this.consumes.power(2.2f);
+                this.plans = Seq.with(
+                        new UnitPlan(ModUnitTypes.venti, 630, ItemStack.with(Items.silicon, 5, ModItems.graphenite, 10, Items.metaglass, 10))
+                );
+                this.requirements(Category.units, ItemStack.with(Items.lead, 150, Items.silicon, 80, Items.plastanium, 25, Items.metaglass, 85, ModItems.odinum, 55));
+            }
+        };
         hyperAdditiveReconstructor = new Reconstructor("hyper-additive-reconstructor") {
             {
                 this.localizedName = "Hyper Additive Reconstructor";
@@ -30,17 +63,6 @@ public class ModBlocksUnits implements ContentList {
                         new UnitType[]{ModUnitTypes.armor, ModUnitTypes.shield},
                         new UnitType[]{ModUnitTypes.venti, ModUnitTypes.lyra}
                 );
-            }
-        };
-        hyperAirFactory = new UnitFactory("hyper-air-factory") {
-            {
-                this.localizedName = "Hyper Air Factory";
-                this.size = 3;
-                this.consumes.power(2.2f);
-                this.plans = Seq.with(
-                        new UnitPlan(ModUnitTypes.armor, 600, ItemStack.with(Items.silicon, 15, ModItems.graphenite, 5, Items.lead, 5))
-                );
-                this.requirements(Category.units, ItemStack.with(Items.copper, 50, Items.lead, 150, Items.silicon, 70, Items.plastanium, 30, ModItems.odinum, 60));
             }
         };
         hyperExponentialReconstructor = new Reconstructor("hyper-exponential-reconstructor") {
@@ -59,17 +81,6 @@ public class ModBlocksUnits implements ContentList {
                 );
             }
         };
-        hyperGroundFactory = new UnitFactory("hyper-ground-factory") {
-            {
-                this.localizedName = "Hyper Ground Factory";
-                this.size = 3;
-                this.consumes.power(2f);
-                this.plans = Seq.with(
-                        new UnitPlan(ModUnitTypes.ibis, 550, ItemStack.with(Items.silicon, 10, ModItems.graphenite, 5, ModItems.odinum, 5))
-                );
-                this.requirements(Category.units, ItemStack.with(Items.copper, 50, Items.lead, 140, Items.silicon, 70, Items.plastanium, 60));
-            }
-        };
         hyperMultiplicativeReconstructor = new Reconstructor("hyper-multiplicative-reconstructor") {
             {
                 this.localizedName = "Hyper Multiplicative Reconstructor";
@@ -83,17 +94,6 @@ public class ModBlocksUnits implements ContentList {
                         new UnitType[]{ModUnitTypes.shield, ModUnitTypes.chestplate},
                         new UnitType[]{ModUnitTypes.lyra, ModUnitTypes.tropsy}
                 );
-            }
-        };
-        hyperNavalFactory = new UnitFactory("hyper-naval-factory") {
-            {
-                this.localizedName = "Hyper Naval Factory";
-                this.size = 3;
-                this.consumes.power(2.2f);
-                this.plans = Seq.with(
-                        new UnitPlan(ModUnitTypes.venti, 630, ItemStack.with(Items.silicon, 5, ModItems.graphenite, 10, Items.metaglass, 10))
-                );
-                this.requirements(Category.units, ItemStack.with(Items.lead, 150, Items.silicon, 80, Items.plastanium, 25, Items.metaglass, 85, ModItems.odinum, 55));
             }
         };
         hyperTetrativeReconstructor = new Reconstructor("hyper-tetrative-reconstructor") {

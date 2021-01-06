@@ -28,6 +28,7 @@ public class EveBulletType extends MissileBulletType {
         this.trailColor = ModPal.eveTrailColor;
         this.backColor = ModPal.eveBackColor;
         this.frontColor = ModPal.eveFrontColor;
+        this.lightningColor=this.backColor;
         this.weaveScale = 1;
         this.weaveMag = 3;
     }

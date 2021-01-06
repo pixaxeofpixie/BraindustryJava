@@ -27,6 +27,7 @@ public class AdamBulletType extends MissileBulletType {
         this.trailColor = ModPal.adamTrailColor;
         this.backColor = ModPal.adamBackColor;
         this.frontColor = ModPal.adamFrontColor;
+        this.lightningColor=this.backColor;
         this.weaveScale = 3f;
         this.weaveMag = 6f;
     }

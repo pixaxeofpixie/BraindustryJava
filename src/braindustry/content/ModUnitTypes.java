@@ -10,7 +10,10 @@ import braindustry.entities.PowerUnitType;
 import braindustry.entities.bullets.AdamBulletType;
 import braindustry.entities.bullets.EveBulletType;
 import braindustry.type.ModWeapon;
-import mindustry.content.*;
+import mindustry.content.Bullets;
+import mindustry.content.Fx;
+import mindustry.content.StatusEffects;
+import mindustry.content.UnitTypes;
 import mindustry.ctype.ContentList;
 import mindustry.entities.abilities.UnitSpawnAbility;
 import mindustry.entities.bullet.*;
@@ -19,7 +22,6 @@ import mindustry.gen.Sounds;
 import mindustry.gen.Unit;
 import mindustry.type.AmmoTypes;
 import mindustry.type.UnitType;
-import mindustry.type.Weapon;
 import mindustry.world.Block;
 
 
@@ -30,156 +32,13 @@ public class ModUnitTypes implements ContentList {
             lyra, shield, tropsy, venti,
             vyvna, tyzen;
 
-    private static class Types {
-        static Prov<? extends Unit> payload = EntityMapping.map("PayloadUnit");
-        static Prov<? extends Unit> naval = EntityMapping.map("UnitWaterMove");
-        static Prov<? extends Unit> legs = EntityMapping.map("LegsUnit");
-        static Prov<? extends Unit> mech = EntityMapping.map("MechUnit");
-    }
-
     public ModUnitTypes() {
         UnitTypes.class.isArray();
     }
 
     @Override
     public void load() {
-        vyvna = new PowerUnitType("vyvna") {
-
-            public Block getGeneratorBlock(){
-                return ModBlocks.unitGenerator;
-            }
-            public void init(){
-                int spawnTime = 1300; //why you use no created variables :(
-                abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
-                super.init();
-            }
-
-            @Override
-            public Block getNodeBlock() {
-                return ModBlocks.unitNode;
-            }
-
-            {
-                this.range = 18;
-                this.constructor = ()->new PowerGeneratorUnit();
-                this.localizedName = "Vyvna";
-                this.description = "Giant atomic cruiser, produce energy and fires from railguns and rocket launchers.";
-                this.health = 21900;
-                this.speed = 0.6f;
-                this.accel = 0.1f;
-                this.rotateSpeed = 1.0f;
-                this.drag = 0.23f;
-                this.hitSize = 100.0F;
-                this.armor = 10;
-                this.rotateShooting = false;
-                this.trailLength = 180;
-                this.trailX = 28;
-                this.trailY = 23;
-                this.trailScl = 2f;
-
-                int brange = 1; //why you use no created variables :(
-
-                
-                this.weapons.add(
-                        new ModWeapon("cenda-weapon") {
-                            {
-                                this.reload =60;
-                                this.x = 27;
-                                this.y = 5f;
-                                this.shadow = 15;
-                                this.rotateSpeed = 0.4f;
-                                this.rotate = true;
-                                this.mirror=true;
-                                this.shots = 6;
-                                this.shotDelay = 10;
-                                this.inaccuracy = 1.5f;
-                                this.velocityRnd = 0.5f;
-                                this.shootSound = Sounds.missile;
-                                this.bullet = new EveBulletType() {
-                                    {
-                                        this.width = 15;
-                                        this.height = 25;
-                                        this.shrinkY = 0.1f;
-                                        this.speed = 2.5f;
-                                        this.drag = 0f;
-                                        this.splashDamageRadius = 50;
-                                        this.splashDamage = 30;
-                                        this.homingPower = 0.5f;
-                                        this.lightningDamage = 10;
-                                        this.lightning = 4;
-                                        this.lightningLength = 10;
-                                        this.lifetime = 100;
-                                        this.weaveScale = 1;
-                                        this.weaveMag = 3;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("cenda-weapon3") {
-                                {
-                                this.reload = 80;
-                                this.x = 14;
-                                this.y = -4f;
-                                this.shadow = 12;
-                                this.rotateSpeed = 0.6f;
-                                this.rotate = true;
-                                this.shots = 4;
-                                this.shotDelay = 5;
-                                this.inaccuracy = 0.7f;
-                                this.velocityRnd = 0.1f;
-                                this.shootSound = Sounds.missile;
-                                this.bullet=new AdamBulletType() {
-                                    {
-                                        this.width = 15;
-                                        this.height = 15;
-                                        this.shrinkY = 0.1f;
-                                        this.speed = 3.0f;
-                                        this.drag = 0.01f;
-                                        this.splashDamageRadius = 30f;
-                                        this.splashDamage = 52f;
-                                        this.homingPower = 0.2f;
-                                        this.lightningDamage = 6f;
-                                        this.lightning = 8;
-                                        this.lightningLength = 5;
-                                        this.lifetime = 85f;
-                                        this.weaveScale = 3f;
-                                        this.weaveMag = 6f;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("vyvna-weapon") {
-                            {
-                                this.x = 0f;
-                                this.y = -30f;
-                                this.shootY = -3f;
-                                this.reload = 105f;
-                                this.ejectEffect = Fx.none;
-                                this.recoil = 5f;
-                                this.rotate = true;
-                                this.shadow=50;
-                                this.mirror = false;
-                                this.shootSound = Sounds.flame;
-                                this.alternate = true;
-                                this.bullet = new PointBulletType(){
-                                    {
-                                    this.shootEffect = Fx.instShoot;
-                                    this.hitEffect = Fx.instHit;
-                                    this.smokeEffect = Fx.smokeCloud;
-                                    this.trailEffect = Fx.instTrail;
-                                    this.despawnEffect = Fx.instBomb;
-                                    this.trailSpacing = 15f;
-                                    this.damage = 1240;
-                                    this.buildingDamageMultiplier = 0.4f;
-                                    this.speed = brange;
-                                    this.hitShake = 7f;
-                                    }
-                                };
-                            }
-                        }
-                );
-            }
-        };
+        //====spiders
         ibis = new UnitType("ibis") {
             {
                 this.constructor = Types.legs;
@@ -412,7 +271,7 @@ public class ModUnitTypes implements ContentList {
                                         this.sideAngle = 15;
                                         this.sideWidth = 0;
                                         this.sideLength = 0;
-                                        this.lightningColor=Color.valueOf("d5b2ed");
+                                        this.lightningColor = Color.valueOf("d5b2ed");
                                         this.colors = new Color[]{Color.valueOf("d5b2ed"), Color.valueOf("9671b1"), Color.valueOf("a17dcd")};
                                     }
                                 };
@@ -561,7 +420,7 @@ public class ModUnitTypes implements ContentList {
                                         this.sideAngle = 18;
                                         this.sideWidth = 0;
                                         this.sideLength = 0;
-                                        this.lightningColor=Color.valueOf("d5b2ed");
+                                        this.lightningColor = Color.valueOf("d5b2ed");
                                         this.colors = new Color[]{Color.valueOf("d5b2ed"), Color.valueOf("9671b1"), Color.valueOf("a17dcd")};
                                     }
                                 };
@@ -570,7 +429,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        //===========================
+        //====fly
         armor = new UnitType("armor") {
             {
                 this.constructor = Types.payload;
@@ -595,7 +454,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet=new SapBulletType() {
+                                this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.5f;
                                         this.length = 75;
@@ -660,7 +519,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        chestplate =new UnitType("chestplate") {
+        chestplate = new UnitType("chestplate") {
             {
                 this.localizedName = "Chestplate";
                 this.description = "A big T3 defense unit with sap laser guns.";
@@ -686,10 +545,10 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 6;
                                 this.y = 0;
                                 this.rotate = true;
-                                this.bullet=Bullets.missileExplosive;
+                                this.bullet = Bullets.missileExplosive;
                             }
                         },
-                        new ModWeapon("chainmail-weapon" ){
+                        new ModWeapon("chainmail-weapon") {
                             {
                                 this.x = 0;
                                 this.y = -8f;
@@ -700,7 +559,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet=new SapBulletType() {
+                                this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.9f;
                                         this.length = 50;
@@ -720,10 +579,10 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        chainmail =new UnitType("chainmail") {
+        chainmail = new UnitType("chainmail") {
             {
                 this.localizedName = "Chainmail";
-                this.constructor=Types.payload;
+                this.constructor = Types.payload;
                 this.speed = 0.9f;
                 this.flying = true;
                 this.hitSize = 27;
@@ -744,7 +603,7 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 75;
                                 this.minShootVelocity = 0.02f;
                                 this.shootSound = Sounds.plasmadrop;
-                                this.bullet=new BasicBulletType() {
+                                this.bullet = new BasicBulletType() {
                                     {
                                         this.width = 60;
                                         this.height = 60;
@@ -782,7 +641,7 @@ public class ModUnitTypes implements ContentList {
                                 this.velocityRnd = 0.2f;
                                 this.alternate = true;
                                 this.mirror = true;
-                                this.bullet=Bullets.missileExplosive;
+                                this.bullet = Bullets.missileExplosive;
                             }
                         }
                 );
@@ -820,7 +679,7 @@ public class ModUnitTypes implements ContentList {
                                 this.minShootVelocity = 0.02f;
                                 this.soundPitchMin = 1;
                                 this.shootSound = Sounds.plasmadrop;
-                                this.bullet=new BasicBulletType(){
+                                this.bullet = new BasicBulletType() {
                                     {
                                         this.width = 45;
                                         this.height = 45;
@@ -859,19 +718,19 @@ public class ModUnitTypes implements ContentList {
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
                                 this.mirror = true;
-                                this.bullet=Bullets.missileSurge;
+                                this.bullet = Bullets.missileSurge;
                             }
                         }
                 );
             }
         };
 
-        //===========================
+        //====water
         venti = new UnitType("venti") {
             {
                 this.localizedName = "Vixy";
                 this.description = "First naval unit, has powerful shrapnel gun but needs support.";
-                this.constructor=Types.naval;
+                this.constructor = Types.naval;
                 this.health = 520;
                 this.speed = 1.2f;
                 this.drag = 0.17f;
@@ -895,7 +754,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 0;
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
-                                this.bullet=new ShrapnelBulletType() {
+                                this.bullet = new ShrapnelBulletType() {
                                     {
                                         this.length = 60;
                                         this.damage = 50;
@@ -918,7 +777,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        lyra =new UnitType("lyra") {
+        lyra = new UnitType("lyra") {
             {
                 this.localizedName = "Lyra";
                 this.description = "A T2 sea unit with shrapnel lasers and rocketguns, good at attacking opponent's base, but needs support.";
@@ -946,7 +805,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 0;
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
-                                this.bullet=new ShrapnelBulletType() {
+                                this.bullet = new ShrapnelBulletType() {
                                     {
                                         this.length = 60;
                                         this.damage = 100;
@@ -976,7 +835,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shots = 1;
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
-                                this.bullet = new MissileBulletType(){
+                                this.bullet = new MissileBulletType() {
                                     {
                                         this.width = 10;
                                         this.height = 20;
@@ -1002,7 +861,7 @@ public class ModUnitTypes implements ContentList {
             {
                 this.localizedName = "Tropsy";
                 this.description = "An enlarged and improved unit created on the basis of Lyra unit.";
-                this.constructor=Types.naval;
+                this.constructor = Types.naval;
                 this.health = 1120;
                 this.speed = 0.51f;
                 this.accel = 0.16f;
@@ -1029,7 +888,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 4;
                                 this.velocityRnd = 0.14f;
                                 this.shootSound = Sounds.missile;
-                                this.bullet=new AdamBulletType(){
+                                this.bullet = new AdamBulletType() {
                                     {
                                         this.width = 14;
                                         this.height = 14f;
@@ -1038,7 +897,7 @@ public class ModUnitTypes implements ContentList {
                                         this.drag = 0.05f;
                                         this.splashDamageRadius = 50;
                                         this.splashDamage = 28;
-                                        this.makeFire=false;
+                                        this.makeFire = false;
                                         this.lightningDamage = 7;
                                         this.lightning = 5;
                                         this.lightningLength = 7;
@@ -1060,7 +919,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet=new ShrapnelBulletType() {
+                                this.bullet = new ShrapnelBulletType() {
                                     {
                                         this.length = 60;
                                         this.damage = 62;
@@ -1086,7 +945,7 @@ public class ModUnitTypes implements ContentList {
             {
                 this.localizedName = "Cenda";
                 this.description = "A large and heavy attacking naval unit built on the proven \"Tropsy\" design, but with improvements in everything.";
-                this.constructor=Types.naval;
+                this.constructor = Types.naval;
                 this.health = 5300;
                 this.speed = 0.6f;
                 this.accel = 0.13f;
@@ -1113,7 +972,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 1;
                                 this.velocityRnd = 0.1f;
                                 this.shootSound = Sounds.missile;
-                                this.bullet=new AdamBulletType() {
+                                this.bullet = new AdamBulletType() {
                                     {
                                         this.width = 15;
                                         this.height = 21;
@@ -1145,7 +1004,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet=new ShrapnelBulletType() {
+                                this.bullet = new ShrapnelBulletType() {
                                     {
                                         this.length = 130;
                                         this.damage = 92;
@@ -1169,12 +1028,174 @@ public class ModUnitTypes implements ContentList {
         };
         tyzen = new UnitType("tyzen") {
             {
-            this.constructor=Types.mech;
-            this.speed = 0.6f;
-            this.hitSize = 8;
-            this.health = 310;
+                this.constructor = Types.mech;
+                this.speed = 0.6f;
+                this.hitSize = 8;
+                this.health = 310;
 
             }
         };
+
+        vyvna = new PowerUnitType("vyvna") {
+
+            {
+                this.range = 18;
+                this.constructor = () -> new PowerGeneratorUnit();
+                this.localizedName = "Vyvna";
+                this.description = "Giant atomic cruiser, produce energy and fires from railguns and rocket launchers.";
+                this.health = 21900;
+                this.speed = 0.6f;
+                this.accel = 0.1f;
+                this.rotateSpeed = 1.0f;
+                this.drag = 0.23f;
+                this.hitSize = 100.0F;
+                this.armor = 10;
+                this.rotateShooting = false;
+                this.trailLength = 180;
+                this.trailX = 28;
+                this.trailY = 23;
+                this.trailScl = 2f;
+                int spawnTime = 1300; //why you use no created variables :(
+                abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
+                int brange = 1; //why you use no created variables :(
+
+
+                this.weapons.add(
+                        new ModWeapon("cenda-weapon") {
+                            {
+                                this.reload = 60;
+                                this.x = 27;
+                                this.y = 5f;
+                                this.shadow = 15;
+                                this.rotateSpeed = 0.4f;
+                                this.rotate = true;
+                                this.mirror = true;
+                                this.shots = 6;
+                                this.shotDelay = 10;
+                                this.inaccuracy = 1.5f;
+                                this.velocityRnd = 0.5f;
+                                this.shootSound = Sounds.missile;
+                                this.bullet = new EveBulletType() {
+                                    {
+                                        this.width = 15;
+                                        this.height = 25;
+                                        this.shrinkY = 0.1f;
+                                        this.speed = 2.5f;
+                                        this.drag = 0f;
+                                        this.splashDamageRadius = 50;
+                                        this.splashDamage = 30;
+                                        this.homingPower = 0.5f;
+                                        this.lightningDamage = 10;
+                                        this.lightning = 4;
+                                        this.lightningLength = 10;
+                                        this.lifetime = 100;
+                                        this.weaveScale = 1;
+                                        this.weaveMag = 3;
+                                    }
+                                };
+                            }
+                        },
+                        new ModWeapon("cenda-weapon3") {
+                            {
+                                this.reload = 80;
+                                this.x = 14;
+                                this.y = -4f;
+                                this.shadow = 12;
+                                this.rotateSpeed = 0.6f;
+                                this.rotate = true;
+                                this.shots = 4;
+                                this.shotDelay = 5;
+                                this.inaccuracy = 0.7f;
+                                this.velocityRnd = 0.1f;
+                                this.shootSound = Sounds.missile;
+                                this.bullet = new AdamBulletType() {
+                                    {
+                                        this.width = 15;
+                                        this.height = 15;
+                                        this.shrinkY = 0.1f;
+                                        this.speed = 3.0f;
+                                        this.drag = 0.01f;
+                                        this.splashDamageRadius = 30f;
+                                        this.splashDamage = 52f;
+                                        this.homingPower = 0.2f;
+                                        this.lightningDamage = 6f;
+                                        this.lightning = 8;
+                                        this.lightningLength = 5;
+                                        this.lifetime = 85f;
+                                        this.weaveScale = 3f;
+                                        this.weaveMag = 6f;
+                                    }
+                                };
+                            }
+                        },
+                        new ModWeapon("vyvna-weapon") {
+                            {
+                                this.x = 0f;
+                                this.y = -30f;
+                                this.shootY = -3f;
+                                this.reload = 105f;
+                                this.ejectEffect = Fx.none;
+                                this.recoil = 5f;
+                                this.rotate = true;
+                                this.shadow = 50;
+                                this.mirror = false;
+                                this.shootSound = Sounds.flame;
+                                this.alternate = true;
+                                /*this.bullet = new PointBulletType() {
+                                    {
+                                        this.shootEffect = ModFx.instShoot;
+                                        this.hitEffect = ModFx.instHit;
+                                        this.smokeEffect = Fx.smokeCloud;
+                                        this.trailEffect = ModFx.instTrail;
+                                        this.despawnEffect = ModFx.instBomb;
+                                        this.trailSpacing = 15f;
+                                        this.damage = 1240;
+                                        this.buildingDamageMultiplier = 0.4f;
+                                        this.speed = brange;
+                                        this.hitShake = 7f;
+                                    }
+                                };*/
+                                this.bullet = new RailBulletType() {
+                                    {
+                                        this.shootEffect = ModFx.instShoot;
+                                        this.length = 700.0F;
+                                        this.updateEffectSeg = 60.0F;
+                                        this.pierceEffect = this.hitEffect = ModFx.instHit;
+                                        this.updateEffect = this.trailEffect = ModFx.instTrail;
+                                        this.hitEffect = Fx.massiveExplosion;
+                                        this.smokeEffect = Fx.shootBig2;
+                                        this.damage = 1250.0F;
+                                        this.pierceDamageFactor = 0.5F;
+                                        this.despawnEffect = ModFx.instBomb;
+                                        this.buildingDamageMultiplier = 0.4f;
+                                        this.speed = brange;
+                                        this.hitShake = 7f;
+                                    }
+                                };
+                            }
+                        }
+                );
+            }
+
+            public Block getGeneratorBlock() {
+                return ModBlocks.unitGenerator;
+            }
+
+            public void init() {
+                super.init();
+            }
+
+            @Override
+            public Block getNodeBlock() {
+                return ModBlocks.unitNode;
+            }
+        };
+    }
+
+    private static class Types {
+        static Prov<? extends Unit> payload = EntityMapping.map("PayloadUnit");
+        static Prov<? extends Unit> naval = EntityMapping.map("UnitWaterMove");
+        static Prov<? extends Unit> legs = EntityMapping.map("LegsUnit");
+        static Prov<? extends Unit> mech = EntityMapping.map("MechUnit");
     }
 }
