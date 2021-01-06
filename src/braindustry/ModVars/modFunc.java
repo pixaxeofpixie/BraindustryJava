@@ -104,6 +104,7 @@ public class modFunc {
     }
 
     public static void showException(Exception exception){
+        Log.err(exception);
         if (Vars.ui != null){
             Vars.ui.showException(Strings.format("@: error", modInfo.meta.displayName), exception);
         } else {

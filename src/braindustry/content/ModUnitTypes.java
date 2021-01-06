@@ -9,6 +9,7 @@ import braindustry.entities.PowerGeneratorUnit;
 import braindustry.entities.PowerUnitType;
 import braindustry.entities.bullets.AdamBulletType;
 import braindustry.entities.bullets.EveBulletType;
+import braindustry.gen.StealthMechUnit;
 import braindustry.type.ModWeapon;
 import mindustry.content.Bullets;
 import mindustry.content.Fx;
@@ -1028,9 +1029,12 @@ public class ModUnitTypes implements ContentList {
         };
         tyzen = new UnitType("tyzen") {
             {
-                this.constructor = Types.mech;
+                this.mineSpeed = 8.0F;
+                this.mineTier = 2;
+                this.constructor = Types.stealthMech;
                 this.speed = 0.6f;
                 this.hitSize = 8;
+                this.buildSpeed = 1.0F;
                 this.health = 310;
 
             }
@@ -1197,5 +1201,6 @@ public class ModUnitTypes implements ContentList {
         static Prov<? extends Unit> naval = EntityMapping.map("UnitWaterMove");
         static Prov<? extends Unit> legs = EntityMapping.map("LegsUnit");
         static Prov<? extends Unit> mech = EntityMapping.map("MechUnit");
+        static Prov<? extends Unit> stealthMech = StealthMechUnit::new;
     }
 }

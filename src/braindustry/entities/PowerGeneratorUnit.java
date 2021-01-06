@@ -18,7 +18,7 @@ import mindustry.world.blocks.power.PowerGraph;
 import mindustry.world.blocks.power.PowerNode;
 
 public class PowerGeneratorUnit extends UnitWaterMove {
-    public static final int classId = 41;
+    public static int classId = 41;
     public Seq<Building> links = new Seq<>();
     public UnitPowerGenerator.UnitPowerGeneratorBuild generatorBuilding;
     public UnitPowerNode.UnitPowerNodeBuild nodeBuild;

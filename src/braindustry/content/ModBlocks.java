@@ -10,6 +10,7 @@ import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.production.MultiCrafter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
+import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
@@ -53,7 +54,7 @@ public class ModBlocks implements ContentList {
         new ModDefense().load();
         multiCrafter = new MultiCrafter("multi-crafter") {
             {
-                this.size = 1;
+                this.size = 3;
                 this.update = true;
                 this.destructible = true;
                 this.hasLiquids=true;
