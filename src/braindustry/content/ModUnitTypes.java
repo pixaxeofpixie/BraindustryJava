@@ -7,6 +7,8 @@ import braindustry.entities.Advanced.AdvancedUnitType;
 import braindustry.entities.Advanced.UnitExtensions;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.entities.PowerUnitType;
+import braindustry.entities.bullets.AdamBulletType;
+import braindustry.entities.bullets.EveBulletType;
 import braindustry.type.ModWeapon;
 import mindustry.content.*;
 import mindustry.ctype.ContentList;
@@ -93,7 +95,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 1.5f;
                                 this.velocityRnd = 0.5f;
                                 this.shootSound = Sounds.missile;
-                                this.bullet = new MissileBulletType() {
+                                this.bullet = new EveBulletType() {
                                     {
                                         this.width = 15;
                                         this.height = 25;
@@ -102,18 +104,11 @@ public class ModUnitTypes implements ContentList {
                                         this.drag = 0f;
                                         this.splashDamageRadius = 50;
                                         this.splashDamage = 30;
-                                        this.hitEffect = Fx.blastExplosion;
-                                        this.despawnEffect = Fx.blastExplosion;
                                         this.homingPower = 0.5f;
                                         this.lightningDamage = 10;
                                         this.lightning = 4;
                                         this.lightningLength = 10;
-                                        this.makeFire = true;
-                                        this.status = StatusEffects.burning;
                                         this.lifetime = 100;
-                                        this.trailColor = Color.valueOf("f2e2ff");
-                                        this.backColor = Color.valueOf("c496d3");
-                                        this.frontColor = Color.valueOf("f2c9ff");
                                         this.weaveScale = 1;
                                         this.weaveMag = 3;
                                     }
@@ -133,7 +128,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 0.7f;
                                 this.velocityRnd = 0.1f;
                                 this.shootSound = Sounds.missile;
-                                this.bullet=new MissileBulletType() {
+                                this.bullet=new AdamBulletType() {
                                     {
                                         this.width = 15;
                                         this.height = 15;
@@ -142,18 +137,11 @@ public class ModUnitTypes implements ContentList {
                                         this.drag = 0.01f;
                                         this.splashDamageRadius = 30f;
                                         this.splashDamage = 52f;
-                                        this.hitEffect = Fx.blastExplosion;
-                                        this.despawnEffect = Fx.blastExplosion;
                                         this.homingPower = 0.2f;
                                         this.lightningDamage = 6f;
                                         this.lightning = 8;
                                         this.lightningLength = 5;
-                                        this.makeFire = true;
-                                        this.status = StatusEffects.burning;
                                         this.lifetime = 85f;
-                                        this.trailColor = Color.valueOf("b3bee0");
-                                        this.backColor = Color.valueOf("7bafc4");
-                                        this.frontColor = Color.valueOf("b5eff4");
                                         this.weaveScale = 3f;
                                         this.weaveMag = 6f;
                                     }
@@ -1041,7 +1029,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 4;
                                 this.velocityRnd = 0.14f;
                                 this.shootSound = Sounds.missile;
-                                this.bullet=new MissileBulletType(){
+                                this.bullet=new AdamBulletType(){
                                     {
                                         this.width = 14;
                                         this.height = 14f;
@@ -1050,15 +1038,11 @@ public class ModUnitTypes implements ContentList {
                                         this.drag = 0.05f;
                                         this.splashDamageRadius = 50;
                                         this.splashDamage = 28;
-                                        this.hitEffect = Fx.blastExplosion;
-                                        this.despawnEffect = Fx.blastExplosion;
+                                        this.makeFire=false;
                                         this.lightningDamage = 7;
                                         this.lightning = 5;
                                         this.lightningLength = 7;
                                         this.lifetime = 120;
-                                        this.trailColor = Color.valueOf("b3bee0");
-                                        this.backColor = Color.valueOf("7bafc4");
-                                        this.frontColor = Color.valueOf("b5eff4");
                                         this.weaveScale = 8;
                                         this.weaveMag = 1;
                                     }
@@ -1129,7 +1113,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 1;
                                 this.velocityRnd = 0.1f;
                                 this.shootSound = Sounds.missile;
-                                this.bullet=new MissileBulletType() {
+                                this.bullet=new AdamBulletType() {
                                     {
                                         this.width = 15;
                                         this.height = 21;
@@ -1138,18 +1122,12 @@ public class ModUnitTypes implements ContentList {
                                         this.drag = -0.01f;
                                         this.splashDamageRadius = 30;
                                         this.splashDamage = 22;
-                                        this.hitEffect = Fx.blastExplosion;
-                                        this.despawnEffect = Fx.blastExplosion;
                                         this.homingPower = 0.1f;
                                         this.lightningDamage = 6;
                                         this.lightning = 8;
                                         this.lightningLength = 5;
                                         this.makeFire = true;
-                                        this.status = StatusEffects.burning;
                                         this.lifetime = 85;
-                                        this.trailColor = Color.valueOf("b3bee0");
-                                        this.backColor = Color.valueOf("7bafc4");
-                                        this.frontColor = Color.valueOf("b5eff4");
                                         this.weaveScale = 3;
                                         this.weaveMag = 6;
                                     }

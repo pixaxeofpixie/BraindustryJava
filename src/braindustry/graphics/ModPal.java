@@ -8,6 +8,14 @@ public class ModPal {
     static {
         Pal.class.getClass();
     }
+    public static final Color adamTrailColor = Color.valueOf("b3bee0");
+    public static final Color adamBackColor = Color.valueOf("7bafc4");
+    public static final Color adamFrontColor = Color.valueOf("b5eff4");
+
+    public static final Color eveTrailColor=Color.valueOf("f2e2ff");
+    public static final Color eveBackColor=Color.valueOf("c496d3");
+    public static final Color eveFrontColor=Color.valueOf("f2c9ff");
+
     public static final Color energy = Color.valueOf("FFE93D");
     public static final Color energyLight = Color.valueOf("#FFEF75");
 

@@ -456,6 +456,38 @@ public class ModFx {
         Fx.class.isArray();
     }
 
+    public static final Effect adamExplosion = new Effect(22.0F, e -> {
+        Draw.color(ModPal.adamFrontColor);
+        e.scaled(6.0F, (i) -> {
+            Lines.stroke(3.0F * i.fout());
+            Lines.circle(e.x, e.y, 3.0F + i.fin() * 15.0F);
+        });
+        Draw.color(Color.gray);
+        Angles.randLenVectors((long)e.id, 5, 2.0F + 23.0F * e.finpow(), (x, y) -> {
+            Fill.circle(e.x + x, e.y + y, e.fout() * 4.0F + 0.5F);
+        });
+        Draw.color(ModPal.adamBackColor);
+        Lines.stroke(e.fout());
+        Angles.randLenVectors((long)(e.id + 1), 4, 1.0F + 23.0F * e.finpow(), (x, y) -> {
+            Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 1.0F + e.fout() * 3.0F);
+        });
+    });
+    public static final Effect eveExplosion = new Effect(22.0F, e -> {
+        Draw.color(ModPal.eveFrontColor);
+        e.scaled(6.0F, (i) -> {
+            Lines.stroke(3.0F * i.fout());
+            Lines.circle(e.x, e.y, 3.0F + i.fin() * 15.0F);
+        });
+        Draw.color(Color.gray);
+        Angles.randLenVectors((long)e.id, 5, 2.0F + 23.0F * e.finpow(), (x, y) -> {
+            Fill.circle(e.x + x, e.y + y, e.fout() * 4.0F + 0.5F);
+        });
+        Draw.color(ModPal.eveBackColor);
+        Lines.stroke(e.fout());
+        Angles.randLenVectors((long)(e.id + 1), 4, 1.0F + 23.0F * e.finpow(), (x, y) -> {
+            Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 1.0F + e.fout() * 3.0F);
+        });
+    });
     public static final Effect shootSmall = new Effect(8.0F, (e) -> {
         Draw.color(Color.white, e.color, e.fin());
         float w = 1.0F + 5.0F * e.fout();
