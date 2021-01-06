@@ -1,6 +1,6 @@
 package braindustry.content;
 
-import braindustry.content.Blocks.ModBlocksUnits;
+import braindustry.content.Blocks.ModUnitsBlocks;
 import braindustry.content.Blocks.ModDefense;
 import braindustry.content.Blocks.ModOtherBlocks;
 import braindustry.content.Blocks.ModProduction;
@@ -10,7 +10,6 @@ import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.production.MultiCrafter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
-import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
@@ -48,7 +47,7 @@ public class ModBlocks implements ContentList {
     smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter;
 
     public void load() {
-        new ModBlocksUnits().load();
+        new ModUnitsBlocks().load();
         new ModProduction().load();
         new ModOtherBlocks().load();
         new ModDefense().load();

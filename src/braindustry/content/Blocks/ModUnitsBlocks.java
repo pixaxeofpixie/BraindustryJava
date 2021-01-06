@@ -13,7 +13,7 @@ import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 
 import static braindustry.content.ModBlocks.*;
-public class ModBlocksUnits implements ContentList {
+public class ModUnitsBlocks implements ContentList {
 
     @Override
     public void load() {
