@@ -245,16 +245,46 @@ public class MultiCrafter extends Block {
 
         public Recipe() {
             consumeItems = ItemStack.empty;
-            consumeLiquids = new LiquidStack[0];
+            consumeLiquids = ModLiquidStack.empty;
 
         }
-
+        private void checkItems(){
+            Seq<ItemStack> itemStacks=new Seq<>(consumeItems);
+            Seq<ItemStack> newItemsStacks=new Seq<>();
+            itemStacks.each((itemStack -> {
+                ItemStack found=newItemsStacks.find(s->s.item== itemStack.item);
+                if (found!=null){
+                    found.amount+=itemStack.amount;
+                } else {
+                    newItemsStacks.add(itemStack);
+                }
+            }));
+            this.consumeItems=newItemsStacks.toArray();
+        }
+        private void checkLiquids(){
+            Seq<LiquidStack> liquidsStacks=new Seq<>(consumeLiquids);
+            Seq<LiquidStack> newLiquidStacks=new Seq<>();
+            liquidsStacks.each((liquidStack -> {
+                LiquidStack found=newLiquidStacks.find(s->s.liquid== liquidStack.liquid);
+                if (found!=null){
+                    found.amount+=liquidStack.amount;
+                } else {
+                    newLiquidStacks.add(liquidStack);
+                }
+            }));
+            this.consumeLiquids=newLiquidStacks.toArray();
+        }
+        private void check(){
+            checkItems();
+            checkLiquids();
+        }
         public static Recipe with(ItemStack outputItem, ItemStack[] consumeItems, LiquidStack[] consumeLiquids, float craftTime) {
             Recipe recipe = new Recipe();
             if (outputItem != null) recipe.outputItem = outputItem;
-            if (outputItem != null) recipe.consumeItems = consumeItems;
+            if (consumeItems != null) recipe.consumeItems = consumeItems;
             if (consumeLiquids != null) recipe.consumeLiquids = consumeLiquids;
             recipe.craftTime = craftTime;
+            recipe.check();
             return recipe;
         }
 
