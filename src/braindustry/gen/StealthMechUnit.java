@@ -17,7 +17,6 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Bits;
 import arc.struct.Queue;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Structs;
 import arc.util.Time;
 import arc.util.Tmp;
@@ -70,7 +69,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Rotc, ElevationMovec, Mechc, Posc, Syncc, Healthc, Itemsc, Unitc, Hitboxc, Statusc, Physicsc, Velc, Builderc, Shieldc, Flyingc, Weaponsc, Commanderc, Drawc, Entityc {
-    public static int classId=0;
+    public static int classId = 0;
     public static final float warpDst = 180.0F;
     public static final float hitDuration = 9.0F;
     public static final Vec2[] vecs = new Vec2[]{new Vec2(), new Vec2(), new Vec2(), new Vec2()};
@@ -145,8 +144,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     }
 
     public void wobble() {
-        this.x += Mathf.sin(Time.time + (float)(this.id() % 10 * 12), 25.0F, 0.05F) * Time.delta * this.elevation;
-        this.y += Mathf.cos(Time.time + (float)(this.id() % 10 * 12), 25.0F, 0.05F) * Time.delta * this.elevation;
+        this.x += Mathf.sin(Time.time + (float) (this.id() % 10 * 12), 25.0F, 0.05F) * Time.delta * this.elevation;
+        this.y += Mathf.cos(Time.time + (float) (this.id() % 10 * 12), 25.0F, 0.05F) * Time.delta * this.elevation;
     }
 
     public void write(Writes write) {
@@ -164,8 +163,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         write.i(this.plans.size);
 
         int INDEX;
-        for(INDEX = 0; INDEX < this.plans.size; ++INDEX) {
-            TypeIO.writeRequest(write, (BuildPlan)this.plans.get(INDEX));
+        for (INDEX = 0; INDEX < this.plans.size; ++INDEX) {
+            TypeIO.writeRequest(write, (BuildPlan) this.plans.get(INDEX));
         }
 
         write.f(this.rotation);
@@ -174,8 +173,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         TypeIO.writeItems(write, this.stack);
         write.i(this.statuses.size);
 
-        for(INDEX = 0; INDEX < this.statuses.size; ++INDEX) {
-            TypeIO.writeStatuse(write, (StatusEntry)this.statuses.get(INDEX));
+        for (INDEX = 0; INDEX < this.statuses.size; ++INDEX) {
+            TypeIO.writeStatuse(write, (StatusEntry) this.statuses.get(INDEX));
         }
 
         TypeIO.writeTeam(write, this.team);
@@ -194,7 +193,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     }
 
     public BuildPlan buildPlan() {
-        return this.plans.size == 0 ? null : (BuildPlan)this.plans.first();
+        return this.plans.size == 0 ? null : (BuildPlan) this.plans.first();
     }
 
     public boolean onSolid() {
@@ -240,7 +239,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     }
 
     public <T> T as() {
-        return (T)this;
+        return (T) this;
     }
 
     private void rawDamage(float amount) {
@@ -267,7 +266,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     }
 
     public Player getPlayer() {
-        return this.isPlayer() ? (Player)this.controller : null;
+        return this.isPlayer() ? (Player) this.controller : null;
     }
 
     public boolean isFlying() {
@@ -278,7 +277,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     }
 
     public boolean isLocal() {
-        return this == (Entityc)Vars.player || this instanceof Unitc && ((Unitc)this).controller() == Vars.player;
+        return this == (Entityc) Vars.player || this instanceof Unitc && ((Unitc) this).controller() == Vars.player;
     }
 
     public void set(UnitType def, UnitController controller) {
@@ -297,32 +296,32 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
     public Object senseObject(LAccess sensor) {
         Object var10000;
-        switch(sensor) {
+        switch (sensor) {
             case type:
                 var10000 = this.type;
                 break;
             case name:
                 UnitController var7 = this.controller;
                 Player p;
-                var10000 = var7 instanceof Player && (p = (Player)var7) == (Player)var7 ? p.name : null;
+                var10000 = var7 instanceof Player && (p = (Player) var7) == (Player) var7 ? p.name : null;
                 break;
             case firstItem:
                 var10000 = this.stack().amount == 0 ? null : this.item();
                 break;
             case payloadType:
                 Payloadc pay;
-                if (this instanceof Payloadc && (pay = (Payloadc)this) == (Payloadc)this) {
+                if (this instanceof Payloadc && (pay = (Payloadc) this) == (Payloadc) this) {
                     if (pay.payloads().isEmpty()) {
                         var10000 = null;
                     } else {
                         Object var5 = pay.payloads().peek();
                         UnitPayload p1;
-                        if (var5 instanceof UnitPayload && (p1 = (UnitPayload)var5) == (UnitPayload)var5) {
+                        if (var5 instanceof UnitPayload && (p1 = (UnitPayload) var5) == (UnitPayload) var5) {
                             var10000 = p1.unit.type;
                         } else {
                             var5 = pay.payloads().peek();
                             BuildPayload p2;
-                            var10000 = var5 instanceof BuildPayload && (p2 = (BuildPayload)var5) == (BuildPayload)var5 ? p2.block() : null;
+                            var10000 = var5 instanceof BuildPayload && (p2 = (BuildPayload) var5) == (BuildPayload) var5 ? p2.block() : null;
                         }
                     }
                 } else {
@@ -360,7 +359,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     public boolean shouldSkip(BuildPlan request, Building core) {
         if (!Vars.state.rules.infiniteResources && !this.team.rules().infiniteResources && !request.breaking && core != null && !request.isRotation(this.team)) {
             return request.stuck && !core.items.has(request.block.requirements) || Structs.contains(request.block.requirements, (i) -> {
-                return !core.items.has(i.item) && Mathf.round((float)i.amount * Vars.state.rules.buildCostMultiplier) > 0;
+                return !core.items.has(i.item) && Mathf.round((float) i.amount * Vars.state.rules.buildCostMultiplier) > 0;
             }) && !request.initialized;
         } else {
             return false;
@@ -373,9 +372,9 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
     public float clipSize() {
         if (this.isBuilding()) {
-            return Vars.state.rules.infiniteResources ? 3.4028235E38F : Math.max(this.type.clipSize, (float)this.type.region.width) + 220.0F + 32.0F;
+            return Vars.state.rules.infiniteResources ? 3.4028235E38F : Math.max(this.type.clipSize, (float) this.type.region.width) + 220.0F + 32.0F;
         } else {
-            return Math.max((float)this.type.region.width * 2.0F, this.type.clipSize);
+            return Math.max((float) this.type.region.width * 2.0F, this.type.clipSize);
         }
     }
 
@@ -390,54 +389,54 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
     public double sense(LAccess sensor) {
         double var10000;
-        switch(sensor) {
+        switch (sensor) {
             case totalItems:
-                var10000 = (double)this.stack().amount;
+                var10000 = (double) this.stack().amount;
                 break;
             case itemCapacity:
-                var10000 = (double)this.type.itemCapacity;
+                var10000 = (double) this.type.itemCapacity;
                 break;
             case rotation:
-                var10000 = (double)this.rotation;
+                var10000 = (double) this.rotation;
                 break;
             case health:
-                var10000 = (double)this.health;
+                var10000 = (double) this.health;
                 break;
             case maxHealth:
-                var10000 = (double)this.maxHealth;
+                var10000 = (double) this.maxHealth;
                 break;
             case ammo:
-                var10000 = !Vars.state.rules.unitAmmo ? (double)this.type.ammoCapacity : (double)this.ammo;
+                var10000 = !Vars.state.rules.unitAmmo ? (double) this.type.ammoCapacity : (double) this.ammo;
                 break;
             case ammoCapacity:
-                var10000 = (double)this.type.ammoCapacity;
+                var10000 = (double) this.type.ammoCapacity;
                 break;
             case x:
                 var10000 = (double) World.conv(this.x);
                 break;
             case y:
-                var10000 = (double)World.conv(this.y);
+                var10000 = (double) World.conv(this.y);
                 break;
             case team:
-                var10000 = (double)this.team.id;
+                var10000 = (double) this.team.id;
                 break;
             case shooting:
                 var10000 = this.isShooting() ? 1.0D : 0.0D;
                 break;
             case shootX:
-                var10000 = (double)World.conv(this.aimX());
+                var10000 = (double) World.conv(this.aimX());
                 break;
             case shootY:
-                var10000 = (double)World.conv(this.aimY());
+                var10000 = (double) World.conv(this.aimY());
                 break;
             case mining:
                 var10000 = this.mining() ? 1.0D : 0.0D;
                 break;
             case mineX:
-                var10000 = this.mining() ? (double)this.mineTile.x : -1.0D;
+                var10000 = this.mining() ? (double) this.mineTile.x : -1.0D;
                 break;
             case mineY:
-                var10000 = this.mining() ? (double)this.mineTile.y : -1.0D;
+                var10000 = this.mining() ? (double) this.mineTile.y : -1.0D;
                 break;
             case flag:
                 var10000 = this.flag;
@@ -450,7 +449,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 break;
             case payloadCount:
                 Payloadc pay;
-                var10000 = (double)(this instanceof Payloadc && (pay = (Payloadc)this) == (Payloadc)this ? pay.payloads().size : 0);
+                var10000 = (double) (this instanceof Payloadc && (pay = (Payloadc) this) == (Payloadc) this ? pay.payloads().size : 0);
                 break;
             default:
                 var10000 = 0.0D;
@@ -467,7 +466,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         WeaponMount[] var2 = this.mounts;
         int var3 = var2.length;
 
-        for(int var4 = 0; var4 < var3; ++var4) {
+        for (int var4 = 0; var4 < var3; ++var4) {
             WeaponMount mount = var2[var4];
             mount.rotation = rotation;
         }
@@ -511,16 +510,18 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     public float getX() {
         return this.x;
     }
-    private void drawRect(Floatc4 floatc4,float x,float y,float size){
-        floatc4.get(x-size/2f,y-size/2f,size,size);
+
+    private void drawRect(Floatc4 floatc4, float x, float y, float size) {
+        floatc4.get(x - size / 2f, y - size / 2f, size, size);
     }
+
     public void draw() {
-        Color color=team.color.cpy();
+        Color color = team.color.cpy();
         Draw.color(color.cpy());
-        drawRect(Lines::rect,this.x,this.y,this.hitSize);
-        Draw.color(color.cpy().lerp(Color.black,0.1f));
-        drawRect(Lines::rect,this.x,this.y,this.clipSize());
-        if (true)return;
+        drawRect(Lines::rect, this.x, this.y, this.hitSize);
+        Draw.color(color.cpy().lerp(Color.black, 0.1f));
+        drawRect(Lines::rect, this.x, this.y, this.clipSize());
+        if (true) return;
         float tx;
         float ty;
         float focusLen;
@@ -547,8 +548,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         this.type.draw(this);
         Iterator var20 = this.statuses.iterator();
 
-        while(var20.hasNext()) {
-            StatusEntry e = (StatusEntry)var20.next();
+        while (var20.hasNext()) {
+            StatusEntry e = (StatusEntry) var20.next();
             e.effect.draw(this);
         }
 
@@ -572,7 +573,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 focusLen = this.type.buildBeamOffset + Mathf.absin(Time.time, 3.0F, 0.6F);
                 float px = this.x + Angles.trnsx(this.rotation, focusLen);
                 float py = this.y + Angles.trnsy(this.rotation, focusLen);
-                float sz = (float)(8 * size) / 2.0F;
+                float sz = (float) (8 * size) / 2.0F;
                 float ang = this.angleTo(tx, ty);
                 vecs[0].set(tx - sz, ty - sz);
                 vecs[1].set(tx + sz, ty - sz);
@@ -591,7 +592,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 Draw.z(122.0F);
                 Draw.alpha(this.buildAlpha);
                 if (!active && !(tile.build instanceof ConstructBlock.ConstructBuild)) {
-                    Fill.square(plan.drawx(), plan.drawy(), (float)(size * 8) / 2.0F);
+                    Fill.square(plan.drawx(), plan.drawy(), (float) (size * 8) / 2.0F);
                 }
 
                 if (Vars.renderer.animateShields) {
@@ -633,14 +634,14 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
     public void destroy() {
         if (this.isAdded()) {
-            float explosiveness = 2.0F + this.item().explosiveness * (float)this.stack().amount * 1.53F;
-            float flammability = this.item().flammability * (float)this.stack().amount / 1.9F;
+            float explosiveness = 2.0F + this.item().explosiveness * (float) this.stack().amount * 1.53F;
+            float flammability = this.item().flammability * (float) this.stack().amount / 1.9F;
             if (!this.spawnedByCore) {
                 Damage.dynamicExplosion(this.x, this.y, flammability, explosiveness, 0.0F, this.bounds() / 2.0F, Vars.state.rules.damageExplosions, this.item().flammability > 1.0F, this.team);
             }
 
             float shake = this.hitSize / 3.0F;
-            Effect.scorch(this.x, this.y, (int)(this.hitSize / 5.0F));
+            Effect.scorch(this.x, this.y, (int) (this.hitSize / 5.0F));
             Fx.explosion.at(this);
             Effect.shake(shake, shake, this);
             this.type.deathSound.at(this);
@@ -654,7 +655,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             }
 
             if (!Vars.headless) {
-                for(int i = 0; i < this.type.wreckRegions.length; ++i) {
+                for (int i = 0; i < this.type.wreckRegions.length; ++i) {
                     if (this.type.wreckRegions[i].found()) {
                         float range = this.type.hitSize / 4.0F;
                         Tmp.v1.rnd(range);
@@ -684,7 +685,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
     public Floor floorOn() {
         Tile tile = this.tileOn();
-        return tile != null && tile.block() == Blocks.air ? tile.floor() : (Floor)Blocks.air;
+        return tile != null && tile.block() == Blocks.air ? tile.floor() : (Floor) Blocks.air;
     }
 
     public Block blockOn() {
@@ -710,7 +711,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             float total = 0.0F;
 
             float intensity;
-            for(Iterator<StatusEntry> var5 = this.statuses.iterator(); var5.hasNext(); total += intensity) {
+            for (Iterator<StatusEntry> var5 = this.statuses.iterator(); var5.hasNext(); total += intensity) {
                 StatusEntry entry = var5.next();
                 intensity = entry.time < 10.0F ? entry.time / 10.0F : 1.0F;
                 r += entry.effect.color.r * intensity;
@@ -718,7 +719,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 b += entry.effect.color.b * intensity;
             }
 
-            float count = (float)this.statuses.size + total;
+            float count = (float) this.statuses.size + total;
             return Tmp.c1.set(r / count, g / count, b / count, 1.0F);
         }
     }
@@ -736,7 +737,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     }
 
     public float ammof() {
-        return this.ammo / (float)this.type.ammoCapacity;
+        return this.ammo / (float) this.type.ammoCapacity;
     }
 
     public void commandNearby(FormationPattern pattern, Boolf<Unit> include) {
@@ -767,8 +768,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     public void apply(StatusEffect effect, float duration) {
         if (effect != StatusEffects.none && effect != null && !this.isImmune(effect)) {
             if (this.statuses.size > 0) {
-                for(int i = 0; i < this.statuses.size; ++i) {
-                    StatusEntry entry = (StatusEntry)this.statuses.get(i);
+                for (int i = 0; i < this.statuses.size; ++i) {
+                    StatusEntry entry = (StatusEntry) this.statuses.get(i);
                     if (entry.effect == effect) {
                         entry.time = Math.max(entry.time, duration);
                         return;
@@ -787,7 +788,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 }
             }
 
-            StatusEntry entry = (StatusEntry)Pools.obtain(StatusEntry.class, StatusEntry::new);
+            StatusEntry entry = (StatusEntry) Pools.obtain(StatusEntry.class, StatusEntry::new);
             entry.set(effect, duration);
             this.statuses.add(entry);
         }
@@ -812,8 +813,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
     public void interpolate() {
         if (this.lastUpdated != 0L && this.updateSpacing != 0L) {
-            float timeSinceUpdate = (float)Time.timeSinceMillis(this.lastUpdated);
-            float alpha = Math.min(timeSinceUpdate / (float)this.updateSpacing, 2.0F);
+            float timeSinceUpdate = (float) Time.timeSinceMillis(this.lastUpdated);
+            float alpha = Math.min(timeSinceUpdate / (float) this.updateSpacing, 2.0F);
             this.baseRotation = Mathf.slerp(this.baseRotation_LAST_, this.baseRotation_TARGET_, alpha);
             this.rotation = Mathf.slerp(this.rotation_LAST_, this.rotation_TARGET_, alpha);
             this.x = Mathf.lerp(this.x_LAST_, this.x_TARGET_, alpha);
@@ -830,7 +831,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     public EntityCollisions.SolidPred solidity() {
 
 //        return this.isFlying() ? null : EntityCollisions::solid;
-        return this.isFlying()? null:(x,y)->!EntityCollisions.solid(x,y);
+        return this.isFlying() ? null : (x, y) -> !EntityCollisions.solid(x, y);
     }
 
     public void writeSyncManual(FloatBuffer buffer) {
@@ -870,7 +871,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             plans_LENGTH = read.i();
             this.statuses.clear();
 
-            for(statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
                 statuses_ITEM = TypeIO.readStatuse(read);
                 if (statuses_ITEM != null) {
                     this.statuses.add(statuses_ITEM);
@@ -878,7 +879,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             }
 
             this.team = TypeIO.readTeam(read);
-            this.type = (UnitType)Vars.content.getByID(ContentType.unit, read.s());
+            this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
             this.x = read.f();
             this.y = read.f();
         } else if (REV == 1) {
@@ -897,7 +898,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             plans_LENGTH = read.i();
             this.statuses.clear();
 
-            for(statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
                 statuses_ITEM = TypeIO.readStatuse(read);
                 if (statuses_ITEM != null) {
                     this.statuses.add(statuses_ITEM);
@@ -905,7 +906,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             }
 
             this.team = TypeIO.readTeam(read);
-            this.type = (UnitType)Vars.content.getByID(ContentType.unit, read.s());
+            this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
             this.x = read.f();
             this.y = read.f();
         } else if (REV == 2) {
@@ -925,7 +926,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             plans_LENGTH = read.i();
             this.statuses.clear();
 
-            for(statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
                 statuses_ITEM = TypeIO.readStatuse(read);
                 if (statuses_ITEM != null) {
                     this.statuses.add(statuses_ITEM);
@@ -933,7 +934,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             }
 
             this.team = TypeIO.readTeam(read);
-            this.type = (UnitType)Vars.content.getByID(ContentType.unit, read.s());
+            this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
             this.x = read.f();
             this.y = read.f();
         } else if (REV == 3) {
@@ -954,7 +955,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             plans_LENGTH = read.i();
             this.statuses.clear();
 
-            for(statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+            for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
                 statuses_ITEM = TypeIO.readStatuse(read);
                 if (statuses_ITEM != null) {
                     this.statuses.add(statuses_ITEM);
@@ -962,7 +963,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             }
 
             this.team = TypeIO.readTeam(read);
-            this.type = (UnitType)Vars.content.getByID(ContentType.unit, read.s());
+            this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
             this.x = read.f();
             this.y = read.f();
         } else {
@@ -982,7 +983,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 plans_LENGTH = read.i();
                 this.plans.clear();
 
-                for(statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+                for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
                     plans_ITEM = TypeIO.readRequest(read);
                     if (plans_ITEM != null) {
                         this.plans.add(plans_ITEM);
@@ -996,7 +997,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 statuses_LENGTH = read.i();
                 this.statuses.clear();
 
-                for(INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
+                for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
                     statuses_ITEM = TypeIO.readStatuse(read);
                     if (statuses_ITEM != null) {
                         this.statuses.add(statuses_ITEM);
@@ -1004,7 +1005,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 }
 
                 this.team = TypeIO.readTeam(read);
-                this.type = (UnitType)Vars.content.getByID(ContentType.unit, read.s());
+                this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
                 this.x = read.f();
                 this.y = read.f();
             } else {
@@ -1025,7 +1026,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 plans_LENGTH = read.i();
                 this.plans.clear();
 
-                for(statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
+                for (statuses_LENGTH = 0; statuses_LENGTH < plans_LENGTH; ++statuses_LENGTH) {
                     plans_ITEM = TypeIO.readRequest(read);
                     if (plans_ITEM != null) {
                         this.plans.add(plans_ITEM);
@@ -1039,7 +1040,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 statuses_LENGTH = read.i();
                 this.statuses.clear();
 
-                for(INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
+                for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
                     statuses_ITEM = TypeIO.readStatuse(read);
                     if (statuses_ITEM != null) {
                         this.statuses.add(statuses_ITEM);
@@ -1047,7 +1048,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 }
 
                 this.team = TypeIO.readTeam(read);
-                this.type = (UnitType)Vars.content.getByID(ContentType.unit, read.s());
+                this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
                 this.updateBuilding = read.bool();
                 this.x = read.f();
                 this.y = read.f();
@@ -1058,7 +1059,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     }
 
     public boolean isRemote() {
-        return this instanceof Unitc && ((Unitc)this).isPlayer() && !this.isLocal();
+        return this instanceof Unitc && ((Unitc) this).isPlayer() && !this.isLocal();
     }
 
     public Building closestEnemyCore() {
@@ -1095,7 +1096,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         WeaponMount[] var3 = this.mounts;
         int var4 = var3.length;
 
-        for(int var5 = 0; var5 < var4; ++var5) {
+        for (int var5 = 0; var5 < var4; ++var5) {
             WeaponMount mount = var3[var5];
             mount.rotate = rotate;
             mount.shoot = shoot;
@@ -1156,7 +1157,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             WeaponMount[] var1 = this.mounts;
             int var2 = var1.length;
 
-            for(int var3 = 0; var3 < var2; ++var3) {
+            for (int var3 = 0; var3 < var2; ++var3) {
                 WeaponMount mount = var1[var3];
                 if (mount.bullet != null) {
                     mount.bullet.time = mount.bullet.lifetime - 10.0F;
@@ -1201,11 +1202,11 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         } else if (this.mining()) {
             Item item = this.mineTile.drop();
             this.mineTimer += Time.delta * this.type.mineSpeed;
-            if (Mathf.chance(0.06D * (double)Time.delta)) {
+            if (Mathf.chance(0.06D * (double) Time.delta)) {
                 Fx.pulverizeSmall.at(this.mineTile.worldx() + Mathf.range(4.0F), this.mineTile.worldy() + Mathf.range(4.0F), 0.0F, item.color);
             }
 
-            if (this.mineTimer >= 50.0F + (float)item.hardness * 15.0F) {
+            if (this.mineTimer >= 50.0F + (float) item.hardness * 15.0F) {
                 this.mineTimer = 0.0F;
                 if (Vars.state.rules.sector != null && this.team() == Vars.state.rules.defaultTeam) {
                     Vars.state.rules.sector.info.handleProduction(item, 1);
@@ -1242,23 +1243,23 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 var10000.y += -this.y / 180.0F;
             }
 
-            if (this.x > (float)Vars.world.unitWidth()) {
+            if (this.x > (float) Vars.world.unitWidth()) {
                 var10000 = this.vel;
-                var10000.x -= (this.x - (float)Vars.world.unitWidth()) / 180.0F;
+                var10000.x -= (this.x - (float) Vars.world.unitWidth()) / 180.0F;
             }
 
-            if (this.y > (float)Vars.world.unitHeight()) {
+            if (this.y > (float) Vars.world.unitHeight()) {
                 var10000 = this.vel;
-                var10000.y -= (this.y - (float)Vars.world.unitHeight()) / 180.0F;
+                var10000.y -= (this.y - (float) Vars.world.unitHeight()) / 180.0F;
             }
         }
 
         if (this.isGrounded()) {
-            this.x = Mathf.clamp(this.x, 0.0F, (float)(Vars.world.width() * 8 - 8));
-            this.y = Mathf.clamp(this.y, 0.0F, (float)(Vars.world.height() * 8 - 8));
+            this.x = Mathf.clamp(this.x, 0.0F, (float) (Vars.world.width() * 8 - 8));
+            this.y = Mathf.clamp(this.y, 0.0F, (float) (Vars.world.height() * 8 - 8));
         }
 
-        if (this.x < -500.0F || this.y < -500.0F || this.x >= (float)(Vars.world.width() * 8) + 500.0F || this.y >= (float)(Vars.world.height() * 8) + 500.0F) {
+        if (this.x < -500.0F || this.y < -500.0F || this.x >= (float) (Vars.world.width() * 8) + 500.0F || this.y >= (float) (Vars.world.height() * 8) + 500.0F) {
             this.kill();
         }
 
@@ -1280,7 +1281,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         float mountY;
         if (extendScl < lastExtend && range % 2.0F > 1.0F && !this.isFlying()) {
             total = -Mathf.sign(finalPlaceDst);
-            float width = this.hitSize / 2.0F * (float)total;
+            float width = this.hitSize / 2.0F * (float) total;
             weaponRotation = this.type.mechStride * 1.35F;
             mountX = this.x + Angles.trnsx(this.baseRotation, weaponRotation, width);
             mountY = this.y + Angles.trnsy(this.baseRotation, weaponRotation, width);
@@ -1304,9 +1305,9 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
         this.hitTime -= Time.delta / 9.0F;
         this.stack.amount = Mathf.clamp(this.stack.amount, 0, this.itemCapacity());
-        this.itemTime = Mathf.lerpDelta(this.itemTime, (float)Mathf.num(this.hasItem()), 0.05F);
+        this.itemTime = Mathf.lerpDelta(this.itemTime, (float) Mathf.num(this.hasItem()), 0.05F);
         this.type.update(this);
-        if (Vars.state.rules.unitAmmo && this.ammo < (float)this.type.ammoCapacity - 1.0E-4F) {
+        if (Vars.state.rules.unitAmmo && this.ammo < (float) this.type.ammoCapacity - 1.0E-4F) {
             this.resupplyTime += Time.delta;
             if (this.resupplyTime > 10.0F) {
                 this.type.ammoType.resupply(this);
@@ -1317,8 +1318,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         if (this.abilities.size > 0) {
             Iterator var16 = this.abilities.iterator();
 
-            while(var16.hasNext()) {
-                Ability a = (Ability)var16.next();
+            while (var16.hasNext()) {
+                Ability a = (Ability) var16.next();
                 a.update(this);
             }
         }
@@ -1328,8 +1329,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             finalPlaceDst = Vars.state.rules.dropZoneRadius + this.hitSize / 2.0F + 1.0F;
             Iterator var21 = Vars.spawner.getSpawns().iterator();
 
-            while(var21.hasNext()) {
-                Tile spawn = (Tile)var21.next();
+            while (var21.hasNext()) {
+                Tile spawn = (Tile) var21.next();
                 if (this.within(spawn.worldx(), spawn.worldy(), finalPlaceDst)) {
                     this.vel().add(Tmp.v1.set(this).sub(spawn.worldx(), spawn.worldy()).setLength(1.1F - this.dst(spawn) / finalPlaceDst).scl(0.45F * Time.delta));
                 }
@@ -1398,13 +1399,13 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             index = 0;
 
             label552:
-            while(true) {
-                while(true) {
+            while (true) {
+                while (true) {
                     if (index >= this.statuses.size) {
                         break label552;
                     }
 
-                    StatusEntry entry = (StatusEntry)this.statuses.get(index++);
+                    StatusEntry entry = (StatusEntry) this.statuses.get(index++);
                     entry.time = Math.max(entry.time - Time.delta, 0.0F);
                     if (entry.effect != null && (entry.time > 0.0F || entry.effect.permanent)) {
                         this.applied.set(entry.effect.id);
@@ -1436,7 +1437,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             Iterator it = this.plans.iterator();
 
             label528:
-            while(true) {
+            while (true) {
                 BuildPlan req;
                 Tile tileR;
                 do {
@@ -1445,7 +1446,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                         if (this.buildPlan() != null) {
                             BuildPlan reqR;
                             if (this.plans.size > 1) {
-                                for(total = 0; (!this.within((reqR = this.buildPlan()).tile(), finalPlaceDst) || this.shouldSkip(reqR, coreR)) && total < this.plans.size; ++total) {
+                                for (total = 0; (!this.within((reqR = this.buildPlan()).tile(), finalPlaceDst) || this.shouldSkip(reqR, coreR)) && total < this.plans.size; ++total) {
                                     this.plans.removeFirst();
                                     this.plans.addLast(reqR);
                                 }
@@ -1462,7 +1463,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                             if (this.within(tile2R, finalPlaceDst)) {
                                 Building var41 = tile2R.build;
                                 ConstructBlock.ConstructBuild entity;
-                                if (var41 instanceof ConstructBlock.ConstructBuild && (entity = (ConstructBlock.ConstructBuild)var41) == (ConstructBlock.ConstructBuild)var41) {
+                                if (var41 instanceof ConstructBlock.ConstructBuild && (entity = (ConstructBlock.ConstructBuild) var41) == (ConstructBlock.ConstructBuild) var41) {
                                     if (tile2R.team() != this.team && tile2R.team() != Team.derelict || !current.breaking && entity.cblock != current.block) {
                                         this.plans.removeFirst();
                                         break label528;
@@ -1494,7 +1495,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
                                 if (coreR != null || infinite) {
                                     var41 = tile2R.build;
-                                    if (var41 instanceof ConstructBlock.ConstructBuild && (entity = (ConstructBlock.ConstructBuild)var41) == (ConstructBlock.ConstructBuild)var41) {
+                                    if (var41 instanceof ConstructBlock.ConstructBuild && (entity = (ConstructBlock.ConstructBuild) var41) == (ConstructBlock.ConstructBuild) var41) {
                                         if (current.breaking) {
                                             entity.deconstruct(this, coreR, 1.0F / entity.buildCost * Time.delta * this.type.buildSpeed * Vars.state.rules.buildSpeedMultiplier);
                                         } else {
@@ -1510,9 +1511,9 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                         break label528;
                     }
 
-                    req = (BuildPlan)it.next();
+                    req = (BuildPlan) it.next();
                     tileR = Vars.world.tile(req.x, req.y);
-                } while(tileR != null && (!req.breaking || tileR.block() != Blocks.air) && (req.breaking || (tileR.build == null || tileR.build.rotation != req.rotation) && req.block.rotate || tileR.block() != req.block));
+                } while (tileR != null && (!req.breaking || tileR.block() != Blocks.air) && (req.breaking || (tileR.build == null || tileR.build.rotation != req.rotation) && req.block.rotate || tileR.block() != req.block));
 
                 it.remove();
             }
@@ -1559,7 +1560,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         WeaponMount[] var34 = this.mounts;
         int var29 = var34.length;
 
-        for(int var31 = 0; var31 < var29; ++var31) {
+        for (int var31 = 0; var31 < var29; ++var31) {
             WeaponMount mount = var34[var31];
             Weapon weapon = mount.weapon;
             mount.reload = Math.max(mount.reload - Time.delta * this.reloadMultiplier, 0.0F);
@@ -1629,7 +1630,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                 if (!u.dead) {
                     UnitController ai$temp = u.controller();
                     FormationAI ai;
-                    if (ai$temp instanceof FormationAI && (ai = (FormationAI)ai$temp) == (FormationAI)ai$temp && ai.leader == this) {
+                    if (ai$temp instanceof FormationAI && (ai = (FormationAI) ai$temp) == (FormationAI) ai$temp && ai.leader == this) {
                         var10000 = false;
                         return var10000;
                     }
@@ -1675,7 +1676,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         sequenceNum = 0;
         if (delay) {
             Angles.shotgun(weapon.shots, weapon.spacing, rotation, (f) -> {
-                Time.run((float)sequenceNum * weapon.shotDelay + weapon.firstShotDelay, () -> {
+                Time.run((float) sequenceNum * weapon.shotDelay + weapon.firstShotDelay, () -> {
                     if (this.isAdded()) {
                         mount.bullet = this.bullet(weapon, x + this.x - baseX, y + this.y - baseY, f + Mathf.range(weapon.inaccuracy), lifeScl);
                     }
@@ -1707,7 +1708,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             mount.heat = 1.0F;
         }
 
-        weapon.ejectEffect.at(mountX, mountY, rotation * (float)side);
+        weapon.ejectEffect.at(mountX, mountY, rotation * (float) side);
         ammo.shootEffect.at(x, y, rotation, parentize ? this : null);
         ammo.smokeEffect.at(x, y, rotation, parentize ? this : null);
         this.apply(weapon.shootStatus, weapon.shootStatusDuration);
@@ -1744,8 +1745,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     public void setupWeapons(UnitType def) {
         this.mounts = new WeaponMount[def.weapons.size];
 
-        for(int i = 0; i < this.mounts.length; ++i) {
-            this.mounts[i] = new WeaponMount((Weapon)def.weapons.get(i));
+        for (int i = 0; i < this.mounts.length; ++i) {
+            this.mounts[i] = new WeaponMount((Weapon) def.weapons.get(i));
         }
 
     }
@@ -1771,7 +1772,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     }
 
     public double sense(Content content) {
-        return content == this.stack().item ? (double)this.stack().amount : 0.0D;
+        return content == this.stack().item ? (double) this.stack().amount : 0.0D;
     }
 
     public void aim(float x, float y) {
@@ -1785,7 +1786,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         WeaponMount[] var3 = this.mounts;
         int var4 = var3.length;
 
-        for(int var5 = 0; var5 < var4; ++var5) {
+        for (int var5 = 0; var5 < var4; ++var5) {
             WeaponMount mount = var3[var5];
             mount.aimX = x;
             mount.aimY = y;
@@ -1813,8 +1814,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             BuildPlan replace = null;
             Iterator var4 = this.plans.iterator();
 
-            while(var4.hasNext()) {
-                BuildPlan request = (BuildPlan)var4.next();
+            while (var4.hasNext()) {
+                BuildPlan request = (BuildPlan) var4.next();
                 if (request.x == place.x && request.y == place.y) {
                     replace = request;
                     break;
@@ -1829,7 +1830,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             if (tile != null) {
                 Building var6 = tile.build;
                 ConstructBlock.ConstructBuild cons;
-                if (var6 instanceof ConstructBlock.ConstructBuild && (cons = (ConstructBlock.ConstructBuild)var6) == (ConstructBlock.ConstructBuild)var6) {
+                if (var6 instanceof ConstructBlock.ConstructBuild && (cons = (ConstructBlock.ConstructBuild) var6) == (ConstructBlock.ConstructBuild) var6) {
                     place.progress = cons.progress;
                 }
             }
@@ -1848,8 +1849,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     }
 
     public <T> T with(Cons<T> cons) {
-        cons.get((T)this);
-        return (T)this;
+        cons.get((T) this);
+        return (T) this;
     }
 
     public void addBuild(BuildPlan place) {
@@ -1859,7 +1860,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
     public void drawBuildPlans() {
         Iterator var1 = this.plans.iterator();
 
-        while(true) {
+        while (true) {
             BuildPlan plan;
             do {
                 do {
@@ -1868,9 +1869,9 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
                         return;
                     }
 
-                    plan = (BuildPlan)var1.next();
-                } while(plan.progress > 0.01F);
-            } while(this.buildPlan() == plan && plan.initialized && (this.within((float)(plan.x * 8), (float)(plan.y * 8), 220.0F) || Vars.state.isEditor()));
+                    plan = (BuildPlan) var1.next();
+                } while (plan.progress > 0.01F);
+            } while (this.buildPlan() == plan && plan.initialized && (this.within((float) (plan.x * 8), (float) (plan.y * 8), 220.0F) || Vars.state.isEditor()));
 
             this.drawPlan(plan, 1.0F);
         }
@@ -1925,15 +1926,15 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
     public float floorSpeedMultiplier() {
         Floor on = !this.isFlying() && !this.hovering ? this.floorOn() : Blocks.air.asFloor();
-        on=Blocks.air.asFloor();
+        on = Blocks.air.asFloor();
         return on.speedMultiplier * this.speedMultiplier;
     }
 
     public void clearCommand() {
         Iterator var1 = this.controlling.iterator();
 
-        while(var1.hasNext()) {
-            Unit unit = (Unit)var1.next();
+        while (var1.hasNext()) {
+            Unit unit = (Unit) var1.next();
             if (unit.controller().isBeingControlled(this)) {
                 unit.controller(unit.type.createController());
             }
@@ -2008,8 +2009,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         write.i(this.plans.size);
 
         int INDEX;
-        for(INDEX = 0; INDEX < this.plans.size; ++INDEX) {
-            TypeIO.writeRequest(write, (BuildPlan)this.plans.get(INDEX));
+        for (INDEX = 0; INDEX < this.plans.size; ++INDEX) {
+            TypeIO.writeRequest(write, (BuildPlan) this.plans.get(INDEX));
         }
 
         write.f(this.rotation);
@@ -2018,8 +2019,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         TypeIO.writeItems(write, this.stack);
         write.i(this.statuses.size);
 
-        for(INDEX = 0; INDEX < this.statuses.size; ++INDEX) {
-            TypeIO.writeStatuse(write, (StatusEntry)this.statuses.get(INDEX));
+        for (INDEX = 0; INDEX < this.statuses.size; ++INDEX) {
+            TypeIO.writeStatuse(write, (StatusEntry) this.statuses.get(INDEX));
         }
 
         TypeIO.writeTeam(write, this.team);
@@ -2083,8 +2084,8 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
 
         Iterator var4;
         Unit unit;
-        for(var4 = units.iterator(); var4.hasNext(); this.minFormationSpeed = Math.min(this.minFormationSpeed, unit.type.speed)) {
-            unit = (Unit)var4.next();
+        for (var4 = units.iterator(); var4.hasNext(); this.minFormationSpeed = Math.min(this.minFormationSpeed, unit.type.speed)) {
+            unit = (Unit) var4.next();
             FormationAI ai;
             unit.controller(ai = new FormationAI(this, formation));
             spacing = Math.max(spacing, ai.formationSize());
@@ -2095,9 +2096,9 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         members.clear();
         var4 = units.iterator();
 
-        while(var4.hasNext()) {
-            Unitc u = (Unitc)var4.next();
-            members.add((FormationAI)u.controller());
+        while (var4.hasNext()) {
+            Unitc u = (Unitc) var4.next();
+            members.add((FormationAI) u.controller());
         }
 
         formation.addMembers(members);
@@ -2171,7 +2172,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
             statuses_LENGTH = read.i();
             this.plans.clear();
 
-            for(INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
+            for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
                 BuildPlan plans_ITEM = TypeIO.readRequest(read);
                 if (plans_ITEM != null) {
                     this.plans.add(plans_ITEM);
@@ -2180,7 +2181,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         } else {
             statuses_LENGTH = read.i();
 
-            for(INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
+            for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
                 TypeIO.readRequest(read);
             }
         }
@@ -2200,7 +2201,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         statuses_LENGTH = read.i();
         this.statuses.clear();
 
-        for(INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
+        for (INDEX = 0; INDEX < statuses_LENGTH; ++INDEX) {
             StatusEntry statuses_ITEM = TypeIO.readStatuse(read);
             if (statuses_ITEM != null) {
                 this.statuses.add(statuses_ITEM);
@@ -2208,7 +2209,7 @@ public class StealthMechUnit extends Unit implements Teamc, Minerc, Boundedc, Ro
         }
 
         this.team = TypeIO.readTeam(read);
-        this.type = (UnitType)Vars.content.getByID(ContentType.unit, read.s());
+        this.type = (UnitType) Vars.content.getByID(ContentType.unit, read.s());
         if (!islocal) {
             this.updateBuilding = read.bool();
         } else {
