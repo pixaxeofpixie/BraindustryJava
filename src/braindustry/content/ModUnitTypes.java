@@ -42,6 +42,7 @@ public class ModUnitTypes implements ContentList {
     @Override
     public void load() {
         vyvna = new PowerUnitType("vyvna") {
+
             public Block getGeneratorBlock(){
                 return ModBlocks.unitGenerator;
             }
@@ -50,6 +51,12 @@ public class ModUnitTypes implements ContentList {
                 abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
                 super.init();
             }
+
+            @Override
+            public Block getNodeBlock() {
+                return ModBlocks.unitNode;
+            }
+
             {
                 this.range = 18;
                 this.constructor = ()->new PowerGeneratorUnit();
@@ -80,6 +87,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shadow = 15;
                                 this.rotateSpeed = 0.4f;
                                 this.rotate = true;
+                                this.mirror=true;
                                 this.shots = 6;
                                 this.shotDelay = 10;
                                 this.inaccuracy = 1.5f;
@@ -161,7 +169,8 @@ public class ModUnitTypes implements ContentList {
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 5f;
                                 this.rotate = true;
-                                this.mirror = true;
+                                this.shadow=50;
+                                this.mirror = false;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new PointBulletType(){

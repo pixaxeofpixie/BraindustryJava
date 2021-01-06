@@ -112,4 +112,6 @@ public abstract class PowerUnitType extends UnitType {
         }
         super.init();
     }
+
+    public abstract Block getNodeBlock();
 }

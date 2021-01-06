@@ -1,5 +1,6 @@
 package braindustry.world.blocks.Unit.power;
 
+import arc.math.geom.Point2;
 import arc.struct.Seq;
 import braindustry.entities.PowerGeneratorUnit;
 import mindustry.Vars;
@@ -25,6 +26,9 @@ public class UnitPowerGenerator extends PowerGenerator {
 
         }
 
+        public int pos(){
+            return Point2.pack((int)this.x/8, (int) this.y/8);
+        }
         public void setParent(PowerGeneratorUnit parent) {
             this.parent = parent;
         }

@@ -5,6 +5,7 @@ import braindustry.content.Blocks.ModDefense;
 import braindustry.content.Blocks.ModOtherBlocks;
 import braindustry.content.Blocks.ModProduction;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
+import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.production.MultiCrafter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
@@ -44,7 +45,7 @@ public class ModBlocks implements ContentList {
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
 
 
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator, multiCrafter;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter;
 
     public void load() {
         new ModBlocksUnits().load();
@@ -76,6 +77,12 @@ public class ModBlocks implements ContentList {
         unitGenerator = new UnitPowerGenerator("unit-generator") {
             {
                 this.powerProduction = 10f;
+            }
+        };
+        unitNode = new UnitPowerNode("unit-node") {
+            {
+                this.maxNodes = Integer.MAX_VALUE;
+
             }
         };
 
