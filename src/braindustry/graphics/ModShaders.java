@@ -8,6 +8,8 @@ import arc.math.geom.Vec2;
 import arc.scene.ui.layout.Scl;
 import arc.struct.Seq;
 import arc.util.Time;
+import mindustry.game.EventType;
+import mindustry.graphics.Shaders;
 
 import static braindustry.ModVars.modFunc.print;
 import static braindustry.ModVars.modVars.modInfo;
@@ -24,13 +26,13 @@ public class ModShaders {
         menuRender=new MenuRenderShader();
         logoRender=new LogoRenderShader();
         fractalPyramid=new FractalPyramidShader();
-        defaultShader=new Shader("default","default");
+//        defaultShader=new Shaders.LoadShader("default","default");
     }
 
     public static class LogoRenderShader extends ModLoadShader {
         public int offsetId=0;
         public LogoRenderShader() {
-            super(("logoRender"), "default");
+            super("logoRender", "logoRender");
         }
 
         @Override
