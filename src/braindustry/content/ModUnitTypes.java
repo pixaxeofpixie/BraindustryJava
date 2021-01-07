@@ -1052,7 +1052,7 @@ public class ModUnitTypes implements ContentList {
                 this.accel = 0.1f;
                 this.rotateSpeed = 1.0f;
                 this.drag = 0.23f;
-                this.hitSize = 100.0F;
+                this.hitSize = 72.0F;
                 this.armor = 10;
                 this.rotateShooting = false;
                 this.trailLength = 180;
