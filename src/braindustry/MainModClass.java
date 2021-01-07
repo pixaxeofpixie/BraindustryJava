@@ -2,6 +2,8 @@ package braindustry;
 
 import Gas.GasInit;
 import arc.graphics.Color;
+import arc.scene.event.Touchable;
+import arc.scene.ui.layout.WidgetGroup;
 import braindustry.content.*;
 import braindustry.ModVars.Classes.ModAtlas;
 import braindustry.ModVars.Classes.ModEventType;
@@ -13,6 +15,8 @@ import arc.scene.ui.*;
 import arc.scene.ui.layout.Cell;
 import arc.struct.Seq;
 import arc.util.*;
+import braindustry.graphics.ModShaders;
+import braindustry.ui.fragments.ModMenuFragment;
 import mindustry.*;
 import mindustry.content.*;
 import mindustry.ctype.UnlockableContent;
@@ -32,7 +36,17 @@ import static braindustry.ModVars.modVars.*;
 public class MainModClass extends Mod {
     public void init() {
         Events.fire(new ModEventType.ModInit());
-        modInfo = Vars.mods.getMod(this.getClass());
+
+        Vars.ui.menuGroup = new WidgetGroup();
+        Vars.ui.menuGroup.setFillParent(true);
+        Vars.ui.menuGroup.touchable = Touchable.childrenOnly;
+        Vars.ui.menuGroup.visible(() -> {
+            return Vars.state.isMenu();
+        });
+        Core.scene.add(Vars.ui.menuGroup);
+        Vars.ui.menufrag=new ModMenuFragment();
+//        Vars.ui.menufrag.
+        Vars.ui.menufrag.build(Vars.ui.menuGroup);
     }
     public static TextureRegion getIcon() {
 
@@ -142,6 +156,9 @@ public class MainModClass extends Mod {
     public void loadContent() {
         modInfo = Vars.mods.getMod(this.getClass());
         modAtlas=new ModAtlas();
+        inTry(()->{
+            ModShaders.init();
+        });
         Events.fire(ModEventType.ModContentLoad.class);
 //        loadMaps();
         GasInit.init(true);
