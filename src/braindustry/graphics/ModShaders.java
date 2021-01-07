@@ -17,12 +17,14 @@ public class ModShaders {
     public static MenuRenderShader menuRender;
     public static LogoRenderShader logoRender;
     public static FractalPyramidShader fractalPyramid;
+    public static Shader defaultShader;
 
     public static void init() {
         rainbow = new RainbowShader();
         menuRender=new MenuRenderShader();
         logoRender=new LogoRenderShader();
         fractalPyramid=new FractalPyramidShader();
+        defaultShader=new Shader("default","default");
     }
 
     public static class LogoRenderShader extends ModLoadShader {
