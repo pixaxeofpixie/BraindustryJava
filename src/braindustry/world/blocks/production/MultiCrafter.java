@@ -259,7 +259,7 @@ public class MultiCrafter extends Block {
                     newItemsStacks.add(itemStack);
                 }
             }));
-            this.consumeItems=newItemsStacks.toArray();
+            this.consumeItems=newItemsStacks.toArray(ItemStack.class);
         }
         private void checkLiquids(){
             Seq<LiquidStack> liquidsStacks=new Seq<>(consumeLiquids);
@@ -272,7 +272,7 @@ public class MultiCrafter extends Block {
                     newLiquidStacks.add(liquidStack);
                 }
             }));
-            this.consumeLiquids=newLiquidStacks.toArray();
+            this.consumeLiquids=newLiquidStacks.toArray(LiquidStack.class);
         }
         private void check(){
             checkItems();
