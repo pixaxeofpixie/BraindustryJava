@@ -328,6 +328,13 @@ public class ModFx {
             Fill.circle(e.x + x, e.y + y, 0.6f + e.fout() * 2.0f);
         });
     });
+
+    public static final Effect shieldWave = new Effect(22.0F, (e) -> {
+        Draw.color(e.color);
+        Lines.stroke(e.fout() * 2.0F);
+        Lines.circle(e.x, e.y, 8.0F + e.finpow() * e.rotation);
+    });
+
     public static final Effect adamExplosion = new Effect(22.0F, e -> {
         Draw.color(ModPal.adamFrontColor);
         e.scaled(6.0F, (i) -> {
@@ -509,6 +516,20 @@ public class ModFx {
         Draw.color(secondColor, e.color, e.fin());
         Draw.alpha(e.fout());
         Fill.square(e.x, e.y, 4.0F * e.rotation);
+    });
+    public static final Effect blockSelect = new Effect(40.0F, (e) -> {
+        Color secondColor;
+        if (e.data == null) {
+            secondColor = e.color;
+        } else {
+            if (!(e.data instanceof Color)) return;
+            secondColor = (Color) e.data;
+        }
+
+        Draw.color(secondColor, e.color, e.fin());
+        Lines.stroke(e.fout());
+//        Draw.alpha(e.fout());
+        Lines.square(e.x, e.y, 4.0F * e.rotation);
     });
     public static final Effect debugSelect = new DebugEffect(40.0F, (e) -> {
         Color secondColor;
