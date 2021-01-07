@@ -10,6 +10,7 @@ import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.production.MultiCrafter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
+import braindustry.world.blocks.sandbox.UnitSpawner;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -45,13 +46,19 @@ public class ModBlocks implements ContentList {
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
 
 
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter,unitSpawner;
 
     public void load() {
         new ModUnitsBlocks().load();
         new ModProduction().load();
         new ModOtherBlocks().load();
         new ModDefense().load();
+        unitSpawner=new UnitSpawner("unit-spawner"){
+            {
+                this.size = 2;
+                this.requirements(Category.effect, ItemStack.empty);
+            }
+        };
         multiCrafter = new MultiCrafter("multi-crafter") {
             {
                 this.size = 3;
