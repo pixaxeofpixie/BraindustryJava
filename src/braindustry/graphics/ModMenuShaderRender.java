@@ -247,8 +247,9 @@ public class ModMenuShaderRender extends MenuRenderer {
         Fill.crect(0.0F, 0.0F, (float)Core.graphics.getWidth(), (float)Core.graphics.getHeight());
         Draw.color();
         Draw.shader();
+        ModShaders.logoRender.logo=logoRegion;
         Draw.shader(ModShaders.logoRender);
-        Draw.rect(logoRegion,Core.graphics.getWidth()/2f,Core.graphics.getHeight()/2f,logoRegion.width,logoRegion.height);
+        Draw.rect(logoRegion,Core.graphics.getWidth()-logoRegion.width/2f,logoRegion.height/2f,logoRegion.width,logoRegion.height);
         Draw.shader();
     }
 

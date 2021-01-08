@@ -13,7 +13,7 @@ vec4 getPix(in vec2 fragCoord )
 
     // Time varying pixel color
     vec3 col = 0.60+0.40*cos(time+uv.xyx+vec3(0,2,4));
-    col = 0.70+0.30*cos(time/2.+uv.xyx+vec3(-2,2,-0));
+    col = 0.70+0.30*sin(time/2.+uv.xyx+vec3(-2,2,-0));
 
     // Output to screen
     return vec4(col,1.0);
