@@ -18,6 +18,7 @@ import arc.util.Time;
 import arc.util.Tmp;
 import arc.util.noise.RidgedPerlin;
 import arc.util.noise.Simplex;
+import braindustry.MainModClass;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.UnitTypes;
@@ -65,6 +66,7 @@ public class ModMenuShaderRender extends MenuRenderer {
         this.cache();
         Log.info("Time to generate menu: @", new Object[]{Time.elapsed()});
         logoRegion=Core.atlas.find(fullName("mod-logo"));
+//        logoRegion= MainModClass.getIcon();
     }
 
     private void generate() {
@@ -244,8 +246,10 @@ public class ModMenuShaderRender extends MenuRenderer {
         Draw.color(0.0F, 0.0F, 0.0F, 0.3F);
         Fill.crect(0.0F, 0.0F, (float)Core.graphics.getWidth(), (float)Core.graphics.getHeight());
         Draw.color();
+        Draw.shader();
+        ModShaders.logoRender.logo=logoRegion;
         Draw.shader(ModShaders.logoRender);
-        Draw.rect(logoRegion,Core.graphics.getWidth()/2f-logoRegion.width/2f,Core.graphics.getHeight()/2f-logoRegion.height/2f);
+        Draw.rect(logoRegion,Core.graphics.getWidth()-logoRegion.width/2f,logoRegion.height/2f,logoRegion.width,logoRegion.height);
         Draw.shader();
     }
 
