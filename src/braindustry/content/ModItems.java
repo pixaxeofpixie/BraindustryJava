@@ -93,7 +93,7 @@ public class ModItems implements ContentList {
                 this.color = Color.valueOf("e868d7");
                 this.radioactivity = 0.94f;
                 this.flammability = 0.99f;
-                this.hardness= 999;
+                this.hardness = 999;
             }
         };
     }
