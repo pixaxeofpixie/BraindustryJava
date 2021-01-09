@@ -6,6 +6,7 @@ import braindustry.content.Blocks.ModOtherBlocks;
 import braindustry.content.Blocks.ModProduction;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
+import braindustry.world.blocks.Wall.LaserReflectionWall;
 import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.production.MultiCrafter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
@@ -44,7 +45,7 @@ public class ModBlocks implements ContentList {
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
 
 
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter, laserReflectionWall;
 
     public void load() {
         new ModUnitsBlocks().load();
@@ -111,6 +112,14 @@ public class ModBlocks implements ContentList {
             }
         };
 
-
+        //test name
+        laserReflectionWall = new LaserReflectionWall("laser-reflection-wall") {
+            {
+                localizedName = "laser reflection wall";
+                size = 1;
+                health = 1000;
+                requirements(Category.defense, ItemStack.with(Items.graphite, 10));
+            }
+        };
     }
 }
