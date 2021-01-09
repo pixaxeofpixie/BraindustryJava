@@ -18,7 +18,13 @@ uniform vec2 iResolution;
 uniform float u_mul1;
 uniform float u_scl;
 void main(){
-    gl_Position =u_projTrans * a_position;
+    vec4 pos=u_projTrans * a_position;
+    pos.a+=cos(pos.a+u_timeMul)/(u_mul1*u_mul1);
+    pos.z+=sin(pos.z+u_timeMul)/(u_mul1);
+    pos.y+=sin(pos.y+u_timeMul)/(u_mul1);
+    pos.x+=sin(pos.x+u_timeMul)/(u_mul1);
+    //pos.y+=sin(pos.x+u_time/100.);
+    gl_Position = pos;
     v_pos=a_position;
     v_texCoords = a_texCoord0;
     v_viewportInverse=u_viewportInverse;

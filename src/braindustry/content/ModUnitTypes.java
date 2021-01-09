@@ -2,15 +2,17 @@ package braindustry.content;
 
 import arc.func.Prov;
 import arc.graphics.Color;
+import braindustry.ai.types.StealthGroundAI;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedUnitType;
 import braindustry.entities.Advanced.UnitExtensions;
 import braindustry.entities.PowerGeneratorUnit;
-import braindustry.entities.PowerUnitType;
+import braindustry.type.PowerUnitType;
 import braindustry.entities.bullets.AdamBulletType;
 import braindustry.entities.bullets.EveBulletType;
 import braindustry.gen.StealthMechUnit;
 import braindustry.type.ModWeapon;
+import braindustry.type.StealthUnitType;
 import mindustry.content.Bullets;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
@@ -1027,10 +1029,11 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        tyzen = new UnitType("tyzen") {
+        tyzen = new StealthUnitType("tyzen") {
             {
                 this.mineSpeed = 8.0F;
                 this.mineTier = 2;
+                this.defaultController= StealthGroundAI::new;
                 this.constructor = Types.stealthMech;
                 this.speed = 0.6f;
                 this.hitSize = 8;
