@@ -104,10 +104,9 @@ public class modFunc {
     }
 
     public static void showException(Exception exception){
-        Log.err(exception);
-        try {
+        if (Vars.ui != null){
             Vars.ui.showException(Strings.format("@: error", modInfo.meta.displayName), exception);
-        } catch (NullPointerException n){
+        } else {
             Events.on(EventType.ClientLoadEvent.class, event -> {
                 Vars.ui.showException(Strings.format("@: error", modInfo.meta.displayName), exception);
             });

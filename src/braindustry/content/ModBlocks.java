@@ -6,12 +6,11 @@ import braindustry.content.Blocks.ModOtherBlocks;
 import braindustry.content.Blocks.ModProduction;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
+import braindustry.world.blocks.Wall.LaserReflectionWall;
 import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.production.MultiCrafter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
-import braindustry.world.blocks.sandbox.UnitSpawner;
-import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
@@ -33,7 +32,7 @@ public class ModBlocks implements ContentList {
 
     refrigerantReactor, chromiumForge, exoticAlloySmelter, grapheniteFluidizer, grapheniteForge,
             hydraulicDrill, hyperAlloySmelter, hyperPhaseWeaver, magmaMixer, odinumExtractor,
-            phaseAlloySmelter, plasticForge, quarryDrill, geothermicDrill, grapheniteKiln, refrigerantmixer, astroSmelter,
+            phaseAlloySmelter, plasticForge, quarryDrill, geothermicDrill, grapheniteKiln, refrigerantmixer,
 
 
     hyperAdditiveReconstructor, hyperAirFactory, hyperExponentialReconstructor, hyperGroundFactory,
@@ -46,22 +45,16 @@ public class ModBlocks implements ContentList {
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
 
 
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter,unitSpawner;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter, laserReflectionWall;
 
     public void load() {
         new ModUnitsBlocks().load();
         new ModProduction().load();
         new ModOtherBlocks().load();
         new ModDefense().load();
-        unitSpawner=new UnitSpawner("unit-spawner"){
-            {
-                this.size = 2;
-                this.requirements(Category.effect, ItemStack.empty);
-            }
-        };
         multiCrafter = new MultiCrafter("multi-crafter") {
             {
-                this.size = 3;
+                this.size = 1;
                 this.update = true;
                 this.destructible = true;
                 this.hasLiquids=true;
@@ -119,6 +112,14 @@ public class ModBlocks implements ContentList {
             }
         };
 
-
+        //test name
+        laserReflectionWall = new LaserReflectionWall("laser-reflection-wall") {
+            {
+                localizedName = "laser reflection wall";
+                size = 1;
+                health = 1000;
+                requirements(Category.defense, ItemStack.with(Items.graphite, 10));
+            }
+        };
     }
 }
