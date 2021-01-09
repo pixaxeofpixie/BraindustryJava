@@ -42,10 +42,11 @@ public class ModBlocks implements ContentList {
     axon, heartbeat, blaze, brain, electron, fragment, impulse, katana, mind, neuron, perlin, soul, stinger, synaps, gloryTurret,
 
 
-    exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
+    exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge,
+            plasticWall, astronomicalWall, largeAstronomicalWall,
 
 
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter, laserReflectionWall;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter;
 
     public void load() {
         new ModUnitsBlocks().load();
@@ -109,16 +110,6 @@ public class ModBlocks implements ContentList {
                 this.health = Integer.MAX_VALUE;
                 this.size = 3;
 //                this.requirements();
-            }
-        };
-
-        //test name
-        laserReflectionWall = new LaserReflectionWall("laser-reflection-wall") {
-            {
-                localizedName = "laser reflection wall";
-                size = 1;
-                health = 1000;
-                requirements(Category.defense, ItemStack.with(Items.graphite, 10));
             }
         };
     }
