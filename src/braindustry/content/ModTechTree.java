@@ -89,7 +89,9 @@ public class ModTechTree extends TechTreeManager {
                 node(ModBlocks.chromiumForge,()->{
                     node(ModBlocks.magmaMixer);
                 });
-                node(ModBlocks.exoticAlloySmelter);
+                node(ModBlocks.exoticAlloySmelter, () -> {
+                    node(ModBlocks.astroSmelter);
+                });
                 node(ModBlocks.grapheniteKiln);
                 node(ModBlocks.odinumExtractor);
             });
