@@ -8,6 +8,7 @@ import arc.math.Mathf;
 import arc.util.Tmp;
 import braindustry.entities.bullets.ReflectionBullet;
 import braindustry.entities.bullets.SpikeCircleOrbonBullet;
+import braindustry.world.blocks.Wall.LaserReflectionWall;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -33,6 +34,7 @@ public class ModDefense implements ContentList {
 
     @Override
     public void load() {
+
         heartbeat =new ItemTurret("heartbeat"){
             {
                 this.localizedName="Heartbeat";
@@ -768,6 +770,25 @@ public class ModDefense implements ContentList {
                 this.requirements(Category.defense, ItemStack.with(ModItems.plastic, 6, Items.metaglass, 4));
                 this.insulated = true;
                 this.absorbLasers = true;
+            }
+        };
+
+        //please add description :3
+        largeAstronomicalWall = new LaserReflectionWall("astronomical-alloy-wall-large") {
+            {
+                localizedName = "large astronomical wall";
+                size = 2;
+                health = 4650;
+                requirements(Category.defense, ItemStack.with(ModItems.phaseAlloy, 60));
+            }
+        };
+
+        astronomicalWall = new LaserReflectionWall("astronomical-alloy-wall") {
+            {
+                localizedName = "laser astronomical wall";
+                size = 1;
+                health = 1550;
+                requirements(Category.defense, ItemStack.with(ModItems.phaseAlloy, 20));
             }
         };
     }

@@ -13,7 +13,7 @@ repositories{
 
 ext{
     //the build number that this mod is made for
-    mindustryVersion = 'v122.1'
+    mindustryVersion = 'v122'
     //version of SDK you will be using
     sdkVersion = '29'
     sdkRoot = "C:\\Users\\sefce\\AppData\\Local\\Android\\android-sdk";
@@ -28,7 +28,7 @@ ext{
 allprojects{
     tasks.withType(JavaCompile){
         if(JavaVersion.current() != JavaVersion.VERSION_1_8){
-            options.compilerArgs.addAll(['--release', '14'])
+            options.compilerArgs.addAll(['--release', '8'])
         }
     }
 }
