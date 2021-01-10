@@ -16,7 +16,7 @@ ext{
     mindustryVersion = 'v122.1'
     //version of SDK you will be using
     sdkVersion = '29'
-    sdkRoot = "C:\\Users\\sefce\\AppData\\Local\\Android\\android-sdk";
+    sdkRoot = System.getenv("ANDROID_HOME")
 
     doExec = { cmd ->
         def proc = cmd.execute(null, new File("$buildDir/libs"))
