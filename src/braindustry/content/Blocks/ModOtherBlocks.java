@@ -294,5 +294,22 @@ public class ModOtherBlocks implements ContentList {
                 this.requirements(Category.production, ItemStack.with(ModItems.plastic, 150, ModItems.graphenite, 120, ModItems.odinum, 140, Items.plastanium, 100));
             }
         };
+        blackHoleReactor = new ImpactReactor("blackhole-reactor") {
+            {
+                this.localizedName = "Blackhole Reactor";
+                this.description = "Create power from small Blackhole in center.";
+                this.size = 5;
+                this.hasPower = true;
+                this.hasLiquids = true;
+                this.hasItems = false;
+                //this.itemCapacity = 120;
+                this.liquidCapacity = 100;
+                this.itemDuration = 240;
+                this.powerProduction = 192;
+                this.consumes.power(16f);
+                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.5f);
+                this.requirements(Category.power, ItemStack.with(ModItems.astroAlloy, 300, Items.surgeAlloy, 200, Items.graphite, 500, ModItems.odinum, 100));
+            }
+        };
     }
 }
