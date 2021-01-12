@@ -1,6 +1,7 @@
 package braindustry.content.Blocks;
 import arc.struct.Seq;
 import braindustry.content.*;
+import braindustry.content.ModFx;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
@@ -396,7 +397,7 @@ public class ModDefense implements ContentList {
                         this.absorbable = false;
                         this.damage = 82;
                         this.shootEffect = Fx.railShoot;
-                        this.despawnEffect = Fx.railHit;
+                        this.despawnEffect = ModFx.leviathanLaserCharge;
                         this.knockback = 1;
                         this.lightning = 4;//?????????? ??????
                         this.lightningLength = 30;//????? ??????
