@@ -24,6 +24,7 @@ public class AllBurnerGenerator extends AllGenerator {
         super(name);
     }
 
+
     @Override
     public void load() {
         super.load();

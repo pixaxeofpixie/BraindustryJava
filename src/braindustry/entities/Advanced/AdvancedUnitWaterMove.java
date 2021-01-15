@@ -3,7 +3,7 @@ package braindustry.entities.Advanced;
 import mindustry.gen.UnitWaterMove;
 
 public class AdvancedUnitWaterMove extends UnitWaterMove {
-    public static final int classId = 44;
+    public static int classId = 44;
     @Override
     public String toString() {
         return "Advanced"+super.toString();

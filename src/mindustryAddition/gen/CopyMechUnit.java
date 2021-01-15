@@ -1,5 +1,6 @@
 package mindustryAddition.gen;
 
+
 import arc.Core;
 import arc.Events;
 import arc.func.Boolf;
@@ -41,11 +42,15 @@ import mindustry.ctype.ContentType;
 import mindustry.entities.Damage;
 import mindustry.entities.Effect;
 import mindustry.entities.EntityCollisions;
+import mindustry.entities.EntityCollisions.SolidPred;
 import mindustry.entities.Units;
 import mindustry.entities.abilities.Ability;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.units.*;
-import mindustry.game.EventType;
+import mindustry.game.EventType.BuildSelectEvent;
+import mindustry.game.EventType.Trigger;
+import mindustry.game.EventType.UnitDestroyEvent;
+import mindustry.game.EventType.UnitDrownEvent;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Drawf;
@@ -59,6 +64,7 @@ import mindustry.world.Block;
 import mindustry.world.Build;
 import mindustry.world.Tile;
 import mindustry.world.blocks.ConstructBlock;
+import mindustry.world.blocks.ConstructBlock.ConstructBuild;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.payloads.BuildPayload;
 import mindustry.world.blocks.payloads.UnitPayload;
@@ -68,9 +74,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import static mindustry.Vars.*;
-import static mindustry.Vars.control;
 
-public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMovec, Flyingc, Entityc, Statusc, Healthc, Commanderc, Hitboxc, Physicsc, Weaponsc, Builderc, Posc, Velc, Rotc, Shieldc, Drawc, Teamc, Boundedc, Mechc, Syncc, Unitc {
+public class CopyMechUnit extends Unit implements Itemsc, Minerc, ElevationMovec, Flyingc, Entityc, Statusc, Healthc, Commanderc, Hitboxc, Physicsc, Weaponsc, Builderc, Posc, Velc, Rotc, Shieldc, Drawc, Teamc, Boundedc, Mechc, Syncc, Unitc {
     public static final Vec2 tmp1 = new Vec2();
     public static final Vec2 tmp2 = new Vec2();
     public static final float hitDuration = 9.0F;
@@ -98,20 +103,20 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
     protected transient float healthMultiplier = 1;
     protected transient float reloadMultiplier = 1;
     protected transient boolean isRotate;
-    protected transient float x_TARGET_;
-    protected transient float x_LAST_;
-    protected transient float y_TARGET_;
-    protected transient float y_LAST_;
-    protected transient float rotation_TARGET_;
-    protected transient float rotation_LAST_;
-    protected transient float baseRotation_TARGET_;
-    protected transient float baseRotation_LAST_;
+    private transient float x_TARGET_;
+    private transient float x_LAST_;
+    private transient float y_TARGET_;
+    private transient float y_LAST_;
+    private transient float rotation_TARGET_;
+    private transient float rotation_LAST_;
+    private transient float baseRotation_TARGET_;
+    private transient float baseRotation_LAST_;
 
-    protected WorkbleMechUnit() {
+    protected CopyMechUnit() {
     }
 
-    public static WorkbleMechUnit create() {
-        return new WorkbleMechUnit();
+    public static CopyMechUnit create() {
+        return new CopyMechUnit();
     }
 
     public boolean serialize() {
@@ -260,7 +265,7 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
         rawDamage(amount);
     }
 
-    protected <T> T cast(Object o) {
+    private <T> T cast(Object o) {
         return (T) o;
     }
 
@@ -485,7 +490,7 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
             float y3 = vecs[1].y;
             Draw.z(Layer.buildBeam);
             Draw.alpha(buildAlpha);
-            if (!active && !(tile.build instanceof ConstructBlock.ConstructBuild)) {
+            if (!active && !(tile.build instanceof ConstructBuild)) {
                 Fill.square(plan.drawx(), plan.drawy(), size * tilesize / 2.0F);
             }
             if (renderer.animateShields) {
@@ -533,9 +538,9 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
         Fx.explosion.at(this);
         Effect.shake(shake, shake, this);
         type.deathSound.at(this);
-        Events.fire(new EventType.UnitDestroyEvent(this));
+        Events.fire(new UnitDestroyEvent(this));
         if (explosiveness > 7.0F && (isLocal() || wasPlayer)) {
-            Events.fire(EventType.Trigger.suicideBomb);
+            Events.fire(Trigger.suicideBomb);
         }
         if (type.flying && !spawnedByCore) {
             Damage.damage(team, x, y, Mathf.pow(hitSize, 0.94F) * 1.25F, Mathf.pow(hitSize, 0.75F) * type.crashDamageMultiplier * 5.0F, true, false, true);
@@ -918,7 +923,7 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
     }
 
     public void move(float cx, float cy) {
-        EntityCollisions.SolidPred check = solidity();
+        SolidPred check = solidity();
         if (check != null) {
             collisions.move(this, cx, cy, check);
         } else {
@@ -1116,8 +1121,8 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
         stack.amount = Mathf.clamp(stack.amount, 0, itemCapacity());
     }
 
-    protected void shoot(WeaponMount mount, float x, float y, float aimX, float aimY, float mountX,
-                         float mountY, float rotation, int side) {
+    private void shoot(WeaponMount mount, float x, float y, float aimX, float aimY, float mountX,
+                       float mountY, float rotation, int side) {
         Weapon weapon = mount.weapon;
         float baseX = this.x;
         float baseY = this.y;
@@ -1207,7 +1212,7 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
 
     }
 
-    protected Bullet bullet(Weapon weapon, float x, float y, float angle, float lifescl) {
+    private Bullet bullet(Weapon weapon, float x, float y, float angle, float lifescl) {
         float xr = Mathf.range(weapon.xRand);
         return weapon.bullet.create(this, team(), x + Angles.trnsx(angle, 0, xr), y + Angles.trnsy(angle, 0, xr), angle, (1.0F - weapon.velocityRnd) + Mathf.random(weapon.velocityRnd), lifescl);
     }
@@ -1229,8 +1234,8 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
             plans.remove(replace);
         }
         Tile tile = world.tile(place.x, place.y);
-        if (tile != null && tile.build instanceof ConstructBlock.ConstructBuild) {
-            place.progress = this.<ConstructBlock.ConstructBuild>cast(tile.build).progress;
+        if (tile != null && tile.build instanceof ConstructBuild) {
+            place.progress = this.<ConstructBuild>cast(tile.build).progress;
         }
         if (tail) {
             plans.addLast(place);
@@ -1289,7 +1294,7 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
     }
 
     public boolean canPass(int tileX, int tileY) {
-        EntityCollisions.SolidPred s = solidity();
+        SolidPred s = solidity();
         return s == null || !s.solid(tileX, tileY);
     }
 
@@ -1461,7 +1466,7 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
                 }
                 if (drownTime >= 0.999F && !net.client()) {
                     kill();
-                    Events.fire(new EventType.UnitDrownEvent(this));
+                    Events.fire(new UnitDrownEvent(this));
                 }
             } else {
                 drownTime = Mathf.lerpDelta(drownTime, 0.0F, 0.03F);
@@ -1604,8 +1609,8 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
             buildAlpha = 1.0F;
             if (current.breaking) lastSize = tile.block().size;
             if (!within(tile, finalPlaceDst)) break builder;
-            ConstructBlock.ConstructBuild cb;
-            if (!(tile.build instanceof ConstructBlock.ConstructBuild)) {
+            ConstructBuild cb;
+            if (!(tile.build instanceof ConstructBuild)) {
                 if (!current.initialized && !current.breaking && Build.validPlace(current.block, team, current.x, current.y, current.rotation)) {
                     boolean hasAll = infinite || current.isRotation(team) || !Structs.contains(current.block.requirements, (i) -> core != null && !core.items.has(i.item));
                     if (hasAll) {
@@ -1623,14 +1628,14 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
                 plans.removeFirst();
                 break builder;
             }
-            if (tile.build instanceof ConstructBlock.ConstructBuild && !current.initialized) {
-                Core.app.post(() -> Events.fire(new EventType.BuildSelectEvent(tile, team, this, current.breaking)));
+            if (tile.build instanceof ConstructBuild && !current.initialized) {
+                Core.app.post(() -> Events.fire(new BuildSelectEvent(tile, team, this, current.breaking)));
                 current.initialized = true;
             }
-            if ((core == null && !infinite) || !(tile.build instanceof ConstructBlock.ConstructBuild)) {
+            if ((core == null && !infinite) || !(tile.build instanceof ConstructBuild)) {
                 break builder;
             }
-            ConstructBlock.ConstructBuild entity=(ConstructBlock.ConstructBuild)tile.build;
+            ConstructBuild entity=(ConstructBuild)tile.build;
             if (current.breaking) {
                 entity.deconstruct(this, core, 1.0F / entity.buildCost * Time.delta * type.buildSpeed * state.rules.buildSpeedMultiplier);
             } else {
@@ -1837,7 +1842,7 @@ public class WorkbleMechUnit extends Unit implements Itemsc, Minerc, ElevationMo
         type.display(this, table);
     }
 
-    protected void rawDamage(float amount) {
+    private void rawDamage(float amount) {
 
         boolean hadShields = shield > 1.0E-4F;
         if (hadShields) {

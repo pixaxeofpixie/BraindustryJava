@@ -31,7 +31,7 @@ public abstract class PowerUnitType extends UnitType {
         Draw.rect(this.bottomRegion, unit.x, unit.y);
 
         for(int i = 0; i < this.plasmaRegions.length; ++i) {
-            float r = (float)(this.hitSize/4f) - 3.0F + Mathf.absin(Time.time, 2.0F + (float)i * 1.0F, 5.0F - (float)i * 0.5F);
+            float r = (float)(this.hitSize/2f) - 3.0F + Mathf.absin(Time.time, 2.0F + (float)i * 1.0F, 5.0F - (float)i * 0.5F);
             Draw.color(this.plasma1, this.plasma2, (float)i / (float)this.plasmaRegions.length);
             Draw.alpha((0.3F + Mathf.absin(Time.time, 2.0F + (float)i * 2.0F, 0.3F + (float)i * 0.05F)) * 1);
             Draw.blend(Blending.additive);

@@ -68,7 +68,7 @@ import java.util.Iterator;
 
 public class AmmoDistributeUnit extends Unit implements  Itemsc, Builderc, Weaponsc, Commanderc, Boundedc, Statusc, Syncc, Minerc, Healthc, Shieldc, Entityc, Teamc, Physicsc, Drawc, Flyingc, Hitboxc, Velc, Rotc, Unitc, Payloadc, Posc, AmmoDistributec {
 
-    public static final int classId = 40;
+    public static int classId = 40;
     public static final Vec2[] vecs = new Vec2[]{new Vec2(), new Vec2(), new Vec2(), new Vec2()};
     public static final Seq<FormationMember> members = new Seq();
     public static final Seq<Unit> units = new Seq();
@@ -2334,7 +2334,7 @@ public class AmmoDistributeUnit extends Unit implements  Itemsc, Builderc, Weapo
     }
 
     public int classId() {
-        return 40;
+        return classId;
     }
 
     public ItemStack stack() {

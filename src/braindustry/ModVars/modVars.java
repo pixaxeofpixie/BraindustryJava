@@ -22,22 +22,19 @@ public class modVars {
     private static int lastClass = 0;
 
     public static void load() {
-        mapClass(AmmoDistributeUnit.class,0);
-        mapClass(PowerGeneratorUnit.class,1);
-        mapClass(AdvancedLegsUnit.class,2);
-        mapClass(AdvancedPayloadUnit.class,3);
-        mapClass(AdvancedUnitWaterMove.class,4);
-        mapClass(StealthMechUnit.class,5);
+        mapClass(AmmoDistributeUnit.class);
+        mapClass(PowerGeneratorUnit.class);
+        mapClass(AdvancedLegsUnit.class);
+        mapClass(AdvancedPayloadUnit.class);
+        mapClass(AdvancedUnitWaterMove.class);
+        mapClass(StealthMechUnit.class);
         settings = new ModSettings();
     }
     private static  <T> void mapClass(Class<?> objClass) {
-        mapClass(objClass,lastClass++);
-    }
-    private static  <T> void mapClass(Class<?> objClass,int offset) {
         try {
             Constructor<?> cons = objClass.getDeclaredConstructor();
-            objClass.getField("classId").setInt(objClass,classOffset+offset);
-            EntityMapping.idMap[classOffset+offset] = () -> {
+            objClass.getField("classId").setInt(objClass,classOffset+lastClass);
+            EntityMapping.idMap[classOffset+lastClass++] = () -> {
                 try {
                     return cons.newInstance();
                 } catch (Exception var3) {

@@ -22,8 +22,6 @@ import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
 
 import static braindustry.content.ModBlocks.*;
-import static braindustry.content.ModBlocks.crimzesFloor;
-
 public class ModOtherBlocks implements ContentList {
     @Override
     public void load() {
@@ -294,62 +292,6 @@ public class ModOtherBlocks implements ContentList {
                 this.liquidCapacity = 60;
                 this.rotateSpeed = 5;
                 this.requirements(Category.production, ItemStack.with(ModItems.plastic, 150, ModItems.graphenite, 120, ModItems.odinum, 140, Items.plastanium, 100));
-            }
-        };
-        blackHoleReactor = new ImpactReactor("blackhole-reactor") {
-            {
-                this.localizedName = "Blackhole Reactor";
-                this.description = "Create power from small Blackhole in center.";
-                this.size = 5;
-                this.hasPower = true;
-                this.hasLiquids = true;
-                this.hasItems = false;
-                //this.itemCapacity = 120;
-                this.liquidCapacity = 100;
-                this.itemDuration = 240;
-                this.powerProduction = 192;
-                this.consumes.power(16f);
-                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.5f);
-                this.requirements(Category.power, ItemStack.with(ModItems.astroAlloy, 300, Items.surgeAlloy, 200, Items.graphite, 500, ModItems.odinum, 100));
-            }
-        };
-        crimzesBlock = new StaticWall("crimzes-block") {
-            {
-                this.localizedName = "Crimson Wall";
-                this.breakable = false;
-                this.alwaysReplace = false;
-                this.solid = true;
-                this.variants = 3;
-            }
-        };
-        jungleWall = new StaticWall("jungle-wall") {
-            {
-                this.localizedName = "Jungle Wall";
-                this.breakable = false;
-                this.alwaysReplace = false;
-                this.solid = true;
-                this.variants = 3;
-            }
-        };
-        dirtRocksWall = new StaticWall("dirt-rocks-wall") {
-            {
-                this.localizedName = "Hard Dirt Wall";
-                this.breakable = false;
-                this.alwaysReplace = false;
-                this.solid = true;
-                this.variants = 3;
-            }
-        };
-        jungleFloor = new Floor("jungle-floor") {
-            {
-                this.localizedName = "Jungle Floor";
-                this.variants = 5;
-            }
-        };
-        crimzesFloor = new Floor("crimzes-floor") {
-            {
-                this.localizedName = "crimzes Floor";
-                this.variants = 3;
             }
         };
     }
