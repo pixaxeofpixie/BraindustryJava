@@ -1,6 +1,7 @@
 package braindustry.content;
 
 import arc.Core;
+import arc.graphics.Color;
 import arc.struct.Seq;
 import braindustry.content.Blocks.ModUnitsBlocks;
 import braindustry.content.Blocks.ModDefense;
@@ -17,6 +18,7 @@ import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
+import mindustry.graphics.Pal;
 import mindustry.logic.LAccess;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
@@ -58,7 +60,7 @@ public class ModBlocks implements ContentList {
             plasticWall, astronomicalWall, largeAstronomicalWall,
 
     //experimental
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
+    smartRouter, turretSwitcher,blockHealer, dpsMeter, unitGenerator,unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
             exampleCrossItemBridge, exampleCrossPhaseBridge;
 
 
@@ -146,6 +148,7 @@ public class ModBlocks implements ContentList {
                 dynamicLiquid=true;
 //                this.changeTexture = true;
                 //1st itemStack = выход, вход писать во втором itemStack
+
                 recipes(Recipe.with(new ItemStack(ModItems.graphenite, 1),ItemStack.with(Items.graphite, 2, Items.silicon, 3, Items.titanium, 2, Items.lead, 2), ModLiquidStack.with(Liquids.slag, 1), 150),
                         Recipe.with(new ItemStack(ModItems.exoticAlloy, 1),ItemStack.with(Items.sporePod, 3, Items.titanium, 4, Items.thorium, 3), ModLiquidStack.with(Liquids.water, 2), 140)
                 );
@@ -201,6 +204,7 @@ public class ModBlocks implements ContentList {
                 blockFilter=(build)->{
                     return build.block instanceof Turret;
                 };
+                colorFunc=(b)-> Color.orange.cpy().lerp(Pal.accent,0.1f);
                 /** default action*/
                 action =(build)-> {
                     boolean enable= (build instanceof ControlBlock && ((ControlBlock) build).isControlled() && !(build instanceof BlockSwitcherBuild));
@@ -208,6 +212,23 @@ public class ModBlocks implements ContentList {
                     build.enabledControlTime = 30.0F;
                 };
                 this.size = 2;
+                this.laserRange = 6.0F;
+                this.health=10000;
+                this.requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
+                this.buildCostMultiplier = 4.0F;
+            }
+        };
+        blockHealer = new BlockSwitcher("block-healer") {
+            {
+                blockFilter=(build)->{
+                    return true;
+                };
+                action =(build)-> {
+                    build.heal();
+                };
+                colorFunc=(b)-> Pal.heal;
+                this.size = 2;
+                this.health=10000;
                 this.laserRange = 6.0F;
                 this.requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 this.buildCostMultiplier = 4.0F;

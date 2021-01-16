@@ -771,7 +771,7 @@ public class ModDefense implements ContentList {
                 this.absorbLasers = true;
             }
         };
-        //please add description :3
+        //please add description :3 /*Zelaux: NO*/
         largeAstronomicalWall = new LaserReflectionWall("astronomical-alloy-wall-large") {
             {
                 localizedName = "large astronomical wall";

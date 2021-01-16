@@ -48,9 +48,7 @@ public class SmartRouter extends Router {
 
         @Override
         public void updateTableAlign(Table table) {
-//            Vec2 pos = Core.input.mouseScreen(this.x-1F, this.y + 5f + (this.block.size % 2)*8F);
             float addPos = Mathf.ceil(this.block.size / 2f) - 1;
-//            addPos=0;
             Vec2 pos = Core.input.mouseScreen((this.x) + addPos - 0.5f, this.y + addPos);
             table.setSize(this.block.size * 12f);
             table.setPosition(pos.x, pos.y, 0);
