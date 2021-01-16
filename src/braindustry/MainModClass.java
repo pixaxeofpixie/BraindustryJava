@@ -30,6 +30,7 @@ import mindustry.ui.Styles;
 import mindustry.ui.dialogs.*;
 import mindustry.world.Tile;
 import mindustry.world.meta.BuildVisibility;
+import mindustryAddition.iu.AdvancedContentInfoDialog;
 
 import static braindustry.ModVars.modFunc.*;
 import static braindustry.ModVars.modVars.*;
@@ -50,6 +51,7 @@ public class MainModClass extends Mod {
 //        Vars.ui.menufrag.
             Vars.ui.menufrag.build(Vars.ui.menuGroup);
         });
+        AdvancedContentInfoDialog.init();
     }
     public static TextureRegion getIcon() {
 

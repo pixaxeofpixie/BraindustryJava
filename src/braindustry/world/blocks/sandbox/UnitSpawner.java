@@ -318,7 +318,7 @@ public class UnitSpawner extends Block {
 
         @Override
         public void damage(float damage) {
-            ModFx.shieldWave.at(this.x, this.y, this.block.size + 1, Pal.shield);
+            ModFx.shieldWave.at(this.x, this.y, this.block.size + 1, Pal.shield,this.block.size*8f);
         }
 
         public void damage(float amount, boolean withEffect) {

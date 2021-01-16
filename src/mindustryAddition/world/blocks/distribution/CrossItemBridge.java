@@ -30,9 +30,11 @@ import mindustryAddition.world.blocks.BlockAdvancedStats;
 import mindustryAddition.world.blocks.BuildingLabel;
 import mindustryAddition.world.blocks.BuildingTaskQueue;
 import mindustryAddition.world.meta.AStat;
+import mindustryAddition.world.meta.AStats;
 
 public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
     public Prov<Seq<Block>> connectBlocksGetter = () -> new Seq<>();
+    AStats aStats = new AStats();
     Seq<Block> connectibleBlocks = new Seq<>();
     public Boolf<Building> connectFilter = (building) -> connectibleBlocks.contains(building.block());
     byte maxConnections = 10;

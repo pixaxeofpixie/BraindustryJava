@@ -5,6 +5,7 @@ import arc.scene.ui.layout.Table;
 import arc.struct.ObjectMap;
 import arc.struct.OrderedMap;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Scaling;
 import mindustry.Vars;
 import mindustry.ctype.UnlockableContent;
@@ -48,7 +49,7 @@ public class AdvancedContentInfoDialog extends ContentInfoDialog {
         });
         table.row();
         if (content.description != null) {
-            boolean any = content.stats.toMap().size > 0;
+            boolean any = ((AStats) content.stats).toAMap().size > 0;
             if (any) {
                 table.add("@category.purpose").color(Pal.accent).fillX().padTop(10.0F);
                 table.row();
@@ -63,7 +64,7 @@ public class AdvancedContentInfoDialog extends ContentInfoDialog {
         }
 
         AStats stats = (AStats)content.stats;
-        ObjectMap.Keys<StatCat> var4 = stats.toMap().keys().iterator();
+        ObjectMap.Keys<StatCat> var4 = stats.toAMap().keys().iterator();
 
         while(true) {
             StatCat cat;
@@ -98,10 +99,8 @@ public class AdvancedContentInfoDialog extends ContentInfoDialog {
                     inset.left();
                     inset.add("[lightgray]" + stat.localized() + ":[] ").left();
                     Seq<StatValue> arr = mapCathe.get(stat);
-                    Iterator<StatValue> var6 = arr.iterator();
 
-                    while(var6.hasNext()) {
-                        StatValue value = var6.next();
+                    for (StatValue value : arr) {
                         value.display(inset);
                         inset.add().size(10.0F);
                     }

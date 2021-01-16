@@ -72,8 +72,8 @@ public enum  AStat {
     booster(StatCat.optional),
     boostEffect(StatCat.optional),
     affinities(StatCat.optional),
-    maxConnections(StatCat.function)
-    ;
+    maxConnections(StatCat.function),
+    recipes(StatCat.function);
     public final StatCat category;
     public static AStat fromExist(Stat stat){
         return Seq.with(values()).find((v)-> v.name().equals(stat.name()));

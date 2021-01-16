@@ -330,8 +330,11 @@ public class ModFx {
     });
 
     public static final Effect shieldWave = new Effect(22.0F, (e) -> {
+        float startValue=2.f;
+        if (e.data instanceof Float)startValue=(float)e.data;
         Draw.color(e.color);
-        Lines.stroke(e.fout() * 2.0F);
+        float mul=e.fin()*e.fin();
+        Lines.stroke((1f-mul) * startValue);
         Lines.circle(e.x, e.y, 8.0F + e.finpow() * e.rotation);
     });
 

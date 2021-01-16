@@ -2,11 +2,15 @@ package braindustry.content;
 
 import arc.Core;
 import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
+import arc.math.Mathf;
 import arc.struct.Seq;
+import arc.util.Time;
 import braindustry.content.Blocks.ModUnitsBlocks;
 import braindustry.content.Blocks.ModDefense;
 import braindustry.content.Blocks.ModOtherBlocks;
 import braindustry.content.Blocks.ModProduction;
+import braindustry.type.Recipe;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import braindustry.world.blocks.distribution.SmartRouter;
@@ -140,12 +144,14 @@ public class ModBlocks implements ContentList {
                 this.update = true;
                 this.destructible = true;
                 this.hasLiquids = true;
-                this.hasShadow = false;
+                this.hasShadow = true;
 
                 this.health = 360;
                 this.category = Category.production;
                 dynamicItem = true;
                 dynamicLiquid=true;
+                this.extraStorageLiquid=3;
+                this.extraStorageItem=3;
 //                this.changeTexture = true;
                 //1st itemStack = выход, вход писать во втором itemStack
 
@@ -163,7 +169,7 @@ public class ModBlocks implements ContentList {
                 this.update = true;
                 this.destructible = true;
                 this.hasLiquids = true;
-                this.hasShadow = false;
+                this.hasShadow = true;
 
                 this.health = 980;
                 this.category = Category.production;
@@ -224,9 +230,12 @@ public class ModBlocks implements ContentList {
                     return true;
                 };
                 action =(build)-> {
-                    build.heal(0.15f+build.maxHealth);
+                    build.heal(0.15f*build.edelta()*build.maxHealth);
                 };
-                colorFunc=(b)-> Pal.heal.cpy().lerp(Color.black,1f-b.healthf());
+                colorFunc=(b)-> {
+                    float t=Mathf.absin(Time.time + Mathf.randomSeed(b.id, 0, 1000000), 1f, 1F)* 0.2f+0.1f;
+                   return Pal.heal.cpy().lerp(Color.black, t * (1f - b.healthf()));
+                };
                 this.size = 2;
                 this.health=10000;
                 this.laserRange = 6.0F;
