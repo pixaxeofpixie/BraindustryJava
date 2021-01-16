@@ -18,7 +18,6 @@ import arc.util.Time;
 import arc.util.Tmp;
 import arc.util.noise.RidgedPerlin;
 import arc.util.noise.Simplex;
-import braindustry.MainModClass;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.UnitTypes;
