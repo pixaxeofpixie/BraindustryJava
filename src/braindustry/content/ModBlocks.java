@@ -17,9 +17,12 @@ import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
+import mindustry.logic.LAccess;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
+import mindustry.world.blocks.ControlBlock;
+import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.blocks.distribution.BufferedItemBridge;
 import mindustry.world.blocks.distribution.ItemBridge;
 import mindustry.world.blocks.storage.StorageBlock;
@@ -194,6 +197,16 @@ public class ModBlocks implements ContentList {
         };
         turretSwitcher = new BlockSwitcher("turret-switcher") {
             {
+                /** custom block filter*/
+                blockFilter=(build)->{
+                    return build.block instanceof Turret;
+                };
+                /** default action*/
+                action =(build)-> {
+                    boolean enable= (build instanceof ControlBlock && ((ControlBlock) build).isControlled() && !(build instanceof BlockSwitcherBuild));
+                    build.control(LAccess.enabled, enable ? 1 : 0, 0, 0, 0);
+                    build.enabledControlTime = 30.0F;
+                };
                 this.size = 2;
                 this.laserRange = 6.0F;
                 this.requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));

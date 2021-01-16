@@ -1,6 +1,8 @@
 package braindustry.world.blocks.sandbox;
 
 import arc.Core;
+import arc.func.Boolf;
+import arc.func.Cons;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
@@ -29,7 +31,12 @@ public class BlockSwitcher extends Block {
     public float laserRange = 6.0F;
     public Color laserColor1;
     public Color laserColor2;
-
+    public Boolf<Building> blockFilter=(build)-> true;
+    public Cons<Building> action =(build)-> {
+       boolean enable= (build instanceof ControlBlock && ((ControlBlock) build).isControlled() && !(build instanceof BlockSwitcherBuild));
+        build.control(LAccess.enabled, enable ? 1 : 0, 0, 0, 0);
+        build.enabledControlTime = 30.0F;
+    };
     public BlockSwitcher(String name) {
         super(name);
         this.update = true;
@@ -67,7 +74,7 @@ public class BlockSwitcher extends Block {
     }
 
     public boolean goodBuilding(BlockSwitcherBuild forB, Building other) {
-        return other.dst(forB) <= (laserRange + other.block.size+Mathf.ceil(forB.block.size/2f)) * 8f && forB != other && forB.isValid() && other.isValid();
+        return other.dst(forB) <= (laserRange + other.block.size+Mathf.ceil(forB.block.size/2f)) * 8f && forB != other && forB.isValid() && other.isValid() && blockFilter.get(other);
     }
 
     public class BlockSwitcherBuild extends Building {
@@ -92,9 +99,7 @@ public class BlockSwitcher extends Block {
                 if (!BlockSwitcher.this.goodBuilding(this, link)) links.remove(link);
             });
             links.each(link -> {
-                boolean enable = (link instanceof ControlBlock && ((ControlBlock) link).isControlled() && !(link instanceof BlockSwitcherBuild));
-                link.control(LAccess.enabled, enable ? 1 : 0, 0, 0, 0);
-                link.enabledControlTime = 30.0F;
+                action.get(link);
             });
         }
 
