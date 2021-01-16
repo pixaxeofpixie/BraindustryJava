@@ -1027,18 +1027,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        tyzen = new UnitType("tyzen") {
-            {
-                this.mineSpeed = 8.0F;
-                this.mineTier = 2;
-                this.constructor = Types.stealthMech;
-                this.speed = 0.6f;
-                this.hitSize = 8;
-                this.buildSpeed = 1.0F;
-                this.health = 310;
-
-            }
-        };
 
         vyvna = new PowerUnitType("vyvna") {
 
@@ -1192,6 +1180,19 @@ public class ModUnitTypes implements ContentList {
             @Override
             public Block getNodeBlock() {
                 return ModBlocks.unitNode;
+            }
+        };
+        //STEALTH UNITS///////////////////////////////////////////////////////////////////////////////////////////////////
+        tyzen = new UnitType("tyzen") {
+            {
+                this.mineSpeed = 8.0F;
+                this.mineTier = 2;
+                this.constructor = Types.stealthMech;
+                this.speed = 0.6f;
+                this.hitSize = 8;
+                this.buildSpeed = 1.0F;
+                this.health = 310;
+
             }
         };
     }

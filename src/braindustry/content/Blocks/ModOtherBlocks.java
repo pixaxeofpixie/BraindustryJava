@@ -134,6 +134,23 @@ public class ModOtherBlocks implements ContentList {
                 this.itemDrop = ModItems.odinum;
             }
         };
+        blackHoleReactor = new ImpactReactor("blackhole-reactor") {
+            {
+                this.localizedName = "Blackhole Reactor";
+                this.description = "Create power from small Blackhole in center.";
+                this.size = 5;
+                this.hasPower = true;
+                this.hasLiquids = true;
+                this.hasItems = false;
+                //this.itemCapacity = 120;
+                this.liquidCapacity = 100;
+                this.itemDuration = 240;
+                this.powerProduction = 192;
+                this.consumes.power(16f);
+                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.5f);
+                this.requirements(Category.power, ItemStack.with(ModItems.astroAlloy, 300, Items.surgeAlloy, 200, Items.graphite, 500, ModItems.odinum, 100));
+            }
+        };
         differentialMagmaGenerator = new SingleTypeGenerator("differential-magma-generator") {
             {
                 this.localizedName = "Hyper Magma Generator";

@@ -29,7 +29,7 @@ public class ModBlocks implements ContentList {
 
     //environment and power
     magmaFloor, obsidianBlock, obsidianFloor, oreChromium, oreOdinum, differentialMagmaGenerator,
-            grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, phaseAlloySolarPanel, phaseTower, blackHoleReactor, crimzesBlock, crimzesFloor, jungleWall, jungleFloor, jungleWater, dirtRocksWall,
+            grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, blackHoleReactor, phaseAlloySolarPanel, phaseTower, crimzesBlock, crimzesFloor, jungleWall, jungleFloor, jungleWater, dirtRocksWall,
 
     //production
     refrigerantReactor, chromiumForge, exoticAlloySmelter, grapheniteFluidizer, grapheniteForge,
@@ -48,7 +48,7 @@ public class ModBlocks implements ContentList {
             plasticWall, astronomicalWall, largeAstronomicalWall,
 
     //experimental
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter, largeMultiCrafter;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter, largeMultiCrafter, unitSpawner;
 
 
     public void load() {
@@ -105,23 +105,6 @@ public class ModBlocks implements ContentList {
                 );
                 this.requirements(this.category, ItemStack.with(ModItems.odinum, 200, ModItems.graphenite, 230, ModItems.phaseAlloy, 500, ModItems.plastic, 220));
 //                addResearch(Blocks.mechanicalDrill, this);
-            }
-        };
-        blackHoleReactor = new ImpactReactor("blackhole-reactor") {
-            {
-                this.localizedName = "Blackhole Reactor";
-                this.description = "Create power from small Blackhole in center.";
-                this.size = 5;
-                this.hasPower = true;
-                this.hasLiquids = true;
-                this.hasItems = false;
-                //this.itemCapacity = 120;
-                this.liquidCapacity = 100;
-                this.itemDuration = 240;
-                this.powerProduction = 192;
-                this.consumes.power(16f);
-                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.5f);
-                this.requirements(Category.power, ItemStack.with(ModItems.astroAlloy, 300, Items.surgeAlloy, 200, Items.graphite, 500, ModItems.odinum, 100));
             }
         };
         unitGenerator = new UnitPowerGenerator("unit-generator") {
