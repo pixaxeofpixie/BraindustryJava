@@ -224,9 +224,9 @@ public class ModBlocks implements ContentList {
                     return true;
                 };
                 action =(build)-> {
-                    build.heal();
+                    build.heal(0.15f+build.maxHealth);
                 };
-                colorFunc=(b)-> Pal.heal;
+                colorFunc=(b)-> Pal.heal.cpy().lerp(Color.black,1f-b.healthf());
                 this.size = 2;
                 this.health=10000;
                 this.laserRange = 6.0F;

@@ -50,14 +50,10 @@ public class LaserReflectionWall extends Wall {
                         1,
                          null
                 );
-
-//                bullet1.timer = bullet.timer;
                 b.lifetime=bullet.lifetime;
                 b.time=bullet.time;
                 float rotate=(180f-angle)*2f;
                 b.vel.set(bullet.vel.cpy()).rotate(rotate);
-//                bullet.time=bullet.lifetime;
-                Log.info("data: @",bullet.fdata);
             }
 
             /*if (bullet.type instanceof LightningBulletType) {
