@@ -59,6 +59,7 @@ public class ModShaders {
     public static class LogoRenderShader extends ModLoadShader {
         public int offsetId = 0;
         public TextureRegion logo;
+        public float force=10;
 
         public LogoRenderShader() {
             super("logoRender", "logoRender");
@@ -74,7 +75,7 @@ public class ModShaders {
             this.setUniformf("u_size", new Vec2(Scl.scl(logo.width), Scl.scl(logo.height)));
             this.setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100, 100));
             this.setUniformf("u_timeMul", 10f * u_time);
-            this.setUniformf("u_mul1", 0.1f);
+            this.setUniformf("u_force", force);
             this.setUniformf("u_scl", Scl.scl(4));
             this.setUniformf("colorFrom", Color.purple);
             this.setUniformf("colorTo", Color.yellow);

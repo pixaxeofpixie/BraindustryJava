@@ -21,6 +21,7 @@ import mindustry.*;
 import mindustry.content.*;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.EntityCollisions;
+import mindustry.game.EventType;
 import mindustry.game.EventType.*;
 import mindustry.game.Team;
 import mindustry.gen.*;
@@ -36,17 +37,19 @@ import static braindustry.ModVars.modVars.*;
 public class MainModClass extends Mod {
     public void init() {
         Events.fire(new ModEventType.ModInit());
-
-        Vars.ui.menuGroup = new WidgetGroup();
-        Vars.ui.menuGroup.setFillParent(true);
-        Vars.ui.menuGroup.touchable = Touchable.childrenOnly;
-        Vars.ui.menuGroup.visible(() -> {
-            return Vars.state.isMenu();
-        });
-        Core.scene.add(Vars.ui.menuGroup);
-        Vars.ui.menufrag=new ModMenuFragment();
+        EventOn(EventType.ClientLoadEvent.class,(e)->{
+            Vars.ui.menuGroup.remove();
+            Vars.ui.menuGroup = new WidgetGroup();
+            Vars.ui.menuGroup.setFillParent(true);
+            Vars.ui.menuGroup.touchable = Touchable.childrenOnly;
+            Vars.ui.menuGroup.visible(() -> {
+                return Vars.state.isMenu();
+            });
+            Core.scene.add(Vars.ui.menuGroup);
+            Vars.ui.menufrag=new ModMenuFragment();
 //        Vars.ui.menufrag.
-        Vars.ui.menufrag.build(Vars.ui.menuGroup);
+            Vars.ui.menufrag.build(Vars.ui.menuGroup);
+        });
     }
     public static TextureRegion getIcon() {
 

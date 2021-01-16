@@ -11,7 +11,7 @@ uniform vec2 iResolution;
 uniform vec2 u_texsize;
 uniform vec2 u_size;
 uniform float u_timeMul;
-uniform float u_mul1;
+uniform float u_force;
 uniform float u_scl;
 uniform vec4 colorFrom;
 uniform vec4 colorTo;
@@ -31,7 +31,7 @@ void main(){
     float iTime=u_time;
     vec2 texCoord=vec2(v_texCoords.xy);
     vec2 fragCoord=vec2(gl_FragCoord.xy);
-    texCoord.x+=cos(fragCoord.y+u_timeMul)/(iResolution.y*u_mul1);
+    texCoord.x+=cos(fragCoord.y+u_timeMul)/(iResolution.y*u_force);
     vec4 rainbow=vec4(getPix(fragCoord.xy));
     vec4 color = texture2D(u_texture,texCoord);
 
