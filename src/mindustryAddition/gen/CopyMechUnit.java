@@ -68,6 +68,7 @@ import mindustry.world.blocks.ConstructBlock.ConstructBuild;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.payloads.BuildPayload;
 import mindustry.world.blocks.payloads.UnitPayload;
+import mindustry.world.blocks.storage.CoreBlock;
 
 import java.nio.FloatBuffer;
 import java.util.Arrays;
@@ -273,15 +274,16 @@ public class CopyMechUnit extends Unit implements Itemsc, Minerc, ElevationMovec
         Payloadc pay;
         UnitPayload p1;
         BuildPayload p2;
-        return switch (sensor) {
-            case type -> type;
-            case name -> controller instanceof Player ? ((Player) controller).name : null;
-            case firstItem -> stack().amount == 0 ? null : item();
-            case payloadType -> this instanceof Payloadc && (pay = (Payloadc) this) == this ? (pay.payloads().isEmpty() ? null :
+        Object value=noSensed;
+        switch (sensor) {
+            case type :value= type;
+            case name : value=controller instanceof Player ? ((Player) controller).name : null;
+            case firstItem : value=stack().amount == 0 ? null : item();
+            case payloadType : value=this instanceof Payloadc && (pay = (Payloadc) this) == this ? (pay.payloads().isEmpty() ? null :
                     pay.payloads().peek() instanceof UnitPayload && (p1 = cast(pay.payloads().peek())) == pay.payloads().peek() ? p1.unit.type :
                             pay.payloads().peek() instanceof BuildPayload && (p2 = cast(pay.payloads().peek())) == pay.payloads().peek() ? p2.block() : null) : null;
-            default -> noSensed;
         };
+        return value;
     }
 
     public boolean activelyBuilding() {
@@ -346,29 +348,30 @@ public class CopyMechUnit extends Unit implements Itemsc, Minerc, ElevationMovec
     }
 
     public double sense(LAccess sensor) {
-        return switch (sensor) {
-            case totalItems -> stack().amount;
-            case itemCapacity -> type.itemCapacity;
-            case rotation -> rotation;
-            case health -> health;
-            case maxHealth -> maxHealth;
-            case ammo -> !state.rules.unitAmmo ? type.ammoCapacity : ammo;
-            case ammoCapacity -> type.ammoCapacity;
-            case x -> World.conv(x);
-            case y -> World.conv(y);
-            case team -> team.id;
-            case shooting -> isShooting() ? 1 : 0;
-            case shootX -> World.conv(aimX());
-            case shootY -> World.conv(aimY());
-            case mining -> mining() ? 1 : 0;
-            case mineX -> mining() ? mineTile.x : -1;
-            case mineY -> mining() ? mineTile.y : -1;
-            case flag -> flag;
-            case controlled -> controller instanceof LogicAI || controller instanceof Player ? 1 : 0;
-            case commanded -> controller instanceof FormationAI ? 1 : 0;
-            case payloadCount -> this instanceof Payloadc ? this.<Payloadc>as().payloads().size : 0;
-            default -> 0;
+        double value=0;
+        switch (sensor) {
+            case totalItems :value= stack().amount;
+            case itemCapacity :value= type.itemCapacity;
+            case rotation : value=rotation;
+            case health :value= health;
+            case maxHealth : value=maxHealth;
+            case ammo : value=!state.rules.unitAmmo ? type.ammoCapacity : ammo;
+            case ammoCapacity :value= type.ammoCapacity;
+            case x :value= World.conv(x);
+            case y :value= World.conv(y);
+            case team :value= team.id;
+            case shooting :value= isShooting() ? 1 : 0;
+            case shootX :value= World.conv(aimX());
+            case shootY : value=World.conv(aimY());
+            case mining : value=mining() ? 1 : 0;
+            case mineX :value= mining() ? mineTile.x : -1;
+            case mineY : value=mining() ? mineTile.y : -1;
+            case flag : value=flag;
+            case controlled :value= controller instanceof LogicAI || controller instanceof Player ? 1 : 0;
+            case commanded : value=controller instanceof FormationAI ? 1 : 0;
+            case payloadCount :value= this instanceof Payloadc ? this.<Payloadc>as().payloads().size : 0;
         };
+        return value;
     }
 
     public void clampHealth() {
@@ -458,7 +461,7 @@ public class CopyMechUnit extends Unit implements Itemsc, Minerc, ElevationMovec
             Draw.z(Layer.flyingUnit);
             BuildPlan plan = active ? buildPlan() : lastActive;
             Tile tile = world.tile(plan.x, plan.y);
-            var core = team.core();
+            CoreBlock.CoreBuild core = team.core();
             if (tile == null || !within(plan, state.rules.infiniteResources ? Float.MAX_VALUE : buildingRange)) {
                 break builder;
             }
