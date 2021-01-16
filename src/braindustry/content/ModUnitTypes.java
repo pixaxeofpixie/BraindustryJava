@@ -1192,7 +1192,41 @@ public class ModUnitTypes implements ContentList {
                 this.hitSize = 8;
                 this.buildSpeed = 1.0F;
                 this.health = 310;
-
+                this.weapons.add(
+                        new ModWeapon("tyzen-weapon") {
+                            {
+                                this.reload = 60;
+                                this.x = 3;
+                                this.y = -4f;
+                                this.shadow = 8;
+                                this.rotateSpeed = 0.9f;
+                                this.rotate = true;
+                                this.shots = 2;
+                                this.shotDelay = 5;
+                                this.inaccuracy = 0.7f;
+                                this.velocityRnd = 0.1f;
+                                this.shootSound = Sounds.missile;
+                                this.bullet = new AdamBulletType() {
+                                    {
+                                        this.width = 15;
+                                        this.height = 15;
+                                        this.shrinkY = 0.1f;
+                                        this.speed = 3.0f;
+                                        this.drag = 0.01f;
+                                        this.splashDamageRadius = 30f;
+                                        this.splashDamage = 52f;
+                                        this.homingPower = 0.2f;
+                                        this.lightningDamage = 6f;
+                                        this.lightning = 8;
+                                        this.lightningLength = 5;
+                                        this.lifetime = 85f;
+                                        this.weaveScale = 3f;
+                                        this.weaveMag = 6f;
+                                    }
+                                };
+                            }
+                        }
+                );
             }
         };
     }
