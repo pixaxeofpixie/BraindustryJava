@@ -34,7 +34,7 @@ import mindustryAddition.world.meta.AStat;
 public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
     public Prov<Seq<Block>> connectBlocksGetter = () -> new Seq<>();
     Seq<Block> connectibleBlocks = new Seq<>();
-    public Boolf<Block> connectFilter = (block) -> connectibleBlocks.contains(block);
+    public Boolf<Building> connectFilter = (building) -> connectibleBlocks.contains(building.block());
     byte maxConnections = 10;
 
     public CrossItemBridge(String name) {
@@ -162,7 +162,7 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
                 if (other.build instanceof ItemBridgeBuild) {
                     connected = other.build.<ItemBridgeBuild>as().link == tile.pos();
                 }
-                return ((block.connectFilter.get(other.block())) || !(tile.block() instanceof ItemBridge) && other.block() == this) &&
+                return ((block.connectFilter.get(other.build)) || !(tile.block() instanceof ItemBridge) && other.block() == this) &&
                         b2 &&
                         (other.team() == tile.team() || tile.block() != this) &&
 

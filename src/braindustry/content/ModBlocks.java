@@ -1,5 +1,7 @@
 package braindustry.content;
 
+import arc.Core;
+import arc.struct.Seq;
 import braindustry.content.Blocks.ModUnitsBlocks;
 import braindustry.content.Blocks.ModDefense;
 import braindustry.content.Blocks.ModOtherBlocks;
@@ -11,15 +13,20 @@ import braindustry.world.blocks.production.MultiCrafter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
 import braindustry.world.blocks.sandbox.UnitSpawner;
-import mindustry.content.Fx;
+import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
+import mindustry.world.blocks.distribution.BufferedItemBridge;
+import mindustry.world.blocks.distribution.ItemBridge;
+import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.meta.BuildVisibility;
 import mindustryAddition.type.ModLiquidStack;
+import mindustryAddition.world.blocks.distribution.CrossBufferedItemBridge;
+import mindustryAddition.world.blocks.distribution.CrossItemBridge;
 
 public class ModBlocks implements ContentList {
     public static Block
@@ -48,7 +55,8 @@ public class ModBlocks implements ContentList {
             plasticWall, astronomicalWall, largeAstronomicalWall,
 
     //experimental
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter, largeMultiCrafter, unitSpawner;
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
+            exampleCrossItemBridge, exampleCrossPhaseBridge;
 
 
     public void load() {
@@ -56,6 +64,64 @@ public class ModBlocks implements ContentList {
         new ModProduction().load();
         new ModOtherBlocks().load();
         new ModDefense().load();
+        exampleCrossPhaseBridge =new CrossItemBridge("cross-phase-conveyor"){
+            {
+                this.requirements(Category.distribution, ItemStack.with(Items.phaseFabric, 5, Items.silicon, 7, Items.lead, 10, Items.graphite, 10));
+                this.range = 12;
+                this.canOverdrive = false;
+                this.hasPower = true;
+                this.consumes.power(0.3F);
+                /** custom connect filter*/
+                connectFilter=(build)->{
+                    Block block=build.block;
+                    return block.acceptsItems || block instanceof StorageBlock;
+                };
+                //end of block
+                ItemBridge bridge=(ItemBridge)Blocks.phaseConveyor;
+                range=bridge.range;
+            }
+            @Override
+            public void load() {
+                ItemBridge bridge=(ItemBridge)Blocks.phaseConveyor;
+                Core.atlas.addRegion(this.name,Core.atlas.find(bridge.name));
+                super.load();
+                this.arrowRegion=bridge.arrowRegion;
+                this.bridgeRegion=bridge.bridgeRegion;
+                this.endRegion=bridge.endRegion;
+                this.region=bridge.region;
+            }
+        };
+        exampleCrossItemBridge =new CrossBufferedItemBridge("cross-item-bridge"){
+            {
+                this.requirements(Category.distribution, ItemStack.with(Items.lead, 6, Items.copper, 6));
+                this.range = 4;
+                this.speed = 74.0F;
+                this.bufferCapacity = 14;
+                /** custom connect filter*/
+                connectFilter=(build)->{
+                    Block block=build.block;
+                    return block.acceptsItems || block instanceof StorageBlock;
+                };
+                /** default filter check blocks from connectBlocksGetter*/
+                connectBlocksGetter=()->{
+                    return Seq.with(Blocks.titaniumConveyor);
+                };
+                //end of block
+                BufferedItemBridge bridge=(BufferedItemBridge)Blocks.itemBridge;
+                range=bridge.range;
+            }
+
+            @Override
+            public void load() {
+                BufferedItemBridge bridge=(BufferedItemBridge)Blocks.itemBridge;
+                Core.atlas.addRegion(this.name,Core.atlas.find(bridge.name));
+                super.load();
+                this.arrowRegion=bridge.arrowRegion;
+                this.bridgeRegion=bridge.bridgeRegion;
+                this.endRegion=bridge.endRegion;
+                this.region=bridge.region;
+            }
+        };
         unitSpawner=new UnitSpawner("unit-spawner"){
             {
                 this.size = 2;
