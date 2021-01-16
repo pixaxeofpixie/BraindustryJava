@@ -1,6 +1,7 @@
 package braindustry.content.Blocks;
 import arc.struct.Seq;
 import braindustry.content.*;
+import braindustry.world.blocks.Wall.LaserReflectionWall;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
@@ -768,6 +769,24 @@ public class ModDefense implements ContentList {
                 this.requirements(Category.defense, ItemStack.with(ModItems.plastic, 6, Items.metaglass, 4));
                 this.insulated = true;
                 this.absorbLasers = true;
+            }
+        };
+        //please add description :3
+        largeAstronomicalWall = new LaserReflectionWall("astronomical-alloy-wall-large") {
+            {
+                localizedName = "large astronomical wall";
+                size = 2;
+                health = 4650;
+                requirements(Category.defense, ItemStack.with(ModItems.phaseAlloy, 60));
+            }
+        };
+
+        astronomicalWall = new LaserReflectionWall("astronomical-alloy-wall") {
+            {
+                localizedName = "laser astronomical wall";
+                size = 1;
+                health = 1550;
+                requirements(Category.defense, ItemStack.with(ModItems.phaseAlloy, 20));
             }
         };
     }
