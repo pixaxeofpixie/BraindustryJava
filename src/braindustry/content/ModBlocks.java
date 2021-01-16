@@ -24,29 +24,32 @@ import mindustryAddition.type.ModLiquidStack;
 public class ModBlocks implements ContentList {
     public static Block
 
+//transportation
             armoredPlastaniumConveyor, chromiumConduit, phaseAlloyConveyor, plasticConveyor, surgeConveyor, surgePayloadConveyor,
 
-
+    //environment and power
     magmaFloor, obsidianBlock, obsidianFloor, oreChromium, oreOdinum, differentialMagmaGenerator,
-            grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, phaseAlloySolarPanel, phaseTower,
+            grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, phaseAlloySolarPanel, phaseTower, blackHoleReactor, crimzesBlock, crimzesFloor, jungleWall, jungleFloor, jungleWater, dirtRocksWall,
 
-
+    //production
     refrigerantReactor, chromiumForge, exoticAlloySmelter, grapheniteFluidizer, grapheniteForge,
             hydraulicDrill, hyperAlloySmelter, hyperPhaseWeaver, magmaMixer, odinumExtractor,
-            phaseAlloySmelter, plasticForge, quarryDrill, geothermicDrill, grapheniteKiln, refrigerantmixer,
+            phaseAlloySmelter, plasticForge, quarryDrill, geothermicDrill, grapheniteKiln, refrigerantmixer, astroSmelter,
 
-
+    //units
     hyperAdditiveReconstructor, hyperAirFactory, hyperExponentialReconstructor, hyperGroundFactory,
             hyperMultiplicativeReconstructor, hyperNavalFactory, hyperTetrativeReconstructor,
 
-
+    //turrets
     axon, heartbeat, blaze, brain, electron, fragment, impulse, katana, mind, neuron, perlin, soul, stinger, synaps, gloryTurret,
 
+    //walls
+    exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge,
+            plasticWall, astronomicalWall, largeAstronomicalWall,
 
-    exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge, plasticWall,
+    //experimental
+    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter, largeMultiCrafter;
 
-
-    smartRouter, turretSwitcher, dpsMeter, unitGenerator,unitNode, multiCrafter,unitSpawner;
 
     public void load() {
         new ModUnitsBlocks().load();
@@ -62,23 +65,63 @@ public class ModBlocks implements ContentList {
         multiCrafter = new MultiCrafter("multi-crafter") {
             {
                 this.size = 3;
+                this.localizedName = "Universal Smelter";
                 this.update = true;
                 this.destructible = true;
-                this.hasLiquids=true;
+                this.hasLiquids = true;
                 this.hasShadow = false;
 
                 this.health = 360;
-                this.category = Category.units;
+                this.category = Category.production;
                 dynamicItem = true;
                 dynamicLiquid=true;
 //                this.changeTexture = true;
-                recipes(Recipe.with(new ItemStack(Items.copper, 1), ModLiquidStack.with(Liquids.water, 1, Liquids.slag, 1),120),
-                        Recipe.with(new ItemStack(Items.lead, 1),ItemStack.with(Items.copper,2), ModLiquidStack.with(Liquids.water, 3, Liquids.slag, 3), 120),
-                        Recipe.with(new ItemStack(Items.titanium, 1), ModLiquidStack.with(Liquids.water, 20, Liquids.slag, 20), 120),
-                        Recipe.with(new ItemStack(Items.thorium, 1), ModLiquidStack.with(Liquids.water, 20, Liquids.slag, 20, Liquids.oil, 20, Liquids.cryofluid, 20), 120)
+                //1st itemStack = выход, вход писать во втором itemStack
+                recipes(Recipe.with(new ItemStack(ModItems.graphenite, 1),ItemStack.with(Items.graphite, 2, Items.silicon, 3, Items.titanium, 2, Items.lead, 2), ModLiquidStack.with(Liquids.slag, 1), 150),
+                        Recipe.with(new ItemStack(ModItems.exoticAlloy, 1),ItemStack.with(Items.sporePod, 3, Items.titanium, 4, Items.thorium, 3), ModLiquidStack.with(Liquids.water, 2), 140)
                 );
-                this.requirements(this.category, ItemStack.with(Items.lead, 12));
+                this.requirements(this.category, ItemStack.with(Items.thorium, 200, ModItems.graphenite, 230, Items.lead, 500, Items.plastanium, 120));
 //                addResearch(Blocks.mechanicalDrill, this);
+            }
+        };
+        largeMultiCrafter = new MultiCrafter("large-multi-crafter") {
+            {
+                this.size = 6;
+                this.localizedName = "Multi Kiln";
+                this.update = true;
+                this.destructible = true;
+                this.hasLiquids = true;
+                this.hasShadow = false;
+
+                this.health = 980;
+                this.category = Category.production;
+                dynamicItem = true;
+                dynamicLiquid = true;
+//                this.changeTexture = true;
+                recipes(Recipe.with(new ItemStack(ModItems.graphenite, 2),ItemStack.with(Items.graphite, 2, Items.silicon, 3, Items.titanium, 2, Items.lead, 2), ModLiquidStack.with(Liquids.slag, 1), 150),
+                        Recipe.with(new ItemStack(ModItems.exoticAlloy, 2),ItemStack.with(Items.sporePod, 3, Items.titanium, 4, Items.thorium, 3), ModLiquidStack.with(Liquids.water, 2), 140),
+                        Recipe.with(new ItemStack(ModItems.chromium, 1),ItemStack.with(Items.titanium, 3, Items.metaglass, 4), ModLiquidStack.with(Liquids.oil, 2), 125),
+                        Recipe.with(new ItemStack(ModItems.odinum, 2),ItemStack.with(Items.thorium, 3, Items.titanium, 1, Items.plastanium, 3), ModLiquidStack.with(Liquids.water, 2), 155)
+                );
+                this.requirements(this.category, ItemStack.with(ModItems.odinum, 200, ModItems.graphenite, 230, ModItems.phaseAlloy, 500, ModItems.plastic, 220));
+//                addResearch(Blocks.mechanicalDrill, this);
+            }
+        };
+        blackHoleReactor = new ImpactReactor("blackhole-reactor") {
+            {
+                this.localizedName = "Blackhole Reactor";
+                this.description = "Create power from small Blackhole in center.";
+                this.size = 5;
+                this.hasPower = true;
+                this.hasLiquids = true;
+                this.hasItems = false;
+                //this.itemCapacity = 120;
+                this.liquidCapacity = 100;
+                this.itemDuration = 240;
+                this.powerProduction = 192;
+                this.consumes.power(16f);
+                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.5f);
+                this.requirements(Category.power, ItemStack.with(ModItems.astroAlloy, 300, Items.surgeAlloy, 200, Items.graphite, 500, ModItems.odinum, 100));
             }
         };
         unitGenerator = new UnitPowerGenerator("unit-generator") {

@@ -294,5 +294,44 @@ public class ModOtherBlocks implements ContentList {
                 this.requirements(Category.production, ItemStack.with(ModItems.plastic, 150, ModItems.graphenite, 120, ModItems.odinum, 140, Items.plastanium, 100));
             }
         };
+        crimzesBlock = new StaticWall("crimzes-block") {
+            {
+                this.localizedName = "Crimson Wall";
+                this.breakable = false;
+                this.alwaysReplace = false;
+                this.solid = true;
+                this.variants = 3;
+            }
+        };
+        jungleWall = new StaticWall("jungle-wall") {
+            {
+                this.localizedName = "Jungle Wall";
+                this.breakable = false;
+                this.alwaysReplace = false;
+                this.solid = true;
+                this.variants = 3;
+            }
+        };
+        dirtRocksWall = new StaticWall("dirt-rocks-wall") {
+            {
+                this.localizedName = "Hard Dirt Wall";
+                this.breakable = false;
+                this.alwaysReplace = false;
+                this.solid = true;
+                this.variants = 3;
+            }
+        };
+        jungleFloor = new Floor("jungle-floor") {
+            {
+                this.localizedName = "Jungle Floor";
+                this.variants = 5;
+            }
+        };
+        crimzesFloor = new Floor("crimzes-floor") {
+            {
+                this.localizedName = "crimzes Floor";
+                this.variants = 3;
+            }
+        };
     }
 }
