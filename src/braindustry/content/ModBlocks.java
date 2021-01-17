@@ -242,7 +242,7 @@ public class ModBlocks implements ContentList {
                     return true;
                 };
                 action =(build)-> {
-                    build.heal(0.15f*build.edelta()*build.maxHealth);
+                    build.heal(build.delta()*build.maxHealth);
                 };
                 colorFunc=(b)-> {
                     float t=Mathf.absin(Time.time + Mathf.randomSeed(b.id, 0, 1000000), 1f, 1F)* 0.9f+0.1f;

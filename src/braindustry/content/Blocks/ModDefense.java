@@ -1,8 +1,7 @@
 package braindustry.content.Blocks;
-import arc.struct.Seq;
 import braindustry.content.*;
 import braindustry.entities.bullets.RainbowLaserBulletType;
-import braindustry.world.blocks.Wall.LaserReflectionWall;
+import braindustry.world.blocks.Wall.ReflectionWall;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
@@ -786,8 +785,10 @@ public class ModDefense implements ContentList {
             }
         };
         //please add description :3 /*Zelaux: NO*/
-        largeAstronomicalWall = new LaserReflectionWall("astronomical-alloy-wall-large") {
+        largeAstronomicalWall = new ReflectionWall("astronomical-alloy-wall-large") {
             {
+                laserReflect=true;
+                lightningReflect=true;
                 localizedName = "large astronomical wall";
                 size = 2;
                 health = 4650;
@@ -795,7 +796,7 @@ public class ModDefense implements ContentList {
             }
         };
 
-        astronomicalWall = new LaserReflectionWall("astronomical-alloy-wall") {
+        astronomicalWall = new ReflectionWall("astronomical-alloy-wall") {
             {
                 localizedName = "laser astronomical wall";
                 size = 1;

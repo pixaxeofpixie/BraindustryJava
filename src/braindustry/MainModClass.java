@@ -1,9 +1,12 @@
 package braindustry;
 
 import Gas.GasInit;
+import arc.func.Boolf;
+import arc.func.Func;
 import arc.graphics.Color;
 import arc.scene.event.Touchable;
 import arc.scene.ui.layout.WidgetGroup;
+import arc.struct.ObjectMap;
 import braindustry.content.*;
 import ModVars.Classes.ModAtlas;
 import ModVars.Classes.ModEventType;
@@ -15,21 +18,30 @@ import arc.scene.ui.*;
 import arc.scene.ui.layout.Cell;
 import arc.struct.Seq;
 import arc.util.*;
+import braindustry.entities.bullets.ModLightningBulletType;
 import braindustry.graphics.ModShaders;
 import braindustry.ui.fragments.ModMenuFragment;
 import mindustry.*;
 import mindustry.content.*;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.EntityCollisions;
+import mindustry.entities.bullet.BulletType;
+import mindustry.entities.bullet.LightningBulletType;
 import mindustry.game.EventType;
 import mindustry.game.EventType.*;
 import mindustry.game.Schematics;
 import mindustry.game.Team;
 import mindustry.gen.*;
+import mindustry.io.JsonIO;
 import mindustry.mod.Mod;
+import mindustry.type.Item;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.*;
+import mindustry.world.Block;
 import mindustry.world.Tile;
+import mindustry.world.blocks.defense.turrets.ItemTurret;
+import mindustry.world.blocks.defense.turrets.PowerTurret;
+import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.meta.BuildVisibility;
 import mindustryAddition.iu.AdvancedContentInfoDialog;
 
@@ -162,6 +174,39 @@ public class MainModClass extends Mod {
             Blocks.blockUnloader.buildVisibility = BuildVisibility.shown;
             modInfo = Vars.mods.getMod(this.getClass());
             constructor();
+            Boolf<BulletType> replace=(b)->(b instanceof LightningBulletType && !(b instanceof ModLightningBulletType));
+            Func<BulletType,ModLightningBulletType> newBullet=(old)->{
+
+                ModLightningBulletType newType=new ModLightningBulletType();
+                JsonIO.copy(old,newType);
+                return newType;
+            };
+            Vars.content.each((c)->{
+                if (c instanceof UnlockableContent){
+                    UnlockableContent content=(UnlockableContent)c;
+                    if (content instanceof Block){
+                        if (content instanceof Turret){
+                            if (content instanceof PowerTurret){
+                                PowerTurret powerTurret=(PowerTurret)content;
+                                if (replace.get(powerTurret.shootType)){
+                                    powerTurret.shootType=newBullet.get(powerTurret.shootType);
+                                }
+                            } else if (content instanceof ItemTurret){
+                                ItemTurret itemTurret=(ItemTurret)content;
+                                ObjectMap<Item,BulletType> toReplace=new ObjectMap<>();
+                                for (ObjectMap.Entry<Item, BulletType> entry: itemTurret.ammoTypes.entries()) {
+                                    if (replace.get(entry.value)){
+                                        toReplace.put(entry.key,entry.value);
+                                    }
+                                }
+                                for (ObjectMap.Entry<Item, BulletType> entry: toReplace.entries()) {
+                                        itemTurret.ammoTypes.put(entry.key, newBullet.get(entry.value));
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         });
     }
 
