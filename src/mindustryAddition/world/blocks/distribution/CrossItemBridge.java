@@ -83,7 +83,6 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
         this.bars.add("connections", (entity) -> {
             return new Bar(() -> {
                 //in bundle: Connections: {0}/{1}
-                //in bundle_ru: Подключений: {0}/{1}
                 return Core.bundle.format("bar.cross-item-bridge-lines", cast(entity).realConnections(), this.maxConnections);
             }, () -> {
                 return Pal.items;

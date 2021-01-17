@@ -33,7 +33,7 @@ public class ModUnitTypes implements ContentList {
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
             lyra, shield, tropsy, venti,
-            vyvna, tyzen;
+            vyvna, tyzen, kryox, intelix, nemesix, troplex;
 
     public ModUnitTypes() {
         UnitTypes.class.isArray();
@@ -1029,19 +1029,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        tyzen = new StealthUnitType("tyzen") {
-            {
-                this.mineSpeed = 8.0F;
-                this.mineTier = 2;
-                this.constructor = Types.stealthMech;
-                this.defaultController= StealthGroundAI::new;
-                this.speed = 0.6f;
-                this.hitSize = 8;
-                this.buildSpeed = 1.0F;
-                this.health = 310;
-
-            }
-        };
 
         vyvna = new PowerUnitType("vyvna") {
 
@@ -1195,6 +1182,128 @@ public class ModUnitTypes implements ContentList {
             @Override
             public Block getNodeBlock() {
                 return ModBlocks.unitNode;
+            }
+        };
+        ///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH
+        tyzen = new StealthUnitType("tyzen") {
+            {
+                this.mineSpeed = 8.0F;
+                this.mineTier = 2;
+                this.constructor = Types.stealthMech;
+                this.defaultController= StealthGroundAI::new;
+                this.speed = 0.6f;
+                this.hitSize = 8;
+                this.armor = 10;
+                this.buildSpeed = 1.0F;
+                this.health = 310;
+                this.localizedName = "Tyzen";
+                this.description = "Slow and weak unit with Stealth ability.";
+
+                this.weapons.add(
+                        new ModWeapon("tyzen-weapon") {
+                            {
+                                this.x = 5;
+                                this.y = 0;
+                                this.shootY = -1f;
+                                this.reload = 50;
+                                this.ejectEffect = Fx.none;
+                                this.recoil = 2;
+                                this.shots = 3;
+                                this.rotate = true;
+                                this.shootSound = Sounds.flame;
+                                this.alternate = true;
+                                this.bullet = new ShrapnelBulletType() {
+                                    {
+                                        this.length = 58;
+                                        this.damage = 50;
+                                        this.width = 17;
+                                        this.lifetime = 20;
+                                        this.serrationLenScl = 2;
+                                        this.serrationSpaceOffset = 1;
+                                        this.serrationFadeOffset = 0;
+                                        this.serrations = 3;
+                                        this.serrationWidth = 51;
+                                        this.fromColor = Color.valueOf("625b82");
+                                        this.toColor = Color.valueOf("d4c7ea");
+                                        this.shootEffect = Fx.sparkShoot;
+                                        this.smokeEffect = Fx.sparkShoot;
+                                    }
+                                };
+                            }
+                        }
+                );
+            }
+        };
+        kryox = new StealthUnitType("kryox") {
+            {
+                this.mineSpeed = 9.0F;
+                this.mineTier = 2;
+                this.constructor = Types.stealthMech;
+                this.defaultController= StealthGroundAI::new;
+                this.speed = 0.5f;
+                this.hitSize = 14;
+                this.armor = 12;
+                this.buildSpeed = 1.4F;
+                this.health = 1300;
+                this.localizedName = "Kryox";
+                this.description = "Upgraded Tyzen with vampire lasers and Stealth ability.";
+
+                this.weapons.add(
+                        new ModWeapon("kryox-weapon") {
+                            {
+                                this.x = 3;
+                                this.y = -9f;
+                                this.shootY = -1f;
+                                this.reload = 70;
+                                this.ejectEffect = Fx.none;
+                                this.recoil = 3;
+                                this.shootSound = Sounds.laser;
+                                this.rotate = true;
+                                this.mirror = true;
+                                this.bullet = new SapBulletType() {
+                                    {
+                                        this.sapStrength = 0.9f;
+                                        this.length = 40;
+                                        this.damage = 68;
+                                        this.shootEffect = ModFx.adamExplosion;
+                                        this.hitColor = Color.valueOf("625b82");
+                                        this.color = Color.valueOf("d4c7ea");
+                                        this.despawnEffect = ModFx.angelLight;
+                                        this.width = 3;
+                                        this.lifetime = 40;
+                                        this.knockback = -1f;
+                                    }
+                                };
+                            }
+                        },
+                        new ModWeapon("tyzen-weapon") {
+                            {
+                                this.x = 4;
+                                this.y = 7f;
+                                this.shootY = -1f;
+                                this.reload = 50;
+                                this.ejectEffect = ModFx.magicShootEffectSmall;
+                                this.recoil = 2;
+                                this.shootSound = Sounds.laser;
+                                this.rotate = true;
+                                this.mirror = true;
+                                this.bullet = new SapBulletType() {
+                                    {
+                                        this.sapStrength = 0.7f;
+                                        this.length = 68;
+                                        this.damage = 70;
+                                        this.shootEffect = ModFx.eveExplosion;
+                                        this.hitColor = Color.valueOf("625b82");
+                                        this.color = Color.valueOf("d4c7ea");
+                                        this.despawnEffect = ModFx.angelLight;
+                                        this.width = 2;
+                                        this.lifetime = 30;
+                                        this.knockback = -0.3f;
+                                    }
+                                };
+                            }
+                        }
+                );
             }
         };
     }
