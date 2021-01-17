@@ -1,34 +1,40 @@
 package braindustry.world.blocks;
 
 import arc.Core;
-import arc.func.Func;
-import arc.func.Prov;
+import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Lines;
 import arc.graphics.g2d.TextureRegion;
+import arc.math.Angles;
 import arc.math.Mathf;
+import arc.math.geom.Geometry;
 import arc.math.geom.Vec2;
-import arc.scene.Action;
-import arc.scene.Element;
-import arc.scene.actions.Actions;
-import arc.scene.event.Touchable;
-import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
 import arc.util.Eachable;
+import ModVars.modVars;
+import braindustry.content.ModFx;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.Team;
 import mindustry.gen.Building;
-import mindustry.ui.Styles;
+import mindustry.gen.Icon;
+import mindustry.graphics.Layer;
+import mindustry.graphics.Pal;
 import mindustry.world.Block;
 import mindustry.world.Tile;
+import mindustryAddition.world.blocks.BuildingLabel;
 
-import static braindustry.ModVars.modFunc.*;
+import static ModVars.modFunc.*;
 
 public class TestBlock extends Block {
+    public final int timerAny;
     public TestBlock(String name) {
         super(name);
+        timerAny=timers++;
         this.rotate = true;
         this.destructible = true;
+        this.update=true;
+        configurable=true;
     }
 
     @Override
@@ -48,61 +54,41 @@ public class TestBlock extends Block {
         }
     }
 
-    public class TestBlockBuild extends Building {
-        private boolean label=false;
+    public class TestBlockBuild extends Building implements BuildingLabel {
+        private float time=0;
+
+        @Override
+        public void buildConfiguration(Table table) {
+            super.buildConfiguration(table);
+            table.table((t)->{
+               t.button(Icon.terminal,()->{
+                   ModFx.Spirals.at(this.x,this.y,size, Pal.lancerLaser);
+               });
+            });
+            table.slider(0,360,0.1f, modVars.settings.getFloat("angle"),(f)->{
+                modVars.settings.setFloat("angle",f);
+            });
+        }
 
         @Override
         public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
-            return super.init(tile, team, shouldAdd, rotation);
+
+            Building building = super.init(tile, team, shouldAdd, rotation);
+            newLabel(()->building,(build)->{
+                float angle=new Vec2(tileX(),tileY()).angleTo(tile.nearby(build.rotation));
+                Tile other=tile.nearby(Geometry.d4x(build.rotation),Geometry.d4y(build.rotation));
+                angle= Angles.angle(tile.getX(), tile.getY(), other.getX(), other.getY());
+                angle= modVars.settings.getFloat("angle");
+                if (true)return ""+angle;
+                if (true)return build.rotation+"\n"+angle;
+                return "time: "+(int)time;
+            });
+            return building;
         }
 
         @Override
         public void playerPlaced(Object config) {
-//            EntityGroup
-//            new Color((Color)null);
             super.playerPlaced(config);
-        }
-
-        private void newLabel(Prov<Building> cons, Func<Building,String> name){
-            Table table = (new Table(Styles.black3)).margin(4.0F);
-            table.touchable = Touchable.disabled;
-            Label label=new Label("");
-
-            table.visibility=()->cons.get()!=null;
-            table.update(() -> {
-                if (Vars.state.isMenu()) {
-                    table.remove();
-                }
-//                label.setText(""+this.rotation);
-                Building build=cons.get();
-                if (build==null){
-                    return;
-                }
-                label.setText(name.get(build));
-                Vec2 v = Core.camera.project(build.tile().worldx(), build.tile().worldy());
-                table.setPosition(v.x, v.y, 1);
-            });
-            Building me=this;
-            table.actions(new Action() {
-                @Override
-                public boolean act(float v) {
-                    return !me.isValid();
-                }
-            }, Actions.remove());
-            table.add(label).style(Styles.outlineLabel);
-            table.pack();
-            table.act(0.0F);
-            Core.scene.root.addChildAt(0, table);
-            ((Element)table.getChildren().first()).act(0.0F);
-        }
-        private void createLabel(){
-            newLabel(()->this.front(),(build)->{
-                return "\n"+build.getDisplayName();
-            });
-
-            newLabel(()->this,(build)->{
-                return build.rotation+"";
-            });
         }
 
         public Building nearby(int rotation) {
@@ -120,22 +106,26 @@ public class TestBlock extends Block {
             return this.nearby(this.rotation);
         }
 
-        public void draw() {
-//            super.draw();
-            if (!label){
-                createLabel();
-                label=true;
+        @Override
+        public void updateTile() {
+            super.updateTile();
+            time+=this.delta()/60f;
+            if (this.timer.get(timerAny,5*60)){
+//                Fx.upgradeCore.at(this.x,this.y,this.block.size, Color.white);
             }
+        }
+
+        public void draw() {
             Draw.rect(this.block.region, this.x, this.y,this.block.size*8,this.block.size*8, 0.0F);
             Building front = this.front();
 //            if (true)return;
             if (front != null && front.block != null) {
-//                Draw.alpha(0.3f);
-//                Draw.color(Color.green);
-//                Draw.z(40f);
-
-//                print("@, @, @, @, @, @",front.block.region, front.x, front.y, front.block.size, front.block.size, this.block.rotate ? this.rotdeg() : 0.0F);
-//                Draw.rect(front.block.region, front.x, front.y, 0.0F);
+                float size = front.block.size*8f;
+                Draw.z(Layer.blockBuilding+1f);
+                Draw.color(Color.green);
+                Draw.alpha(0.25f);
+                float offset =  Mathf.ceil(size / 2f);
+                Lines.rect(front.x-offset,front.y-offset, size,size);
             }
         }
     }

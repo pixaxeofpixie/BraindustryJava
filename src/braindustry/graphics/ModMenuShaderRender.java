@@ -18,7 +18,6 @@ import arc.util.Time;
 import arc.util.Tmp;
 import arc.util.noise.RidgedPerlin;
 import arc.util.noise.Simplex;
-import braindustry.MainModClass;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.UnitTypes;
@@ -34,7 +33,7 @@ import mindustry.world.blocks.environment.OreBlock;
 
 import java.util.Iterator;
 
-import static braindustry.ModVars.modFunc.fullName;
+import static ModVars.modFunc.fullName;
 
 public class ModMenuShaderRender extends MenuRenderer {
     private static final float darkness = 0.3F;

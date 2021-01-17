@@ -6,15 +6,11 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
-import arc.math.geom.Position;
 import arc.math.geom.Vec2;
-import arc.math.geom.Vec3;
 import arc.scene.ui.Image;
-import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.Bits;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Strings;
 import braindustry.content.ModFx;
 import braindustry.graphics.ModShaders;
@@ -32,13 +28,11 @@ import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.Tile;
-import mindustry.world.blocks.ItemSelection;
-import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.meta.StatUnit;
 
 import java.util.Iterator;
 
-import static braindustry.ModVars.modFunc.print;
+import static ModVars.modFunc.print;
 import static mindustry.Vars.world;
 
 public class UnitSpawner extends Block {
@@ -318,7 +312,7 @@ public class UnitSpawner extends Block {
 
         @Override
         public void damage(float damage) {
-            ModFx.shieldWave.at(this.x, this.y, this.block.size + 1, Pal.shield);
+            ModFx.shieldWave.at(this.x, this.y, this.block.size + 1, Pal.shield,this.block.size*8f);
         }
 
         public void damage(float amount, boolean withEffect) {

@@ -14,18 +14,16 @@ import arc.util.Strings;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import braindustry.content.ModFx;
+import braindustry.type.Recipe;
+import braindustry.world.meta.RecipeListValue;
 import mindustry.content.Fx;
-import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.entities.Effect;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
-import mindustry.type.Item;
-import mindustry.type.ItemStack;
-import mindustry.type.Liquid;
-import mindustry.type.LiquidStack;
+import mindustry.type.*;
 import mindustry.ui.Bar;
 import mindustry.ui.Styles;
 import mindustry.world.Block;
@@ -37,19 +35,27 @@ import mindustry.world.consumers.ConsumePower;
 import mindustry.world.consumers.ConsumeType;
 import mindustry.world.meta.BlockFlag;
 import mindustry.world.meta.BlockGroup;
-import mindustry.world.meta.Stats;
+import mindustry.world.meta.Stat;
+import mindustry.world.meta.StatUnit;
+import mindustry.world.meta.values.ItemListValue;
 import mindustryAddition.iu.MultiBar;
-import mindustryAddition.type.ModLiquidStack;
+import mindustryAddition.world.blocks.BlockAdvancedStats;
 import mindustryAddition.world.consumers.ConsumeLiquidDynamic;
+import mindustryAddition.world.meta.AStat;
+import mindustryAddition.world.meta.AStats;
+import mindustryAddition.world.meta.DynamicBlockBars;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static braindustry.ModVars.modFunc.*;
+import static ModVars.modFunc.fullName;
+import static ModVars.modFunc.getInfoDialog;
 
-public class MultiCrafter extends Block {
+public class MultiCrafter extends Block implements BlockAdvancedStats {
     public final int timerDump;
+    public final int timerReBuildBars;
+    protected final DynamicBlockBars dynamicBars = new DynamicBlockBars();
     public Seq<Recipe> recipes = new Seq<>();
     public Effect craftEffect;
     public Effect updateEffect;
@@ -60,12 +66,15 @@ public class MultiCrafter extends Block {
     public boolean dynamicItem = true;
     public boolean dynamicLiquid = true;
     public boolean dynamicPower = true;
-    public float extraStorageLiquid=1;
-    public float extraStorageItem=1;
+    public float extraStorageLiquid = 1;
+    public float extraStorageItem = 1;
+    AStats aStats = new AStats();
 
     public MultiCrafter(String name) {
         super(name);
+        this.stats = aStats.copy(stats);
         timerDump = timers++;
+        timerReBuildBars = timers++;
         this.craftEffect = Fx.none;
         this.updateEffect = Fx.none;
         this.updateEffectChance = 0.04F;
@@ -84,12 +93,15 @@ public class MultiCrafter extends Block {
             MultiCrafterBuild tile = (MultiCrafterBuild) build;
             tile.currentRecipe = i >= 0 && i < recipes.size ? i : -1;
             Color color;
+            boolean spawnEffect = changeTexture;
             if (tile.currentRecipe != -1) {
                 color = new Color(Color.white).lerp(Color.yellow, 1.0f);
+                if (itemsTexture != null && itemsTexture[i] == region) spawnEffect = false;
             } else {
                 color = new Color(Color.black).lerp(Color.white, 0.0f);
             }
-            ModFx.changeCraft.at(tile.x, tile.y, tile.block.size * 1.1f, color, new Color(Color.black).lerp(Color.white, 8.0f));
+            if (spawnEffect)
+                ModFx.changeCraft.at(tile.x, tile.y, tile.block.size * 1.1f, color, new Color(Color.black).lerp(Color.white, 8.0f));
             tile.progress = 0.0F;
 
         });
@@ -109,34 +121,69 @@ public class MultiCrafter extends Block {
         this.recipes = Seq.with(recipes);
     }
 
-    public void init() {
-//        hasLiquids|=dynamicLiquid;
-//        hasItems|=dynamicItem;
-//        hasPower|= dynamicPower;
-        this.itemCapacity=0;
-        recipes.each((recipe -> {
-            Seq.with(recipe.consumeItems).each((itemStack -> {
-//                this.itemCapacity=Math.max(this.itemCapacity,itemStack.amount);
-//                this.itemCapacity+=itemStack.amount;
-            }));
-            Seq.with(recipe.consumeLiquids).each((liquidStack -> {
-                this.liquidCapacity=Math.max(this.liquidCapacity,liquidStack.amount);
-            }));
-            if(recipe.outputLiquid!=null)this.liquidCapacity=Math.max(this.liquidCapacity,recipe.outputLiquid.amount);
-            if(recipe.outputItem!=null)this.itemCapacity=Math.max(this.itemCapacity,recipe.outputItem.amount);
-        }));
-        this.liquidCapacity*=extraStorageLiquid;
-        this.itemCapacity*=extraStorageItem;
-        super.init();
+    @Override
+    public void load() {
+        super.load();
         if (changeTexture) {
             itemsTexture = new TextureRegion[this.recipes.size];
             for (int i = 0; i < itemsTexture.length; i++) {
                 String itemName = this.recipes.get(i).outputItem.item.name;
                 if (itemName.startsWith(fullName(""))) itemName = itemName.split(fullName(""), 2)[1];
 //                print("load: @",this.name+"-"+itemName);
-                itemsTexture[i] = Core.atlas.find(this.name + "-" + itemName, this.region);
+                itemsTexture[i] = Core.atlas.find(this.name + "-" + itemName);
+                if (!itemsTexture[i].found()) itemsTexture[i] = region;
             }
         }
+    }
+
+    @Override
+    public void setStats() {
+        aStats.add(Stat.size, "@x@", new Object[]{this.size, this.size});
+        aStats.add(Stat.health, (float)this.health, StatUnit.none);
+        if (this.canBeBuilt()) {
+            aStats.add(Stat.buildTime, this.buildCost / 60.0F, StatUnit.seconds);
+            aStats.add(Stat.buildCost, new ItemListValue(false, this.requirements));
+        }
+
+        if (this.instantTransfer) {
+            aStats.add(Stat.maxConsecutive, 2.0F, StatUnit.none);
+        }
+
+        this.consumes.display(this.stats);
+        if (this.hasLiquids) {
+            aStats.add(Stat.liquidCapacity, this.liquidCapacity, StatUnit.liquidUnits);
+        }
+
+        if (this.hasItems && this.itemCapacity > 0) {
+            aStats.add(Stat.itemCapacity, (float)this.itemCapacity, StatUnit.items);
+        }
+        aStats.add(AStat.recipes, new RecipeListValue(recipes));
+
+
+    }
+
+    public void init() {
+//        hasLiquids|=dynamicLiquid;
+//        hasItems|=dynamicItem;
+//        hasPower|= dynamicPower;
+        this.itemCapacity = 0;
+        recipes.each((recipe -> {
+            Seq.with(recipe.consumeItems).each((itemStack -> {
+                this.itemCapacity = Math.max(this.itemCapacity, itemStack.amount);
+//                this.itemCapacity+=itemStack.amount;
+            }));
+            Seq.with(recipe.consumeLiquids).each((liquidStack -> {
+                this.liquidCapacity = Math.max(this.liquidCapacity, liquidStack.amount);
+            }));
+            if (recipe.outputLiquid != null)
+                this.liquidCapacity = Math.max(this.liquidCapacity, recipe.outputLiquid.amount);
+            if (recipe.outputItem != null) this.itemCapacity = Math.max(this.itemCapacity, recipe.outputItem.amount);
+        }));
+        this.liquidCapacity *= extraStorageLiquid;
+        this.itemCapacity *= extraStorageItem;
+        super.init();
+
+
         this.config(Item.class, (obj, item) -> {
             MultiCrafterBuild tile = (MultiCrafterBuild) obj;
             tile.currentRecipe = this.recipes.indexOf((p) -> {
@@ -148,7 +195,9 @@ public class MultiCrafter extends Block {
 
     @Override
     public void setBars() {
-        this.bars.add("health", (entity) -> {
+//        bars
+        dynamicBars.clear();
+        dynamicBars.add("health", (entity) -> {
             Color var10003 = Pal.health;
             Objects.requireNonNull(entity);
             return (new Bar("stat.health", var10003, entity::healthf)).blink(Color.white);
@@ -156,24 +205,23 @@ public class MultiCrafter extends Block {
         if (this.hasLiquids) {
             Func<Building, Liquid> current;
             if (this.consumes.has(ConsumeType.liquid) && this.consumes.get(ConsumeType.liquid) instanceof ConsumeLiquidDynamic) {
-                this.bars.add("liquids", (t) -> {
+                dynamicBars.add("liquids", (t) -> {
                     MultiCrafterBuild build = (MultiCrafterBuild) t;
-                    if (build==null)return new Bar("0",Color.black.cpy(),()->0f);
-                    Seq<MultiBar.BarPart> barParts=new Seq<>();
+                    if (build == null) return new Bar("0", Color.black.cpy(), () -> 0f);
+                    Seq<MultiBar.BarPart> barParts = new Seq<>();
 
-                    Seq<LiquidStack> stacks=build.getNeedLiquids();
+                    Seq<LiquidStack> stacks = build.getNeedLiquids();
                     stacks.each((stack -> {
-                        barParts.add(new MultiBar.BarPart(stack.liquid.color,() -> {
-                            if ( build.liquids == null) return 0.0f;
+                        barParts.add(new MultiBar.BarPart(stack.liquid.color, () -> {
+                            if (build.liquids == null) return 0.0f;
                             float amounts = build.liquids.get(stack.liquid);
                             float need = stack.amount;
-                            if (need == 0 && build.currentRecipe != -1) return 1f;
-//                        print("a: @, n: @",amounts,need);
-                            return Math.max(amounts /  need, 0);
+                            if (need == 0 && build.currentRecipe != -1) return 0;
+                            return Math.max(amounts / need, 0);
                         }));
                     }));
                     return new MultiBar(() -> {
-                        String text=Core.bundle.get("bar.liquids");
+                        String text = Core.bundle.get("bar.liquids");
                         if (build.liquids == null)
                             return text;
                         return text + " " + Mathf.round((build.countNowLiquid() / build.countNeedLiquid() * 100f), 0.1f) + "%";
@@ -191,7 +239,7 @@ public class MultiCrafter extends Block {
                         return entity.liquids == null ? Liquids.water : entity.liquids.current();
                     };
                 }
-                this.bars.add("liquid", (entity) -> {
+                dynamicBars.add("liquid", (entity) -> {
                     return new Bar(() -> {
                         return entity.liquids.get((Liquid) current.get(entity)) <= 0.001F ? Core.bundle.get("bar.liquid") : ((Liquid) current.get(entity)).localizedName;
                     }, () -> {
@@ -207,7 +255,7 @@ public class MultiCrafter extends Block {
             ConsumePower cons = this.consumes.getPower();
             boolean buffered = cons.buffered;
             float capacity = cons.capacity;
-            this.bars.add("power", (entity) -> {
+            dynamicBars.add("power", (entity) -> {
                 return new Bar(() -> {
                     return buffered ? Core.bundle.format("bar.poweramount", new Object[]{Float.isNaN(entity.power.status * capacity) ? "<ERROR>" : (int) (entity.power.status * capacity)}) : Core.bundle.get("bar.power");
                 }, () -> {
@@ -220,7 +268,7 @@ public class MultiCrafter extends Block {
 
         if (this.hasItems && this.configurable) {
 
-            this.bars.add("items", (entity) -> {
+            dynamicBars.add("items", (entity) -> {
                 return new Bar(() -> {
                     return Core.bundle.format("bar.items", entity.items.total());
                 }, () -> {
@@ -233,73 +281,6 @@ public class MultiCrafter extends Block {
 
     }
 
-    public static class Recipe {
-        public static Recipe empty = with(null, -1);
-        public ItemStack outputItem;
-        public LiquidStack outputLiquid;
-        public ItemStack[] consumeItems;
-        public LiquidStack[] consumeLiquids;
-
-        //        public TextureRegion textureRegion;
-        public float craftTime;
-
-        public Recipe() {
-            consumeItems = ItemStack.empty;
-            consumeLiquids = ModLiquidStack.empty;
-
-        }
-        private void checkItems(){
-            Seq<ItemStack> itemStacks=new Seq<>(consumeItems);
-            Seq<ItemStack> newItemsStacks=new Seq<>();
-            itemStacks.each((itemStack -> {
-                ItemStack found=newItemsStacks.find(s->s.item== itemStack.item);
-                if (found!=null){
-                    found.amount+=itemStack.amount;
-                } else {
-                    newItemsStacks.add(itemStack);
-                }
-            }));
-            this.consumeItems=newItemsStacks.toArray(ItemStack.class);
-        }
-        private void checkLiquids(){
-            Seq<LiquidStack> liquidsStacks=new Seq<>(consumeLiquids);
-            Seq<LiquidStack> newLiquidStacks=new Seq<>();
-            liquidsStacks.each((liquidStack -> {
-                LiquidStack found=newLiquidStacks.find(s->s.liquid== liquidStack.liquid);
-                if (found!=null){
-                    found.amount+=liquidStack.amount;
-                } else {
-                    newLiquidStacks.add(liquidStack);
-                }
-            }));
-            this.consumeLiquids=newLiquidStacks.toArray(LiquidStack.class);
-        }
-        private void check(){
-            checkItems();
-            checkLiquids();
-        }
-        public static Recipe with(ItemStack outputItem, ItemStack[] consumeItems, LiquidStack[] consumeLiquids, float craftTime) {
-            Recipe recipe = new Recipe();
-            if (outputItem != null) recipe.outputItem = outputItem;
-            if (consumeItems != null) recipe.consumeItems = consumeItems;
-            if (consumeLiquids != null) recipe.consumeLiquids = consumeLiquids;
-            recipe.craftTime = craftTime;
-            recipe.check();
-            return recipe;
-        }
-
-        public static Recipe with(ItemStack outputItem, LiquidStack[] consumeLiquids, float craftTime) {
-            return with(outputItem, ItemStack.empty, consumeLiquids, craftTime);
-        }
-
-        public static Recipe with(ItemStack outputItem, float craftTime) {
-            return with(outputItem, ModLiquidStack.empty, craftTime);
-        }
-
-        public static Recipe with(ItemStack outputItem, ItemStack[] consumeItems, float craftTime) {
-            return with(outputItem, consumeItems, ModLiquidStack.empty, craftTime);
-        }
-    }
 
     public class MultiCrafterBuild extends Building {
         public int currentRecipe = -1;
@@ -313,6 +294,18 @@ public class MultiCrafter extends Block {
 
         public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
             return super.init(tile, team, shouldAdd, rotation);
+        }
+
+        public void displayBars(Table table) {
+            setBars();
+            for (Func<Building, Bar> bar : dynamicBars.list()) {
+                try {
+                    table.add(bar.get(this)).growX();
+                    table.row();
+                } catch (ClassCastException e) {
+                    break;
+                }
+            }
         }
 
         public void drawStatus() {
@@ -371,7 +364,7 @@ public class MultiCrafter extends Block {
                         Strings.format("if1: @", this.consValid()),
                         Strings.format("if2: @", (getCurrentRecipe().outputItem != null
                                 && this.items.get(getCurrentRecipe().outputItem.item) >= this.block.itemCapacity)),
-                        Strings.format("liquid consume: @",getNeedLiquids().toString())
+                        Strings.format("liquid consume: @", getNeedLiquids().toString())
                 };
                 getInfoDialog("", "Debug window", Strings.join("\n", lines), Color.green.add(Color.black)).show();
             });
@@ -404,14 +397,15 @@ public class MultiCrafter extends Block {
             LiquidStack found = needLiquids.find((l) -> l.liquid == liquid);
             if (found == null) {
                 return;
-            };
+            }
+            ;
             float need = Math.max(0, found.amount - this.liquids.get(liquid));
             this.liquids.add(liquid, Math.min(amount, need));
         }
 
         @Override
         public String toString() {
-            return "MultiCrafterBuild#"+id;
+            return "MultiCrafterBuild#" + id;
         }
 
         @Override
@@ -437,7 +431,7 @@ public class MultiCrafter extends Block {
             return getCurrentRecipe().outputItem == null || this.items.get(getCurrentRecipe().outputItem.item) < MultiCrafter.this.itemCapacity;
         }
 
-        protected MultiCrafter.Recipe getCurrentRecipe() {
+        protected Recipe getCurrentRecipe() {
             if (currentRecipe == -1) return Recipe.empty;
             return MultiCrafter.this.recipes.get(currentRecipe);
         }
@@ -462,13 +456,16 @@ public class MultiCrafter extends Block {
         }
 
         public void updateTile() {
+            if (timer.get(timerReBuildBars, 5)) {
+                setBars();
+            }
             if (this.currentRecipe < 0 || this.currentRecipe >= this.block.recipes.size) {
                 this.currentRecipe = -1;
                 this.progress = 0;
             }
 
             if (this.canCraft() && this.currentRecipe != -1) {
-                this.progress += this.getProgressIncrease(this.block.recipes.get(currentRecipe).craftTime);
+                this.progress += this.getProgressIncrease(this.block.recipes.get(currentRecipe).produceTime);
                 this.totalProgress += this.delta();
                 /*if (Mathf.chanceDelta((double)this.block.updateEffectChance)) {
                     GenericCrafter.this.updateEffect.at(this.getX() + Mathf.range((float)GenericCrafter.this.size * 4.0F), this.getY() + (float)Mathf.range(GenericCrafter.this.size * 4));

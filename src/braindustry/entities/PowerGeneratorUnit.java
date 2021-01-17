@@ -2,20 +2,17 @@ package braindustry.entities;
 
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
-import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import braindustry.type.PowerUnitType;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import mindustry.Vars;
-import mindustry.content.Blocks;
 import mindustry.gen.Building;
 import mindustry.gen.UnitWaterMove;
 import mindustry.world.Block;
 import mindustry.world.Tile;
-import mindustry.world.blocks.power.PowerGraph;
-import mindustry.world.blocks.power.PowerNode;
 
 public class PowerGeneratorUnit extends UnitWaterMove {
     public static int classId = 41;

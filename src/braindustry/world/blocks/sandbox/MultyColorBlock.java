@@ -1,6 +1,6 @@
 package braindustry.world.blocks.sandbox;
 
-import braindustry.ModVars.Classes.UI.ModColorPicker;
+import ModVars.Classes.UI.ModColorPicker;
 import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;

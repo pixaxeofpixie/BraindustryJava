@@ -2,15 +2,17 @@ package braindustry.content;
 
 import arc.func.Prov;
 import arc.graphics.Color;
+import braindustry.ai.types.StealthGroundAI;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedUnitType;
 import braindustry.entities.Advanced.UnitExtensions;
 import braindustry.entities.PowerGeneratorUnit;
-import braindustry.entities.PowerUnitType;
 import braindustry.entities.bullets.AdamBulletType;
 import braindustry.entities.bullets.EveBulletType;
 import braindustry.gen.StealthMechUnit;
 import braindustry.type.ModWeapon;
+import braindustry.type.PowerUnitType;
+import braindustry.type.StealthUnitType;
 import mindustry.content.Bullets;
 import mindustry.content.Fx;
 import mindustry.content.StatusEffects;
@@ -1027,6 +1029,19 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
+        tyzen = new StealthUnitType("tyzen") {
+            {
+                this.mineSpeed = 8.0F;
+                this.mineTier = 2;
+                this.constructor = Types.stealthMech;
+                this.defaultController= StealthGroundAI::new;
+                this.speed = 0.6f;
+                this.hitSize = 8;
+                this.buildSpeed = 1.0F;
+                this.health = 310;
+
+            }
+        };
 
         vyvna = new PowerUnitType("vyvna") {
 
@@ -1180,53 +1195,6 @@ public class ModUnitTypes implements ContentList {
             @Override
             public Block getNodeBlock() {
                 return ModBlocks.unitNode;
-            }
-        };
-        //STEALTH UNITS///////////////////////////////////////////////////////////////////////////////////////////////////
-        tyzen = new UnitType("tyzen") {
-            {
-                this.mineSpeed = 8.0F;
-                this.mineTier = 2;
-                this.constructor = Types.stealthMech;
-                this.speed = 0.6f;
-                this.hitSize = 8;
-                this.buildSpeed = 1.0F;
-                this.health = 310;
-                this.weapons.add(
-                        new ModWeapon("tyzen-weapon") {
-                            {
-                                this.reload = 60;
-                                this.x = 3;
-                                this.y = -4f;
-                                this.shadow = 8;
-                                this.rotateSpeed = 0.9f;
-                                this.rotate = true;
-                                this.shots = 2;
-                                this.shotDelay = 5;
-                                this.inaccuracy = 0.7f;
-                                this.velocityRnd = 0.1f;
-                                this.shootSound = Sounds.missile;
-                                this.bullet = new AdamBulletType() {
-                                    {
-                                        this.width = 15;
-                                        this.height = 15;
-                                        this.shrinkY = 0.1f;
-                                        this.speed = 3.0f;
-                                        this.drag = 0.01f;
-                                        this.splashDamageRadius = 30f;
-                                        this.splashDamage = 52f;
-                                        this.homingPower = 0.2f;
-                                        this.lightningDamage = 6f;
-                                        this.lightning = 8;
-                                        this.lightningLength = 5;
-                                        this.lifetime = 85f;
-                                        this.weaveScale = 3f;
-                                        this.weaveMag = 6f;
-                                    }
-                                };
-                            }
-                        }
-                );
             }
         };
     }

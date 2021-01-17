@@ -10,7 +10,7 @@ import mindustry.gen.Building;
 import mindustry.world.Block;
 import mindustry.world.meta.BlockGroup;
 
-import static braindustry.ModVars.modFunc.EventOn;
+import static ModVars.modFunc.EventOn;
 
 public class DynamicWallSecond extends Block {
     TextureRegion regionLight0, regionDark0,

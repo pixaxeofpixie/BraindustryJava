@@ -1,6 +1,9 @@
 package braindustry.world.blocks.sandbox;
 
 import arc.Core;
+import arc.func.Boolf;
+import arc.func.Cons;
+import arc.func.Func;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
@@ -11,7 +14,7 @@ import arc.struct.Seq;
 import arc.util.Time;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import braindustry.ModVars.modVars;
+import ModVars.modVars;
 import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.Building;
@@ -29,7 +32,13 @@ public class BlockSwitcher extends Block {
     public float laserRange = 6.0F;
     public Color laserColor1;
     public Color laserColor2;
-
+    public Boolf<Building> blockFilter=(build)-> true;
+    public Func<Building,Color> colorFunc=(building -> building.enabled?Color.green : Pal.redDust);
+    public Cons<Building> action =(build)-> {
+       boolean enable= (build instanceof ControlBlock && ((ControlBlock) build).isControlled() && !(build instanceof BlockSwitcherBuild));
+        build.control(LAccess.enabled, enable ? 1 : 0, 0, 0, 0);
+        build.enabledControlTime = 30.0F;
+    };
     public BlockSwitcher(String name) {
         super(name);
         this.update = true;
@@ -56,18 +65,18 @@ public class BlockSwitcher extends Block {
         this.laserEnd = Core.atlas.find("laser-end");
     }
 
-    protected void drawLaser(Team team, float x1, float y1, float x2, float y2, int size1, int size2, boolean enable) {
+    protected void drawLaser(Team team, float x1, float y1, float x2, float y2, int size1, int size2, Building building) {
         float angle1 = Angles.angle(x1, y1, x2, y2);
         float vx = Mathf.cosDeg(angle1);
         float vy = Mathf.sinDeg(angle1);
         float len1 = (float) (size1 * 8) / 2.0F - 1.5F;
         float len2 = (float) (size2 * 8) / 2.0F - 1.5F;
-        Draw.color(enable ? Color.green : Pal.redDust);
+        Draw.color(colorFunc.get(building));
         Drawf.laser(team, modVars.modAtlas.laser, modVars.modAtlas.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
     }
 
     public boolean goodBuilding(BlockSwitcherBuild forB, Building other) {
-        return other.dst(forB) <= (laserRange + other.block.size+Mathf.ceil(forB.block.size/2f)) * 8f && forB != other && forB.isValid() && other.isValid();
+        return other.dst(forB) <= (laserRange + other.block.size+Mathf.ceil(forB.block.size/2f)) * 8f && forB != other && forB.isValid() && other.isValid() && blockFilter.get(other);
     }
 
     public class BlockSwitcherBuild extends Building {
@@ -92,9 +101,7 @@ public class BlockSwitcher extends Block {
                 if (!BlockSwitcher.this.goodBuilding(this, link)) links.remove(link);
             });
             links.each(link -> {
-                boolean enable = (link instanceof ControlBlock && ((ControlBlock) link).isControlled() && !(link instanceof BlockSwitcherBuild));
-                link.control(LAccess.enabled, enable ? 1 : 0, 0, 0, 0);
-                link.enabledControlTime = 30.0F;
+                action.get(link);
             });
         }
 
@@ -150,7 +157,7 @@ public class BlockSwitcher extends Block {
             if (!Mathf.zero(Vars.renderer.laserOpacity)) {
                 Draw.z(70.0F);
                 this.links.each((link) -> {
-                    BlockSwitcher.this.drawLaser(this.team, this.x, this.y, link.x, link.y, BlockSwitcher.this.size, link.block.size, link.enabled);
+                    BlockSwitcher.this.drawLaser(this.team, this.x, this.y, link.x, link.y, BlockSwitcher.this.size, link.block.size, link);
                 });
 
                 Draw.reset();

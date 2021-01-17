@@ -1,6 +1,5 @@
 package Gas.world.consumers;
 
-import Gas.type.Gas;
 import arc.struct.Bits;
 import arc.util.Structs;
 import mindustry.Vars;
@@ -10,8 +9,6 @@ import mindustry.world.consumers.ConsumeType;
 import mindustry.world.consumers.Consumers;
 
 import java.util.Objects;
-
-import static braindustry.ModVars.modFunc.print;
 
 public class GasConsumers extends Consumers {
     protected Consume[] map = new GasConsume[ConsumeType.values().length+1];
