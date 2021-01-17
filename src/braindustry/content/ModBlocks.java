@@ -11,6 +11,7 @@ import braindustry.content.Blocks.ModDefense;
 import braindustry.content.Blocks.ModOtherBlocks;
 import braindustry.content.Blocks.ModProduction;
 import braindustry.type.Recipe;
+import braindustry.world.blocks.TestBlock;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import braindustry.world.blocks.distribution.SmartRouter;
@@ -65,7 +66,7 @@ public class ModBlocks implements ContentList {
 
     //experimental
     smartRouter, turretSwitcher,blockHealer, dpsMeter, unitGenerator,unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
-            exampleCrossItemBridge, exampleCrossPhaseBridge;
+            exampleCrossItemBridge, exampleCrossPhaseBridge,testBlock;
 
 
     public void load() {
@@ -73,6 +74,12 @@ public class ModBlocks implements ContentList {
         new ModProduction().load();
         new ModOtherBlocks().load();
         new ModDefense().load();
+        testBlock=new TestBlock("test-block"){
+            {
+                this.size = 2;
+                this.requirements(Category.logic, ItemStack.with(), true);
+            }
+        };
         exampleCrossPhaseBridge =new CrossItemBridge("cross-phase-conveyor"){
             {
                 this.requirements(Category.distribution, ItemStack.with(Items.phaseFabric, 5, Items.silicon, 7, Items.lead, 10, Items.graphite, 10));

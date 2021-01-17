@@ -1,4 +1,4 @@
-package braindustry.ModVars.Classes.UI.Cheat;
+package ModVars.Classes.UI.Cheat;
 
 import arc.Core;
 import arc.graphics.Color;

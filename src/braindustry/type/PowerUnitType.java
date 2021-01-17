@@ -10,7 +10,7 @@ import arc.math.Angles;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Time;
-import braindustry.ModVars.modVars;
+import ModVars.modVars;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import mindustry.game.Team;

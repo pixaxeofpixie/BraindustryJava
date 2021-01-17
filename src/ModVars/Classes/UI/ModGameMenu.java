@@ -1,4 +1,4 @@
-package braindustry.ModVars.Classes.UI;
+package ModVars.Classes.UI;
 
 import arc.Core;
 import arc.Events;
@@ -10,8 +10,6 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.ui.Styles;
-
-import static braindustry.ModVars.modFunc.*;
 
 public class ModGameMenu {
     static Seq<Cons<Table>> conses = new Seq<>();

@@ -38,8 +38,6 @@ import mindustry.world.blocks.environment.Floor;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static braindustry.ModVars.modFunc.print;
-
 public class Cloud implements Pool.Poolable, Entityc, Drawc, Posc {
     public static final int maxGeneration = 2;
     public static final Color tmp = new Color();

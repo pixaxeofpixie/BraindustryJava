@@ -1,4 +1,4 @@
-package braindustry.ModVars.Classes.UI;
+package ModVars.Classes.UI;
 
 import arc.Core;
 import arc.Input;

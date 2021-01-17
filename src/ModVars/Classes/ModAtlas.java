@@ -1,9 +1,9 @@
-package braindustry.ModVars.Classes;
+package ModVars.Classes;
 
 import arc.Core;
 import arc.graphics.g2d.TextureRegion;
 
-import static braindustry.ModVars.modFunc.*;
+import static ModVars.modFunc.*;
 
 public class ModAtlas {
     public TextureRegion laser, laserEnd;

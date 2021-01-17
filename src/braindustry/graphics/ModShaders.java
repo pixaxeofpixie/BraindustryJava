@@ -11,7 +11,7 @@ import arc.scene.ui.layout.Scl;
 import arc.struct.Seq;
 import arc.util.Time;
 
-import static braindustry.ModVars.modVars.modInfo;
+import static ModVars.modVars.modInfo;
 
 public class ModShaders {
     public static RainbowShader rainbow;

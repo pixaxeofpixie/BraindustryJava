@@ -49,8 +49,8 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static braindustry.ModVars.modFunc.fullName;
-import static braindustry.ModVars.modFunc.getInfoDialog;
+import static ModVars.modFunc.fullName;
+import static ModVars.modFunc.getInfoDialog;
 
 public class MultiCrafter extends Block implements BlockAdvancedStats {
     public final int timerDump;

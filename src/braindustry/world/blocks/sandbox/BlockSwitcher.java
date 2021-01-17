@@ -14,7 +14,7 @@ import arc.struct.Seq;
 import arc.util.Time;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import braindustry.ModVars.modVars;
+import ModVars.modVars;
 import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.Building;

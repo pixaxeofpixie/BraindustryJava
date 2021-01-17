@@ -5,10 +5,10 @@ import arc.graphics.Color;
 import arc.scene.event.Touchable;
 import arc.scene.ui.layout.WidgetGroup;
 import braindustry.content.*;
-import braindustry.ModVars.Classes.ModAtlas;
-import braindustry.ModVars.Classes.ModEventType;
-import braindustry.ModVars.Classes.UI.Cheat.*;
-import braindustry.ModVars.modVars;
+import ModVars.Classes.ModAtlas;
+import ModVars.Classes.ModEventType;
+import ModVars.Classes.UI.Cheat.*;
+import ModVars.modVars;
 import arc.*;
 import arc.graphics.g2d.TextureRegion;
 import arc.scene.ui.*;
@@ -23,6 +23,7 @@ import mindustry.ctype.UnlockableContent;
 import mindustry.entities.EntityCollisions;
 import mindustry.game.EventType;
 import mindustry.game.EventType.*;
+import mindustry.game.Schematics;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.mod.Mod;
@@ -32,12 +33,18 @@ import mindustry.world.Tile;
 import mindustry.world.meta.BuildVisibility;
 import mindustryAddition.iu.AdvancedContentInfoDialog;
 
-import static braindustry.ModVars.modFunc.*;
-import static braindustry.ModVars.modVars.*;
+import static ModVars.modFunc.*;
+import static ModVars.modVars.*;
+import static arc.Core.assets;
+import static mindustry.Vars.schematics;
 
 public class MainModClass extends Mod {
     public void init() {
         Events.fire(new ModEventType.ModInit());
+        Events.fire(new EventType.DisposeEvent());
+
+        schematics = new Schematics();
+        assets.load(schematics);
         EventOn(EventType.ClientLoadEvent.class,(e)->{
             Vars.ui.menuGroup.remove();
             Vars.ui.menuGroup = new WidgetGroup();

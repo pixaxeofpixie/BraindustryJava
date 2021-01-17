@@ -1,23 +1,22 @@
-package braindustry.ModVars.Classes;
+package ModVars.Classes;
 
-import braindustry.MainModClass;
 import arc.Core;
 import arc.Events;
 import arc.scene.ui.Dialog;
 import arc.util.Strings;
+import braindustry.MainModClass;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
 
-import static braindustry.ModVars.modFunc.*;
-import static braindustry.ModVars.modVars.*;
+import static ModVars.modFunc.fullName;
+import static ModVars.modVars.modInfo;
 
 public class ModSettings {
     public ModSettings(){
         addEvent();
     }
     private String full(String name){
-        if (name.equals("cheat"))return "zelConst-"+name;
         return fullName(name);
     }
     private void put(String name,Object value){
@@ -36,6 +35,15 @@ public class ModSettings {
         return getBool(name,false);
     }
     public void setBool(String name, boolean def){
+        put(name,def);
+    }
+    public float getFloat(String name, float def){
+        return (float)get(name,def);
+    }
+    public float getFloat(String name){
+        return getFloat(name,0.0F);
+    }
+    public void setFloat(String name, float def){
         put(name,def);
     }
     public boolean cheating(){
@@ -70,12 +78,17 @@ public class ModSettings {
                         dialog.buttons.table((t)->{
                             t.check("@cheat",cheating(),(b)->{
                                 cheating(b);
-                            });
-                        }).row();
-                        dialog.buttons.table((t)->{
+                            }).row();
                             t.check("@debug",debug(),(b)->{
                                 debug(b);
                             });
+                        }).row();
+                        dialog.buttons.table((t)->{
+                        }).row();
+                        dialog.buttons.table((t)->{
+                            t.slider(0,360,0.1f,getFloat("angle"),(b)->{
+                                setFloat("angle",b);
+                            }).row();
                         }).row();
                         dialog.closeOnBack();
                         dialog.buttons.button("@back", Icon.leftOpen, () -> {

@@ -12,8 +12,6 @@ import mindustry.world.consumers.ConsumeType;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.Stats;
 
-import static braindustry.ModVars.modFunc.print;
-
 public class ConsumeGasses extends GasConsume {
     public final Gas gas;
     public final float amount;

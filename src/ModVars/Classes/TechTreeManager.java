@@ -1,4 +1,4 @@
-package braindustry.ModVars.Classes;
+package ModVars.Classes;
 
 import arc.struct.Seq;
 import arc.util.Nullable;

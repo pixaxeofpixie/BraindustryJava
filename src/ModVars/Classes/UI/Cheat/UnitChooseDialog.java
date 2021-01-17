@@ -1,4 +1,4 @@
-package braindustry.ModVars.Classes.UI.Cheat;
+package ModVars.Classes.UI.Cheat;
 
 import arc.func.Boolf;
 import arc.graphics.Color;
@@ -12,7 +12,7 @@ import mindustry.content.UnitTypes;
 import mindustry.type.UnitType;
 import mindustry.ui.dialogs.BaseDialog;
 
-import static braindustry.ModVars. modFunc.getInfoDialog;
+import static ModVars. modFunc.getInfoDialog;
 
 public class UnitChooseDialog extends BaseDialog {
     public UnitChooseDialog(Boolf<UnitType> check) {

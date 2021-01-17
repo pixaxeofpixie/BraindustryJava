@@ -1,4 +1,4 @@
-package braindustry.ModVars.Classes;
+package ModVars.Classes;
 
 public class ModEventType {
     public ModEventType(){

@@ -1,4 +1,4 @@
-package braindustry.ModVars.Classes.UI.Cheat;
+package ModVars.Classes.UI.Cheat;
 
 import arc.Core;
 import arc.func.Boolf;
@@ -9,7 +9,7 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Strings;
 import arc.util.Structs;
-import braindustry.ModVars.modFunc;
+import ModVars.modFunc;
 import mindustry.Vars;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;

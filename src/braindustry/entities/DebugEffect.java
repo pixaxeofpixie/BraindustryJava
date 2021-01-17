@@ -1,6 +1,6 @@
 package braindustry.entities;
 
-import braindustry.ModVars.modVars;
+import ModVars.modVars;
 import arc.func.Cons;
 import arc.graphics.Color;
 import arc.math.geom.Position;

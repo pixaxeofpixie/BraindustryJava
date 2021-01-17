@@ -33,7 +33,7 @@ import mindustry.world.blocks.environment.OreBlock;
 
 import java.util.Iterator;
 
-import static braindustry.ModVars.modFunc.fullName;
+import static ModVars.modFunc.fullName;
 
 public class ModMenuShaderRender extends MenuRenderer {
     private static final float darkness = 0.3F;

@@ -1,8 +1,7 @@
-package braindustry.ModVars;
+package ModVars;
 
-import arc.struct.ObjectMap;
-import braindustry.ModVars.Classes.ModAtlas;
-import braindustry.ModVars.Classes.ModSettings;
+import ModVars.Classes.ModAtlas;
+import ModVars.Classes.ModSettings;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedPayloadUnit;
 import braindustry.entities.Advanced.AdvancedUnitWaterMove;

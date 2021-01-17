@@ -1,4 +1,4 @@
-package braindustry.ModVars;
+package ModVars;
 
 
 import arc.Core;
@@ -17,7 +17,7 @@ import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType;
 import mindustry.gen.EntityMapping;
 
-import static braindustry.ModVars.modVars.*;
+import static ModVars.modVars.*;
 
 public class modFunc {
     public static int addEntityMappingIdMap(Prov prov) {

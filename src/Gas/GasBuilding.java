@@ -25,8 +25,6 @@ import mindustry.world.consumers.ConsumeType;
 
 import java.util.Iterator;
 
-import static braindustry.ModVars.modFunc.print;
-
 public class GasBuilding extends Building {
     public GasModule gasses;
     public GasBlock block;
