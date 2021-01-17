@@ -1,6 +1,7 @@
 package braindustry.content.Blocks;
 import arc.struct.Seq;
 import braindustry.content.*;
+import braindustry.entities.bullets.RainbowLaserBulletType;
 import braindustry.world.blocks.Wall.LaserReflectionWall;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
@@ -658,6 +659,19 @@ public class ModDefense implements ContentList {
                 this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 120, Items.silicon, 140, Items.lead, 190, Items.titanium, 120));
             }
         };
+
+        gem = new LaserTurret("gem") {
+            {
+                localizedName = "Gem";
+                requirements(Category.turret, ItemStack.with(Items.copper, 10));
+                size = 14;
+                health = 240 * size * size;
+                range = 240f;
+                this.shootType = new RainbowLaserBulletType();
+                consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
+            }
+        };
+
         gloryTurret = new LaserTurret("glory"){{
                 this.localizedName = "Synaps";
                 this.requirements(Category.turret, ItemStack.with(Items.plastanium, 340, Items.lead, 350, Items.phaseFabric, 260, Items.surgeAlloy, 360, Items.silicon, 390));
