@@ -41,10 +41,13 @@ public class ModMenuFragment extends MenuFragment {
     private Table submenu;
     private Button currentMenu;
     private ModMenuShaderRender renderer;
+public void dispose(){
 
+    this.renderer.dispose();
+}
     public ModMenuFragment() {
         Events.on(EventType.DisposeEvent.class, (event) -> {
-            this.renderer.dispose();
+            dispose();
         });
     }
 

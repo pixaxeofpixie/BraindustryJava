@@ -41,10 +41,6 @@ import static mindustry.Vars.schematics;
 public class MainModClass extends Mod {
     public void init() {
         Events.fire(new ModEventType.ModInit());
-        Events.fire(new EventType.DisposeEvent());
-
-        schematics = new Schematics();
-        assets.load(schematics);
         EventOn(EventType.ClientLoadEvent.class,(e)->{
             Vars.ui.menuGroup.remove();
             Vars.ui.menuGroup = new WidgetGroup();
@@ -153,6 +149,10 @@ public class MainModClass extends Mod {
         });
     }
     public MainModClass() {
+        EventOn(DisposeEvent.class,(d)->{
+            if (Vars.ui.menufrag instanceof ModMenuFragment)((ModMenuFragment)Vars.ui.menufrag).dispose();
+            Vars.ui.dispose();
+        });
         modInfo = Vars.mods.getMod(this.getClass());
         modVars.load();
         EventOn(ClientLoadEvent.class, (e) -> {

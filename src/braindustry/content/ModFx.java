@@ -26,16 +26,19 @@ import static ModVars.modFunc.fullName;
 public class ModFx {
 
     public static final Effect Spirals=new Effect(200.0F,300f, (e) -> {
-        float partLenght,count;
+        float partLenght,count,angleMul;
         SpiralContainer cont=new SpiralContainer();
         if (e.data instanceof SpiralContainer)cont=(SpiralContainer)e.data;
         count=cont.count;
         partLenght=cont.partLength;
+        angleMul=cont.angleMul;
         Draw.color(e.color);
         float mul=e.fin()*e.fin();
         Seq<Vec2> points=new Seq<>();
         float lx=e.x,ly=e.y;
-        float offset= (Time.time+Mathf.randomSeed(e.id,100000000))%360;
+
+        
+        float offset= (Mathf.absin(Time.time + Mathf.randomSeed(e.id, 0, 1000000), 10f, 360f)+360)%360 ;
         for (int i = 0; i < count; i++) {
             float angle=((i)/count)*360+offset;
             Vec2 vec2=new Vec2().trns(angle,partLenght,partLenght).add(e.x,e.y);
@@ -43,7 +46,7 @@ public class ModFx {
             ly=vec2.y;
             points.add(vec2);
             for (int j = 1; j < count-1; j+=1) {
-                vec2=new Vec2().trns(angle+j*180*mul,partLenght,partLenght).add(lx,ly);
+                vec2=new Vec2().trns(angle+j*angleMul*mul,partLenght,partLenght).add(lx,ly);
                 lx=vec2.x;
                 ly=vec2.y;
                 points.add(vec2);

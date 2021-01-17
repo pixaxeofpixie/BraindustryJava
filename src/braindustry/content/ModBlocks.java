@@ -219,10 +219,15 @@ public class ModBlocks implements ContentList {
                 };
                 colorFunc=(b)-> Color.orange.cpy().lerp(Pal.accent,0.1f);
                 /** default action*/
-                action =(build)-> {
-                    boolean enable= (build instanceof ControlBlock && ((ControlBlock) build).isControlled() && !(build instanceof BlockSwitcherBuild));
+                action =(b)-> {
+                    Turret.TurretBuild build =(Turret.TurretBuild)b;
+                    boolean enable= (build instanceof ControlBlock && ((ControlBlock) build).isControlled());
                     build.control(LAccess.enabled, enable ? 1 : 0, 0, 0, 0);
                     build.enabledControlTime = 30.0F;
+                    if (enable){
+                        build.enabledControlTime=0f;
+                        build.charging=false;
+                    }
                 };
                 this.size = 2;
                 this.laserRange = 6.0F;
@@ -240,7 +245,7 @@ public class ModBlocks implements ContentList {
                     build.heal(0.15f*build.edelta()*build.maxHealth);
                 };
                 colorFunc=(b)-> {
-                    float t=Mathf.absin(Time.time + Mathf.randomSeed(b.id, 0, 1000000), 1f, 1F)* 0.2f+0.1f;
+                    float t=Mathf.absin(Time.time + Mathf.randomSeed(b.id, 0, 1000000), 1f, 1F)* 0.9f+0.1f;
                    return Pal.heal.cpy().lerp(Color.black, t * (1f - b.healthf()));
                 };
                 this.size = 2;
