@@ -1,3 +1,4 @@
+const F = require("functions");
 const simplex = new Packages.arc.util.noise.Simplex();
 const rid = new Packages.arc.util.noise.RidgedPerlin(1, 2);
 
