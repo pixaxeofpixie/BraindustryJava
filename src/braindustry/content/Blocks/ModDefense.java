@@ -666,7 +666,12 @@ public class ModDefense implements ContentList {
                 size = 14;
                 health = 240 * size * size;
                 range = 240f;
-                this.shootType = new RainbowLaserBulletType();
+                this.shootType = new RainbowLaserBulletType(){
+                    {
+                        length=100f;
+                        lifetime=120f;
+                    }
+                };
                 consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
             }
         };
