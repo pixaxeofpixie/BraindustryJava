@@ -16,20 +16,31 @@ float dst(vec2  to,vec2 from){
     float b_y=from.y-to.y;
     return sqrt(b_x*b_x+b_y*b_y);
 }
+bool isIn(vec2 to,vec2 i,float offset){
+    if (to.x>i.x-offset && to.x<i.x+offset){
+
+        if (to.y>i.y-offset && to.y<i.y+offset)return true;
+    }
+    return false;
+}
 vec4 getPix(in vec2 fragCoord )
 {
     vec4 color = texture2D(u_texture, v_texCoords);
     if (color.a==0)return vec4(0);
+   /* if (isIn(fragCoord,u_screenPos.xy,10.)){
+        return vec4(1.);
+    }
+   if (true) return vec4(0);*/
     float time=(u_time);
+    float dis=dst(fragCoord,u_screenPos);
     fragCoord=fragCoord.xy;
     // Normalized pixel coordinates (from 0 to 1)
-    vec2 uv =fragCoord/ (iResolution.xy*2.);
-    float dis=dst(uv,u_screenPos);
+    vec2 uv =fragCoord/ (iResolution.xy);
     uv*=1.;
     // Time varying pixel color
 
     vec3 disVec=vec3((dis)/u_length);
-    vec3 col = 0.50+0.50*cos(u_time/2.+disVec.x+u_offset);
+    vec3 col = 0.50+0.50*cos(u_time/2.+disVec.xyz);
 
     // Output to screen
     return vec4(col,1.0);

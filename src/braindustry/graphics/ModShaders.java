@@ -3,9 +3,11 @@ package braindustry.graphics;
 import arc.Core;
 import arc.files.Fi;
 import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.graphics.gl.Shader;
 import arc.math.Mathf;
+import arc.math.geom.Position;
 import arc.math.geom.Vec2;
 import arc.math.geom.Vec3;
 import arc.scene.ui.layout.Scl;
@@ -40,21 +42,26 @@ public class ModShaders {
         Vec2 screenSize = new Vec2(Core.graphics.getWidth(), Core.graphics.getHeight());
         return screenSize;
     }
+    private static Vec2 vec2(float x, float y) {
+        return new Vec2(x,y);
+    }
+    private static Vec2 vec2(float x) {
+        return new Vec2(x,x);
+    }
     public static class TestShader extends ModLoadShader {
         public int offsetId=0;
+        public Vec2 pos=new Vec2();
 
         public TestShader() {
             super("test", "default");
         }
-
-        private Vec3 vec2(Vec2 vec2, float val) {
-            return new Vec3(vec2.x, val, vec2.y);
+        public void setPos(Position pos){
+            this.pos.set(pos);
+            Draw.shader(this);
         }
-
-        private Vec3 vec2(Vec2 vec2) {
-            return vec2(vec2, 0);
+        public void setPos(Vec2 pos){
+            this.pos.set(pos);
         }
-
         @Override
         public void apply() {
             super.apply();
@@ -63,6 +70,11 @@ public class ModShaders {
             setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
             Vec2 screenSize = getScreenSize();
             setUniformf("iResolution", screenSize);
+            Vec2 cameraOffset=Core.camera.position.cpy().sub(Core.camera.width/2f,Core.camera.height/2f);
+            float displayScale = Vars.renderer.getDisplayScale();
+            setUniformf("u_pos", pos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
+            setUniformf("u_dscl", displayScale);
+            setUniformf("u_scl", Vars.renderer.getScale());
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));
 //            this.setUniformf("offset", );
         }
@@ -83,13 +95,6 @@ public class ModShaders {
             return this;
         }
 
-        private Vec3 vec2(Vec2 vec2, float val) {
-            return new Vec3(vec2.x, val, vec2.y);
-        }
-
-        private Vec3 vec2(Vec2 vec2) {
-            return vec2(vec2, 0);
-        }
 
         @Override
         public void apply() {
@@ -100,35 +105,12 @@ public class ModShaders {
             Vec2 screenSize = getScreenSize();
             setUniformf("iResolution", screenSize);
             Vec2 bulletPos = new Vec2(bullet.y, bullet.x);
-            Vec2 bulletScreenPos = bulletPos.cpy().sub(Core.camera.position.cpy()
-                    .sub(Core.camera.width / 2f, Core.camera.height / 2f))
-                    .div(new Vec2(Core.camera.width, Core.camera.height)
-                    );
+            Vec2 cameraOffset=Core.camera.position.cpy().sub(Core.camera.width/2f,Core.camera.height/2f);
+            float displayScale = Vars.renderer.getDisplayScale();
+            setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
             setUniformf("u_pos", bulletPos);
-            /** а
-             * Сделать нормальную подачу длинны
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * Да
-             * */
-            setUniformf("u_length", type.length);
-            setUniformf("u_scl", Vars.renderer.getScale());
-            setUniformf("u_screenPos", bulletScreenPos);
+            setUniformf("u_length", type.length * displayScale);
+            setUniformf("u_scl", displayScale);
             setUniformf("u_vecRot", new Vec2(Mathf.cosDeg(bullet.rotation()), Mathf.sinDeg(bullet.rotation())));
             setUniformf("u_offset", new Vec3(-2, 2, -0));
 
