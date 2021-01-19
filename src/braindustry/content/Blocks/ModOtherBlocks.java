@@ -134,7 +134,7 @@ public class ModOtherBlocks implements ContentList {
                 this.itemDrop = ModItems.odinum;
             }
         };
-        blackHoleReactor = new ImpactReactor("blackhole-reactor") {
+        blackHoleReactor = new ImpactReactor("black-hole-reactor") {
             {
                 this.localizedName = "Blackhole Reactor";
                 this.description = "Create power from small Blackhole in center.";

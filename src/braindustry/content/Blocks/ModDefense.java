@@ -37,11 +37,11 @@ public class ModDefense implements ContentList {
         heartbeat =new ItemTurret("heartbeat"){
             {
                 this.localizedName="Heartbeat";
-                this.range = 400;
+                this.range = 200;
 //                this.recoilAmount = 28;
-                this.reloadTime = 15;
-                this.size = 3;
-                this.shots = 7;
+                this.reloadTime = 70;
+                this.size = 5;
+                this.shots = 1;
                 this.health = 5800;
                 this.inaccuracy = 0;
                 this.shootSound = Sounds.missile;
@@ -82,42 +82,7 @@ public class ModDefense implements ContentList {
                                 this.hitColor=this.trailColor=this.lightColor=this.lightningColor=Color.gray;
                             }
                         },
-                        Items.copper, new ReflectionBullet(),
-                        Items.lead, new SpikeCircleOrbonBullet(),
-                        Items.surgeAlloy, new SapBulletType(){
-                            {
-                                this.sapStrength = 1.2f;
-                                this.length = 240;
-                                this.damage = 40;
-                                this.buildingDamageMultiplier = 0.3f;
-                                this.shootEffect = ModFx.shootSmall;
-                                this.hitColor = Color.valueOf("e88ec9");
-                                this.color = Color.valueOf("e88ec9");
-                                this.hitColor=this.color=this.trailColor=this.lightColor=this.lightningColor=Color.gray;
-                                this.despawnEffect = Fx.none;
-                                this.width = 1;
-                                this.lifetime = 80;
-                                this.knockback = 0.4f;
-                                this.ammoMultiplier = 1;
-                            }
-                        },
-                        ModItems.exoticAlloy, new PointBulletType(){
-                            {
-                                this.shootEffect=this.hitEffect=this.smokeEffect=this.trailEffect=this.despawnEffect=Fx.none;
-//                                this.shootEffect = Fx.instShoot;
-//                                this.hitEffect = Fx.instHit;
-//                                this.smokeEffect = Fx.smokeCloud;
-                                this.trailEffect = Fx.instTrail;
-//                                this.despawnEffect = Fx.instBomb;
-                                this.trailSpacing = 12;
-                                this.damage = 60;
-                                this.buildingDamageMultiplier = 0.3f;
-                                this.speed = 50;
-                                this.hitShake = 0.2f;
-                                this.ammoMultiplier = 2;
-                                this.hitColor=this.trailColor=this.lightColor=this.lightningColor=Color.gray;
-                            }
-                        }
+                        Items.phaseFabric, new SpikeCircleOrbonBullet()
                 );
                 this.consumes.liquid(Liquids.cryofluid,0.2f).optional(false,true);
                 this.requirements(Category.turret, ItemStack.with(ModItems.odinum,400, Items.plastanium,350, Items.silicon,800, Items.titanium,420, Items.metaglass,280));
@@ -623,7 +588,6 @@ public class ModDefense implements ContentList {
                 this.size = 2;
                 this.hasItems = true;
                 this.hasLiquids = true;
-                this.localizedName = "Synaps";
                 this.description = "Electrical Sap turret, can shoot a sap bullet with mane ligthnings.";
 
                 this.ammo(
