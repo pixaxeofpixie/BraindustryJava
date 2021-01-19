@@ -20,6 +20,25 @@ import static braindustry.content.ModBlocks.*;
 public class ModProduction implements ContentList {
     @Override
     public void load() {
+        astroSmelter = new GenericSmelter("astronomical-smelter") {
+            {
+                this.localizedName = "Astronomical Smelter";
+                this.description = "Smelt Astronomical Alloy.";//change this pls
+                this.health = 800;
+                this.liquidCapacity = 100;
+                this.size = 3;
+                this.hasPower = true;
+                this.hasLiquids = true;
+                this.hasItems = true;
+                this.craftTime = 240;
+                this.updateEffect = Fx.plasticburn;
+                this.consumes.power(24f);
+                this.consumes.items(ItemStack.with(Items.thorium, 4, Items.surgeAlloy, 2, ModItems.graphenite, 5, ModItems.exoticAlloy, 5));
+                this.requirements(Category.crafting, ItemStack.with(ModItems.astroAlloy, 420, Items.titanium, 100, Items.copper, 80, ModItems.graphenite, 100, Items.metaglass, 80));
+                this.outputItem = new ItemStack(ModItems.astroAlloy, 2);
+            }
+        };
+
         chromiumForge = new GenericSmelter("chromium-forge") {
             {
                 this.localizedName = "Chromium Forge";

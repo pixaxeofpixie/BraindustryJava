@@ -753,12 +753,12 @@ public class ModDefense implements ContentList {
                 this.absorbLasers = true;
             }
         };
-        //please add description :3 /*Zelaux: NO*/
+        //please add description :3 /*Zelaux: NO*/ /*PixaxeOfPixie: YEEAS*/
         largeAstronomicalWall = new ReflectionWall("astronomical-alloy-wall-large") {
             {
                 laserReflect=true;
                 lightningReflect=true;
-                localizedName = "large astronomical wall";
+                localizedName = "Large Astronomical Wall";
                 size = 2;
                 health = 4650;
                 requirements(Category.defense, ItemStack.with(ModItems.phaseAlloy, 60));
@@ -767,10 +767,10 @@ public class ModDefense implements ContentList {
 
         astronomicalWall = new ReflectionWall("astronomical-alloy-wall") {
             {
-                localizedName = "laser astronomical wall";
+                localizedName = "Astronomical Wall";
                 size = 1;
                 health = 1550;
-                requirements(Category.defense, ItemStack.with(ModItems.phaseAlloy, 20));
+                requirements(Category.defense, ItemStack.with(ModItems.astroAlloy, 20));
             }
         };
     }
