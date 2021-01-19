@@ -219,7 +219,7 @@ public void dispose(){
         this.container.table(background, (t) -> {
             t.defaults().width(width).height(70.0F);
             t.name = "buttons";
-            Buttoni[] var10002 = new Buttoni[]{new Buttoni("@play", Icon.play, new Buttoni[]{new Buttoni("@campaign", Icon.play, () -> {
+            Buttoni[] var10002 = new Buttoni[]{new Buttoni("@play", Icon.play, new Buttoni("@campaign", Icon.play, () -> {
                 PlanetDialog var10001 = Vars.ui.planet;
                 Objects.requireNonNull(var10001);
                 this.checkPlay(var10001::show);
@@ -235,7 +235,7 @@ public void dispose(){
                 LoadDialog var10001 = Vars.ui.load;
                 Objects.requireNonNull(var10001);
                 this.checkPlay(var10001::show);
-            })}), new Buttoni("@editor", Icon.terrain, () -> {
+            })), new Buttoni("@editor", Icon.terrain, () -> {
                 MapsDialog var10001 = Vars.ui.maps;
                 Objects.requireNonNull(var10001);
                 this.checkPlay(var10001::show);
@@ -293,15 +293,15 @@ public void dispose(){
 
     private void fadeInMenu() {
         this.submenu.clearActions();
-        this.submenu.actions(new Action[]{Actions.alpha(1.0F, 0.15F, Interp.fade)});
+        this.submenu.actions(Actions.alpha(1.0F, 0.15F, Interp.fade));
     }
 
     private void fadeOutMenu() {
         if (!this.submenu.getChildren().isEmpty()) {
             this.submenu.clearActions();
-            this.submenu.actions(new Action[]{Actions.alpha(1.0F), Actions.alpha(0.0F, 0.2F, Interp.fade), Actions.run(() -> {
+            this.submenu.actions(Actions.alpha(1.0F), Actions.alpha(0.0F, 0.2F, Interp.fade), Actions.run(() -> {
                 this.submenu.clearChildren();
-            })});
+            }));
         }
     }
 

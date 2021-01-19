@@ -1,5 +1,6 @@
 package braindustry.graphics;
 
+import ModVars.modFunc;
 import arc.Core;
 import arc.func.Floatc2;
 import arc.graphics.Camera;
@@ -18,6 +19,8 @@ import arc.util.Time;
 import arc.util.Tmp;
 import arc.util.noise.RidgedPerlin;
 import arc.util.noise.Simplex;
+import braindustry.content.ModBlocks;
+import braindustry.content.ModUnitTypes;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.UnitTypes;
@@ -59,11 +62,17 @@ public class ModMenuShaderRender extends MenuRenderer {
         this.time = 0.0F;
         this.flyerRot = 45.0F;
         this.flyers = Mathf.chance(0.2D) ? Mathf.random(35) : Mathf.random(15);
-        this.flyerType = (UnitType) Structs.select(new UnitType[]{UnitTypes.flare, UnitTypes.flare, UnitTypes.horizon, UnitTypes.mono, UnitTypes.poly, UnitTypes.mega, UnitTypes.zenith});
+        this.flyerType = Structs.select(
+                UnitTypes.flare, UnitTypes.flare,
+                UnitTypes.horizon, UnitTypes.mono,
+                UnitTypes.poly, UnitTypes.mega,
+                UnitTypes.zenith,
+                ModUnitTypes.armor, ModUnitTypes.armor,
+                ModUnitTypes.chainmail);
         Time.mark();
         this.generate();
         this.cache();
-        Log.info("Time to generate menu: @", new Object[]{Time.elapsed()});
+        Log.info("Time to generate menu: @", Time.elapsed());
         logoRegion=Core.atlas.find(fullName("mod-logo"));
 //        logoRegion= MainModClass.getIcon();
     }
@@ -76,15 +85,37 @@ public class ModMenuShaderRender extends MenuRenderer {
         });
         this.shadows = new FrameBuffer(this.width, this.height);
         int offset = Mathf.random(100000);
-        Simplex s1 = new Simplex((long)offset);
-        Simplex s2 = new Simplex((long)(offset + 1));
-        Simplex s3 = new Simplex((long)(offset + 2));
+        Simplex s1 = new Simplex(offset);
+        Simplex s2 = new Simplex((offset + 1));
+        Simplex s3 = new Simplex((offset + 2));
         RidgedPerlin rid = new RidgedPerlin(1 + offset, 1);
-        Block[] selected = (Block[])Structs.select(new Block[][]{{Blocks.sand, Blocks.sandWall}, {Blocks.shale, Blocks.shaleWall}, {Blocks.ice, Blocks.iceWall}, {Blocks.sand, Blocks.sandWall}, {Blocks.shale, Blocks.shaleWall}, {Blocks.ice, Blocks.iceWall}, {Blocks.moss, Blocks.sporePine}});
-        Block[] selected2 = (Block[])Structs.select(new Block[][]{{Blocks.basalt, Blocks.duneWall}, {Blocks.basalt, Blocks.duneWall}, {Blocks.stone, Blocks.stoneWall}, {Blocks.stone, Blocks.stoneWall}, {Blocks.moss, Blocks.sporeWall}, {Blocks.salt, Blocks.saltWall}});
-        Block ore1 = (Block)ores.random();
+        Block[] selected = Structs.select(new Block[][]{
+                {Blocks.sand, Blocks.sandWall},
+                {Blocks.shale, Blocks.shaleWall},
+                {Blocks.ice, Blocks.iceWall},
+                {Blocks.sand, Blocks.sandWall},
+                {Blocks.shale, Blocks.shaleWall},
+                {Blocks.ice, Blocks.iceWall},
+                {Blocks.moss, Blocks.sporePine},
+                {ModBlocks.obsidianFloor,ModBlocks.obsidianBlock},
+                {ModBlocks.obsidianFloor,ModBlocks.obsidianBlock},
+        });
+        Block[] selected2 = Structs.select(new Block[][]{
+                {Blocks.basalt, Blocks.duneWall},
+                {Blocks.basalt, Blocks.duneWall},
+                {Blocks.stone, Blocks.stoneWall},
+                {Blocks.stone, Blocks.stoneWall},
+                {Blocks.moss, Blocks.sporeWall},
+                {Blocks.salt, Blocks.saltWall},
+                {ModBlocks.jungleFloor,ModBlocks.jungleWall},
+                {ModBlocks.jungleFloor,ModBlocks.jungleWall},
+                {ModBlocks.crimzesFloor,ModBlocks.crimzesWall},
+                {Blocks.water, Blocks.sandWall},
+
+        });
+        Block ore1 = ores.random();
         ores.remove(ore1);
-        Block ore2 = (Block)ores.random();
+        Block ore2 = ores.random();
         double tr1 = (double)Mathf.random(0.65F, 0.85F);
         double tr2 = (double)Mathf.random(0.65F, 0.85F);
         boolean doheat = Mathf.chance(0.25D);
@@ -177,12 +208,10 @@ public class ModMenuShaderRender extends MenuRenderer {
         Draw.proj().setOrtho(0.0F, 0.0F, (float)this.shadows.getWidth(), (float)this.shadows.getHeight());
         this.shadows.begin(Color.clear);
         Draw.color(Color.black);
-        Iterator var1 = Vars.world.tiles.iterator();
 
-        while(var1.hasNext()) {
-            Tile tile = (Tile)var1.next();
+        for (Tile tile : Vars.world.tiles) {
             if (tile.block() != Blocks.air) {
-                Fill.rect((float)tile.x + 0.5F, (float)tile.y + 0.5F, 1.0F, 1.0F);
+                Fill.rect((float) tile.x + 0.5F, (float) tile.y + 0.5F, 1.0F, 1.0F);
             }
         }
 
@@ -191,7 +220,7 @@ public class ModMenuShaderRender extends MenuRenderer {
         Batch prev = Core.batch;
         Core.batch = this.batch = new CacheBatch(new SpriteCache(this.width * this.height * 6, false));
         this.batch.beginCache();
-        Iterator var5 = Vars.world.tiles.iterator();
+        Iterator<Tile> var5 = Vars.world.tiles.iterator();
 
         Tile tile;
         while(var5.hasNext()) {
@@ -218,7 +247,7 @@ public class ModMenuShaderRender extends MenuRenderer {
         this.cacheWall = this.batch.endCache();
         Core.batch = prev;
     }
-
+    boolean errorred =false;
     public void render() {
         this.time += Time.delta;
         float scaling = Math.max(Scl.scl(4.0F), Math.max((float)Core.graphics.getWidth() / (((float)this.width - 1.0F) * 8.0F), (float)Core.graphics.getHeight() / (((float)this.height - 1.0F) * 8.0F)));
@@ -246,7 +275,15 @@ public class ModMenuShaderRender extends MenuRenderer {
         Fill.crect(0.0F, 0.0F, (float)Core.graphics.getWidth(), (float)Core.graphics.getHeight());
         Draw.color();
         Draw.shader();
-        ModShaders.logoRender.logo=logoRegion;
+        try {
+            ModShaders.logoRender.logo=logoRegion;
+        } catch (NullPointerException exception) {
+            if (!errorred){
+                modFunc.showException(exception);
+                errorred=true;
+            }
+//            exception.printStackTrace();
+        }
         Draw.shader(ModShaders.logoRender);
         Draw.rect(logoRegion,Core.graphics.getWidth()-logoRegion.width/2f,logoRegion.height/2f,logoRegion.width,logoRegion.height);
         Draw.shader();

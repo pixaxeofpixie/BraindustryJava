@@ -311,13 +311,13 @@ public class ModOtherBlocks implements ContentList {
                 this.requirements(Category.production, ItemStack.with(ModItems.plastic, 150, ModItems.graphenite, 120, ModItems.odinum, 140, Items.plastanium, 100));
             }
         };
-        crimzesBlock = new StaticWall("crimzes-block") {
+        crimzesWall = new StaticWall("crimzes-block") {
             {
                 this.localizedName = "Crimson Wall";
                 this.breakable = false;
                 this.alwaysReplace = false;
                 this.solid = true;
-                this.variants = 3;
+                this.variants = 2;
             }
         };
         jungleWall = new StaticWall("jungle-wall") {

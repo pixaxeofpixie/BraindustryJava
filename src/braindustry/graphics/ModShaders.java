@@ -150,7 +150,7 @@ public class ModShaders {
     public static class LogoRenderShader extends ModLoadShader {
         public int offsetId = 0;
         public TextureRegion logo;
-        public float force = 10;
+        public float force = 1000;
 
         public LogoRenderShader() {
             super("logoRender", "logoRender");

@@ -46,7 +46,7 @@ public class ModBlocks implements ContentList {
 
     //environment and power
     magmaFloor, obsidianBlock, obsidianFloor, oreChromium, oreOdinum, differentialMagmaGenerator,
-            grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, blackHoleReactor, phaseAlloySolarPanel, phaseTower, crimzesBlock, crimzesFloor, jungleWall, jungleFloor, jungleWater, dirtRocksWall,
+            grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, blackHoleReactor, phaseAlloySolarPanel, phaseTower, crimzesWall, crimzesFloor, jungleWall, jungleFloor, jungleWater, dirtRocksWall,
 
     //production
     refrigerantReactor, chromiumForge, exoticAlloySmelter, grapheniteFluidizer, grapheniteForge,

@@ -31,7 +31,7 @@ void main(){
     float iTime=u_time;
     vec2 texCoord=vec2(v_texCoords.xy);
     vec2 fragCoord=vec2(gl_FragCoord.xy);
-    texCoord.x+=cos(fragCoord.y+u_timeMul)/(iResolution.y*u_force);
+    texCoord.x+=cos(fragCoord.y+u_timeMul)/(u_force);
     vec4 rainbow=vec4(getPix(fragCoord.xy));
     vec4 color = texture2D(u_texture,texCoord);
 

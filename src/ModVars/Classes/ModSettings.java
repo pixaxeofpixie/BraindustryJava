@@ -64,7 +64,7 @@ public class ModSettings {
             Vars.ui.settings.button((button) -> {
                         button.image(MainModClass.getIcon()).size(64, 64);
 //                        button.setSize(80f,80f);
-                        button.label(() -> Strings.format("@", modInfo.meta.displayName));
+                        button.label(() -> Strings.format("@", modInfo==null?"":modInfo.meta.displayName));
                     },
                     () -> {
                         Dialog dialog=new Dialog("@settings"){

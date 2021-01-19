@@ -72,7 +72,7 @@ public class MainModClass extends Mod {
 
 //        if (modInfo==null)modInfo = Vars.mods.getMod(mod.getClass());
 //        print("modInfo: @",modInfo);
-        if (modInfo.iconTexture == null) return Core.atlas.find("nomap");
+        if (modInfo==null||modInfo.iconTexture == null) return Core.atlas.find("nomap");
         return new TextureRegion(modInfo.iconTexture);
     }
     private void showUnitChangeDialog(){
@@ -168,6 +168,7 @@ public class MainModClass extends Mod {
         modInfo = Vars.mods.getMod(this.getClass());
         modVars.load();
         EventOn(ClientLoadEvent.class, (e) -> {
+            modInfo = Vars.mods.getMod(this.getClass());
             Blocks.interplanetaryAccelerator.buildVisibility = BuildVisibility.shown;
             Blocks.blockForge.buildVisibility = BuildVisibility.shown;
             Blocks.blockLoader.buildVisibility = BuildVisibility.shown;
