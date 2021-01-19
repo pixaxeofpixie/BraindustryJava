@@ -27,6 +27,7 @@ public class ModShaders {
     public static FractalPyramidShader fractalPyramid;
     public static RainbowLaserShader rainbowLaserShader;
     public static TestShader testShader;
+    public static GradientLaserShader gradientLaserShader;
 
     public static void init() {
         rainbow = new RainbowShader();
@@ -35,6 +36,8 @@ public class ModShaders {
         fractalPyramid = new FractalPyramidShader();
         holo = new HoloShader();
         rainbowLaserShader = new RainbowLaserShader();
+        gradientLaserShader=new GradientLaserShader();
+
         testShader=new TestShader();
 //        defaultShader=new Shaders.LoadShader("default","default");
     }
@@ -77,6 +80,46 @@ public class ModShaders {
             setUniformf("u_scl", Vars.renderer.getScale());
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));
 //            this.setUniformf("offset", );
+        }
+    }
+    public static class GradientLaserShader extends ModLoadShader {
+        public int offsetId = 0;
+        public Bullet bullet;
+        public RainbowLaserBulletType type;
+        private Color from;
+        private Color to;
+
+        public GradientLaserShader() {
+            super("gradientLaser", "default");
+        }
+
+        public Shader setBullet(Bullet bullet, RainbowLaserBulletType type,Color from,Color to) {
+            offsetId = bullet.id;
+            this.bullet = bullet;
+            this.type = type;
+            this.from=from;
+            this.to=to;
+            return this;
+        }
+
+
+        @Override
+        public void apply() {
+            super.apply();
+            float u_time = Time.time / Scl.scl(10);
+
+            setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
+            Vec2 screenSize = getScreenSize();
+            setUniformf("iResolution", screenSize);
+            Vec2 bulletPos = new Vec2(bullet.y, bullet.x);
+            Vec2 cameraOffset=Core.camera.position.cpy().sub(Core.camera.width/2f,Core.camera.height/2f);
+            float displayScale = Vars.renderer.getDisplayScale();
+            setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
+            setUniformf("u_pos", bulletPos);
+            setUniformf("u_length", type.length * displayScale);
+            setUniformf("u_scl", displayScale);
+            setUniformf("u_fromColor",from);
+            setUniformf("u_toColor",to);
         }
     }
     public static class RainbowLaserShader extends ModLoadShader {

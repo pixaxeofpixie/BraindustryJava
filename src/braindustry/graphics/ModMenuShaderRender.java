@@ -93,12 +93,12 @@ public class ModMenuShaderRender extends MenuRenderer {
                 {Blocks.sand, Blocks.sandWall},
                 {Blocks.shale, Blocks.shaleWall},
                 {Blocks.ice, Blocks.iceWall},
+                {ModBlocks.obsidianFloor,ModBlocks.obsidianBlock},
                 {Blocks.sand, Blocks.sandWall},
                 {Blocks.shale, Blocks.shaleWall},
                 {Blocks.ice, Blocks.iceWall},
+                {ModBlocks.obsidianFloor,ModBlocks.obsidianBlock},
                 {Blocks.moss, Blocks.sporePine},
-                {ModBlocks.obsidianFloor,ModBlocks.obsidianBlock},
-                {ModBlocks.obsidianFloor,ModBlocks.obsidianBlock},
         });
         Block[] selected2 = Structs.select(new Block[][]{
                 {Blocks.basalt, Blocks.duneWall},
