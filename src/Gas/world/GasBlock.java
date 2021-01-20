@@ -99,9 +99,7 @@ public class GasBlock extends Block {
     @Override
     public void setBars() {
         this.bars.add("health", (entity) -> {
-            Color var10003 = Pal.health;
-            Objects.requireNonNull(entity);
-            return (new Bar("stat.health", var10003, entity::healthf)).blink(Color.white);
+            return (new Bar("stat.health", Pal.health, entity::healthf)).blink(Color.white);
         });
         if (this.hasLiquids) {
             Func<Building,Liquid> current;
@@ -127,13 +125,13 @@ public class GasBlock extends Block {
             });
         }
 
-        if (this.hasPower && this.consumes.hasPower()) {
-            ConsumePower cons = this.consumes.getPower();
+        if (hasPower && consumes.hasPower()) {
+            ConsumePower cons = consumes.getPower();
             boolean buffered = cons.buffered;
             float capacity = cons.capacity;
-            this.bars.add("power", (entity) -> {
+            bars.add("power", (entity) -> {
                 return new Bar(() -> {
-                    return buffered ? Core.bundle.format("bar.poweramount", new Object[]{Float.isNaN(entity.power.status * capacity) ? "<ERROR>" : (int)(entity.power.status * capacity)}) : Core.bundle.get("bar.power");
+                    return buffered ? Core.bundle.format("bar.poweramount", Float.isNaN(entity.power.status * capacity) ? "<ERROR>" : (int)(entity.power.status * capacity)) : Core.bundle.get("bar.power");
                 }, () -> {
                     return Pal.powerBar;
                 }, () -> {
@@ -142,8 +140,8 @@ public class GasBlock extends Block {
             });
         }
 
-        if (this.hasItems && this.configurable) {
-            this.bars.add("items", (entity) -> {
+        if (hasItems && configurable) {
+            bars.add("items", (entity) -> {
                 return new Bar(() -> {
                     return Core.bundle.format("bar.items", new Object[]{entity.items.total()});
                 }, () -> {
@@ -155,7 +153,7 @@ public class GasBlock extends Block {
         }
         if (this.hasGas) {
             Func<GasBuilding, Gas> current;
-            if (this.consumes.hasGas() && this.consumes.getGas() instanceof ConsumeGasses) {
+            if (consumes.hasGas() && this.consumes.getGas() instanceof ConsumeGasses) {
                 Gas gas = ((ConsumeGasses)this.consumes.getGas()).gas;
                 current = (entity) -> {
                     return gas;
@@ -166,7 +164,7 @@ public class GasBlock extends Block {
                 };
             }
 
-            this.bars.add("gas", (e) -> {
+            bars.add("gas", (e) -> {
                 GasBuilding entity=(GasBuilding)e;
                 return new Bar(() -> {
                     return entity.gasses.get(current.get(entity)) <= 0.001F ? Core.bundle.get("bar.gas") : (current.get(entity)).localizedName;

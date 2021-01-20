@@ -32,15 +32,16 @@ public class DebugBlocks {
         };
         methaneBurner = new AllBurnerGenerator("methane-burner") {
             {
-               this.hasPower = true;
-               this.hasGas = true;
-               this.localizedName = "Methane Burner";
-               this.description = "Burn Methane to produce heat energy.";
-               this.powerProduction = 5f;
-               this.gasCapacity = 11f;
-               this.size = 2;
-               this.consumes.addGas(new ConsumeGasses(Gasses.methane, 1));
-               this.requirements(Category.power, ItemStack.with(Items.silicon, 60, Items.titanium, 50, ModItems.chromium, 90));
+//                Blocks.steamGenerator
+                this.hasPower = true;
+                this.hasGas = true;
+                this.localizedName = "Methane Burner";
+                this.description = "Burn Methane to produce heat energy.";
+                this.powerProduction = 5f;
+                this.gasCapacity = 11f;
+                this.size = 2;
+                this.consumes.addGas(new ConsumeGasses(Gasses.methane, 1));
+                this.requirements(Category.power, ItemStack.with(Items.silicon, 60, Items.titanium, 50, ModItems.chromium, 90));
             }
         };
     }

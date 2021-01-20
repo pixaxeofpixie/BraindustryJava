@@ -60,6 +60,7 @@ public class AllGenerator extends GasPowerGenerator {
         this.heatColor = Color.valueOf("ff9b59");
         this.randomlyExplode = true;
         this.setDefaults();
+        this.update=true;
     }
 
     @Override
@@ -155,7 +156,7 @@ public class AllGenerator extends GasPowerGenerator {
                 }
 
                 this.totalTime += this.heat * Time.delta;
-                if (AllGenerator.this.hasGas && gas != null && this.gasses.get(gas) >= 0.001F) {
+                if (AllGenerator.this.hasGas && gas != null && this.gasses.get(gas) > 0.001F) {
                     float baseLiquidEfficiency = AllGenerator.this.getGasEfficiency(gas);
                     float maximumPossible = AllGenerator.this.maxGasGenerate * calculationDelta;
                     float used = Math.min(this.gasses.get(gas) * calculationDelta, maximumPossible);
