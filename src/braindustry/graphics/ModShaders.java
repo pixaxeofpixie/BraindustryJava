@@ -16,6 +16,7 @@ import arc.util.Time;
 import braindustry.entities.bullets.RainbowLaserBulletType;
 import mindustry.Vars;
 import mindustry.gen.Bullet;
+import mindustry.graphics.Shaders;
 
 import static ModVars.modVars.modInfo;
 
@@ -28,6 +29,9 @@ public class ModShaders {
     public static RainbowLaserShader rainbowLaserShader;
     public static TestShader testShader;
     public static GradientLaserShader gradientLaserShader;
+static {
+    Shaders.class.getName();
+}
 
     public static void init() {
         rainbow = new RainbowShader();
@@ -49,7 +53,7 @@ public class ModShaders {
         return new Vec2(x,y);
     }
     private static Vec2 vec2(float x) {
-        return new Vec2(x,x);
+        return vec2(x,x);
     }
     public static class TestShader extends ModLoadShader {
         public int offsetId=0;
@@ -193,7 +197,7 @@ public class ModShaders {
     public static class LogoRenderShader extends ModLoadShader {
         public int offsetId = 0;
         public TextureRegion logo;
-        public float force = 1000;
+        public float force = 10000;
 
         public LogoRenderShader() {
             super("logoRender", "logoRender");
@@ -205,15 +209,21 @@ public class ModShaders {
             super.apply();
             float u_time = Time.time / 100f;
 
-            this.setUniformf("u_texsize", new Vec2(Scl.scl(logo.texture.width), Scl.scl(logo.texture.height)));
-            this.setUniformf("u_size", new Vec2(Scl.scl(logo.width), Scl.scl(logo.height)));
+            float displayScale = Vars.renderer.getDisplayScale();
+            this.setUniformf("u_texsize", new Vec2(logo.texture.width, logo.texture.height));
+            Vec2 logoSize=vec2(logo.width,logo.height);
+            Vec2 logoTexSize=vec2(logo.texture.width,logo.texture.height);
+            this.setUniformf("u_uv", vec2(logo.u,logo.v));
+
+            this.setUniformf("u_uv2", vec2(logo.u2,logo.v2));
+            setUniformf("u_campos", Core.camera.position);
+            this.setUniformf("u_texsize", logo.texture.width,logo.texture.height);
             this.setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100, 100));
-            this.setUniformf("u_timeMul", 10f * u_time);
+            this.setUniformf("u_timeMul", Time.time/10f);
+            this.setUniformf("u_yOffset",  2.f);
             this.setUniformf("u_force", force);
             this.setUniformf("u_scl", Scl.scl(4));
-            this.setUniformf("colorFrom", Color.purple);
-            this.setUniformf("colorTo", Color.yellow);
-            this.setUniformf("iResolution", getScreenSize());
+            this.setUniformf("u_resolution", getScreenSize());
 //            this.setUniformf("offset", );
         }
     }
@@ -273,6 +283,9 @@ public class ModShaders {
     }
 
     public static class ModLoadShader extends Shader {
+        public void set(){
+            Draw.shader(this);
+        }
         public ModLoadShader(String fragment, String vertex) {
             super(loadFile(vertex + ".vert"), loadFile(fragment + ".frag"));
         }

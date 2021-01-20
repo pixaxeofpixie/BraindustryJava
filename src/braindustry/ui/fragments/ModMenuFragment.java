@@ -21,6 +21,7 @@ import arc.scene.ui.layout.Table;
 import arc.scene.ui.layout.WidgetGroup;
 import arc.util.Tmp;
 import braindustry.graphics.ModMenuShaderRender;
+import braindustry.graphics.ModShaders;
 import mindustry.Vars;
 import mindustry.core.Platform;
 import mindustry.core.Version;
@@ -35,6 +36,8 @@ import mindustry.ui.dialogs.*;
 import mindustry.ui.fragments.MenuFragment;
 
 import java.util.Objects;
+
+import static ModVars.modFunc.fullName;
 
 public class ModMenuFragment extends MenuFragment {
     private Table container;
@@ -112,7 +115,7 @@ public void dispose(){
 
         String versionText = (Version.build == -1 ? "[#fc8140aa]" : "[#ffffffba]") + Version.combined();
         group.fill((x, y, w, h) -> {
-            TextureRegion logo = Core.atlas.find("logo");
+            TextureRegion logo = Core.atlas.find(fullName("logo"),"logo");
             float width = (float)Core.graphics.getWidth();
             float height = (float)Core.graphics.getHeight() - Core.scene.marginTop;
             float logoscl = Scl.scl(1.0F);
@@ -121,7 +124,9 @@ public void dispose(){
             float fx = (float)((int)(width / 2.0F));
             float fy = (float)((int)(height - 6.0F - logoh)) + logoh / 2.0F - (Core.graphics.isPortrait() ? Scl.scl(30.0F) : 0.0F);
             Draw.color();
+            ModShaders.logoRender.set();
             Draw.rect(logo, fx, fy, logow, logoh);
+            Draw.shader();
             Fonts.def.setColor(Color.white);
             Fonts.def.draw(versionText, fx, fy - logoh / 2.0F, 1);
         }).touchable = Touchable.disabled;
@@ -134,14 +139,10 @@ public void dispose(){
         float size = 120.0F;
         this.container.defaults().size(size).pad(5.0F).padTop(4.0F);
         MobileButton play = new MobileButton(Icon.play, "@campaign", () -> {
-            PlanetDialog var10001 = Vars.ui.planet;
-            Objects.requireNonNull(var10001);
-            this.checkPlay(var10001::show);
+            this.checkPlay(Vars.ui.planet::show);
         });
         MobileButton custom = new MobileButton(Icon.rightOpenOut, "@customgame", () -> {
-            CustomGameDialog var10001 = Vars.ui.custom;
-            Objects.requireNonNull(var10001);
-            this.checkPlay(var10001::show);
+            this.checkPlay(Vars.ui.custom::show);
         });
         MobileButton maps = new MobileButton(Icon.download, "@loadgame", () -> {
             LoadDialog var10001 = Vars.ui.load;

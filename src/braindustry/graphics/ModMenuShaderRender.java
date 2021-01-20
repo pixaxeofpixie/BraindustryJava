@@ -1,6 +1,5 @@
 package braindustry.graphics;
 
-import ModVars.modFunc;
 import arc.Core;
 import arc.func.Floatc2;
 import arc.graphics.Camera;
@@ -8,6 +7,7 @@ import arc.graphics.Color;
 import arc.graphics.Texture;
 import arc.graphics.g2d.*;
 import arc.graphics.gl.FrameBuffer;
+import arc.graphics.gl.Shader;
 import arc.math.Angles;
 import arc.math.Mat;
 import arc.math.Mathf;
@@ -52,7 +52,7 @@ public class ModMenuShaderRender extends MenuRenderer {
     private float flyerRot;
     private int flyers;
     private UnitType flyerType;
-    public TextureRegion logoRegion;
+    public TextureRegion logo;
 
     public ModMenuShaderRender() {
         this.width = !Vars.mobile ? 100 : 60;
@@ -73,10 +73,14 @@ public class ModMenuShaderRender extends MenuRenderer {
         this.generate();
         this.cache();
         Log.info("Time to generate menu: @", Time.elapsed());
-        logoRegion=Core.atlas.find(fullName("mod-logo"));
+        logo =Core.atlas.find(fullName("logo"));
+        Log.info("LOGO: u: @, v: @, u2: @, v2: @,w: @,h: @",logo.toString(), Mathf.round(logo.u,0.000001f), Mathf.round(logo.v,0.000001f), logo.u2, logo.v2,(logo.u2- logo.u)* logo.width);
 //        logoRegion= MainModClass.getIcon();
     }
-
+    public static Shader createShader() {
+        return new Shader("attribute vec4 a_position;\nattribute vec4 a_color;\nattribute vec2 a_texCoord0;\nattribute vec4 a_mix_color;\nuniform mat4 u_projTrans;\nvarying vec4 v_color;\nvarying vec4 v_mix_color;\nvarying vec2 v_texCoords;\n\nvoid main(){\n   v_color = a_color;\n   v_color.a = v_color.a * (255.0/254.0);\n   v_mix_color = a_mix_color;\n   v_mix_color.a *= (255.0/254.0);\n   v_texCoords = a_texCoord0;\n   gl_Position = u_projTrans * a_position;\n}",
+                "\nvarying lowp vec4 v_color;\nvarying lowp vec4 v_mix_color;\nvarying highp vec2 v_texCoords;\nuniform highp sampler2D u_texture;\n\nvoid main(){\n  vec4 c = texture2D(u_texture, v_texCoords);\n  gl_FragColor = v_color * mix(c, vec4(v_mix_color.rgb, c.a), v_mix_color.a);\n}");
+    }
     private void generate() {
         Vars.world.beginMapLoad();
         Tiles tiles = Vars.world.resize(this.width, this.height);
@@ -275,7 +279,7 @@ public class ModMenuShaderRender extends MenuRenderer {
         Fill.crect(0.0F, 0.0F, (float)Core.graphics.getWidth(), (float)Core.graphics.getHeight());
         Draw.color();
         Draw.shader();
-        try {
+        /*try {
             ModShaders.logoRender.logo=logoRegion;
         } catch (NullPointerException exception) {
             if (!errorred){
@@ -286,7 +290,7 @@ public class ModMenuShaderRender extends MenuRenderer {
         }
         Draw.shader(ModShaders.logoRender);
         Draw.rect(logoRegion,Core.graphics.getWidth()-logoRegion.width/2f,logoRegion.height/2f,logoRegion.width,logoRegion.height);
-        Draw.shader();
+        Draw.shader();*/
     }
 
     private void drawFlyers() {
