@@ -57,7 +57,9 @@ public class BlockSwitcher extends Block {
 
         });
     }
-
+    public float getRealLaserLength(){
+        return (laserRange + Mathf.ceil(size / 2f)) * 8.0F;
+    }
     @Override
     public void load() {
         super.load();
@@ -76,7 +78,7 @@ public class BlockSwitcher extends Block {
     }
 
     public boolean goodBuilding(BlockSwitcherBuild forB, Building other) {
-        return other.dst(forB) <= (laserRange + other.block.size+Mathf.ceil(forB.block.size/2f)) * 8f && forB != other && forB.isValid() && other.isValid() && blockFilter.get(other);
+        return other.dst(forB) <= getRealLaserLength() && forB != other && forB.isValid() && other.isValid() && blockFilter.get(other);
     }
 
     public class BlockSwitcherBuild extends Building {
@@ -130,13 +132,13 @@ public class BlockSwitcher extends Block {
             super.drawSelect();
             Lines.stroke(1.0F);
             Draw.color(Pal.accent);
-            Drawf.circles(this.x, this.y, (BlockSwitcher.this.laserRange+Mathf.ceil(block.size/2f)) * 8.0F);
+            Drawf.circles(this.x, this.y, getRealLaserLength());
             Draw.reset();
         }
 
         public void drawConfigure() {
             Drawf.circles(this.x, this.y, (float) (this.tile.block().size * 8) / 2.0F + 1.0F + Mathf.absin(Time.time, 4.0F, 1.0F));
-            Drawf.circles(this.x, this.y, BlockSwitcher.this.laserRange * 8.0F);
+            Drawf.circles(this.x, this.y, getRealLaserLength());
 
             for (int x = (int) ((float) this.tile.x - BlockSwitcher.this.laserRange - 2.0F); (float) x <= (float) this.tile.x + BlockSwitcher.this.laserRange + 2.0F; ++x) {
                 for (int y = (int) ((float) this.tile.y - BlockSwitcher.this.laserRange - 2.0F); (float) y <= (float) this.tile.y + BlockSwitcher.this.laserRange + 2.0F; ++y) {
