@@ -588,7 +588,7 @@ public class ModDefense implements ContentList {
                 this.size = 2;
                 this.hasItems = true;
                 this.hasLiquids = true;
-                this.description = "Electrical Sap turret, can shoot a sap bullet with mane ligthnings.";
+                this.description = "Electrical Sap turret, can shoot a sap bullet with mane lightnings.";
 
                 this.ammo(
                         Items.plastanium, new SapBulletType() {
@@ -607,12 +607,12 @@ public class ModDefense implements ContentList {
                                 this.width = 3;
                                 this.lifetime = 45;
                                 this.knockback = -1;
-                                this.lightning = 4;//?????????? ??????
-                                this.lightningLength = 2;//????? ??????
-                                this.lightningLengthRand = 10;//????????? ????? ?? 0 ?? 15 ????? ???????????? ? ????? ??????, ?? ???? ???????????? ?????
-                                this.lightningDamage = 50;//???? ??????
-                                this.lightningAngle = 6;//???? ??????????? ?????? ???????????? ???? ????
-                                this.lightningCone = 12;//???????????? ???? ??????????? ??????
+                                this.lightning = 4;
+                                this.lightningLength = 2;
+                                this.lightningLengthRand = 10;
+                                this.lightningDamage = 50;
+                                this.lightningAngle = 6;
+                                this.lightningCone = 12;
 //                                this.largeHit = true;
                                 this.lightColor = this.lightningColor = Color.valueOf("fbff9e");
                             }
