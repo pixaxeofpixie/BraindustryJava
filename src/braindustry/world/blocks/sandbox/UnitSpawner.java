@@ -264,16 +264,15 @@ public class UnitSpawner extends Block {
         }
         @Override
         public void buildConfiguration(Table table) {
-            table.defaults().size(40);
             table.button(Tex.whiteui, Styles.clearTransi, 24.0F, () -> {
                 this.spawnUnits();
-            }).get().getStyle().imageUp=Icon.commandAttack;
+            }).size(40).get().getStyle().imageUp=Icon.commandAttack;
             table.button(Tex.whiteui, Styles.clearTransi, 24.0F, () -> {
                 openUnitDialog();
-            }).fill().grow().get().getStyle().imageUp=Icon.play;
+            }).size(40).fill().grow().get().getStyle().imageUp=Icon.play;
             table.button(Tex.whiteui, Styles.clearTransi, 24.0F, () -> {
                 openCoordsDialog();
-            }).fill().grow().get().getStyle().imageUp=Icon.grid;
+            }).size(40).fill().grow().get().getStyle().imageUp=Icon.grid;
         }
 
         public boolean selected() {
