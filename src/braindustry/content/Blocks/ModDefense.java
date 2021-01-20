@@ -639,37 +639,6 @@ public class ModDefense implements ContentList {
                 consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
             }
         };
-
-        gloryTurret = new LaserTurret("glory"){{
-                this.localizedName = "Synaps";
-                this.requirements(Category.turret, ItemStack.with(Items.plastanium, 340, Items.lead, 350, Items.phaseFabric, 260, Items.surgeAlloy, 360, Items.silicon, 390));
-                this.shootEffect = Fx.greenBomb;
-                this.shootCone = 21f;
-                this.recoilAmount = 6f;
-                this.size = 4;
-                this.shootShake = 3f;
-                this.range = 250f;
-                this.reloadTime = 100f;
-                this.firingMoveFract = 0.4f;
-                this.shootDuration = 280f;
-                this.powerUse = 23f;
-                this.shootSound = Sounds.laserblast;
-                this.loopSound = Sounds.lasercharge2;
-                this.loopSoundVolume = 2.4f;
-
-                this.shootType = new ContinuousLaserBulletType(80){{
-                    this.length = 260f;
-                    this.hitEffect = Fx.hitMeltdown;
-                    this.drawSize = 400f;
-
-                    this.incendChance = 0.7f;
-                    this.incendSpread = 9f;
-                    this.incendAmount = 3;
-                }};
-
-                this.health = 240 * size * size;
-                this.consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
-            }};
         exoticAlloyWallLarge = new Wall("exotic-alloy-wall-large") {
             {
                 this.localizedName = "Exotic Alloy Wall Large";
