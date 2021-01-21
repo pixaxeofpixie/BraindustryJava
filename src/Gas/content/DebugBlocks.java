@@ -22,7 +22,7 @@ public class DebugBlocks {
         gasGenerator = new AllBurnerGenerator("combustion-generator") {
             {
                 this.localizedName = "Combustion Generator";
-
+                this.size = 2;
                 this.requirements(Category.power, ItemStack.with(Items.copper, 50, Items.lead, 40, Items.titanium, 25));
                 this.powerProduction = 1.0F;
                 this.itemDuration = 120.0F;
