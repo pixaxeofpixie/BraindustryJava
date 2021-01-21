@@ -60,16 +60,16 @@ KaenoGenerator.arr = [
     [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.slag, Blocks.dirt, Blocks.dirt],
     [Blocks.dirt, Blocks.slag, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.slag, Blocks.dirt, Blocks.dirt, Blocks.dirt],
     [Blocks.slag, Blocks.dirt, Blocks.mud, Blocks.craters, Blocks.stone, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.slag, Blocks.dirt, Blocks.dirt, Blocks.dirt],
-    [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.slag, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt, Blocks.dirt],  
-    [Blocks.slag, Blocks.slag, Blocks.slag, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt],  
-    [Blocks.slag, Blocks.slag, Blocks.slag, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.slag, Blocks.dirt],  
-    [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.slag, Blocks.slag],  
-    [Blocks.slag, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt],  
-    [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt],
-    [Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.dirt, Blocks.slag, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt], 
-    [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.dirt, Blocks.slag, Blocks.slag, Blocks.slag, Blocks.slag, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.dirt], 
-    [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.slag, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.slag, Blocks.dirt],
-    [Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.dirt]
+    [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.slag, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.slag, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt, Blocks.dirt],  
+    [Blocks.slag, Blocks.slag, Blocks.slag, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt],  
+    [Blocks.slag, Blocks.slag, Blocks.slag, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.slag, Blocks.slag, Blocks.mud, Blocks.dirt, Blocks.slag, Blocks.dirt],  
+    [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.slag, Blocks.dirt, Blocks.dirt, Blocks.slag, Blocks.slag],  
+    [Blocks.slag, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt],  
+    [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.slag, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.slag, Blocks.dirt],
+    [Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.dirt, Blocks.slag, Blocks.slag, Blocks.slag, Blocks.dirt, Blocks.slag, Blocks.slag, Blocks.slag], 
+    [Blocks.slag, Blocks.slag, Blocks.dirt, Blocks.dirt, Blocks.slag, Blocks.slag, Blocks.slag, Blocks.slag, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.slag, Blocks.slag], 
+    [Blocks.slag, Blocks.slag, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.slag, Blocks.slag, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.slag, Blocks.dirt],
+    [Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.slag, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.stone, Blocks.dirt, Blocks.slag, Blocks.dirt]
 ];
 KaenoGenerator.scl = 1.4;
 KaenoGenerator.waterOffset = 0.01;
