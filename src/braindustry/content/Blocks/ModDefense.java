@@ -730,7 +730,7 @@ public class ModDefense implements ContentList {
                 localizedName = "Large Astronomical Wall";
                 size = 2;
                 health = 4650;
-                requirements(Category.defense, ItemStack.with(ModItems.phaseAlloy, 60));
+                requirements(Category.defense, ItemStack.with(ModItems.astroAlloy, 60));
             }
         };
 
@@ -738,6 +738,8 @@ public class ModDefense implements ContentList {
             {
                 localizedName = "Astronomical Wall";
                 size = 1;
+                laserReflect=true;
+                lightningReflect=true;
                 health = 1550;
                 requirements(Category.defense, ItemStack.with(ModItems.astroAlloy, 20));
             }

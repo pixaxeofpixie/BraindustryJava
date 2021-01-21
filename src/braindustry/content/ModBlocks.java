@@ -169,7 +169,7 @@ public class ModBlocks implements ContentList {
 //                addResearch(Blocks.mechanicalDrill, this);
             }
         };
-        largeMultiCrafter = new MultiCrafter("large-multi-crafter") {
+        largeMultiCrafter = new MultiCrafter("multi-kiln") {
             {
                 this.size = 6;
                 this.localizedName = "Multi Kiln";
