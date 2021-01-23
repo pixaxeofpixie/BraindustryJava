@@ -30,7 +30,7 @@ public interface BuildingLabel  extends Buildingc, BuildingTaskQueue{
         newLabel(cons,name,(building)->true);
     }
     default void newLabel(Prov<Building> cons, Func<Building, String> name,Func<Building,Boolean> boolf){
-        addTast(()->{
+        addTast(this,()->{
             Table table = (new Table(Styles.none)).margin(4.0F);
             table.touchable = Touchable.disabled;
             Label label=new Label("");

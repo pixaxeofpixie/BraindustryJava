@@ -18,6 +18,7 @@ import ModVars.modVars;
 import mindustry.Vars;
 import mindustry.game.Team;
 import mindustry.gen.Building;
+import mindustry.gen.ForceDraw;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
 import mindustry.io.JsonIO;
@@ -25,6 +26,8 @@ import mindustry.logic.LAccess;
 import mindustry.world.Block;
 import mindustry.world.blocks.ControlBlock;
 import mindustry.world.blocks.power.PowerGraph;
+import mindustryAddition.graphics.BlackHoleDrawer;
+import mindustryAddition.world.blocks.BuildingTaskQueue;
 
 public class BlockSwitcher extends Block {
     public TextureRegion laser;
@@ -81,23 +84,23 @@ public class BlockSwitcher extends Block {
         return other.dst(forB) <= getRealLaserLength() && forB != other && forB.isValid() && other.isValid() && blockFilter.get(other);
     }
 
-    public class BlockSwitcherBuild extends Building {
+    public class BlockSwitcherBuild extends Building implements BuildingTaskQueue {
         Seq<Building> links = new Seq<>();
-
         public void placed() {
             links.clear();
         }
 
-
+        @Override
+        public void created(){
+            super.created();
+        }
         public void dropped() {
             this.power.links.clear();
             this.power.graph = new PowerGraph();
             this.power.graph.add(this);
         }
-        private Seq<Runnable> onUpdate=new Seq<>();
         public void updateTile() {
-            onUpdate.each(Runnable::run);
-            onUpdate.clear();
+            runUpdateTaskQueue();
             Seq<Building> catchLinks = links.copy();
             catchLinks.each((link) -> {
                 if (!BlockSwitcher.this.goodBuilding(this, link)) links.remove(link);
@@ -186,7 +189,7 @@ public class BlockSwitcher extends Block {
         public void handleString(String value) {
             Seq<Integer> posses = JsonIO.json().fromJson(Seq.class, value);
 
-            onUpdate.add(()->{
+            addTast(()->{
                 links.clear();
                 posses.each((pos) -> {
                     Building build = Vars.world.build(pos);

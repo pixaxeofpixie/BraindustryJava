@@ -66,7 +66,7 @@ import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class AmmoDistributeUnit extends Unit implements  Itemsc, Builderc, Weaponsc, Commanderc, Boundedc, Statusc, Syncc, Minerc, Healthc, Shieldc, Entityc, Teamc, Physicsc, Drawc, Flyingc, Hitboxc, Velc, Rotc, Unitc, Payloadc, Posc, AmmoDistributec {
+public class AmmoDistributeUnit extends Unit implements  Itemsc, Builderc, Weaponsc, Commanderc, Boundedc, Statusc, Syncc, Minerc, Healthc, Shieldc, Entityc, Teamc, Physicsc, Drawc, Flyingc, Hitboxc, Velc, Rotc, Unitc, Posc, AmmoDistributec {
 
     public static int classId = 40;
     public static final Vec2[] vecs = new Vec2[]{new Vec2(), new Vec2(), new Vec2(), new Vec2()};
@@ -118,7 +118,15 @@ public class AmmoDistributeUnit extends Unit implements  Itemsc, Builderc, Weapo
     public String toString() {
         return "AmmoDistributeUnit#" + this.id;
     }
+    public void drawPlanTop(BuildPlan request, float alpha) {
 
+        if (!request.breaking) {
+            Draw.reset();
+            Draw.mixcol(Color.white, 0.24F + Mathf.absin(Time.globalTime, 6.0F, 0.28F));
+            Draw.alpha(alpha);
+            request.block.drawRequestConfigTop(request, plans);
+        }
+    }
     public void move(float cx, float cy) {
         EntityCollisions.SolidPred check = this.solidity();
         if (check != null) {
@@ -702,6 +710,17 @@ public class AmmoDistributeUnit extends Unit implements  Itemsc, Builderc, Weapo
 
             this.remove();
         }
+    }
+
+    @Override
+    public String getControllerName() {
+
+        if (isPlayer()) return getPlayer().name;
+        LogicAI ai;
+        FormationAI fai;
+        if (controller instanceof LogicAI && (ai=(LogicAI)controller)==controller && ai.controller != null) return ai.controller.lastAccessed;
+        if (controller instanceof FormationAI && (fai=(FormationAI)controller)==controller && fai.leader != null && fai.leader.isPlayer()) return fai.leader.getPlayer().name;
+        return null;
     }
 
     public boolean canDrown() {

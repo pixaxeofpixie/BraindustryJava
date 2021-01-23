@@ -2049,6 +2049,16 @@ public class CopyMechUnit extends Unit implements Itemsc, Minerc, ElevationMovec
         }
     }
 
+    @Override
+    public void drawPlanTop(BuildPlan request, float alpha) {
+        if (!request.breaking) {
+            Draw.reset();
+            Draw.mixcol(Color.white, 0.24F + Mathf.absin(Time.globalTime, 6.0F, 0.28F));
+            Draw.alpha(alpha);
+            request.block.drawRequestConfigTop(request, plans);
+        }
+    }
+
     public boolean isPlayer() {
 
         return controller instanceof Player;
