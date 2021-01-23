@@ -9,14 +9,18 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.util.Time;
+import braindustry.world.blocks.BuildingLabel;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.ctype.ContentType;
 import mindustry.entities.Effect;
+import mindustry.game.Team;
+import mindustry.gen.Building;
 import mindustry.graphics.Drawf;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
-import mindustry.world.blocks.power.ItemLiquidGenerator;
+import mindustry.world.Block;
+import mindustry.world.Tile;
 import mindustry.world.consumers.ConsumeItemFilter;
 import mindustry.world.consumers.ConsumeLiquidFilter;
 import mindustry.world.meta.Stat;
@@ -52,7 +56,7 @@ public class AllGenerator extends GasPowerGenerator {
         this.minItemEfficiency = 0.2F;
         this.itemDuration = 70.0F;
         this.minLiquidEfficiency = 0.2F;
-        this.minGasEfficiency = 0.2F;
+        this.minGasEfficiency = 0.2f;
         this.maxLiquidGenerate = 0.4F;
         this.maxGasGenerate = 0.4F;
         this.generateEffect = Fx.generatespark;
@@ -118,10 +122,22 @@ public class AllGenerator extends GasPowerGenerator {
         return 0.0F;
     }
 
-    public class AllGeneratorBuild extends GasPowerGenerator.GasGeneratorBuild {
+    public class AllGeneratorBuild extends GasPowerGenerator.GasGeneratorBuild implements BuildingLabel {
         public float explosiveness;
         public float heat;
         public float totalTime;
+
+        @Override
+        public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
+            Building building = super.init(tile, team, shouldAdd, rotation);
+            return building;
+        }
+
+        @Override
+        public GasBuilding create(Block block, Team team) {
+            GasBuilding building = super.create(block, team);
+            return building;
+        }
 
         public AllGeneratorBuild() {
             super();
@@ -132,6 +148,7 @@ public class AllGenerator extends GasPowerGenerator {
         }
 
         public void updateTile() {
+            runUpdateTaskQueue();
             float calculationDelta = this.delta();
             this.heat = Mathf.lerpDelta(this.heat, this.generateTime >= 0.001F ? 1.0F : 0.0F, 0.05F);
             if (!this.consValid()) {
@@ -142,53 +159,53 @@ public class AllGenerator extends GasPowerGenerator {
                 Liquid liquid = null;
 
                 for (Liquid other : Vars.content.liquids()) {
-                    if (AllGenerator.this.hasLiquids && this.liquids.get(other) >= 0.001F && AllGenerator.this.getLiquidEfficiency(other) >= AllGenerator.this.minLiquidEfficiency) {
+                    if (hasLiquids && this.liquids.get(other) >= 0.001F && getLiquidEfficiency(other) >= minLiquidEfficiency) {
                         liquid = other;
                         break;
                     }
                 }
 
                 for (Gas other : Vars.content.<Gas>getBy(ContentType.typeid_UNUSED)) {
-                    if (AllGenerator.this.hasGas && this.gasses.get(other) >= 0.001F && AllGenerator.this.getGasEfficiency(other) >= AllGenerator.this.minGasEfficiency) {
+                    if (hasGas && this.gasses.get(other) >= 0.001F && getGasEfficiency(other) >= minGasEfficiency) {
                         gas = other;
                         break;
                     }
                 }
 
-                this.totalTime += this.heat * Time.delta;
-                if (AllGenerator.this.hasGas && gas != null && this.gasses.get(gas) > 0.001F) {
-                    float baseLiquidEfficiency = AllGenerator.this.getGasEfficiency(gas);
-                    float maximumPossible = AllGenerator.this.maxGasGenerate * calculationDelta;
-                    float used = Math.min(this.gasses.get(gas) * calculationDelta, maximumPossible);
-                    this.gasses.remove(gas, used * this.power.graph.getUsageFraction());
-                    this.productionEfficiency = baseLiquidEfficiency * used / maximumPossible;
+                totalTime += heat * Time.delta;
+                if (hasGas && gas != null && gasses.get(gas) >= 0.001F) {
+                    float baseGasEfficiency = getGasEfficiency(gas);
+                    float maximumPossible = maxGasGenerate * calculationDelta;
+                    float used = Math.min(gasses.get(gas) * calculationDelta, maximumPossible);
+                    gasses.remove(gas, used * power.graph.getUsageFraction());
+                    productionEfficiency = baseGasEfficiency * used / maximumPossible;
                     if (used > 0.001F && Mathf.chance(0.05D * (double) this.delta())) {
-                        AllGenerator.this.generateEffect.at(this.x + Mathf.range(3.0F), this.y + Mathf.range(3.0F));
+                        generateEffect.at(this.x + Mathf.range(size*8f-5f), this.y + Mathf.range(size*8f-5f));
                     }
-                } else if (AllGenerator.this.hasLiquids && liquid != null && this.liquids.get(liquid) >= 0.001F) {
-                    float baseLiquidEfficiency = AllGenerator.this.getLiquidEfficiency(liquid);
-                    float maximumPossible = AllGenerator.this.maxLiquidGenerate * calculationDelta;
+                } else if (hasLiquids && liquid != null && this.liquids.get(liquid) >= 0.001F) {
+                    float baseLiquidEfficiency = getLiquidEfficiency(liquid);
+                    float maximumPossible = maxLiquidGenerate * calculationDelta;
                     float used = Math.min(this.liquids.get(liquid) * calculationDelta, maximumPossible);
                     this.liquids.remove(liquid, used * this.power.graph.getUsageFraction());
                     this.productionEfficiency = baseLiquidEfficiency * used / maximumPossible;
                     if (used > 0.001F && Mathf.chance(0.05D * (double) this.delta())) {
-                        AllGenerator.this.generateEffect.at(this.x + Mathf.range(3.0F), this.y + Mathf.range(3.0F));
+                        generateEffect.at(this.x + Mathf.range(3.0F), this.y + Mathf.range(3.0F));
                     }
-                } else if (AllGenerator.this.hasItems) {
+                } else if (hasItems) {
                     if (this.generateTime <= 0.0F && this.items.total() > 0) {
-                        AllGenerator.this.generateEffect.at(this.x + Mathf.range(3.0F), this.y + Mathf.range(3.0F));
+                        generateEffect.at(this.x + Mathf.range(3.0F), this.y + Mathf.range(3.0F));
                         Item item = this.items.take();
-                        this.productionEfficiency = AllGenerator.this.getItemEfficiency(item);
+                        this.productionEfficiency = getItemEfficiency(item);
                         this.explosiveness = item.explosiveness;
                         this.generateTime = 1.0F;
                     }
 
                     if (this.generateTime > 0.0F) {
-                        this.generateTime -= Math.min(1.0F / AllGenerator.this.itemDuration * this.delta() * this.power.graph.getUsageFraction(), this.generateTime);
-                        if (AllGenerator.this.randomlyExplode && Vars.state.rules.reactorExplosions && Mathf.chance((double) this.delta() * 0.06D * (double) Mathf.clamp(this.explosiveness - 0.5F))) {
+                        this.generateTime -= Math.min(1.0F / itemDuration * this.delta() * this.power.graph.getUsageFraction(), this.generateTime);
+                        if (randomlyExplode && Vars.state.rules.reactorExplosions && Mathf.chance((double) this.delta() * 0.06D * (double) Mathf.clamp(this.explosiveness - 0.5F))) {
                             Core.app.post(() -> {
                                 this.damage(Mathf.random(11.0F));
-                                AllGenerator.this.explodeEffect.at(this.x + Mathf.range((float) (AllGenerator.this.size * 8) / 2.0F), this.y + Mathf.range((float) (AllGenerator.this.size * 8) / 2.0F));
+                                explodeEffect.at(this.x + Mathf.range((float) (size * 8) / 2.0F), this.y + Mathf.range((float) (size * 8) / 2.0F));
                             });
                         }
                     } else {
@@ -200,24 +217,24 @@ public class AllGenerator extends GasPowerGenerator {
 
 
         public void drawLight() {
-            Drawf.light(this.team, this.x, this.y, (60.0F + Mathf.absin(10.0F, 5.0F)) * (float) AllGenerator.this.size, Color.orange, 0.5F * this.heat);
+            Drawf.light(this.team, this.x, this.y, (60.0F + Mathf.absin(10.0F, 5.0F)) * (float) size, Color.orange, 0.5F * this.heat);
         }
 
         public void draw() {
             super.draw();
-            if (AllGenerator.this.hasItems) {
-                Draw.color(AllGenerator.this.heatColor);
+            if (hasItems) {
+                Draw.color(heatColor);
                 Draw.alpha(this.heat * 0.4F + Mathf.absin(Time.time, 8.0F, 0.6F) * this.heat);
-                Draw.rect(AllGenerator.this.topRegion, this.x, this.y);
+                Draw.rect(topRegion, this.x, this.y);
                 Draw.reset();
             }
 
-            if (AllGenerator.this.hasLiquids) {
-                Drawf.liquid(AllGenerator.this.liquidRegion, this.x, this.y, this.liquids.total() / AllGenerator.this.liquidCapacity, this.liquids.current().color);
+            if (hasLiquids) {
+                Drawf.liquid(liquidRegion, this.x, this.y, this.liquids.total() / liquidCapacity, this.liquids.current().color);
             }
 
-            if (AllGenerator.this.hasGas) {
-                Drawf.liquid(AllGenerator.this.gasRegion, this.x, this.y, this.gasses.total() / AllGenerator.this.gasCapacity, this.gasses.current().color);
+            if (hasGas) {
+                Drawf.liquid(gasRegion, this.x, this.y, this.gasses.total() / gasCapacity, this.gasses.current().color);
             }
         }
     }

@@ -1,12 +1,15 @@
 package Gas.world.consumers;
 
+import arc.func.Cons;
 import arc.struct.Bits;
+import arc.util.Nullable;
 import arc.util.Structs;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
 import mindustry.world.consumers.Consume;
 import mindustry.world.consumers.ConsumeType;
 import mindustry.world.consumers.Consumers;
+import mindustry.world.meta.Stats;
 
 import java.util.Objects;
 
@@ -18,6 +21,17 @@ public class GasConsumers extends Consumers {
     public GasConsumers() {
         super();
         this.gasFilter=new Bits(Vars.content.getBy(ContentType.typeid_UNUSED).size);
+    }public void each(Cons<Consume> c) {
+        Consume[] var2 = this.map;
+        int var3 = var2.length;
+
+        for(int var4 = 0; var4 < var3; ++var4) {
+            Consume cons = var2[var4];
+            if (cons != null) {
+                c.get(cons);
+            }
+        }
+
     }
     public void init() {
         this.results =  Structs.filter(Consume.class, this.map, Objects::nonNull);
@@ -33,12 +47,35 @@ public class GasConsumers extends Consumers {
             }
         }
     }
+    @Nullable
+    public Consume[] all() {
+        return this.results;
+    }
+    public Consume[] optionals() {
+        return this.optionalResults;
+    }
     public <T extends Consume> T add(T consume) {
         if (consume instanceof GasConsume){
             return (T) addGas(((GasConsume)consume));
         }
         this.map[consume.type().ordinal()] = consume;
         return consume;
+    }
+
+    public void remove(ConsumeType type) {
+        this.map[type.ordinal()] = null;
+    }
+
+    public boolean has(ConsumeType type) {
+        return this.map[type.ordinal()] != null;
+    }
+
+    public <T extends Consume> T get(ConsumeType type) {
+        if (this.map[type.ordinal()] == null) {
+            throw new IllegalArgumentException("Block does not contain consumer of type '" + type + "'!");
+        } else {
+            return (T) this.map[type.ordinal()];
+        }
     }
 
     public boolean hasGas() {
@@ -59,5 +96,16 @@ public class GasConsumers extends Consumers {
     public <T extends GasConsume> T addGas(T consume) {
         this.map[3] = consume;
         return consume;
+    }public void display(Stats stats) {
+        Consume[] var2 = this.map;
+        int var3 = var2.length;
+
+        for(int var4 = 0; var4 < var3; ++var4) {
+            Consume c = var2[var4];
+            if (c != null) {
+                c.display(stats);
+            }
+        }
+
     }
 }
