@@ -14,8 +14,10 @@ import arc.scene.ui.layout.Scl;
 import arc.struct.Seq;
 import arc.util.Time;
 import braindustry.entities.bullets.RainbowLaserBulletType;
+import braindustry.world.blocks.sandbox.UnitSpawner;
 import mindustry.Vars;
 import mindustry.gen.Bullet;
+import mindustry.gen.Entityc;
 import mindustry.graphics.Shaders;
 
 import static ModVars.modVars.modInfo;
@@ -279,6 +281,12 @@ static {
             this.setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
             this.setUniformf("iResolution", getScreenSize());
 //            this.setUniformf("offset", );
+        }
+
+        public void set(Entityc entityc) {
+            this.offsetId=entityc.id();
+            super.set();
+
         }
     }
 

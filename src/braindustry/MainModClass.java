@@ -56,7 +56,7 @@ public class MainModClass extends Mod {
         modVars.init();
         ModListener.load();
         ModListener.updaters.add(()->{
-            if (Vars.state.isPlaying() && !Core.scene.hasDialog()){
+            if ((Vars.state.isPlaying() || Vars.state.isPaused()) && !Core.scene.hasDialog()){
                 if (keyBinds.keyTap(unitDialogBing)){
                     openUnitChooseDialog();
                 }

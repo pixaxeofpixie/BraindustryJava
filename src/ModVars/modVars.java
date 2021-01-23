@@ -6,11 +6,13 @@ import ModVars.Classes.UI.Cheat.ModCheatItemsMenu;
 import ModVars.Classes.UI.ModControlsDialog;
 import ModVars.Classes.UI.settings.ModOtherSettingsDialog;
 import ModVars.Classes.UI.settings.ModSettingsDialog;
+import arc.struct.Seq;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedPayloadUnit;
 import braindustry.entities.Advanced.AdvancedUnitWaterMove;
 import braindustry.entities.AmmoDistributeUnit;
 import braindustry.entities.PowerGeneratorUnit;
+import braindustry.gen.Drawer;
 import braindustry.gen.StealthMechUnit;
 import braindustry.input.ModBinding;
 import braindustry.input.ModKeyBinds;
@@ -38,18 +40,25 @@ public class modVars {
         otherSettingsDialog=new ModOtherSettingsDialog();
         settingsDialog=new ModSettingsDialog();
 
-        mapClass(AmmoDistributeUnit.class);
-        mapClass(PowerGeneratorUnit.class);
-        mapClass(AdvancedLegsUnit.class);
-        mapClass(AdvancedPayloadUnit.class);
-        mapClass(AdvancedUnitWaterMove.class);
-        mapClass(StealthMechUnit.class);
+        mapClasses(AmmoDistributeUnit.class,
+                PowerGeneratorUnit.class,
+                AdvancedLegsUnit.class,
+                AdvancedPayloadUnit.class,
+                AdvancedUnitWaterMove.class,
+                StealthMechUnit.class,
+//                Drawer.class,
+                null);
     }
     public static void load() {
         settings = new ModSettings();
     }
+    private static  <T> void mapClasses(Class<?>... objClasses) {
+        Seq.with(objClasses).each(modVars::mapClass);
+    }
+
     private static  <T> void mapClass(Class<?> objClass) {
         try {
+            if (objClass==null)return;
             Constructor<?> cons = objClass.getDeclaredConstructor();
             objClass.getField("classId").setInt(objClass,classOffset+lastClass);
             EntityMapping.idMap[classOffset+lastClass++] = () -> {
