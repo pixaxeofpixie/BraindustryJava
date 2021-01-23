@@ -2,6 +2,7 @@ package braindustry.content.Blocks;
 
 import braindustry.content.ModItems;
 import braindustry.content.ModLiquids;
+import braindustry.world.blocks.power.BlackHoleReactor;
 import braindustry.world.blocks.production.MultiRotorDrill;
 import arc.math.geom.Vec2;
 import mindustry.content.Blocks;
@@ -134,7 +135,7 @@ public class ModOtherBlocks implements ContentList {
                 this.itemDrop = ModItems.odinum;
             }
         };
-        blackHoleReactor = new ImpactReactor("black-hole-reactor") {
+        blackHoleReactor = new BlackHoleReactor("black-hole-reactor") {
             {
                 this.localizedName = "Blackhole Reactor";
                 this.description = "Create power from small Blackhole in center.";
