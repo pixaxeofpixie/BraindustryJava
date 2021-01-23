@@ -330,19 +330,19 @@ public class ModOtherBlocks implements ContentList {
                 this.variants = 3;
             }
         };
-        dirtRocksWall = new StaticWall("dirt-rocks-wall") {
+        dirtRocksWall = new StaticWall("dirt-rocks") {
             {
                 this.localizedName = "Hard Dirt Wall";
                 this.breakable = false;
                 this.alwaysReplace = false;
                 this.solid = true;
-                this.variants = 3;
+                this.variants = 2;
             }
         };
         jungleFloor = new Floor("jungle-floor") {
             {
                 this.localizedName = "Jungle Floor";
-                this.variants = 5;
+                this.variants = 3;
             }
         };
         crimzesFloor = new Floor("crimzes-floor") {
