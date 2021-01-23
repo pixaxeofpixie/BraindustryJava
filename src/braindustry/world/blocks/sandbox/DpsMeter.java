@@ -44,6 +44,7 @@ public class DpsMeter extends Block {
         config(MeterContainer.class,(t,conteiner)->{
             DpsMeterBuild tile=(DpsMeterBuild)t;
             tile.container=conteiner==null?new MeterContainer():conteiner;
+            Vars.indexer.updateIndices(tile.tile);
         });
     }
 
@@ -158,12 +159,22 @@ public class DpsMeter extends Block {
             font.getData().setScale(1);
         }
 
+        @Override
+        public boolean collision(Bullet other) {
+
+            this.damage(other.damage*other.damageMultiplier()*
+                    (container.unit ? 1f : other.type().buildingDamageMultiplier));
+            return true;
+        }
+
+        @Override
+        public boolean collide(Bullet other) {
+            return super.collide(other);
+        }
+
         public void addButton(Table cont, Team team) {
             cont.button(new TextureRegionDrawable(teamRegionButton).tint(team.color), Styles.clearToggleTransi, () -> {
-//                    this._team = team;
                 container.selectedTeam=team;
-//            lastConfig.team = team;
-                Vars.indexer.updateIndices(tile);
                 configure(container);
                 deselect();
             });
@@ -205,6 +216,7 @@ public class DpsMeter extends Block {
                     } else {
                         container.time = 60f;
                     }
+                    configure(container);
                 }).width(100);
                 TextArea textArea = a.get();
                 textArea.setMaxLength((Float.MAX_VALUE + "").length());
