@@ -3,5 +3,5 @@ displayName: "Braindustry"
 author: "Braindustry Team & MotrONa & G0rillaGlue"
 main: "braindustry.MainModClass"
 version: 2.0
-minGameVersion: 122.1
+minGameVersion: 123
 
