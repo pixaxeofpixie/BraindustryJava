@@ -19,6 +19,7 @@ public class modVars {
     public static ModAtlas modAtlas;
     public static Mods.LoadedMod modInfo;
     private static int lastClass = 0;
+    public static boolean loaded=false;
 
     public static void load() {
         mapClass(AmmoDistributeUnit.class);
