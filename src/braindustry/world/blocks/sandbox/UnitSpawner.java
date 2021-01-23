@@ -13,6 +13,7 @@ import arc.struct.Bits;
 import arc.struct.Seq;
 import arc.util.Strings;
 import braindustry.content.ModFx;
+import braindustry.gen.Drawer;
 import braindustry.graphics.ModShaders;
 import mindustry.Vars;
 import mindustry.game.EventType;
@@ -79,18 +80,26 @@ public class UnitSpawner extends Block {
         }
     }
 
-    public class UnitSpawnerBuild extends Building {
-        Tile spawnTile;
+    public class UnitSpawnerBuild extends Building implements Drawer.BuilderDrawer {
+        Vec2 spawnPos;
         Team defaultUnitTeam;
         Seq<UnitEntry> unitEntries=new Seq<>();
+        Drawer drawer;
 
         @Override
         public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
             UnitSpawnerBuild build = (UnitSpawnerBuild) super.init(tile, Team.derelict, shouldAdd, rotation);
             build.defaultUnitTeam = team;
-            build.spawnTile=build.tile;
+            build.spawnPos =new Vec2(tile.worldx(),tile.worldy());
 //            build.
             return build;
+        }
+
+        @Override
+        public void created() {
+            super.created();
+            drawer=Drawer.create(this);
+            if (added)drawer.add();
         }
 
         public void text(Table cont, String text) {
@@ -125,7 +134,7 @@ public class UnitSpawner extends Block {
                                         b.add(u.localizedName);
                                     },
                                     () -> {
-                                        unitEntries.add(new UnitEntry(u,Vars.player.team(),1,new Vec2(spawnTile.worldx(),spawnTile.worldy())));
+                                        unitEntries.add(new UnitEntry(u,Vars.player.team(),1,spawnPos));
 //                                    this.addUnit([u.id, this.getTeam(), this.getMultiplier(), this.getSpawnPos()]);
                                     }
                             ).width(188.0f).margin(12).fillX();
@@ -147,7 +156,7 @@ public class UnitSpawner extends Block {
                 }).growX().height(54).pad(4).row();
 
                 t.button("@button.tp-all-units", () -> {
-                    Groups.unit.each(unit -> unit.set(spawnTile.worldx(), spawnTile.worldy()));
+                    Groups.unit.each(unit -> unit.set(spawnPos));
                 }).growX().height(54).pad(4);
 
                 t.button("@button.damage-all-units", () -> {
@@ -240,7 +249,7 @@ public class UnitSpawner extends Block {
         public void tapAt(Tile tile) {
             UnitSpawner.this.currentBuilding=null;
             UnitSpawner.this.choose=false;
-            spawnTile=tile;
+            spawnPos =new Vec2(tile.worldx(),tile.worldy());
             ModFx.blockSelect.at(tile.worldx(),tile.worldy(),1,Color.lime,Color.white);
             if (Vars.control.input instanceof DesktopInput){
                 ((DesktopInput)Vars.control.input).panning=false;
@@ -259,7 +268,7 @@ public class UnitSpawner extends Block {
             Vars.ui.announce("click on need tile");
             UnitSpawner.this.currentBuilding=this;
             UnitSpawner.this.choose=true;
-            Core.camera.position.set(spawnTile.worldx(),spawnTile.worldy());
+            Core.camera.position.set(getPos());
 //            Core.camera.position.set(this.x,this.y);
         }
         @Override
@@ -333,9 +342,21 @@ public class UnitSpawner extends Block {
         }
 
         @Override
+        public void add() {
+            super.add();
+            if (drawer!=null)drawer.add();
+        }
+        @Override
+        public void remove() {
+            super.remove();
+            if (drawer!=null)drawer.remove();
+        }
+
+        @Override
         public void updateTile() {
             super.updateTile();
             this.team = Team.derelict;
+            drawer.set(getPos());
         }
 
         @Override
@@ -433,5 +454,19 @@ public class UnitSpawner extends Block {
             return true;
         }
 
+        @Override
+        public void drawer() {
+            Draw.draw(Draw.z(),()->{
+                ModShaders.rainbow.set(this);
+                Draw.rect(UnitSpawner.this.colorRegion, getPos().x, getPos().y);
+                Draw.shader();
+            });
+
+        }
+
+        @Override
+        public Vec2 getPos() {
+            return new Vec2().set(spawnPos.cpy());
+        }
     }
 }

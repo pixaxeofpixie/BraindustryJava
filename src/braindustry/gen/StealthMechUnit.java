@@ -15,6 +15,8 @@ import arc.math.geom.QuadTree;
 import arc.math.geom.Vec2;
 import arc.util.Structs;
 import arc.util.Time;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
 import braindustry.input.ModBinding;
 import braindustry.type.StealthUnitType;
 import mindustry.Vars;
@@ -54,7 +56,6 @@ public class StealthMechUnit extends CopyMechUnit {
         this.reloadMultiplier = 1.0F;
         this.buildAlpha = 0.0F;*/
     }
-
     public static StealthMechUnit create() {
         return new StealthMechUnit();
     }
@@ -69,25 +70,36 @@ public class StealthMechUnit extends CopyMechUnit {
         super.setType(type);
         stealthType = (StealthUnitType) type;
     }
-
+boolean check=false;
     public boolean selectStealth() {
-        boolean bool = modVars.keyBinds.keyTap(ModBinding.stealthBing);
-        if (Vars.mobile) return isShooting;
-        return bool;
+        boolean bool;
+        if (isLocal()){
+             bool = modVars.keyBinds.keyTap(ModBinding.stealthBing);
+            if (Vars.mobile) return isShooting;
+            return bool;
+        }
+        bool=mustHeal();
+        return !inStealth && bool;
     }
-
+    public boolean mustHeal(){
+        boolean bool1=health<=stealthType.minHealth;
+        boolean bool2=health>stealthType.maxHealth;
+        if (!check && bool1){
+            check=true;
+            return bool1;
+        } else if (check && bool2){
+            check=false;
+            return bool1;
+        }
+        return !bool2;
+    }
     @Override
     public void update() {
+        if (inStealth){
+            updateLastPosition();
+        }
         super.update();
         cooldownStealth = Math.max(0, cooldownStealth - Time.delta);
-        /*if (inStealth != selectStealth()) {
-            if (!inStealth) {
-                Groups.unit.add(this);
-            } else {
-                Groups.unit.remove(this);
-            }
-//            inStealth = this.isShooting;
-        }*/
         if (inStealth) {
             durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
             if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
@@ -245,6 +257,38 @@ public class StealthMechUnit extends CopyMechUnit {
 
         return this.isFlying() ? null : EntityCollisions::solid;
 //        return this.isFlying() ? null : (x, y) -> !EntityCollisions.solid(x, y);
+    }
+
+    @Override
+    public void write(Writes write) {
+        super.write(write);
+        write.bool(inStealth);
+        write.f(cooldownStealth);
+        write.f(durationStealth);
+    }
+
+    @Override
+    public void writeSync(Writes write) {
+        super.writeSync(write);
+        write.bool(inStealth);
+        write.f(cooldownStealth);
+        write.f(durationStealth);
+    }
+
+    @Override
+    public void read(Reads read) {
+        super.read(read);
+        inStealth=read.bool();
+        cooldownStealth=read.f();
+        durationStealth=read.f();
+    }
+
+    @Override
+    public void readSync(Reads read) {
+        super.readSync(read);
+        inStealth=read.bool();
+        cooldownStealth=read.f();
+        durationStealth=read.f();
     }
 
     public void set(float x, float y) {
