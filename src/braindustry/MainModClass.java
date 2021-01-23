@@ -20,17 +20,16 @@ import arc.struct.Seq;
 import arc.util.*;
 import braindustry.entities.bullets.ModLightningBulletType;
 import braindustry.graphics.ModShaders;
+import braindustry.input.ModBinding;
 import braindustry.ui.fragments.ModMenuFragment;
 import mindustry.*;
 import mindustry.content.*;
-import mindustry.core.Version;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.EntityCollisions;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.bullet.LightningBulletType;
 import mindustry.game.EventType;
 import mindustry.game.EventType.*;
-import mindustry.game.Schematics;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.io.JsonIO;
@@ -48,13 +47,30 @@ import mindustryAddition.iu.AdvancedContentInfoDialog;
 
 import static ModVars.modFunc.*;
 import static ModVars.modVars.*;
-import static arc.Core.assets;
-import static mindustry.Vars.schematics;
+import static braindustry.input.ModBinding.*;
 
 public class MainModClass extends Mod {
 
     public void init() {
         if (!loaded)return;
+        modVars.init();
+        ModListener.load();
+        ModListener.updaters.add(()->{
+            if (Vars.state.isPlaying() && !Core.scene.hasDialog()){
+                if (keyBinds.keyTap(unitDialogBing)){
+                    openUnitChooseDialog();
+                }
+                if (keyBinds.keyTap(teamDialogBing)){
+                    openTeamChooseDialog();
+                }
+                if (keyBinds.keyTap(unlockDialogBing)){
+                    openUnlockContentDialog();
+                }
+                if (keyBinds.keyTap(itemManagerDialogBing)){
+                    openModCheatItemsMenu();
+                }
+            }
+        });
         Events.fire(new ModEventType.ModInit());
         EventOn(EventType.ClientLoadEvent.class,(e)->{
             Vars.ui.menuGroup.remove();
@@ -108,44 +124,31 @@ public class MainModClass extends Mod {
         dialog.show();
     }
     private void constructor() {
+        if (!loaded)return;
         modInfo = Vars.mods.getMod(this.getClass());
+        Blocks.interplanetaryAccelerator.buildVisibility = BuildVisibility.shown;
+        Blocks.blockForge.buildVisibility = BuildVisibility.shown;
+        Blocks.blockLoader.buildVisibility = BuildVisibility.shown;
+        Blocks.blockUnloader.buildVisibility = BuildVisibility.shown;
         new ModCheatMenu((table)->{
             table.button("Cheat menu",()->{
                 BaseDialog dialog=new BaseDialog("Cheat-menu");
                 dialog.cont.table((t)->{
                     t.defaults().size(280.0F, 60.0F);
                     t.button("Change team", () -> {
-                        new TeamChooseDialog((team)->{
-                            try {
-                                Vars.player.team(team);
-                            } catch (Exception exception) {
-                                showException(exception);
-                            }
-                        }).show();
+                        openTeamChooseDialog();
                     }).growX().row();
                     t.button("Change unit", () -> {
-                        new UnitChooseDialog((unitType)->{
-                            Tile tile=Vars.player.tileOn();
-                            if (unitType.constructor.get() instanceof UnitWaterMove && !unitType.flying && EntityCollisions.waterSolid(Vars.player.tileX(), Vars.player.tileY())){
-                                Color color=Color.valueOf(Strings.format("#@",Color.scarlet.toString()));
-                                getInfoDialog("","Can't spawn water unit!!!","You not on the water",color.lerp(Color.white,0.2f)).show();
-                                return false;
-                            }
-                            Unit newUnit = unitType.spawn(Vars.player.x, Vars.player.y);
-                            newUnit.spawnedByCore = true;
-                            Vars.player.unit().spawnedByCore = true;
-                            Vars.player.unit(newUnit);
-                            return true;
-                        }).show();
+                        openUnitChooseDialog();
                     }).growX().row();
                     t.button("Change sandbox", () -> {
                         Vars.state.rules.infiniteResources=!Vars.state.rules.infiniteResources;
                     }).growX().row();
                     t.button("Items manager", () -> {
-                        new ModCheatItemsMenu().show(()->{},()->{});
+                        openModCheatItemsMenu();
                     }).growX().row();
                     t.button("Unlock content", () -> {
-                        new UnlockContentDialog().show();
+                        openUnlockContentDialog();
                     }).growX().row();
                 });
                 dialog.addCloseListener();
@@ -162,7 +165,75 @@ public class MainModClass extends Mod {
             dialog.cont.button("Ok", dialog::hide).size(100f, 50f);
             dialog.show();
         });
+        Boolf<BulletType> replace=(b)->(b instanceof LightningBulletType && !(b instanceof ModLightningBulletType));
+        Func<BulletType,ModLightningBulletType> newBullet=(old)->{
+
+            ModLightningBulletType newType=new ModLightningBulletType();
+            JsonIO.copy(old,newType);
+            return newType;
+        };
+        Vars.content.each((c)->{
+            if (c instanceof UnlockableContent){
+                UnlockableContent content=(UnlockableContent)c;
+                if (content instanceof Block){
+                    if (content instanceof Turret){
+                        if (content instanceof PowerTurret){
+                            PowerTurret powerTurret=(PowerTurret)content;
+                            if (replace.get(powerTurret.shootType)){
+                                powerTurret.shootType=newBullet.get(powerTurret.shootType);
+                            }
+                        } else if (content instanceof ItemTurret){
+                            ItemTurret itemTurret=(ItemTurret)content;
+                            ObjectMap<Item,BulletType> toReplace=new ObjectMap<>();
+                            for (ObjectMap.Entry<Item, BulletType> entry: itemTurret.ammoTypes.entries()) {
+                                if (replace.get(entry.value)){
+                                    toReplace.put(entry.key,entry.value);
+                                }
+                            }
+                            for (ObjectMap.Entry<Item, BulletType> entry: toReplace.entries()) {
+                                itemTurret.ammoTypes.put(entry.key, newBullet.get(entry.value));
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
+
+    public static  void openUnlockContentDialog() {
+        new UnlockContentDialog().show();
+    }
+
+    public static  void openModCheatItemsMenu() {
+        new ModCheatItemsMenu().show(()->{},()->{});
+    }
+//    private static boolean openDialog=false;
+    public static void openUnitChooseDialog() {
+        new UnitChooseDialog((unitType)->{
+            Tile tile=Vars.player.tileOn();
+            if (unitType.constructor.get() instanceof UnitWaterMove && !unitType.flying && EntityCollisions.waterSolid(Vars.player.tileX(), Vars.player.tileY())){
+                Color color=Color.valueOf(Strings.format("#@",Color.scarlet.toString()));
+                getInfoDialog("","Can't spawn water unit!!!","You not on the water",color.lerp(Color.white,0.2f)).show();
+                return false;
+            }
+            Unit newUnit = unitType.spawn(Vars.player.x, Vars.player.y);
+            newUnit.spawnedByCore = true;
+            Vars.player.unit().spawnedByCore = true;
+            Vars.player.unit(newUnit);
+            return true;
+        }).show();
+    }
+
+    public static  void openTeamChooseDialog() {
+        new TeamChooseDialog((team)->{
+            try {
+                Vars.player.team(team);
+            } catch (Exception exception) {
+                showException(exception);
+            }
+        }).show();
+    }
+
     public MainModClass() {
         EventOn(DisposeEvent.class,(d)->{
             if (Vars.ui.menufrag instanceof ModMenuFragment)((ModMenuFragment)Vars.ui.menufrag).dispose();
@@ -171,46 +242,7 @@ public class MainModClass extends Mod {
         modInfo = Vars.mods.getMod(this.getClass());
         modVars.load();
         EventOn(ClientLoadEvent.class, (e) -> {
-            modInfo = Vars.mods.getMod(this.getClass());
-            Blocks.interplanetaryAccelerator.buildVisibility = BuildVisibility.shown;
-            Blocks.blockForge.buildVisibility = BuildVisibility.shown;
-            Blocks.blockLoader.buildVisibility = BuildVisibility.shown;
-            Blocks.blockUnloader.buildVisibility = BuildVisibility.shown;
-            modInfo = Vars.mods.getMod(this.getClass());
             constructor();
-            Boolf<BulletType> replace=(b)->(b instanceof LightningBulletType && !(b instanceof ModLightningBulletType));
-            Func<BulletType,ModLightningBulletType> newBullet=(old)->{
-
-                ModLightningBulletType newType=new ModLightningBulletType();
-                JsonIO.copy(old,newType);
-                return newType;
-            };
-            Vars.content.each((c)->{
-                if (c instanceof UnlockableContent){
-                    UnlockableContent content=(UnlockableContent)c;
-                    if (content instanceof Block){
-                        if (content instanceof Turret){
-                            if (content instanceof PowerTurret){
-                                PowerTurret powerTurret=(PowerTurret)content;
-                                if (replace.get(powerTurret.shootType)){
-                                    powerTurret.shootType=newBullet.get(powerTurret.shootType);
-                                }
-                            } else if (content instanceof ItemTurret){
-                                ItemTurret itemTurret=(ItemTurret)content;
-                                ObjectMap<Item,BulletType> toReplace=new ObjectMap<>();
-                                for (ObjectMap.Entry<Item, BulletType> entry: itemTurret.ammoTypes.entries()) {
-                                    if (replace.get(entry.value)){
-                                        toReplace.put(entry.key,entry.value);
-                                    }
-                                }
-                                for (ObjectMap.Entry<Item, BulletType> entry: toReplace.entries()) {
-                                        itemTurret.ammoTypes.put(entry.key, newBullet.get(entry.value));
-                                }
-                            }
-                        }
-                    }
-                }
-            });
         });
     }
 

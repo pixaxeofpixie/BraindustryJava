@@ -1,13 +1,17 @@
 package ModVars.Classes;
 
+import ModVars.modVars;
 import arc.Core;
 import arc.Events;
 import arc.scene.ui.Dialog;
+import arc.scene.ui.TextButton;
 import arc.util.Strings;
 import braindustry.MainModClass;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
+import mindustry.gen.Tex;
+import mindustry.ui.Styles;
 
 import static ModVars.modFunc.fullName;
 import static ModVars.modVars.modInfo;
@@ -67,34 +71,7 @@ public class ModSettings {
                         button.label(() -> Strings.format("@", modInfo==null?"":modInfo.meta.displayName));
                     },
                     () -> {
-                        Dialog dialog=new Dialog("@settings"){
-                            @Override
-                            public void addCloseButton(){
-                                this.buttons.button("@back", Icon.leftOpen, () -> {
-                                    this.hide();
-                                }).size(230.0F, 64.0F);
-                            }
-                        };
-                        dialog.buttons.table((t)->{
-                            t.check("@cheat",cheating(),(b)->{
-                                cheating(b);
-                            }).row();
-                            t.check("@debug",debug(),(b)->{
-                                debug(b);
-                            });
-                        }).row();
-                        dialog.buttons.table((t)->{
-                        }).row();
-                        dialog.buttons.table((t)->{
-                            t.slider(0,360,0.1f,getFloat("angle"),(b)->{
-                                setFloat("angle",b);
-                            }).row();
-                        }).row();
-                        dialog.closeOnBack();
-                        dialog.buttons.button("@back", Icon.leftOpen, () -> {
-                            dialog.hide();
-                        }).size(230.0F, 64.0F).bottom();
-                        dialog.show();
+                        modVars.settingsDialog.show();
                     }).height(84).right().row();
         });
     }

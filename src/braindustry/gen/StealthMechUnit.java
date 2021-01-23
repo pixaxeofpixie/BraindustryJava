@@ -1,5 +1,6 @@
 package braindustry.gen;
 
+import ModVars.modVars;
 import arc.Core;
 import arc.func.Cons;
 import arc.func.Floatc4;
@@ -12,11 +13,11 @@ import arc.math.Mathf;
 import arc.math.geom.Geometry;
 import arc.math.geom.QuadTree;
 import arc.math.geom.Vec2;
-import arc.struct.Bits;
 import arc.util.Structs;
 import arc.util.Time;
+import braindustry.input.ModBinding;
+import braindustry.type.StealthUnitType;
 import mindustry.Vars;
-import mindustry.ctype.ContentType;
 import mindustry.entities.EntityCollisions;
 import mindustry.entities.units.AIController;
 import mindustry.entities.units.BuildPlan;
@@ -26,17 +27,21 @@ import mindustry.gen.Groups;
 import mindustry.gen.Hitboxc;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
+import mindustry.type.UnitType;
 import mindustry.world.Tile;
 import mindustry.world.blocks.ConstructBlock;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustryAddition.gen.CopyMechUnit;
 
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class StealthMechUnit extends CopyMechUnit {
     public static int classId = 0;
     public boolean inStealth = false;
+    public float cooldownStealth = 0;
+    public float durationStealth = 0;
+    StealthUnitType stealthType;
+    private boolean clicked = false;
 
     public StealthMechUnit() {
         super();
@@ -59,16 +64,43 @@ public class StealthMechUnit extends CopyMechUnit {
     }
 
     @Override
+    public void setType(UnitType type) {
+        if (!(type instanceof StealthUnitType)) return;
+        super.setType(type);
+        stealthType = (StealthUnitType) type;
+    }
+
+    public boolean selectStealth() {
+        boolean bool = modVars.keyBinds.keyTap(ModBinding.stealthBing);
+        if (Vars.mobile) return isShooting;
+        return bool;
+    }
+
+    @Override
     public void update() {
         super.update();
-        if (inStealth != this.isShooting) {
-            if (inStealth) {
+        cooldownStealth = Math.max(0, cooldownStealth - Time.delta);
+        /*if (inStealth != selectStealth()) {
+            if (!inStealth) {
                 Groups.unit.add(this);
             } else {
                 Groups.unit.remove(this);
             }
-            inStealth = this.isShooting;
+//            inStealth = this.isShooting;
+        }*/
+        if (inStealth) {
+            durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
+            if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
+                inStealth = false;
+                Groups.unit.add(this);
+                cooldownStealth = (durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown;
+            }
+        } else if (cooldownStealth == 0f && selectStealth()) {
+            inStealth = true;
+            durationStealth = 0;
+            Groups.unit.remove(this);
         }
+
     }
 
     public void getCollisions(Cons<QuadTree> consumer) {
@@ -94,8 +126,8 @@ public class StealthMechUnit extends CopyMechUnit {
 //        Color color = team.color.cpy();
 //        Draw.color(color.cpy());
 //        drawRect(Lines::rect, this.x, this.y, this.hitSize);
-        Draw.color(isShooting ? Color.red : Color.gray);
-        drawRect(Lines::rect, this.x, this.y, this.clipSize());
+        Draw.color(inStealth ? Color.red : Color.gray);
+        drawRect(Lines::rect, this.x, this.y, this.hitSize);
 //        if (true) return;
         float tx;
         float ty;
@@ -121,10 +153,8 @@ public class StealthMechUnit extends CopyMechUnit {
         }
 
         this.type.draw(this);
-        Iterator var20 = this.statuses.iterator();
 
-        while (var20.hasNext()) {
-            StatusEntry e = (StatusEntry) var20.next();
+        for (StatusEntry e : this.statuses) {
             e.effect.draw(this);
         }
 
@@ -213,8 +243,8 @@ public class StealthMechUnit extends CopyMechUnit {
 
     public EntityCollisions.SolidPred solidity() {
 
-//        return this.isFlying() ? null : EntityCollisions::solid;
-        return this.isFlying() ? null : (x, y) -> !EntityCollisions.solid(x, y);
+        return this.isFlying() ? null : EntityCollisions::solid;
+//        return this.isFlying() ? null : (x, y) -> !EntityCollisions.solid(x, y);
     }
 
     public void set(float x, float y) {
