@@ -23,6 +23,7 @@ import braindustry.graphics.ModShaders;
 import braindustry.ui.fragments.ModMenuFragment;
 import mindustry.*;
 import mindustry.content.*;
+import mindustry.core.Version;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.EntityCollisions;
 import mindustry.entities.bullet.BulletType;
@@ -51,7 +52,9 @@ import static arc.Core.assets;
 import static mindustry.Vars.schematics;
 
 public class MainModClass extends Mod {
+
     public void init() {
+        if (!loaded)return;
         Events.fire(new ModEventType.ModInit());
         EventOn(EventType.ClientLoadEvent.class,(e)->{
             Vars.ui.menuGroup.remove();
@@ -230,6 +233,7 @@ public class MainModClass extends Mod {
         Vars.content.each((c)->{
             if (c instanceof UnlockableContent) checkTranslate((UnlockableContent)c);
         });
+        loaded=true;
     }
 
 }
