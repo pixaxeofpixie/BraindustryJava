@@ -1,5 +1,6 @@
 package braindustry.entities.Advanced;
 
+import ModVars.modVars;
 import arc.Core;
 import arc.Events;
 import arc.func.Boolf;
@@ -60,14 +61,20 @@ import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.payloads.BuildPayload;
 import mindustry.world.blocks.payloads.UnitPayload;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustryAddition.versions.ModEntityc;
 
 import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class AdvancedLegsUnit extends LegsUnit {
+public class AdvancedLegsUnit extends LegsUnit implements ModEntityc {
     public static int classId = 42;
     public int classId() {
+        return modVars.MOD_CONTENT_ID;
+    }
+
+    @Override
+    public int modClassId() {
         return classId;
     }
 

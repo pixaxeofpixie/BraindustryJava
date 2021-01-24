@@ -15,8 +15,6 @@ public class GasInit {
         if (debug){
             new DebugBlocks().load();
         }
-        EntityMapping.idMap[Cloud.classId]=Cloud::new;
-        EntityMapping.idMap[39]=Cloud::new;
         new BasicBlocks().load();
     }
 }

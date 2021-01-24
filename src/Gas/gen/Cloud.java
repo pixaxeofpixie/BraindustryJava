@@ -2,6 +2,7 @@ package Gas.gen;
 
 import Gas.entities.Clouds;
 import Gas.type.Gas;
+import ModVars.modVars;
 import arc.func.Cons;
 import arc.graphics.Blending;
 import arc.graphics.Color;
@@ -34,11 +35,12 @@ import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.environment.Floor;
+import mindustryAddition.versions.ModEntityc;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Cloud implements Pool.Poolable, Entityc, Drawc, Posc {
+public class Cloud implements Pool.Poolable, Entityc, Drawc, Posc, ModEntityc {
     public static final int maxGeneration = 2;
     public static final Color tmp = new Color();
     public static final Rect rect = new Rect();
@@ -55,7 +57,7 @@ public class Cloud implements Pool.Poolable, Entityc, Drawc, Posc {
     public transient int id = EntityGroup.nextId();
     public float x;
     public float y;
-    public static final int classId=Byte.MAX_VALUE-1;
+    public static int classId=Byte.MAX_VALUE-1;
 
     public Cloud() {
     }
@@ -343,6 +345,11 @@ public class Cloud implements Pool.Poolable, Entityc, Drawc, Posc {
     }
 
     public int classId() {
+        return modVars.MOD_CONTENT_ID;
+    }
+
+    @Override
+    public int modClassId() {
         return classId;
     }
 

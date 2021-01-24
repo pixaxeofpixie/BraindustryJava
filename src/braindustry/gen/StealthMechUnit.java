@@ -34,10 +34,11 @@ import mindustry.world.Tile;
 import mindustry.world.blocks.ConstructBlock;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustryAddition.gen.CopyMechUnit;
+import mindustryAddition.versions.ModEntityc;
 
 import java.util.Arrays;
 
-public class StealthMechUnit extends CopyMechUnit implements StealthUnitc {
+public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEntityc {
     public static int classId = 0;
     public boolean inStealth = false;
     public float cooldownStealth = 0;
@@ -353,8 +354,12 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc {
         return true;
     }
 
-    public int classId() {
+    @Override
+    public int modClassId() {
         return classId;
+    }
+    public int classId() {
+        return modVars.MOD_CONTENT_ID;
     }
 
 

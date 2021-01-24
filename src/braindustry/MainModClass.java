@@ -56,6 +56,7 @@ public class MainModClass extends Mod {
         if (!loaded)return;
         modVars.init();
         ModListener.load();
+        AdvancedSettingsMenuDialog.init();
         ModListener.updaters.add(()->{
             if ((Vars.state.isPlaying() || Vars.state.isPaused()) && !Core.scene.hasDialog()){
                 if (keyBinds.keyTap(unitDialogBing)){
@@ -87,7 +88,6 @@ public class MainModClass extends Mod {
         Vars.ui.menufrag=new ModMenuFragment();
 //        Vars.ui.menufrag.
         Vars.ui.menufrag.build(Vars.ui.menuGroup);
-        AdvancedSettingsMenuDialog.init();
         AdvancedContentInfoDialog.init();
     }
     public static TextureRegion getIcon() {

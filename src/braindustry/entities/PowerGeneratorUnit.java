@@ -1,5 +1,6 @@
 package braindustry.entities;
 
+import ModVars.modVars;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.struct.Seq;
@@ -13,8 +14,9 @@ import mindustry.gen.Building;
 import mindustry.gen.UnitWaterMove;
 import mindustry.world.Block;
 import mindustry.world.Tile;
+import mindustryAddition.versions.ModEntityc;
 
-public class PowerGeneratorUnit extends UnitWaterMove {
+public class PowerGeneratorUnit extends UnitWaterMove implements ModEntityc {
     public static int classId = 41;
     public Seq<Building> links = new Seq<>();
     public UnitPowerGenerator.UnitPowerGeneratorBuild generatorBuilding;
@@ -31,8 +33,14 @@ public class PowerGeneratorUnit extends UnitWaterMove {
     }
 
     public int classId() {
+        return modVars.MOD_CONTENT_ID;
+    }
+
+    @Override
+    public int modClassId() {
         return classId;
     }
+
     private <T extends Building,E extends Block> T createBuild(E block){
         Building building=block.buildType.get().create(block,team);
         return (T)building;

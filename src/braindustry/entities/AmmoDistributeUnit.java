@@ -1,5 +1,6 @@
 package braindustry.entities;
 
+import ModVars.modVars;
 import arc.Core;
 import arc.Events;
 import arc.func.Boolf;
@@ -61,12 +62,13 @@ import mindustry.world.blocks.payloads.Payload;
 import mindustry.world.blocks.payloads.UnitPayload;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.units.ResupplyPoint;
+import mindustryAddition.versions.ModEntityc;
 
 import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class AmmoDistributeUnit extends Unit implements  Itemsc, Builderc, Weaponsc, Commanderc, Boundedc, Statusc, Syncc, Minerc, Healthc, Shieldc, Entityc, Teamc, Physicsc, Drawc, Flyingc, Hitboxc, Velc, Rotc, Unitc, Posc, AmmoDistributec {
+public class AmmoDistributeUnit extends Unit implements ModEntityc,  Itemsc, Builderc, Weaponsc, Commanderc, Boundedc, Statusc, Syncc, Minerc, Healthc, Shieldc, Entityc, Teamc, Physicsc, Drawc, Flyingc, Hitboxc, Velc, Rotc, Unitc, Posc, AmmoDistributec {
 
     public static int classId = 40;
     public static final Vec2[] vecs = new Vec2[]{new Vec2(), new Vec2(), new Vec2(), new Vec2()};
@@ -2353,6 +2355,11 @@ public class AmmoDistributeUnit extends Unit implements  Itemsc, Builderc, Weapo
     }
 
     public int classId() {
+        return modVars.MOD_CONTENT_ID;
+    }
+
+    @Override
+    public int modClassId() {
         return classId;
     }
 
