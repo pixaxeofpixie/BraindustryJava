@@ -8,6 +8,8 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.math.Angles;
 import arc.math.Mathf;
+import arc.math.geom.Point2;
+import arc.math.geom.Position;
 import arc.math.geom.Vec2;
 import arc.struct.IntSet;
 import arc.struct.OrderedMap;
@@ -19,6 +21,7 @@ import mindustry.entities.units.BuildPlan;
 import mindustry.gen.Building;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
+import mindustry.input.Placement;
 import mindustry.ui.Bar;
 import mindustry.world.Block;
 import mindustry.world.Tile;
@@ -102,13 +105,22 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
     }
 
     public Tile findLink(int x, int y) {
+        return findLink(x,y,true);
+    }public Tile findLink(int x, int y,boolean checkBlock) {
         Tile tile = Vars.world.tile(x, y);
-        return tile != null && this.lastBuild != null && this.linkValid(tile, this.lastBuild.tile) && this.lastBuild.tile != tile ? this.lastBuild.tile : null;
+        if (checkBlock) {
+            if (tile != null && this.lastBuild != null && this.linkValid(tile, this.lastBuild.tile) && this.lastBuild.tile != tile)
+                return this.lastBuild.tile;
+        } else {
+            if (tile != null && this.lastBuild != null && this.linkValid(tile, this.lastBuild.tile,false,true) && this.lastBuild.tile != tile)
+                return this.lastBuild.tile;
+        }
+        return null;
     }
 
     @Override
     public void drawPlace(int x, int y, int rotation, boolean valid) {
-        Tile link = this.findLink(x, y);
+        Tile link = this.findLink(x, y,false);
         Lines.stroke(2.0F, Pal.placing);
         Lines.dashCircle(x * 8f, y * 8f, range * 8f);
 
@@ -122,7 +134,8 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
             Lines.stroke(1.0F);
             float rectX = (float) (x + link.x) / 2.0F * 8.0F - w / 2.0F,
                     rectY = (float) (y + link.y) / 2.0F * 8.0F - h / 2.0F;
-            Lines.poly(ModLines.rotRect(rectX, rectY, w, h, angle).toArray(Vec2.class), 0, 0, 1f);
+//            Lines.poly(ModLines.rotRect(rectX, rectY, w, h, angle).toArray(Vec2.class), 0, 0, 1f);
+            ModLines.rect(rectX,rectY,w,h,angle);
             Tmp.v1.set(x, y).sub(link.x, link.y).setLength(4.0F).scl(-1.0F);
             Vec2 arrowOffset = new Vec2(Tmp.v1).scl(1f).setLength(1f);
             Draw.rect("bridge-arrow", link.x * 8f - arrowOffset.x * 8f, link.y * 8f - arrowOffset.y * 8f, angle - 90f);
@@ -138,9 +151,12 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
 
     @Override
     public boolean linkValid(Tile tile, Tile other, boolean checkDouble) {
+    return linkValid(tile,other,checkDouble,false);
+    }
+    public boolean linkValid(Tile tile, Tile other, boolean checkDouble,boolean old) {
         old:
         {
-            if (true) break old;
+            if (!old) break old;
             if (other != null && tile != null && this.positionsValid(tile.x, tile.y, other.x, other.y)) {
                 return (other.block() == tile.block() && tile.block() == this || !(tile.block() instanceof ItemBridge) && other.block() == this) && (other.team() == tile.team() || tile.block() != this) && (!checkDouble || ((ItemBridgeBuild) other.build).link != tile.pos());
             } else {
@@ -154,7 +170,7 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
             tile = tile.build.tile;
             int offset = other.block().isMultiblock() ? Mathf.floor(other.block().size / 2f) : 0;
             boolean b2 = tile.pos() != other.pos();
-            if (tile.block() instanceof CrossItemBridge) {
+            if (tile.block() ==this) {
                 Vec2 offVec = Tmp.v1.trns(tile.angleTo(other) + 90f, offset, offset);
                 if (!positionsValid(tile.x, tile.y, Mathf.ceil(other.x + offVec.x), Mathf.ceil(other.y + offVec.y)))
                     break check;
@@ -165,16 +181,16 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
                 }
                 return ((block.connectFilter.get(other.build)) || !(tile.block() instanceof ItemBridge) && other.block() == this) &&
                         b2 &&
-                        (other.team() == tile.team() || tile.block() != this) &&
+                        (other.team() == tile.team() || other.block() != this) &&
 
                         (!checkDouble || !connected);
             } else {
                 if (!positionsValid(tile.x, tile.y, other.x, other.y)) break check;
                 boolean b3 = other.team() == tile.team() || tile.block() != this;
-                if (other.block() instanceof CrossItemBridge) {
+                if (other.block() == this) {
                     CrossItemBridge block = (CrossItemBridge) other.block();
-                    boolean b1 = (other.block() == tile.block() && tile.block() == this || !(tile.block() instanceof ItemBridge) && other.block() == this);
-                    boolean b4 = !checkDouble || !(tile.build instanceof ItemBridgeBuild && ((ItemBridgeBuild) tile.build).link == other.pos());
+                    boolean b1 = true;
+                    boolean b4 = !checkDouble || !(other.build instanceof ItemBridgeBuild && ((ItemBridgeBuild) other.build).link == tile.pos());
                     return b1 &&
                             b2 &&
                             b3 &&
@@ -193,7 +209,17 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
     public boolean positionsValid(int x1, int y1, int x2, int y2) {
         return Mathf.within(x1, y1, x2, y2, range + 0.5f);
     }
-
+    public boolean positionsValid(Position pos, Position other) {
+        return positionsValid((int)pos.getX(),(int)pos.getY(),(int) other.getX(),(int)other.getY());
+    }
+    public boolean positionsValid(Point2 pos, Point2 other) {
+        return positionsValid(pos.x,pos.y, other.x,other.y);
+    }
+    public void changePlacementPath(Seq<Point2> points, int rotation) {
+        Placement.calculateNodes(points, this, rotation, (point, other) -> {
+            return positionsValid(point,other);
+        });
+    }
     public class CrossItemBridgeBuild extends ItemBridge.ItemBridgeBuild implements BuildingLabel, BuildingTaskQueue {
         public void drawBase() {
             Draw.rect(this.block.region, this.x, this.y, this.block.rotate ? this.rotdeg() : 0.0F);
@@ -267,7 +293,7 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
             if (linkBuilding != null) {
                 configure(linkBuilding.pos());
             } else {
-                configure(-1);
+//                configure(-1);
             }
             this.time += this.cycleSpeed * this.delta();
             this.time2 += (this.cycleSpeed - 1.0F) * this.delta();

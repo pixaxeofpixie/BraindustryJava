@@ -2,62 +2,44 @@ package mindustryAddition.graphics;
 
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
+import arc.math.Mathf;
 import arc.math.geom.Rect;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Rectangle2D;
-import java.util.Arrays;
 
 public class ModLines {
     private static float stroke;
+    private static Vec2 vec2(float x,float y){
+        return new Vec2(x,y);
+    }
     public static Seq<Vec2> rotRect(float x, float y, float width, float height,float rot){
-        Rectangle2D r = new Rectangle().getBounds2D();
-        r.setRect(x, y, width, height);
-
-
-        AffineTransform at = AffineTransform.getRotateInstance(
-                Math.toRadians(rot), r.getCenterX(), r.getCenterY());
-
-        PathIterator i = r.getPathIterator(at);
+        float vw = width / 2f;
+        float vh = height / 2f;
+        Seq<Vec2> points=Seq.with(vec2(-vw,-vh),vec2(vw,-vh),vec2(vw,vh),vec2(-vw,vh),vec2(-vw,-vh));
         Seq<Vec2> cords=new Seq<>();
-        while (!i.isDone()) {
-            float[] xy = new float[2];
-            i.currentSegment(xy);
-            cords.add(new Vec2(xy[0], xy[1]));
-            i.next();
-        }
-//        cords.reverse();
-        cords.remove(cords.size-1);
+        points.each((point)->{
+            cords.add(point.cpy().rotate(rot).add(x+vw,y+vh));
+        });
+//        if (cords.size>5)cords.remove(cords.size-1);
         return cords;
     }
-    public static void rect(float x, float y, float width, float height, float xspace, float yspace,float rot) {
-        stroke= Lines.getStroke();
-        x -= xspace;
-        y -= yspace;
-        width += xspace * 2.0F;
-        height += yspace * 2.0F;
-        Fill.rect(x, y, width, stroke,rot);
-        Fill.rect(x, y + height, width, -stroke,rot);
-        Fill.rect(x + width*2f, y, -stroke, height,rot);
-        Fill.rect(x, y, stroke, height,rot);
+    public static void rect(float x, float y, float width, float height, float offsetx, float offsety,float rot) {
+        Lines.poly(ModLines.rotRect(x, y, width, height, rot).toArray(Vec2.class), offsetx, offsety, 1f);
     }
 
     public static void rect(float x, float y, float width, float height) {
         rect(x, y, width, height, 0);
     }
     public static void rect(float x, float y, float width, float height,float rot) {
-        rect(x, y, width, height, 0,0,rot);
+        rect(x,y,width,height,0,0,rot);
     }
 
     public static void rect(Rect rect) {
         rect(rect.x, rect.y, rect.width, rect.height, 0);
     }
 
-    public static void rect(float x, float y, float width, float height, int space) {
-        rect(x, y, width, height, (float)space, (float)space,0F);
+    public static void rect(float x, float y, float width, float height, int offset) {
+        rect(x, y, width, height, (float)offset, (float)offset,0F);
     }
 }
