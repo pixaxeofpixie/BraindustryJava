@@ -34,13 +34,13 @@ public class ModDefense implements ContentList {
 
     @Override
     public void load() {
-        heartbeat =new ItemTurret("heartbeat"){
+        rapier =new ItemTurret("rapier"){
             {
-                this.localizedName="Heartbeat";
+                this.localizedName="Rapier";
                 this.range = 200;
 //                this.recoilAmount = 28;
                 this.reloadTime = 70;
-                this.size = 5;
+                this.size = 3;
                 this.shots = 1;
                 this.health = 5800;
                 this.inaccuracy = 0;
@@ -49,7 +49,7 @@ public class ModDefense implements ContentList {
                 this.targetAir = true;
                 this.targetGround = true;
                 this.ammo(
-                        ModItems.odinum, new BasicBulletType(){public void draw(Bullet b) {
+                       /* ModItems.odinum, new BasicBulletType(){public void draw(Bullet b) {
                             float height = this.height * (1.0F - this.shrinkY + this.shrinkY * b.fout());
                             float width = this.width * (1.0F - this.shrinkX + this.shrinkX * b.fout());
                             float offset = -90.0F + (this.spin != 0.0F ? Mathf.randomSeed((long)b.id, 360.0F) + b.time * this.spin : 0.0F);
@@ -81,7 +81,7 @@ public class ModDefense implements ContentList {
                                 this.frontColor=Color.white;
                                 this.hitColor=this.trailColor=this.lightColor=this.lightningColor=Color.gray;
                             }
-                        },
+                        },*/
                         Items.phaseFabric, new SpikeCircleOrbonBullet()
                 );
                 this.consumes.liquid(Liquids.cryofluid,0.2f).optional(false,true);
@@ -626,14 +626,23 @@ public class ModDefense implements ContentList {
         gem = new LaserTurret("gem") {
             {
                 localizedName = "Gem";
-                requirements(Category.turret, ItemStack.with(Items.copper, 10));
+                requirements(Category.turret, ItemStack.with(ModItems.astroAlloy, 480));
                 size = 14;
                 health = 240 * size * size;
                 range = 240f;
                 this.shootType = new RainbowLaserBulletType(){
                     {
-                        length=100f;
-                        lifetime=120f;
+                        damage = 1400f;
+                        length = 400f;
+                        lifetime = 120f;
+                        width = 200f;
+                        hittable = false;
+                        absorbable = false;
+                        hitEffect = Fx.hitMeltHeal;
+                    //    hitColor = colors[2];
+                        despawnEffect = ModFx.curseEffect;
+                        shootEffect = Fx.hitMeltdown;
+                        smokeEffect = Fx.rocketSmokeLarge;
                     }
                 };
                 consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);

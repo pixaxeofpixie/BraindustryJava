@@ -1320,7 +1320,7 @@ public class ModUnitTypes implements ContentList {
                 this.description = "Heavy stealth unit with dangerous laser and magma guns.";
 
                 this.weapons.add(
-                        new ModWeapon("troplex-grinder") {
+                        new ModWeapon("troplex-grinder2") {
                             {
                                 this.x = -5;
                                 this.y = 0f;
@@ -1383,16 +1383,16 @@ public class ModUnitTypes implements ContentList {
                 this.health = 16000;
                 int brange = 1;
                 this.localizedName = "Nemesis";
-                this.description = "Slow and dangerous sniper unit with railguns.";
+                this.description = "Slow and dangerous sniper unit with railgun.";
 
                 this.weapons.add(
-                        new ModWeapon("troplex-grinder") {
+                        new ModWeapon("troplex-grinder2") {
                             {
                                 this.x = -5;
                                 this.y = 0f;
                                 this.shootY = -1f;
                                 this.reload = 80;
-                                this.ejectEffect = ModFx.napalmShoot;
+                                this.ejectEffect = ModFx.YellowBeamCharge;
                                 this.recoil = 5;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
