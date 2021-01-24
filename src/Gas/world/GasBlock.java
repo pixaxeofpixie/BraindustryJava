@@ -5,6 +5,7 @@ import Gas.GasBuilding;
 import Gas.type.Gas;
 import Gas.world.consumers.ConsumeGasses;
 import Gas.world.consumers.GasConsumers;
+import Gas.GasStats;
 import arc.Core;
 import arc.func.Cons;
 import arc.func.Func;
@@ -33,6 +34,8 @@ public class GasBlock extends Block {
     public float gasCapacity ;
     public boolean outputsGas = false;
     public final GasConsumers consumes = new GasConsumers();
+    public GasStats stats = new GasStats();
+
 //    4a4b53
     public GasBlock(String name) {
         super(name);
