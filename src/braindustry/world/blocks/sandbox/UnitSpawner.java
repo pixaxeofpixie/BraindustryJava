@@ -461,7 +461,6 @@ public class UnitSpawner extends Block {
                 Draw.rect(UnitSpawner.this.colorRegion, getPos().x, getPos().y);
                 Draw.shader();
             });
-
         }
 
         @Override
