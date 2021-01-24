@@ -160,9 +160,7 @@ public void dispose(){
             this.checkPlay(var10001::show);
         });
         TextureRegionDrawable var10002 = Icon.settings;
-        SettingsMenuDialog var10004 = Vars.ui.settings;
-        Objects.requireNonNull(var10004);
-        MobileButton tools = new MobileButton(var10002, "@settings", var10004::show);
+        MobileButton tools = new MobileButton(var10002, "@settings", Vars.ui.settings::show);
         var10002 = Icon.book;
         ModsDialog var10 = Vars.ui.mods;
         Objects.requireNonNull(var10);
@@ -258,9 +256,7 @@ public void dispose(){
             Objects.requireNonNull(var3);
             var10002[3] = new Buttoni("@mods", var10008, var3::show);
             var10008 = Icon.settings;
-            SettingsMenuDialog var4 = Vars.ui.settings;
-            Objects.requireNonNull(var4);
-            var10002[4] = new Buttoni("@settings", var10008, var4::show);
+            var10002[4] = new Buttoni("@settings", var10008, Vars.ui.settings::show);
             var10008 = Icon.info;
             AboutDialog var5 = Vars.ui.about;
             Objects.requireNonNull(var5);

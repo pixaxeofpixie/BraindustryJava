@@ -7,12 +7,12 @@ import arc.files.ZipFi;
 import arc.graphics.Texture;
 import arc.input.KeyCode;
 import arc.scene.Element;
+import arc.scene.Scene;
+import arc.scene.event.FocusListener;
 import arc.scene.event.InputEvent;
 import arc.scene.event.InputListener;
-import arc.scene.ui.Image;
-import arc.scene.ui.ScrollPane;
-import arc.scene.ui.Slider;
-import arc.scene.ui.TextButton;
+import arc.scene.event.Touchable;
+import arc.scene.ui.*;
 import arc.scene.ui.layout.Table;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
@@ -52,16 +52,231 @@ import static mindustry.Vars.net;
 import static mindustry.Vars.*;
 
 public class AdvancedSettingsMenuDialog extends SettingsMenuDialog {
-    public SettingsTable graphics;
-    public SettingsTable game;
-    public SettingsTable sound;
 
     private Table prefs;
     private Table menu;
     private BaseDialog dataDialog;
     private boolean wasPaused;
+    public void edge(int edge){
+        this.edge=edge;
+    }
+    public int edge(){
+        return edge;
+    }
+    protected void DialogConstuctor(){
+        this.ignoreTouchDown = new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
+                event.cancel();
+                return false;
+            }
+        };
+        AdvancedSettingsMenuDialog me=this;
+        boolean keepWithinStage=true;
+        /*this.isMovable = false;
+        this.isModal = true;
+        this.isResizable = false;
+        this.center = true;
+        this.resizeBorder = 8;
+        this.keepWithinStage = true;*/
+        Dialog.DialogStyle style=getStyle();
+        if (title == null) {
+            throw new IllegalArgumentException("title cannot be null.");
+        } else {
+            this.touchable = Touchable.enabled;
+            this.setClip(true);
+//            this.titleTable.add(this.title).expandX().fillX().minWidth(0.0F);
+            this.add(this.titleTable).growX().row();
+            this.setStyle(style);
+            this.setWidth(150.0F);
+            this.setHeight(150.0F);
+            this.addCaptureListener(new InputListener() {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
+                    me.toFront();
+                    return false;
+                }
+            });
+            this.addListener(new InputListener() {
+                float startX;
+                float startY;
+                float lastX;
+                float lastY;
 
+                private void updateEdge(float x, float y) {
+                    float border = (float)8f / 2.0F;
+                    float width = me.getWidth();
+                    float height = me.getHeight();
+                    float padTop = me.getMarginTop();
+                    float padRight = me.getMarginRight();
+                    float right = width - padRight;
+                    me.edge(0);
+                    if (me.isResizable() && x >= me.getMarginLeft() - border && x <= right + border && y >= me.getMarginBottom() - border) {
+                        Dialog mevar10000;
+                        if (x < me.getMarginLeft() + border) {
+                            me.edge |= 8;
+                        }
+
+                        if (x > right - border) {
+                            me.edge |= 16;
+                        }
+
+                        if (y < me.getMarginBottom() + border) {
+                            me.edge |= 4;
+                        }
+
+                        if (me.edge != 0) {
+                            border += 25.0F;
+                        }
+
+                        if (x < me.getMarginLeft() + border) {
+                            me.edge |= 8;
+                        }
+
+                        if (x > right - border) {
+                            me.edge |= 16;
+                        }
+
+                        if (y < me.getMarginBottom() + border) {
+                            me.edge |= 4;
+                        }
+                    }
+
+                    if (me.isMovable() && me.edge == 0 && y <= height && y >= height - padTop && x >= me.getMarginLeft() && x <= right) {
+                        me.edge = 32;
+                    }
+
+                }
+
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, KeyCode button) {
+                    if (button == KeyCode.mouseLeft) {
+                        this.updateEdge(x, y);
+                        me.dragging = me.edge != 0;
+                        this.startX = x;
+                        this.startY = y;
+                        this.lastX = x - me.getWidth();
+                        this.lastY = y - me.getHeight();
+                    }
+
+                    return me.edge != 0 || me.isModal();
+                }
+
+                public void touchUp(InputEvent event, float x, float y, int pointer, KeyCode button) {
+                    me.dragging = false;
+                }
+
+                public void touchDragged(InputEvent event, float x, float y, int pointer) {
+                    if (me.dragging) {
+                        float width = me.getWidth();
+                        float height = me.getHeight();
+                        float windowX = me.x;
+                        float windowY = me.y;
+                        float minWidth = me.getMinWidth();
+                        float minHeight = me.getMinHeight();
+                        Scene stage = me.getScene();
+                        boolean clampPosition = keepWithinStage && me.parent == stage.root;
+                        float amountY;
+                        if ((me.edge & 32) != 0) {
+                            amountY = x - this.startX;
+                            float amountYx = y - this.startY;
+                            windowX += amountY;
+                            windowY += amountYx;
+                        }
+
+                        if ((me.edge & 8) != 0) {
+                            amountY = x - this.startX;
+                            if (width - amountY < minWidth) {
+                                amountY = -(minWidth - width);
+                            }
+
+                            if (clampPosition && windowX + amountY < 0.0F) {
+                                amountY = -windowX;
+                            }
+
+                            width -= amountY;
+                            windowX += amountY;
+                        }
+
+                        if ((me.edge & 4) != 0) {
+                            amountY = y - this.startY;
+                            if (height - amountY < minHeight) {
+                                amountY = -(minHeight - height);
+                            }
+
+                            if (clampPosition && windowY + amountY < 0.0F) {
+                                amountY = -windowY;
+                            }
+
+                            height -= amountY;
+                            windowY += amountY;
+                        }
+
+                        if ((me.edge & 16) != 0) {
+                            amountY = x - this.lastX - width;
+                            if (width + amountY < minWidth) {
+                                amountY = minWidth - width;
+                            }
+
+                            if (clampPosition && windowX + width + amountY > stage.getWidth()) {
+                                amountY = stage.getWidth() - windowX - width;
+                            }
+
+                            width += amountY;
+                        }
+
+                        if ((me.edge & 2) != 0) {
+                            amountY = y - this.lastY - height;
+                            if (height + amountY < minHeight) {
+                                amountY = minHeight - height;
+                            }
+
+                            if (clampPosition && windowY + height + amountY > stage.getHeight()) {
+                                amountY = stage.getHeight() - windowY - height;
+                            }
+
+                            height += amountY;
+                        }
+
+                        me.setBounds((float)Math.round(windowX), (float)Math.round(windowY), (float)Math.round(width), (float)Math.round(height));
+                    }
+                }
+
+                public boolean mouseMoved(InputEvent event, float x, float y) {
+                    this.updateEdge(x, y);
+                    return me.isModal();
+                }
+
+                public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
+                    return me.isModal();
+                }
+
+                public boolean keyDown(InputEvent event, KeyCode keycode) {
+                    return me.isModal();
+                }
+
+                public boolean keyUp(InputEvent event, KeyCode keycode) {
+                    return me.isModal();
+                }
+
+                public boolean keyTyped(InputEvent event, char character) {
+                    return me.isModal();
+                }
+            });
+            this.setOrigin(1);
+            this.defaults().pad(3.0F);
+            this.add(this.cont).expand().fill();
+            this.row();
+            this.add(this.buttons).fillX();
+            this.cont.defaults().pad(3.0F);
+            this.buttons.defaults().pad(3.0F);
+            this.shown(this::updateScrollFocus);
+        }
+    }
     public AdvancedSettingsMenuDialog(){
+        super();
+        clearContent(this);
+        this.addCloseButton();
+        this.main = new SettingsDialog.SettingsTable();
+        this.cont.add(this.main);
+        DialogConstuctor();
         hidden(() -> {
             Sounds.back.play();
             if(state.isGame()){
@@ -81,9 +296,9 @@ public class AdvancedSettingsMenuDialog extends SettingsMenuDialog {
         });
 
         setFillParent(true);
-        title.setAlignment(Align.center);
-        titleTable.row();
-        titleTable.add(new Image()).growX().height(3f).pad(4f).get().setColor(Pal.accent);
+//        title.setAlignment(Align.center);
+//        titleTable.row();
+//        titleTable.add(new Image()).growX().height(3f).pad(4f).get().setColor(Pal.accent);
 
         cont.clearChildren();
         cont.remove();
@@ -270,7 +485,6 @@ public class AdvancedSettingsMenuDialog extends SettingsMenuDialog {
 
         addSettings();
     }
-
     String getLogs(){
         Fi log = settings.getDataDirectory().child("last_log.txt");
 
@@ -462,6 +676,7 @@ public class AdvancedSettingsMenuDialog extends SettingsMenuDialog {
         graphics.checkPref("flow", true);
     }
 
+    @Override
     public void exportData(Fi file) throws IOException {
         Seq<Fi> files = new Seq<>();
         files.add(Core.settings.getSettingsFile());
@@ -482,6 +697,7 @@ public class AdvancedSettingsMenuDialog extends SettingsMenuDialog {
         }
     }
 
+    @Override
     public void importData(Fi file){
         Fi dest = Core.files.local("zipdata.zip");
         file.copyTo(dest);
@@ -538,13 +754,45 @@ public class AdvancedSettingsMenuDialog extends SettingsMenuDialog {
             }
         });
     }
+    public static void clearContent(Table dialog) {
+        dialog.clear();
+        dialog.clearActions();
+        dialog.clearListeners();
+        dialog.reset();
+    }
+
+    public static void clearContent(SettingsMenuDialog dialog){
+        dialog.clear();
+        dialog.clearActions();
+        dialog.clearListeners();
+        clearContent(dialog.cont);
+        clearContent(dialog.main);
+        clearContent(dialog.buttons);
+        dialog.reset();
+        clearContent(dialog.game);
+        clearContent(dialog.graphics);
+    }
+    public static void clearContent(AdvancedSettingsMenuDialog dialog){
+        dialog.clear();
+        dialog.clearActions();
+        dialog.clearListeners();
+        clearContent(dialog.cont);
+        clearContent(dialog.main);
+        clearContent(dialog.buttons);
+        clearContent(dialog.game);
+        clearContent(dialog.graphics);
+    }
     public static void init() {
-        Vars.ui.settings.remove();
-        Vars.ui.settings = new AdvancedSettingsMenuDialog();
         if (mobile){
             control.setInput(new ModMobileInput());
         } else {
             control.setInput(new ModDesktopInput());
         }
+        clearContent(ui.settings);
+//        Vars.ui.settings.clipEnd();
+        Vars.ui.settings.remove();
+//        Vars.ui.settings.shown();
+        Vars.ui.settings = new AdvancedSettingsMenuDialog();
+
     }
 }
