@@ -310,10 +310,9 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        aquila = new AdvancedUnitType("aquila") {
+        aquila = new UnitType("aquila") {
             {
-                this.extensions(UnitExtensions.blink);
-                this.constructor = AdvancedLegsUnit::new;
+                this.constructor = Types.legs;
                 this.groundLayer = 75.0F;
                 this.localizedName = "Aquila";
                 this.description = "Fires a Sap bullets and big large laser.";
