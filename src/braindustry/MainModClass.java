@@ -1,6 +1,7 @@
 package braindustry;
 
 import Gas.GasInit;
+import ModVars.Classes.UI.settings.AdvancedSettingsMenuDialog;
 import arc.func.Boolf;
 import arc.func.Func;
 import arc.graphics.Color;
@@ -50,7 +51,7 @@ import static ModVars.modVars.*;
 import static braindustry.input.ModBinding.*;
 
 public class MainModClass extends Mod {
-
+    public static ModListener modListener;
     public void init() {
         if (!loaded)return;
         modVars.init();
@@ -73,18 +74,20 @@ public class MainModClass extends Mod {
         });
         Events.fire(new ModEventType.ModInit());
         EventOn(EventType.ClientLoadEvent.class,(e)->{
-            Vars.ui.menuGroup.remove();
-            Vars.ui.menuGroup = new WidgetGroup();
-            Vars.ui.menuGroup.setFillParent(true);
-            Vars.ui.menuGroup.touchable = Touchable.childrenOnly;
-            Vars.ui.menuGroup.visible(() -> {
-                return Vars.state.isMenu();
-            });
-            Core.scene.add(Vars.ui.menuGroup);
-            Vars.ui.menufrag=new ModMenuFragment();
-//        Vars.ui.menufrag.
-            Vars.ui.menufrag.build(Vars.ui.menuGroup);
         });
+
+        Vars.ui.menuGroup.remove();
+        Vars.ui.menuGroup = new WidgetGroup();
+        Vars.ui.menuGroup.setFillParent(true);
+        Vars.ui.menuGroup.touchable = Touchable.childrenOnly;
+        Vars.ui.menuGroup.visible(() -> {
+            return Vars.state.isMenu();
+        });
+        Core.scene.add(Vars.ui.menuGroup);
+        Vars.ui.menufrag=new ModMenuFragment();
+//        Vars.ui.menufrag.
+        Vars.ui.menufrag.build(Vars.ui.menuGroup);
+        AdvancedSettingsMenuDialog.init();
         AdvancedContentInfoDialog.init();
     }
     public static TextureRegion getIcon() {

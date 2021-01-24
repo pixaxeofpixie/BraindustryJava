@@ -70,12 +70,20 @@ public class StealthMechUnit extends CopyMechUnit {
         super.setType(type);
         stealthType = (StealthUnitType) type;
     }
-boolean check=false;
+boolean check= false,check2=false;
+    public boolean longPress=false;
     public boolean selectStealth() {
         boolean bool;
         if (isLocal()){
              bool = modVars.keyBinds.keyTap(ModBinding.stealthBing);
-            if (Vars.mobile) return isShooting;
+            if (Vars.mobile) {
+                if (!check2 && longPress){
+                    check2=true;
+                    longPress=false;
+                    return true;
+                }
+                return false;
+            }
             return bool;
         }
         bool=mustHeal();
@@ -86,12 +94,29 @@ boolean check=false;
         boolean bool2=health>stealthType.maxHealth;
         if (!check && bool1){
             check=true;
-            return bool1;
+            return true;
         } else if (check && bool2){
             check=false;
             return bool1;
         }
         return !bool2;
+    }
+    public void checkStealth() {
+        if (inStealth) {
+            while (Groups.unit.contains(u->u==this)){
+                Groups.unit.remove(this);
+            }
+            durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
+            if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
+                inStealth = false;
+                Groups.unit.add(this);
+                cooldownStealth = (durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown;
+            }
+        } else if (cooldownStealth == 0f && selectStealth()) {
+            inStealth = true;
+            durationStealth = 0;
+            Groups.unit.remove(this);
+        }
     }
     @Override
     public void update() {
@@ -101,6 +126,9 @@ boolean check=false;
         super.update();
         cooldownStealth = Math.max(0, cooldownStealth - Time.delta);
         if (inStealth) {
+            while (Groups.unit.contains(u->u==this)){
+                Groups.unit.remove(this);
+            }
             durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
             if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
                 inStealth = false;
@@ -308,4 +336,6 @@ boolean check=false;
     public int classId() {
         return classId;
     }
+
+
 }
