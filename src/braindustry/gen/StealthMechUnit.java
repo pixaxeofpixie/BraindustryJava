@@ -42,6 +42,7 @@ public class StealthMechUnit extends CopyMechUnit {
     public boolean inStealth = false;
     public float cooldownStealth = 0;
     public float durationStealth = 0;
+    public boolean healing;
     StealthUnitType stealthType;
     private boolean clicked = false;
 
@@ -87,6 +88,9 @@ boolean check= false,check2=false;
             return bool;
         }
         bool=mustHeal();
+        if (bool && healing){
+            return inStealth;
+        }
         return !inStealth && bool;
     }
     public boolean mustHeal(){
@@ -100,23 +104,6 @@ boolean check= false,check2=false;
             return bool1;
         }
         return !bool2;
-    }
-    public void checkStealth() {
-        if (inStealth) {
-            while (Groups.unit.contains(u->u==this)){
-                Groups.unit.remove(this);
-            }
-            durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
-            if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
-                inStealth = false;
-                Groups.unit.add(this);
-                cooldownStealth = (durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown;
-            }
-        } else if (cooldownStealth == 0f && selectStealth()) {
-            inStealth = true;
-            durationStealth = 0;
-            Groups.unit.remove(this);
-        }
     }
     @Override
     public void update() {
@@ -159,16 +146,14 @@ boolean check= false,check2=false;
     }
 
     public void drawAlpha() {
-        Draw.alpha(!inStealth ? Draw.getColor().a : this.isLocal() ? 0.25f : 0f);
+        Draw.alpha(getAlpha()*Draw.getColor().a);
+    }
+    public float getAlpha(){
+        return !inStealth ? Draw.getColor().a : this.isLocal() ? 0.25f : 0f;
     }
 
     public void draw() {
-//        Color color = team.color.cpy();
-//        Draw.color(color.cpy());
-//        drawRect(Lines::rect, this.x, this.y, this.hitSize);
-        Draw.color(inStealth ? Color.red : Color.gray);
-        drawRect(Lines::rect, this.x, this.y, this.hitSize);
-//        if (true) return;
+//        if (getAlpha()==0)return;
         float tx;
         float ty;
         float focusLen;
@@ -191,7 +176,7 @@ boolean check= false,check2=false;
 
             Draw.color();
         }
-
+        stealthType.alpha=getAlpha();
         this.type.draw(this);
 
         for (StatusEntry e : this.statuses) {

@@ -34,6 +34,7 @@ public class StealthGroundAI extends AIController {
     }
 
     public void updateUnit() {
+        if (unit instanceof StealthMechUnit)((StealthMechUnit)unit).healing=false;
         if (this.useFallback() && (this.fallback != null || (this.fallback = this.fallback()) != null)) {
 
             if (this.fallback.unit() != this.unit) {
@@ -60,7 +61,6 @@ public class StealthGroundAI extends AIController {
             }
         }
     }
-
     @Override
     protected void updateMovement() {
 
@@ -86,6 +86,8 @@ public class StealthGroundAI extends AIController {
         if (target != null && !unit.within(target, radius)) {
             pathfind(fieldRepair);
 //            targets=new Teamc[0];
+        } else {
+            unit.healing=true;
         }
         if (unit.type.canBoost && !unit.onSolid()) {
             unit.elevation = Mathf.approachDelta(unit.elevation, 0f, 0.08f);
