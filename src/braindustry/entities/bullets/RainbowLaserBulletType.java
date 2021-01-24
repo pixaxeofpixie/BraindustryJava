@@ -10,7 +10,7 @@ public class RainbowLaserBulletType extends LaserBulletType {
     @Override
     public void draw(Bullet b) {
         Draw.draw(Draw.z(),()->{
-            Draw.shader(ModShaders.rainbowLaserShader.setBullet(b,this));
+            ModShaders.rainbowLaserShader.set(b,this);
             super.draw(b);
             Draw.shader();
         });

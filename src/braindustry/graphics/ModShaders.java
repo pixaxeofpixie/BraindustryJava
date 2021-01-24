@@ -133,6 +133,9 @@ static {
         public Bullet bullet;
         public RainbowLaserBulletType type;
 
+        public void set(Bullet bullet, RainbowLaserBulletType type){
+            Draw.shader(setBullet(bullet,type));
+        }
         public RainbowLaserShader() {
             super("rainbowLaser", "default");
         }

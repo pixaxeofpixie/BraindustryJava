@@ -26,7 +26,7 @@ bool isIn(vec2 to,vec2 i,float offset){
 vec4 getPix(in vec2 fragCoord )
 {
     vec4 color = texture2D(u_texture, v_texCoords);
-    if (color.a==0)return vec4(0);
+    if (color.a==0.)return vec4(0);
     /* if (isIn(fragCoord,u_screenPos.xy,10.)){
          return vec4(1.);
      }
