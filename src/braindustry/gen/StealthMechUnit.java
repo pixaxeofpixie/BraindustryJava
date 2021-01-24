@@ -37,13 +37,15 @@ import mindustryAddition.gen.CopyMechUnit;
 
 import java.util.Arrays;
 
-public class StealthMechUnit extends CopyMechUnit {
+public class StealthMechUnit extends CopyMechUnit implements StealthUnitc {
     public static int classId = 0;
     public boolean inStealth = false;
     public float cooldownStealth = 0;
     public float durationStealth = 0;
     public boolean healing;
+    public boolean longPress = false;
     StealthUnitType stealthType;
+    boolean check = false, check2 = false;
     private boolean clicked = false;
 
     public StealthMechUnit() {
@@ -57,6 +59,7 @@ public class StealthMechUnit extends CopyMechUnit {
         this.reloadMultiplier = 1.0F;
         this.buildAlpha = 0.0F;*/
     }
+
     public static StealthMechUnit create() {
         return new StealthMechUnit();
     }
@@ -71,49 +74,80 @@ public class StealthMechUnit extends CopyMechUnit {
         super.setType(type);
         stealthType = (StealthUnitType) type;
     }
-boolean check= false,check2=false;
-    public boolean longPress=false;
+
     public boolean selectStealth() {
         boolean bool;
-        if (isLocal()){
-             bool = modVars.keyBinds.keyTap(ModBinding.stealthBing);
+        if (isLocal()) {
+            bool = modVars.keyBinds.keyTap(ModBinding.stealthBing);
             if (Vars.mobile) {
-                if (!check2 && longPress){
-                    check2=true;
-                    longPress=false;
+                if (!check2 && longPress) {
+                    check2 = true;
+                    longPress = false;
                     return true;
                 }
                 return false;
             }
             return bool;
         }
-        bool=mustHeal();
-        if (bool && healing){
+        bool = mustHeal();
+        if (bool && healing) {
             return inStealth;
         }
         return !inStealth && bool;
     }
-    public boolean mustHeal(){
-        boolean bool1=health<=stealthType.minHealth;
-        boolean bool2=health>stealthType.maxHealth;
-        if (!check && bool1){
-            check=true;
+
+    @Override
+    public boolean healing() {
+        return healing;
+    }
+
+    @Override
+    public void healing(boolean healing) {
+        this.healing = healing;
+    }
+
+    public boolean mustHeal() {
+        boolean bool1 = health <= stealthType.minHealth;
+        boolean bool2 = health > stealthType.maxHealth;
+        if (!check && bool1) {
+            check = true;
             return true;
-        } else if (check && bool2){
-            check=false;
+        } else if (check && bool2) {
+            check = false;
             return bool1;
         }
         return !bool2;
     }
+
+    @Override
+    public boolean inStealth() {
+        return inStealth;
+    }
+
+    @Override
+    public void inStealth(boolean inStealth) {
+        this.inStealth=inStealth;
+    }
+
+    @Override
+    public void longPress(boolean longPress) {
+        this.longPress=longPress;
+    }
+
+    @Override
+    public boolean longPress() {
+        return longPress;
+    }
+
     @Override
     public void update() {
-        if (inStealth){
+        if (inStealth) {
             updateLastPosition();
         }
         super.update();
         cooldownStealth = Math.max(0, cooldownStealth - Time.delta);
         if (inStealth) {
-            while (Groups.unit.contains(u->u==this)){
+            while (Groups.unit.contains(u -> u == this)) {
                 Groups.unit.remove(this);
             }
             durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
@@ -146,9 +180,10 @@ boolean check= false,check2=false;
     }
 
     public void drawAlpha() {
-        Draw.alpha(getAlpha()*Draw.getColor().a);
+        Draw.alpha(getAlpha() * Draw.getColor().a);
     }
-    public float getAlpha(){
+
+    public float getAlpha() {
         return !inStealth ? Draw.getColor().a : this.isLocal() ? 0.25f : 0f;
     }
 
@@ -176,7 +211,7 @@ boolean check= false,check2=false;
 
             Draw.color();
         }
-        stealthType.alpha=getAlpha();
+        stealthType.alpha = getAlpha();
         this.type.draw(this);
 
         for (StatusEntry e : this.statuses) {
@@ -291,17 +326,17 @@ boolean check= false,check2=false;
     @Override
     public void read(Reads read) {
         super.read(read);
-        inStealth=read.bool();
-        cooldownStealth=read.f();
-        durationStealth=read.f();
+        inStealth = read.bool();
+        cooldownStealth = read.f();
+        durationStealth = read.f();
     }
 
     @Override
     public void readSync(Reads read) {
         super.readSync(read);
-        inStealth=read.bool();
-        cooldownStealth=read.f();
-        durationStealth=read.f();
+        inStealth = read.bool();
+        cooldownStealth = read.f();
+        durationStealth = read.f();
     }
 
     public void set(float x, float y) {

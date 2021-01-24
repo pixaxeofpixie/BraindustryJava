@@ -1,8 +1,12 @@
 package braindustry.input;
 
 import arc.Core;
+import arc.input.KeyCode;
 import arc.math.geom.Vec2;
+import arc.util.Tmp;
+import braindustry.entities.ModUnits;
 import braindustry.gen.StealthMechUnit;
+import braindustry.gen.StealthUnitc;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.core.World;
@@ -10,9 +14,11 @@ import mindustry.entities.Units;
 import mindustry.gen.Building;
 import mindustry.gen.Payloadc;
 import mindustry.gen.Unit;
+import mindustry.gen.Unitc;
 import mindustry.input.MobileInput;
 import mindustry.input.PlaceMode;
 import mindustry.world.Tile;
+import mindustry.world.blocks.ControlBlock;
 
 public class ModMobileInput extends MobileInput {
     protected int tileX(float cursorX) {
@@ -46,8 +52,8 @@ public class ModMobileInput extends MobileInput {
                     Vec2 pos = Core.input.mouseWorld(x, y);
                     Unit target = Vars.player.unit();
                     Payloadc pay;
-                    if (target instanceof StealthMechUnit) {
-                        ((StealthMechUnit)target).longPress=true;
+                    if (target instanceof StealthUnitc) {
+                        ((StealthUnitc)target).longPress(true);
                     } else if (target instanceof Payloadc) {
                         pay = (Payloadc) target;
                         target = Units.closest(Vars.player.team(), pos.x, pos.y, 8.0F, (u) -> {
@@ -104,5 +110,21 @@ public class ModMobileInput extends MobileInput {
             return false;
         }
 
+    }
+
+    @Override
+    public Unit selectedUnit() {
+        Unit unit = ModUnits.closest(Vars.player.team(), Core.input.mouseWorld().x, Core.input.mouseWorld().y, 40.0F, Unitc::isAI);
+        if (unit != null) {
+            unit.hitbox(Tmp.r1);
+            Tmp.r1.grow(6.0F);
+            if (Tmp.r1.contains(Core.input.mouseWorld())) {
+                return unit;
+            }
+        }
+
+        Building build = Vars.world.buildWorld(Core.input.mouseWorld().x, Core.input.mouseWorld().y);
+        ControlBlock cont;
+        return build instanceof ControlBlock && (cont = (ControlBlock)build) == build && cont.canControl() && build.team == Vars.player.team() ? cont.unit() : null;
     }
 }

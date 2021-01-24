@@ -18,6 +18,7 @@ import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Align;
 import arc.util.io.Streams;
+import braindustry.input.ModDesktopInput;
 import braindustry.input.ModMobileInput;
 import mindustry.Vars;
 import mindustry.content.TechTree;
@@ -315,9 +316,9 @@ public class AdvancedSettingsMenuDialog extends SettingsMenuDialog {
         game.screenshakePref();
         if(mobile){
             game.checkPref("autotarget", true);
-            game.checkPref("keyboard", false, val -> control.setInput(val ? new DesktopInput() : new ModMobileInput()));
+            game.checkPref("keyboard", false, val -> control.setInput(val ? new ModDesktopInput() : new ModMobileInput()));
             if(Core.settings.getBool("keyboard")){
-                control.setInput(new DesktopInput());
+                control.setInput(new ModDesktopInput());
             }
         }
         //the issue with touchscreen support on desktop is that:
@@ -542,6 +543,8 @@ public class AdvancedSettingsMenuDialog extends SettingsMenuDialog {
         Vars.ui.settings = new AdvancedSettingsMenuDialog();
         if (mobile){
             control.setInput(new ModMobileInput());
+        } else {
+            control.setInput(new ModDesktopInput());
         }
     }
 }

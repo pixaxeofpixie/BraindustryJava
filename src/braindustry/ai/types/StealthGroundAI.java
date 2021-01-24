@@ -4,7 +4,8 @@ import arc.func.Prov;
 import arc.math.Mathf;
 import arc.struct.IntQueue;
 import arc.struct.IntSeq;
-import braindustry.gen.StealthMechUnit;
+import braindustry.gen.StealthUnitc;
+import braindustry.gen.StealthUnitc;
 import mindustry.Vars;
 import mindustry.ai.Pathfinder;
 import mindustry.ai.types.FlyingAI;
@@ -34,7 +35,7 @@ public class StealthGroundAI extends AIController {
     }
 
     public void updateUnit() {
-        if (unit instanceof StealthMechUnit)((StealthMechUnit)unit).healing=false;
+        if (unit instanceof StealthUnitc)((StealthUnitc)unit).healing(false);
         if (this.useFallback() && (this.fallback != null || (this.fallback = this.fallback()) != null)) {
 
             if (this.fallback.unit() != this.unit) {
@@ -64,7 +65,7 @@ public class StealthGroundAI extends AIController {
     @Override
     protected void updateMovement() {
 
-        StealthMechUnit unit = (StealthMechUnit) this.unit;
+        StealthUnitc sunit = (StealthUnitc) this.unit;
         Teamc target = targetFlag(unit.x, unit.y, BlockFlag.repair, false);
         float radius = 8f;
         checkRadius:
@@ -87,7 +88,7 @@ public class StealthGroundAI extends AIController {
             pathfind(fieldRepair);
 //            targets=new Teamc[0];
         } else {
-            unit.healing=true;
+            sunit.healing(true);
         }
         if (unit.type.canBoost && !unit.onSolid()) {
             unit.elevation = Mathf.approachDelta(unit.elevation, 0f, 0.08f);
@@ -107,7 +108,7 @@ public class StealthGroundAI extends AIController {
 
     @Override
     protected boolean useFallback() {
-        return !(this.unit instanceof StealthMechUnit && ((StealthMechUnit) unit).mustHeal());
+        return !(this.unit instanceof StealthUnitc && ((StealthUnitc) unit).mustHeal());
     }
 
     @Override
@@ -117,7 +118,7 @@ public class StealthGroundAI extends AIController {
 
     @Override
     public boolean shouldShoot() {
-        return (this.unit instanceof StealthMechUnit && !((StealthMechUnit) unit).inStealth);
+        return (this.unit instanceof StealthUnitc && !((StealthUnitc) unit).inStealth());
     }
 
     protected static class StealthFlowfield extends Pathfinder.Flowfield {

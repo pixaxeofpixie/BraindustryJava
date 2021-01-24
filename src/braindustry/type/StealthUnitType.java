@@ -9,7 +9,8 @@ import arc.math.Mathf;
 import arc.math.geom.Vec2;
 import arc.util.Time;
 import arc.util.Tmp;
-import braindustry.gen.StealthMechUnit;
+import braindustry.gen.StealthUnitc;
+import braindustry.gen.StealthUnitc;
 import mindustry.content.Blocks;
 import mindustry.entities.Leg;
 import mindustry.gen.Legsc;
@@ -158,8 +159,8 @@ public class StealthUnitType extends UnitType {
     }
 
     public void drawAlpha(Unit unit){
-        if (unit instanceof StealthMechUnit){
-            ((StealthMechUnit)unit).drawAlpha();
+        if (unit instanceof StealthUnitc){
+            ((StealthUnitc)unit).drawAlpha();
         }
     }
     public void drawCell(Unit unit) {
@@ -173,8 +174,8 @@ public class StealthUnitType extends UnitType {
     public void applyColor(Unit unit) {
 
         super.applyColor(unit);
-        if (unit instanceof StealthMechUnit){
-            ((StealthMechUnit)unit).drawAlpha();
+        if (unit instanceof StealthUnitc){
+            ((StealthUnitc)unit).drawAlpha();
         }
     }
 }
