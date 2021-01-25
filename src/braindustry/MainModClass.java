@@ -259,7 +259,6 @@ public class MainModClass extends Mod {
         });
         Events.fire(ModEventType.ModContentLoad.class);
 //        loadMaps();
-        GasInit.init(true);
         new ModSounds().load();
         new ModStatusEffects().load();
         new ModItems().load();
@@ -267,6 +266,7 @@ public class MainModClass extends Mod {
         new ModUnitTypes().load();
         new ModBlocks().load();
         new ModTechTree().load();
+        GasInit.init(true);
         Vars.content.each((c)->{
             if (c instanceof UnlockableContent) checkTranslate((UnlockableContent)c);
         });
