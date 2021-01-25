@@ -1,6 +1,7 @@
 package braindustry.content;
 
 import ModVars.Classes.Conteiners.SpiralContainer;
+import ModVars.modVars;
 import arc.Core;
 import arc.graphics.Blending;
 import arc.graphics.Color;
@@ -10,7 +11,6 @@ import arc.graphics.g2d.Lines;
 import arc.math.Angles;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
-import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Time;
 import braindustry.entities.DebugEffect;
@@ -24,7 +24,24 @@ import mindustry.graphics.Pal;
 import static ModVars.modFunc.fullName;
 
 public class ModFx {
-
+    private static final float Distance1 = Core.camera.width + Core.camera.height + 50*Vars.tilesize;
+    public static final Effect electricExplosionPart1=new Effect(20, Distance1,(e)->{
+        Draw.color(Color.white, ModPal.ElectricColor, e.fin());
+        Lines.stroke(e.fout() * 10.0f + 0.5f);
+        Lines.circle(e.x, e.y, e.fin() * 250.0f);
+    });
+    public static final Effect electricExplosionPart2=new Effect(120, Distance1,(e)->{
+        Draw.color(ModPal.ElectricColor, ModPal.ElectricColorMulled, e.fslope());
+        Draw.alpha(e.fout()/120.0f);
+        Draw.rect(modVars.modAtlas.flash, e.x, e.y, 150.0f + 400.0f * e.fin(), 150.0f + 400.0f * e.fin());
+        Draw.color();
+    });
+    public static final Effect electricExplosionPart3=new Effect(120, Distance1,(e)->{
+        Draw.color(ModPal.ElectricColor, ModPal.ElectricColorMulled, e.fslope());
+        Draw.alpha(e.fout()/120);
+        Draw.rect(modVars.modAtlas.flareWhite, e.x, e.y, 350 + 400 * e.fin(), 350 + 400 * e.fin());
+        Draw.color();
+    });
     public static final Effect Spirals=new Effect(200.0F,300f, (e) -> {
         float partLenght,count,angleMul;
         SpiralContainer cont=new SpiralContainer();
