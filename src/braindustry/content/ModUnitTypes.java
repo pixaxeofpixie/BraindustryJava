@@ -1253,15 +1253,15 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("tyzen-weapon") {
                             {
-                                this.x = 3;
-                                this.y = -9f;
+                                this.x = 0;
+                                this.y = -4f;
                                 this.shootY = -1f;
                                 this.reload = 70;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 3;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
-                                this.mirror = true;
+                                this.mirror = false;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.9f;
@@ -1278,12 +1278,12 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("kryox-weapon") {
+                        new ModWeapon("tyzen-weapon") {
                             {
-                                this.x = 5;
-                                this.y = 9f;
+                                this.x = 4;
+                                this.y = 3f;
                                 this.shootY = -1f;
-                                this.reload = 70;
+                                this.reload = 15;
                                 this.ejectEffect = ModFx.magicShootEffectSmall;
                                 this.recoil = 2;
                                 this.shootSound = Sounds.laser;
@@ -1322,8 +1322,8 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("troplex-grinder2") {
                             {
-                                this.x = -5;
-                                this.y = 0f;
+                                this.x = 0;
+                                this.y = -8f;
                                 this.shootY = -1f;
                                 this.reload = 80;
                                 this.ejectEffect = ModFx.napalmShoot;
@@ -1344,12 +1344,12 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("intelix-weapon") {
+                        new ModWeapon("kryox-weapon") {
                             {
-                                this.x = 5;
-                                this.y = 10f;
+                                this.x = 10;
+                                this.y = 4f;
                                 this.shootY = -1f;
-                                this.reload = 45;
+                                this.reload = 10;
                                 this.ejectEffect = ModFx.magicShootEffectSmall;
                                 this.recoil = 3;
                                 this.shootSound = Sounds.laser;
@@ -1386,21 +1386,21 @@ public class ModUnitTypes implements ContentList {
                 this.description = "Slow and dangerous sniper unit with railgun.";
 
                 this.weapons.add(
-                        new ModWeapon("troplex-grinder2") {
+                        new ModWeapon("troplex-grinder") {
                             {
-                                this.x = -5;
-                                this.y = 0f;
+                                this.x = 13;
+                                this.y = 2f;
                                 this.shootY = -1f;
                                 this.reload = 80;
                                 this.ejectEffect = ModFx.YellowBeamCharge;
                                 this.recoil = 5;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
-                                this.mirror = false;
+                                this.mirror = true;
                                 this.bullet = new RailBulletType() {
                                     {
                                         this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 570.0F;
+                                        this.length = 410.0F;
                                         this.updateEffectSeg = 60.0F;
                                         this.pierceEffect = this.hitEffect = ModFx.instHit;
                                         this.updateEffect = this.trailEffect = ModFx.instTrail;
@@ -1412,6 +1412,33 @@ public class ModUnitTypes implements ContentList {
                                         this.buildingDamageMultiplier = 0.64f;
                                         this.speed = brange;
                                         this.hitShake = 6f;
+                                    }
+                                };
+                            }
+                        },
+                        new ModWeapon("kryox-weapon") {
+                            {
+                                this.x = 9;
+                                this.y = -6f;
+                                this.shootY = -1f;
+                                this.reload = 70;
+                                this.ejectEffect = Fx.none;
+                                this.recoil = 3;
+                                this.shootSound = Sounds.laser;
+                                this.rotate = true;
+                                this.mirror = true;
+                                this.bullet = new SapBulletType() {
+                                    {
+                                        this.sapStrength = 0.7f;
+                                        this.length = 90;
+                                        this.damage = 68;
+                                        this.shootEffect = ModFx.adamExplosion;
+                                        this.hitColor = Color.valueOf("625b82");
+                                        this.color = Color.valueOf("d4c7ea");
+                                        this.despawnEffect = ModFx.angelLight;
+                                        this.width = 5;
+                                        this.lifetime = 40;
+                                        this.knockback = -1f;
                                     }
                                 };
                             }

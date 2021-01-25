@@ -45,7 +45,7 @@ public class ModDefense implements ContentList {
                 this.health = 5800;
                 this.inaccuracy = 0;
                 this.shootSound = Sounds.missile;
-                this.rotateSpeed = 0.4f;
+                this.rotateSpeed = 0.9f;
                 this.targetAir = true;
                 this.targetGround = true;
                 this.ammo(
@@ -630,6 +630,9 @@ public class ModDefense implements ContentList {
                 size = 14;
                 health = 240 * size * size;
                 range = 240f;
+                reloadTime = 210;
+                shootSound = ModSounds.electronShoot;
+                loopSound = ModSounds.electronCharge;
                 this.shootType = new RainbowLaserBulletType(){
                     {
                         damage = 1400f;
