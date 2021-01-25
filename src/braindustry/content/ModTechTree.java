@@ -158,5 +158,8 @@ public class ModTechTree extends TechTreeManager {
         parentNode(Blocks.parallax, ModBlocks.perlin);
         parentNode(Blocks.swarmer, ModBlocks.stinger);
         parentNode(Blocks.router, ModBlocks.smartRouter);
+        //parentNode(Blocks.interplanetaryAccelerator, Osore);
     }
 }
+
+
