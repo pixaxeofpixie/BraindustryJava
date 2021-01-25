@@ -134,7 +134,11 @@ public class ModTechTree extends TechTreeManager {
             });
         });
         node(Blocks.thoriumReactor, () -> {
-            node(ModBlocks.odinumReactor);
+            node(ModBlocks.odinumReactor,()->{
+                node(ModBlocks.materialReactor,()->{
+                    node(ModBlocks.blackHoleReactor);
+                });
+            });
             node(ModBlocks.refrigerantReactor);
         });
         parentNode(Blocks.surgeTower, ModBlocks.phaseTower);

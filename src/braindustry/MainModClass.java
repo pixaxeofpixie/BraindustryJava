@@ -54,6 +54,7 @@ public class MainModClass extends Mod {
     public static ModListener modListener;
     public void init() {
         if (!loaded)return;
+        print("java init");
         modVars.init();
         ModListener.load();
         AdvancedSettingsMenuDialog.init();
@@ -251,6 +252,7 @@ public class MainModClass extends Mod {
 
     public void loadContent() {
         modInfo = Vars.mods.getMod(this.getClass());
+        print("java loadContent");
         modAtlas=new ModAtlas();
         inTry(()->{
             ModShaders.init();

@@ -5,14 +5,12 @@ import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Time;
-import braindustry.content.Blocks.ModDefense;
-import braindustry.content.Blocks.ModOtherBlocks;
-import braindustry.content.Blocks.ModProduction;
-import braindustry.content.Blocks.ModUnitsBlocks;
+import braindustry.content.Blocks.*;
 import braindustry.world.blocks.TestBlock;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import braindustry.world.blocks.distribution.SmartRouter;
+import braindustry.world.blocks.power.MaterialReactor;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
 import braindustry.world.blocks.sandbox.UnitSpawner;
@@ -44,7 +42,8 @@ public class ModBlocks implements ContentList {
             crimzesWall, crimzesFloor, jungleWall, jungleFloor, jungleWater, dirtRocksWall,
 
     //power
-    differentialMagmaGenerator, grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, blackHoleReactor, phaseAlloySolarPanel, phaseTower,
+    differentialMagmaGenerator, grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, blackHoleReactor, phaseAlloySolarPanel,
+            phaseTower,materialReactor,
 
     //production
     refrigerantReactor, chromiumForge, exoticAlloySmelter, grapheniteFluidizer, grapheniteForge,
@@ -70,8 +69,10 @@ public class ModBlocks implements ContentList {
     public void load() {
         new ModUnitsBlocks().load();
         new ModProduction().load();
+        new ModPowerBlocks().load();
         new ModOtherBlocks().load();
         new ModDefense().load();
+
         testBlock = new TestBlock("test-block") {
             {
                 this.size = 2;
