@@ -38,10 +38,12 @@ public class MaterialReactor extends ItemLiquidGenerator {
         effect1 = ModFx.electricExplosionPart1;
         effect2 = ModFx.electricExplosionPart1;
         effect3 = ModFx.electricExplosionPart1;
+        configurable=true;
+        outputsPower=true;
     }
 
     public MaterialReactor(String name) {
-        super(false, false, name);
+        this(false, false, name);
     }
 
     @Override
