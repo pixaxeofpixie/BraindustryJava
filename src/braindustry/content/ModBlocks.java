@@ -39,7 +39,7 @@ public class ModBlocks implements ContentList {
 
     //environment
     magmaFloor, obsidianBlock, obsidianFloor, oreChromium, oreOdinum,
-            crimzesWall, crimzesFloor, jungleWall, jungleFloor, jungleWater, dirtRocksWall,
+            crimzesWall, crimzesFloor, jungleWall, jungleFloor, graysand, dirtRocksWall, liquidMethaneFloor,
 
     //power
     differentialMagmaGenerator, grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, blackHoleReactor, phaseAlloySolarPanel,
@@ -48,7 +48,7 @@ public class ModBlocks implements ContentList {
     //production
     refrigerantReactor, chromiumForge, exoticAlloySmelter, grapheniteFluidizer, grapheniteForge,
             hydraulicDrill, hyperAlloySmelter, hyperPhaseWeaver, magmaMixer, odinumExtractor,
-            phaseAlloySmelter, plasticForge, quarryDrill, geothermicDrill, grapheniteKiln, refrigerantmixer, astroSmelter,
+            phaseAlloySmelter, plasticForge, quarryDrill, geothermicDrill, grapheniteKiln, refrigerantmixer, astroSmelter, methaneGasifier,
 
     //units
     hyperAdditiveReconstructor, hyperAirFactory, hyperExponentialReconstructor, hyperGroundFactory,
@@ -79,9 +79,10 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.logic, ItemStack.with(), true);
             }
         };
-        exampleCrossPhaseBridge = new CrossItemBridge("cross-phase-conveyor") {
+        exampleCrossPhaseBridge = new CrossItemBridge("phase-alloy-conveyor") {
             {
-                this.requirements(Category.distribution, ItemStack.with(Items.phaseFabric, 5, Items.silicon, 7, Items.lead, 10, Items.graphite, 10));
+                this.localizedName = "Phase Alloy Conveyor";
+                this.requirements(Category.distribution, ItemStack.with(ModItems.phaseAlloy, 5, Items.silicon, 7, Items.lead, 10, Items.graphite, 10));
                 this.range = 12;
                 this.canOverdrive = false;
                 this.hasPower = true;

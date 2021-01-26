@@ -34,7 +34,7 @@ public class ModUnitTypes implements ContentList {
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
             lyra, shield, tropsy, venti,
-            vyvna, tyzen, kryox, intelix, nemesis, troplex;
+            vyvna, tyzen, kryox, intelix, nemesis, maverix, troplex;
 
     public ModUnitTypes() {
         UnitTypes.class.isArray();
@@ -1207,28 +1207,21 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 5;
                                 this.y = 0;
                                 this.shootY = -1f;
-                                this.reload = 50;
-                                this.ejectEffect = Fx.none;
-                                this.recoil = 2;
-                                this.shots = 3;
+                                this.reload = 20;
+                                this.ejectEffect = Fx.burning;
+                                this.recoil = 1;
+                                this.shots = 2;
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet = new ShrapnelBulletType() {
+                                this.bullet = new LiquidBulletType(ModLiquids.magma){
                                     {
-                                        this.length = 58;
-                                        this.damage = 50;
-                                        this.width = 17;
-                                        this.lifetime = 20;
-                                        this.serrationLenScl = 2;
-                                        this.serrationSpaceOffset = 1;
-                                        this.serrationFadeOffset = 0;
-                                        this.serrations = 3;
-                                        this.serrationWidth = 51;
-                                        this.fromColor = Color.valueOf("625b82");
-                                        this.toColor = Color.valueOf("d4c7ea");
-                                        this.shootEffect = Fx.sparkShoot;
-                                        this.smokeEffect = Fx.sparkShoot;
+                                        damage = 22;
+                                        speed = 2.0f;
+                                        drag = 0.01f;
+                                        shootEffect = Fx.lightningShoot;
+                                        lifetime = 50f;
+                                        collidesAir = false;
                                     }
                                 };
                             }
@@ -1240,6 +1233,8 @@ public class ModUnitTypes implements ContentList {
             {
                 this.mineSpeed = 9.0F;
                 this.mineTier = 2;
+                stealthDuration=3f*60f;
+                stealthCooldown=4f*60f;
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.5f;
@@ -1248,60 +1243,33 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 1.4F;
                 this.health = 1300;
                 this.localizedName = "Kryox";
-                this.description = "Upgraded Tyzen with vampire lasers and Stealth ability.";
+                this.description = "Upgraded Tyzen with magma guns and Stealth ability.";
 
                 this.weapons.add(
-                        new ModWeapon("tyzen-weapon") {
+                        new ModWeapon("kryox-weapon") {
                             {
-                                this.x = 0;
-                                this.y = -4f;
+                                this.x = 10;
+                                this.y = 0;
                                 this.shootY = -1f;
-                                this.reload = 70;
-                                this.ejectEffect = Fx.none;
-                                this.recoil = 3;
-                                this.shootSound = Sounds.laser;
+                                this.reload = 24;
+                                this.ejectEffect = Fx.fireballsmoke;
+                                this.recoil = 2f;
+                                this.shots = 5;
                                 this.rotate = true;
-                                this.mirror = false;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.9f;
-                                        this.length = 40;
-                                        this.damage = 68;
-                                        this.shootEffect = ModFx.adamExplosion;
-                                        this.hitColor = Color.valueOf("625b82");
-                                        this.color = Color.valueOf("d4c7ea");
-                                        this.despawnEffect = ModFx.angelLight;
-                                        this.width = 3;
-                                        this.lifetime = 40;
-                                        this.knockback = -1f;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("tyzen-weapon") {
-                            {
-                                this.x = 4;
-                                this.y = 3f;
-                                this.shootY = -1f;
-                                this.reload = 15;
-                                this.ejectEffect = ModFx.magicShootEffectSmall;
-                                this.recoil = 2;
-                                this.shootSound = Sounds.laser;
-                                this.rotate = true;
-                                this.mirror = true;
+                                this.shootSound = Sounds.flame;
+                                this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.magma){
                                     {
-                                        damage = 28;
+                                        damage = 40;
                                         speed = 2.2f;
                                         drag = -0.01f;
                                         shootEffect = Fx.lightningShoot;
-                                        lifetime = 60f;
+                                        lifetime = 85f;
                                         collidesAir = false;
                                     }
                                 };
                             }
                         }
-
                 );
             }
         };
@@ -1309,6 +1277,8 @@ public class ModUnitTypes implements ContentList {
             {
                 this.mineSpeed = 8.5F;
                 this.mineTier = 3;
+                stealthDuration=4f*60f;
+                stealthCooldown=5f*60f;
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.55f;
@@ -1316,53 +1286,37 @@ public class ModUnitTypes implements ContentList {
                 this.armor = 14;
                 this.buildSpeed = 1.5F;
                 this.health = 5100;
+                int brange = 1;
                 this.localizedName = "Intelix";
-                this.description = "Heavy stealth unit with dangerous laser and magma guns.";
+                this.description = "Heavy stealth unit with dangerous railgun.";
 
                 this.weapons.add(
                         new ModWeapon("troplex-grinder2") {
                             {
                                 this.x = 0;
-                                this.y = -8f;
+                                this.y = -5;
                                 this.shootY = -1f;
-                                this.reload = 80;
-                                this.ejectEffect = ModFx.napalmShoot;
-                                this.recoil = 5;
+                                this.reload = 90;
+                                this.ejectEffect = ModFx.magicShootEffect;
+                                this.recoil = 4;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = new ContinuousLaserBulletType(30) {
+                                this.bullet = new RailBulletType() {
                                     {
-                                        this.length = 40f;
-                                        this.hitEffect = ModFx.magicShootEffect;
-                                        this.drawSize = 100f;
-
-                                        this.incendChance = 0.9f;
-                                        this.incendSpread = 7f;
-                                        this.incendAmount = 4;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("kryox-weapon") {
-                            {
-                                this.x = 10;
-                                this.y = 4f;
-                                this.shootY = -1f;
-                                this.reload = 10;
-                                this.ejectEffect = ModFx.magicShootEffectSmall;
-                                this.recoil = 3;
-                                this.shootSound = Sounds.laser;
-                                this.rotate = true;
-                                this.mirror = true;
-                                this.bullet = new LiquidBulletType(ModLiquids.magma){
-                                    {
-                                        damage = 32;
-                                        speed = 2.9f;
-                                        drag = 0.01f;
-                                        shootEffect = Fx.lightningShoot;
-                                        lifetime = 72f;
-                                        collidesAir = false;
+                                        this.shootEffect = ModFx.energyShrapnelShoot;
+                                        this.length = 240.0F;
+                                        this.updateEffectSeg = 40.0F;
+                                        this.pierceEffect = this.hitEffect = ModFx.instHit;
+                                        this.updateEffect = this.trailEffect = ModFx.instTrail;
+                                        this.hitEffect = Fx.blastExplosion;
+                                        this.smokeEffect = Fx.shootBig2;
+                                        this.damage = 260.0F;
+                                        this.pierceDamageFactor = 0.45F;
+                                        this.despawnEffect = ModFx.instBomb;
+                                        this.buildingDamageMultiplier = 0.64f;
+                                        this.speed = brange;
+                                        this.hitShake = 3f;
                                     }
                                 };
                             }
@@ -1374,25 +1328,27 @@ public class ModUnitTypes implements ContentList {
             {
                 this.mineSpeed = 9F;
                 this.mineTier = 3;
+                stealthDuration=6f*60f;
+                stealthCooldown=6f*60f;
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.45f;
                 this.hitSize = 32;
                 this.armor = 8;
                 this.buildSpeed = 1.8F;
-                this.health = 16000;
+                this.health = 15400;
                 int brange = 1;
                 this.localizedName = "Nemesis";
-                this.description = "Slow and dangerous sniper unit with railgun.";
+                this.description = "Slow and dangerous sniper unit with railguns.";
 
                 this.weapons.add(
                         new ModWeapon("troplex-grinder") {
                             {
-                                this.x = 13;
-                                this.y = 2f;
+                                this.x = 15;
+                                this.y = -7;
                                 this.shootY = -1f;
-                                this.reload = 80;
-                                this.ejectEffect = ModFx.YellowBeamCharge;
+                                this.reload = 70;
+                                this.ejectEffect = ModFx.magicShootEffectBig;
                                 this.recoil = 5;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
@@ -1400,13 +1356,13 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new RailBulletType() {
                                     {
                                         this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 410.0F;
-                                        this.updateEffectSeg = 60.0F;
+                                        this.length = 370.0F;
+                                        this.updateEffectSeg = 65.0F;
                                         this.pierceEffect = this.hitEffect = ModFx.instHit;
                                         this.updateEffect = this.trailEffect = ModFx.instTrail;
                                         this.hitEffect = Fx.blastExplosion;
                                         this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 400.0F;
+                                        this.damage = 380.0F;
                                         this.pierceDamageFactor = 0.85F;
                                         this.despawnEffect = ModFx.instBomb;
                                         this.buildingDamageMultiplier = 0.64f;
@@ -1415,30 +1371,78 @@ public class ModUnitTypes implements ContentList {
                                     }
                                 };
                             }
-                        },
-                        new ModWeapon("kryox-weapon") {
+                        }
+                );
+            }
+        };
+        maverix = new StealthUnitType("maverix") {
+            {
+                this.mineSpeed = 9F;
+                this.mineTier = 4;
+                stealthDuration=7f*60f;
+                stealthCooldown=7.5f*60f;
+                this.constructor = Types.stealthMech;
+                this.defaultController= StealthGroundAI::new;
+                this.speed = 0.62f;
+                this.hitSize = 38;
+                this.armor = 12;
+                this.buildSpeed = 2F;
+                this.health = 28600;
+                int brange = 1;
+                this.localizedName = "Maverix";
+                this.description = "Heavy attack unit with magma guns and rampage railgun that mostly effective to buildings.";
+
+                this.weapons.add(
+                        new ModWeapon("troplex-grinder2") {
                             {
-                                this.x = 9;
-                                this.y = -6f;
+                                this.x = 0;
+                                this.y = -8;
                                 this.shootY = -1f;
-                                this.reload = 70;
-                                this.ejectEffect = Fx.none;
-                                this.recoil = 3;
-                                this.shootSound = Sounds.laser;
+                                this.reload = 60;
+                                this.ejectEffect = ModFx.magicShootEffectBig;
+                                this.recoil = 6;
+                                this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
-                                this.mirror = true;
-                                this.bullet = new SapBulletType() {
+                                this.mirror = false;
+                                this.bullet = new RailBulletType() {
                                     {
-                                        this.sapStrength = 0.7f;
-                                        this.length = 90;
-                                        this.damage = 68;
-                                        this.shootEffect = ModFx.adamExplosion;
-                                        this.hitColor = Color.valueOf("625b82");
-                                        this.color = Color.valueOf("d4c7ea");
-                                        this.despawnEffect = ModFx.angelLight;
-                                        this.width = 5;
-                                        this.lifetime = 40;
-                                        this.knockback = -1f;
+                                        this.shootEffect = ModFx.energyShrapnelShoot;
+                                        this.length = 420.0F;
+                                        this.updateEffectSeg = 70.0F;
+                                        this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
+                                        this.updateEffect = this.trailEffect = ModFx.magicBulletTrail;
+                                        this.hitEffect = Fx.blastExplosion;
+                                        this.smokeEffect = Fx.shootBig2;
+                                        this.damage = 325.0F;
+                                        this.pierceDamageFactor = 1.2F;
+                                        this.despawnEffect = ModFx.instBomb;
+                                        this.buildingDamageMultiplier = 0.9f;
+                                        this.speed = brange;
+                                        this.hitShake = 5f;
+                                    }
+                                };
+                            }
+                        },
+                        new ModWeapon("intelix-weapon") {
+                            {
+                                this.x = 18;
+                                this.y = 0;
+                                this.shootY = -1f;
+                                this.reload = 40;
+                                this.ejectEffect = Fx.fireballsmoke;
+                                this.recoil = 3f;
+                                this.shots = 6;
+                                this.rotate = true;
+                                this.shootSound = Sounds.flame;
+                                this.alternate = true;
+                                this.bullet = new LiquidBulletType(ModLiquids.magma){
+                                    {
+                                        damage = 48;
+                                        speed = 2.4f;
+                                        drag = -0.01f;
+                                        shootEffect = Fx.lightningShoot;
+                                        lifetime = 95f;
+                                        collidesAir = false;
                                     }
                                 };
                             }

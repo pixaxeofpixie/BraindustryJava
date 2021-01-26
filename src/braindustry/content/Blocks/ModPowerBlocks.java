@@ -114,8 +114,9 @@ public class ModPowerBlocks implements ContentList {
                 this.requirements(Category.power, ItemStack.with(Items.metaglass, 500, ModItems.odinum, 300, Items.silicon, 400, ModItems.graphenite, 200, Items.plastanium, 200));
             }
         };
-        materialReactor=new MaterialReactor("materiaReactor"){
+        materialReactor=new MaterialReactor("materia-reactor"){
             {
+                localizedName = "Material Reactor";
                 itemCapacity=150;
                 liquidCapacity=150;
                 hasPower=true;
