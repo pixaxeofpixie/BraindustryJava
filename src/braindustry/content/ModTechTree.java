@@ -122,7 +122,7 @@ public class ModTechTree extends TechTreeManager {
             });
         });
         parentNode(Blocks.pulseConduit, ModBlocks.chromiumConduit);
-        parentNode(Blocks.phaseConveyor, ModBlocks.phaseAlloyConveyor);
+        parentNode(Blocks.phaseConveyor, ModBlocks.exampleCrossPhaseBridge);
         node(Blocks.largeSolarPanel, () -> {
             node(ModBlocks.grapheniteSolarCollectorLarge, () -> {
                 node(ModBlocks.phaseAlloySolarPanel);
