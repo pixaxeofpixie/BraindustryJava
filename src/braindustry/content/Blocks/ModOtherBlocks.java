@@ -50,25 +50,6 @@ public class ModOtherBlocks implements ContentList {
                 this.requirements(Category.liquid, ItemStack.with(ModItems.chromium, 2, Items.metaglass, 2, Items.thorium, 1));
             }
         };
-        phaseAlloyConveyor = new ItemBridge("phase-alloy-conveyor") {
-            {
-                this.localizedName = "Phase Alloy Conveyor";
-                this.description = "A powerful and fast conveyor that can transport items over several blocks at once.Consumes energy.";
-                this.health = 70;
-                this.size = 1;
-                this.update = true;
-                this.solid = true;
-                this.range = 24;
-                this.configurable = true;
-                this.unloadable = false;
-                this.expanded = true;
-                this.hasItems = true;
-                this.itemCapacity = 16;
-                this.hasPower = true;
-                this.requirements(Category.distribution, ItemStack.with(ModItems.phaseAlloy, 5, Items.silicon, 10, ModItems.graphenite, 8, Items.titanium, 10));
-                this.consumes.power(0.4f);
-            }
-        };
         plasticConveyor = new Conveyor("plastic-conveyor") {
             {
                 this.localizedName = "Hermetic Plastic Conveyor";
@@ -110,7 +91,7 @@ public class ModOtherBlocks implements ContentList {
                 this.drownUpdateEffect = Fx.burning;
             }
         };
-        obsidianBlock = new StaticWall("obsidian-block") {
+        obsidianBlock = new StaticWall("obsidian-wall") {
             {
                 this.localizedName = "Obsidian Block";
                 this.breakable = false;
@@ -187,7 +168,7 @@ public class ModOtherBlocks implements ContentList {
                 this.requirements(Category.production, ItemStack.with(ModItems.plastic, 150, ModItems.graphenite, 120, ModItems.odinum, 140, Items.plastanium, 100));
             }
         };
-        crimzesWall = new StaticWall("crimzes-block") {
+        crimzesWall = new StaticWall("crimzes-wall") {
             {
                 this.localizedName = "Crimson Wall";
                 this.breakable = false;
@@ -224,6 +205,25 @@ public class ModOtherBlocks implements ContentList {
             {
                 this.localizedName = "crimzes Floor";
                 this.variants = 3;
+            }
+        };
+        graysand = new Floor("graysand"){{
+            itemDrop = Items.sand;
+            playerUnmineable = true;
+        }};
+        liquidMethaneFloor = new Floor("liquid-methane-floor") {
+            {
+                this.localizedName = "Liquid Methane";
+                this.isLiquid = true;
+                this.variants = 1;
+                this.blendGroup = Blocks.water;
+                this.cacheLayer = CacheLayer.tar;
+                this.speedMultiplier = -0.15f;
+                this.liquidDrop = ModLiquids.liquidMethane;
+                this.statusDuration = 200;
+                this.drownTime = 90;
+                this.walkEffect = Fx.smokeCloud;
+                this.drownUpdateEffect = Fx.burning;
             }
         };
     }
