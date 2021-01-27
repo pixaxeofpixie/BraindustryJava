@@ -62,7 +62,9 @@ public class ModSave4 extends SaveVersion {
                     int id = entity.classId();
                     if (id == modVars.MOD_CONTENT_ID && entity instanceof ModEntityc) {
                         out.writeByte(id);
-                        out.writeShort(((ModEntityc) entity).modClassId());
+                        int classId = ModEntityMapping.getId(entity.getClass());
+                        out.writeShort(classId);
+//                        Log.info("typeid: @ @",classId,entity.getClass().getName());
                     } else if (id==modVars.MOD_CONTENT_ID) {
                         out.writeByte(Byte.MAX_VALUE - 1);
                     } else {
@@ -110,10 +112,11 @@ public class ModSave4 extends SaveVersion {
                         short modTypeid=in.readShort();
                         try{
                             if (ModEntityMapping.map(modTypeid) == null) {
-                                Log.info("typeid: @",modTypeid);
+//                                Log.info("typeid: @",modTypeid);
                                 in.skipBytes(this.lastRegionLength - 1);
                             } else {
                                 Entityc entity = (Entityc) ModEntityMapping.map(modTypeid).get();
+//                                Log.info("typeid: @ @",modTypeid,entity.getClass().getName());
                                 entity.read(Reads.get(in));
                                 entity.add();
                             }

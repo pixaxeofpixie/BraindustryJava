@@ -1,5 +1,6 @@
 package braindustry.gen;
 
+import ModVars.modVars;
 import arc.func.Cons;
 import arc.math.geom.Position;
 import arc.math.geom.Vec2;
@@ -13,12 +14,13 @@ import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.defense.ForceProjector;
 import mindustry.world.blocks.environment.Floor;
+import mindustryAddition.versions.ModEntityc;
 
 import static mindustry.Vars.player;
 import static mindustry.Vars.world;
 
-public class Drawer implements Drawc, Posc,Entityc {
-    public static int classId=0;
+public class Drawer implements Drawc, Posc,Entityc, ModEntityc {
+    public static int classId= modVars.MOD_CONTENT_ID;
     public float x;
 
     public float y;
@@ -64,7 +66,9 @@ public class Drawer implements Drawc, Posc,Entityc {
     }
 
     public void update() {
-
+        if (!build.isValid()){
+            remove();
+        }
     }
 
     public boolean isNull() {
@@ -196,6 +200,11 @@ public class Drawer implements Drawc, Posc,Entityc {
     @Override
     public int classId() {
         return classId;
+    }
+
+    @Override
+    public int modClassId() {
+        return -1;
     }
 
     public Runnable getRunnable() {

@@ -58,6 +58,7 @@ public class MainModClass extends Mod {
         modVars.init();
         ModListener.load();
         AdvancedSettingsMenuDialog.init();
+        Core.settings.put("uiscalechanged", false);
         ModListener.updaters.add(()->{
             if ((Vars.state.isPlaying() || Vars.state.isPaused()) && !Core.scene.hasDialog()){
                 if (keyBinds.keyTap(unitDialogBing)){

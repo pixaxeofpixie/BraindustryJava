@@ -16,6 +16,8 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Bits;
 import arc.struct.Seq;
 import arc.util.Strings;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
 import braindustry.content.ModFx;
 import braindustry.gen.Drawer;
 import braindustry.graphics.ModShaders;
@@ -25,6 +27,7 @@ import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.input.DesktopInput;
+import mindustry.io.TypeIO;
 import mindustry.type.Category;
 import mindustry.type.Item;
 import mindustry.type.UnitType;
@@ -47,13 +50,13 @@ public class UnitSpawner extends Block {
         this.update = true;
         this.configurable = true;
         Events.on(EventType.TapEvent.class, (e) -> {
-            if (local() && e.player == Vars.player && choose && currentBuilding != null) {
+            if (e.player == Vars.player && choose && currentBuilding != null) {
                 currentBuilding.tapAt(e.tile);
             }
         });
-        config(Vec2.class,(b,vec)->{
-            UnitSpawnerBuild build=b.as();
-            build.offsetVec.set(vec);
+        config(Vec2.class, (b, vec) -> {
+            UnitSpawnerBuild build = b.as();
+            build.spawnPos.set(vec);
         });
     }
 
@@ -67,8 +70,8 @@ public class UnitSpawner extends Block {
         colorRegion = Core.atlas.find(this.name + "-color", "air");
     }
 
-    public class UnitEntry {
-        public final UnitType unitType;
+    public static class UnitEntry {
+        public UnitType unitType;
         public int amount;
         public Vec2 pos;
         public Team team;
@@ -79,17 +82,30 @@ public class UnitSpawner extends Block {
             this.pos = pos;
             this.team = team;
         }
+        public UnitEntry() {
+        }
 
         public void spawn() {
             for (int i = 0; i < amount; i++) {
                 Unit unit = unitType.spawn(team, pos.x, pos.y);
             }
         }
+        public void read(Reads read, byte revision){
+            unitType= TypeIO.readUnitType(read);
+            amount=read.i();
+            pos=TypeIO.readVec2(read);
+            team=TypeIO.readTeam(read);
+        }
+        public void write(Writes write){
+            TypeIO.writeUnitType(write,unitType);
+            write.i(amount);
+            TypeIO.writeVec2(write,pos);
+            TypeIO.writeTeam(write,team);
+        }
     }
 
     public class UnitSpawnerBuild extends Building implements Drawer.BuilderDrawer {
         public Table tmpCont;
-        public Vec2 offsetVec = new Vec2(0.5f, 0.5f);
         Vec2 spawnPos;
         Team defaultUnitTeam;
         Seq<UnitEntry> unitEntries = new Seq<>();
@@ -270,10 +286,6 @@ public class UnitSpawner extends Block {
         }
 
         public void openCoordsDialog() {
-            if (!local()) {
-//                print("un active");
-//                return;
-            }
             if (UnitSpawner.this.currentBuilding != null && UnitSpawner.this.currentBuilding.isValid()) return;
             Tile tile = this.tile.nearby(-Mathf.floor(this.block.size / 2f), 0);
             if (Vars.control.input instanceof DesktopInput) {
@@ -305,8 +317,8 @@ public class UnitSpawner extends Block {
         public void showOffsetInput(String titleText, Cons2<String, String> confirmed) {
             new Dialog(titleText) {
                 {
-                    TextField fieldX = addInput("x: ", offsetVec.x);
-                    TextField fieldY = addInput("y: ", offsetVec.y);
+                    TextField fieldX = addInput("x: ", getPos().x, true);
+                    TextField fieldY = addInput("y: ", getPos().y, false);
                     buttons.defaults().size(120, 54).pad(4);
                     buttons.button("@cancel", this::hide);
                     buttons.button("@ok", () -> {
@@ -325,18 +337,21 @@ public class UnitSpawner extends Block {
                     keyDown(KeyCode.back, this::hide);
                     show();
                     Core.scene.setKeyboardFocus(fieldX);
-                    fieldX.setCursorPosition((offsetVec.x+"").length());
+                    fieldX.setCursorPosition((spawnPos.x + "").length());
                 }
 
-                protected TextField addInput(String dtext, float def) {
+                protected TextField addInput(String dtext, float def, boolean x) {
 
                     cont.margin(30).add(dtext).padRight(6f);
                     TextField.TextFieldFilter filter = TextField.TextFieldFilter.floatsOnly;
                     TextField field = cont.field(def + "", t -> {
                     }).height(50f).get();
                     field.setFilter((f, c) -> {
-                        float num = Strings.parseFloat(f.getText() + c);
-                        return filter.acceptChar(f, c) && num >= 0f && num <= 1f;
+
+                        StringBuilder b = new StringBuilder(f.getText());
+                        b.insert(f.getCursorPosition(), c);
+                        float num = Strings.parseFloat(b.toString(), -1f);
+                        return num >= 0f && num <= (x ? world.width() : world.height());
                     });
                     return field;
                 }
@@ -349,13 +364,13 @@ public class UnitSpawner extends Block {
             dialog.cont.table((t) -> {
                 t.defaults().size(280.0F, 60.0F);
                 t.button("@unit-spawner.edit-offset", () -> {
-                    showOffsetInput("@unit-spawner.edit-offset",(sx,sy)->{
-                        float x=Strings.parseFloat(sx);
-                        float y=Strings.parseFloat(sy);
-                        if (x>=0f && x<=1f && y>=0f && y<=1f){
-                            configure(new Vec2(x,y));
+                    showOffsetInput("@unit-spawner.edit-offset", (sx, sy) -> {
+                        float x = Strings.parseFloat(sx);
+                        float y = Strings.parseFloat(sy);
+                        if (x >= 0f && x <= 1f && y >= 0f && y <= 1f) {
+                            configure(new Vec2(x, y));
                         }
-                    } );
+                    });
                 }).growX().row();
             });
             dialog.addCloseListener();
@@ -416,9 +431,6 @@ public class UnitSpawner extends Block {
             super.damageContinuousPierce(amount);
         }
 
-        public void drawUnitPlace() {
-
-        }
 
         @Override
         public void add() {
@@ -541,8 +553,33 @@ public class UnitSpawner extends Block {
         }
 
         @Override
+        public void write(Writes write) {
+            super.write(write);
+            TypeIO.writeVec2(write,spawnPos);
+            TypeIO.writeTeam(write,defaultUnitTeam);
+            write.i(unitEntries.size);
+            unitEntries.each(entry->{
+                entry.write(write);
+            });
+        }
+
+        @Override
+        public void read(Reads read, byte revision) {
+            super.read(read, revision);
+            spawnPos=TypeIO.readVec2(read);
+            defaultUnitTeam=TypeIO.readTeam(read);
+            float amount=read.i();
+            unitEntries=new Seq<>();
+            for (int i = 0; i < amount; i++) {
+                UnitEntry entry=new UnitEntry();
+                entry.read(read,revision);
+                unitEntries.add(entry);
+            }
+        }
+
+        @Override
         public Vec2 getPos() {
-            return new Vec2().set(spawnPos.cpy()).add(offsetVec.cpy().scl(8f));
+            return new Vec2().set(spawnPos.cpy());
         }
     }
 }

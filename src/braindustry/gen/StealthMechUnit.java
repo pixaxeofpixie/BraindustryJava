@@ -185,7 +185,12 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     }
 
     public float getAlpha() {
-        return !inStealth ? Draw.getColor().a : this.isLocal() ? 0.25f : 0f;
+
+        try {
+            return !inStealth ? Draw.getColor().a : Vars.player.team()==team() ? 0.25f : 0f;
+        } catch (NullPointerException exception) {
+            return 0;
+        }
     }
 
     public void draw() {

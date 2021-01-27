@@ -6,6 +6,7 @@ import ModVars.modVars;
 import arc.func.Prov;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import arc.util.Log;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedPayloadUnit;
 import braindustry.entities.Advanced.AdvancedUnitWaterMove;
@@ -20,6 +21,7 @@ import java.lang.reflect.Constructor;
 public class ModEntityMapping {
     public static Prov[] idMap = new Prov[256];
     public static ObjectMap<String, Prov> nameMap = new ObjectMap();
+    private static ObjectMap<Class<?>,Integer> classIdMap=new ObjectMap<>();
     public static Prov map(int id) {
         return idMap[id];
     }
@@ -27,8 +29,11 @@ public class ModEntityMapping {
     public static Prov map(String name) {
         return (Prov)nameMap.get(name);
     }
-
+    public static int getId(Class<?> name){
+        return classIdMap.get(name,-1);
+    }
     static {
+        lastClass=0;
         mapClasses(
                 AmmoDistributeUnit.class,
                 PowerGeneratorUnit.class,
@@ -49,6 +54,8 @@ public class ModEntityMapping {
             if (objClass==null)return;
             Constructor<?> cons = objClass.getDeclaredConstructor();
             objClass.getField("classId").setInt(objClass,lastClass);
+            Log.info("@ @",lastClass,objClass.getName());
+            classIdMap.put(objClass,lastClass);
             idMap[lastClass++] = () -> {
                 try {
                     return cons.newInstance();
