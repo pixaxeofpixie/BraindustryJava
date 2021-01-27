@@ -1133,6 +1133,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shadow = 50;
                                 this.mirror = false;
+                                this.rotateSpeed = 0.6;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 /*this.bullet = new PointBulletType() {
@@ -1190,16 +1191,16 @@ public class ModUnitTypes implements ContentList {
                 this.mineSpeed = 8.0F;
                 this.mineTier = 2;
                 stealthDuration=2f*60f;
-                stealthCooldown=3f*60f;
+                stealthCooldown=2f*60f;
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
-                this.speed = 0.6f;
+                this.speed = 0.9f;
                 this.hitSize = 8;
-                this.armor = 10;
+                this.armor = 8;
                 this.buildSpeed = 1.0F;
                 this.health = 310;
                 this.localizedName = "Tyzen";
-                this.description = "Slow and weak unit with Stealth ability.";
+                this.description = " Weak unit with Stealth ability.";
 
                 this.weapons.add(
                         new ModWeapon("tyzen-weapon") {
@@ -1214,14 +1215,21 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet = new LiquidBulletType(ModLiquids.magma){
+                                this.bullet = new ShrapnelBulletType() {
                                     {
-                                        damage = 22;
-                                        speed = 2.0f;
-                                        drag = 0.01f;
-                                        shootEffect = Fx.lightningShoot;
-                                        lifetime = 50f;
-                                        collidesAir = false;
+                                        this.length = 58.0F;
+                                        this.damage = 50.0F;
+                                        this.width = 17.0F;
+                                        this.lifetime = 20.0F;
+                                        this.serrationLenScl = 2.0F;
+                                        this.serrationSpaceOffset = 1.0F;
+                                        this.serrationFadeOffset = 0.0F;
+                                        this.serrations = 3;
+                                        this.serrationWidth = 51.0F;
+                                        this.fromColor = Color.valueOf("625b82");
+                                        this.toColor = Color.valueOf("d4c7ea");
+                                        this.shootEffect = Fx.sparkShoot;
+                                        this.smokeEffect = Fx.sparkShoot;
                                     }
                                 };
                             }
@@ -1234,10 +1242,10 @@ public class ModUnitTypes implements ContentList {
                 this.mineSpeed = 9.0F;
                 this.mineTier = 2;
                 stealthDuration=3f*60f;
-                stealthCooldown=4f*60f;
+                stealthCooldown=2.5f*60f;
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
-                this.speed = 0.5f;
+                this.speed = 0.63f;
                 this.hitSize = 14;
                 this.armor = 12;
                 this.buildSpeed = 1.4F;
@@ -1251,17 +1259,18 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 10;
                                 this.y = 0;
                                 this.shootY = -1f;
-                                this.reload = 24;
+                                this.reload = 34;
                                 this.ejectEffect = Fx.fireballsmoke;
                                 this.recoil = 2f;
-                                this.shots = 5;
-                                this.rotate = true;
+                                this.shots = 4;
+                                this.inaccuracy = 9.0f;
+                                this.rotate = false;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.magma){
                                     {
-                                        damage = 40;
-                                        speed = 2.2f;
+                                        damage = 57;
+                                        speed = 2.1f;
                                         drag = -0.01f;
                                         shootEffect = Fx.lightningShoot;
                                         lifetime = 85f;
@@ -1301,6 +1310,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 4;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
+                                this.rotateSpeed = 0.8;
                                 this.mirror = false;
                                 this.bullet = new RailBulletType() {
                                     {
@@ -1311,10 +1321,10 @@ public class ModUnitTypes implements ContentList {
                                         this.updateEffect = this.trailEffect = ModFx.instTrail;
                                         this.hitEffect = Fx.blastExplosion;
                                         this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 260.0F;
+                                        this.damage = 590.0F;
                                         this.pierceDamageFactor = 0.45F;
                                         this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 0.64f;
+                                        this.buildingDamageMultiplier = 0.65f;
                                         this.speed = brange;
                                         this.hitShake = 3f;
                                     }
@@ -1328,13 +1338,13 @@ public class ModUnitTypes implements ContentList {
             {
                 this.mineSpeed = 9F;
                 this.mineTier = 3;
-                stealthDuration=6f*60f;
-                stealthCooldown=6f*60f;
+                stealthDuration= 60f;
+                stealthCooldown= 30f;
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.45f;
                 this.hitSize = 32;
-                this.armor = 8;
+                this.armor = 21;
                 this.buildSpeed = 1.8F;
                 this.health = 15400;
                 int brange = 1;
@@ -1347,25 +1357,25 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 15;
                                 this.y = -7;
                                 this.shootY = -1f;
-                                this.reload = 70;
+                                this.reload = 90;
                                 this.ejectEffect = ModFx.magicShootEffectBig;
                                 this.recoil = 5;
                                 this.shootSound = Sounds.laser;
-                                this.rotate = true;
+                                this.rotate = false;
                                 this.mirror = true;
                                 this.bullet = new RailBulletType() {
                                     {
                                         this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 370.0F;
+                                        this.length = 390.0F;
                                         this.updateEffectSeg = 65.0F;
                                         this.pierceEffect = this.hitEffect = ModFx.instHit;
                                         this.updateEffect = this.trailEffect = ModFx.instTrail;
                                         this.hitEffect = Fx.blastExplosion;
                                         this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 380.0F;
+                                        this.damage = 900.0F;
                                         this.pierceDamageFactor = 0.85F;
                                         this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 0.64f;
+                                        this.buildingDamageMultiplier = 0.70f;
                                         this.speed = brange;
                                         this.hitShake = 6f;
                                     }
@@ -1380,12 +1390,12 @@ public class ModUnitTypes implements ContentList {
                 this.mineSpeed = 9F;
                 this.mineTier = 4;
                 stealthDuration=7f*60f;
-                stealthCooldown=7.5f*60f;
+                stealthCooldown=3f*60f;
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.62f;
                 this.hitSize = 38;
-                this.armor = 12;
+                this.armor = 24;
                 this.buildSpeed = 2F;
                 this.health = 28600;
                 int brange = 1;
@@ -1398,22 +1408,23 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 0;
                                 this.y = -8;
                                 this.shootY = -1f;
-                                this.reload = 60;
+                                this.reload = 90;
                                 this.ejectEffect = ModFx.magicShootEffectBig;
                                 this.recoil = 6;
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
+                                this.rotateSpeed = 0.7;
                                 this.mirror = false;
                                 this.bullet = new RailBulletType() {
                                     {
                                         this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 420.0F;
+                                        this.length = 380.0F;
                                         this.updateEffectSeg = 70.0F;
                                         this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
                                         this.updateEffect = this.trailEffect = ModFx.magicBulletTrail;
                                         this.hitEffect = Fx.blastExplosion;
                                         this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 325.0F;
+                                        this.damage = 1250.0F;
                                         this.pierceDamageFactor = 1.2F;
                                         this.despawnEffect = ModFx.instBomb;
                                         this.buildingDamageMultiplier = 0.9f;
@@ -1425,24 +1436,26 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("intelix-weapon") {
                             {
-                                this.x = 18;
+                                this.x = 19;
                                 this.y = 0;
                                 this.shootY = -1f;
-                                this.reload = 40;
+                                this.reload = 100;
                                 this.ejectEffect = Fx.fireballsmoke;
                                 this.recoil = 3f;
-                                this.shots = 6;
+                                this.shots = 7;
+                                this.inaccuracy = 16.0f;
                                 this.rotate = true;
+                                this.rotateSpeed = 1.4;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.magma){
                                     {
-                                        damage = 48;
-                                        speed = 2.4f;
+                                        damage = 198;
+                                        speed = 1.8f;
                                         drag = -0.01f;
                                         shootEffect = Fx.lightningShoot;
                                         lifetime = 95f;
-                                        collidesAir = false;
+                                        collidesAir = true;
                                     }
                                 };
                             }
