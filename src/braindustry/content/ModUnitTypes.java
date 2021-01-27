@@ -1445,7 +1445,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shots = 7;
                                 this.inaccuracy = 16.0f;
                                 this.rotate = true;
-                                this.rotateSpeed = 1.4;
+                                this.rotateSpeed = 1.4f;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.magma){
