@@ -1133,7 +1133,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shadow = 50;
                                 this.mirror = false;
-                                this.rotateSpeed = 0.6;
+                                this.rotateSpeed = 0.6f;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 /*this.bullet = new PointBulletType() {
@@ -1208,7 +1208,7 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 5;
                                 this.y = 0;
                                 this.shootY = -1f;
-                                this.reload = 20;
+                                this.reload = 20f;
                                 this.ejectEffect = Fx.burning;
                                 this.recoil = 1;
                                 this.shots = 2;
@@ -1310,7 +1310,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 4;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
-                                this.rotateSpeed = 0.8;
+                                this.rotateSpeed = 0.8f;
                                 this.mirror = false;
                                 this.bullet = new RailBulletType() {
                                     {
@@ -1413,7 +1413,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 6;
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
-                                this.rotateSpeed = 0.7;
+                                this.rotateSpeed = 0.7f;
                                 this.mirror = false;
                                 this.bullet = new RailBulletType() {
                                     {
