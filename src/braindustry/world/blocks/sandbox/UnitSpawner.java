@@ -26,6 +26,7 @@ import braindustry.gen.Drawer;
 import braindustry.graphics.ModShaders;
 import braindustry.type.UnitEntry;
 import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.*;
@@ -76,14 +77,13 @@ public class UnitSpawner extends Block {
         super.load();
         colorRegion = Core.atlas.find(this.name + "-color", "air");
     }
- class UnitSpawnerBuild extends Building implements Drawer.BuilderDrawer {
+    public  class UnitSpawnerBuild extends Building implements Drawer.BuilderDrawer {
         public Table tmpCont;
         Vec2 spawnPos;
         Team defaultUnitTeam;
         Seq<UnitEntry> unitEntries = new Seq<>();
         Drawer drawer;
         Runnable rebuild;
-
         @Override
         public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
             UnitSpawnerBuild build = (UnitSpawnerBuild) super.init(tile, Team.derelict, shouldAdd, rotation);
@@ -110,6 +110,7 @@ public class UnitSpawner extends Block {
         }
 
         protected void openUnitDialog() {
+
             BaseDialog dialog = new BaseDialog("@dialog.unit-block-units.name");
             Table cont;
             dialog.cont.pane((t) -> {
