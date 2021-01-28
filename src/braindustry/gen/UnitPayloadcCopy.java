@@ -38,13 +38,15 @@ import mindustry.world.blocks.payloads.UnitPayload;
 
 import java.nio.FloatBuffer;
 
-public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc, Hitboxc, Unitc, Velc, Posc, Teamc, Rotc, Entityc, Healthc, Commanderc, Builderc, Boundedc, Minerc, Shieldc, Statusc, Itemsc, Syncc, Flyingc, Physicsc {
+public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc, Hitboxc, Unitc, Velc, Posc, Teamc, Rotc, Entityc, Healthc, Commanderc, Builderc, Boundedc, Minerc, Shieldc, Statusc, Itemsc, Syncc, Flyingc, Physicsc {
     public final Unit parent;
     public final Payloadc payloadc;
-    public <T extends Unit> UnitPayloadcCopy(T parent){
-        this.parent=parent;
-        payloadc =(Payloadc)parent;
+
+    public <T extends Unit> UnitPayloadcCopy(T parent) {
+        this.parent = parent;
+        payloadc = (Payloadc) parent;
     }
+
     @Override
     public float payloadUsed() {
         return payloadc.payloadUsed();
@@ -77,7 +79,7 @@ public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc
 
     @Override
     public void pickup(Unit unit) {
-        if (!(unit instanceof StealthUnitc))payloadc.pickup(unit);
+        if (!(unit instanceof StealthUnitc)) payloadc.pickup(unit);
     }
 
     @Override
@@ -107,7 +109,7 @@ public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc
 
     @Override
     public void contentInfo(Table table, float v, float v1) {
-        payloadc.contentInfo(table,v,v1);
+        payloadc.contentInfo(table, v, v1);
     }
 
     @Override
@@ -137,7 +139,7 @@ public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc
 
     @Override
     public void aimLook(float v, float v1) {
-        payloadc.aimLook(v,v1);
+        payloadc.aimLook(v, v1);
     }
 
     @Override
@@ -152,7 +154,7 @@ public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc
 
     @Override
     public float speed() {
-        return payloadc.speed() ;
+        return payloadc.speed();
     }
 
     @Override
@@ -172,7 +174,7 @@ public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc
 
     @Override
     public float range() {
-        return payloadc.range() ;
+        return payloadc.range();
     }
 
     @Override
@@ -207,7 +209,7 @@ public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc
 
     @Override
     public void set(UnitType unitType, UnitController unitController) {
-        payloadc.set(unitType,unitController);
+        payloadc.set(unitType, unitController);
     }
 
     @Override
@@ -227,7 +229,7 @@ public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc
 
     @Override
     public void lookAt(float v, float v1) {
-        payloadc.lookAt(v,v1);
+        payloadc.lookAt(v, v1);
     }
 
     @Override
@@ -257,708 +259,708 @@ public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc
 
     @Override
     public void destroy() {
-
+        payloadc.destroy();
     }
 
     @Override
     public String getControllerName() {
-        return null;
+        return payloadc.getControllerName();
     }
 
     @Override
     public void display(Table table) {
-
+        payloadc.display(table);
     }
 
     @Override
     public boolean isPlayer() {
-        return false;
+        return payloadc.isPlayer();
     }
 
     @Override
     public Player getPlayer() {
-        return null;
+        return payloadc.getPlayer();
     }
 
     @Override
     public UnitType type() {
-        return null;
+        return payloadc.type();
     }
 
     @Override
     public void type(UnitType unitType) {
-
+        payloadc.type(unitType);
     }
 
     @Override
     public boolean spawnedByCore() {
-        return false;
+        return payloadc.spawnedByCore();
     }
 
     @Override
     public void spawnedByCore(boolean b) {
-
+        payloadc.spawnedByCore(b);
     }
 
     @Override
     public double flag() {
-        return 0;
+        return payloadc.flag();
     }
 
     @Override
     public void flag(double v) {
-
+        payloadc.flag(v);
     }
 
     @Override
     public Seq<Ability> abilities() {
-        return null;
+        return payloadc.abilities();
     }
 
     @Override
     public void abilities(Seq<Ability> seq) {
-
+        payloadc.abilities(seq);
     }
 
     @Override
     public boolean canBuild() {
-        return false;
+        return payloadc.canBuild();
     }
 
     @Override
     public float ammof() {
-        return 0;
+        return payloadc.ammof();
     }
 
     @Override
     public void setWeaponRotation(float v) {
-
+        payloadc.setWeaponRotation(v);
     }
 
     @Override
     public void setupWeapons(UnitType unitType) {
-
+        payloadc.setupWeapons(unitType);
     }
 
     @Override
     public void controlWeapons(boolean b) {
-
+        payloadc.controlWeapons(b);
     }
 
     @Override
     public void controlWeapons(boolean b, boolean b1) {
-
+        payloadc.controlWeapons(b, b1);
     }
 
     @Override
     public void aim(Position position) {
-
+        payloadc.aim(position);
     }
 
     @Override
     public void aim(float v, float v1) {
-
+        payloadc.aim(v, v1);
     }
 
     @Override
     public boolean canShoot() {
-        return false;
+        return payloadc.canShoot();
     }
 
     @Override
     public void apply(StatusEffect statusEffect) {
-
+        payloadc.apply(statusEffect);
     }
 
     @Override
     public void apply(StatusEffect statusEffect, float v) {
-
+        payloadc.apply(statusEffect, v);
     }
 
     @Override
     public void unapply(StatusEffect statusEffect) {
-
+        payloadc.unapply(statusEffect);
     }
 
     @Override
     public boolean isBoss() {
-        return false;
+        return payloadc.isBoss();
     }
 
     @Override
     public boolean isImmune(StatusEffect statusEffect) {
-        return false;
+        return payloadc.isImmune(statusEffect);
     }
 
     @Override
     public Color statusColor() {
-        return null;
+        return payloadc.statusColor();
     }
 
     @Override
     public boolean checkTarget(boolean b, boolean b1) {
-        return false;
+        return payloadc.checkTarget(b, b1);
     }
 
     @Override
     public boolean isGrounded() {
-        return false;
+        return payloadc.isGrounded();
     }
 
     @Override
     public boolean isFlying() {
-        return false;
+        return payloadc.isFlying();
     }
 
     @Override
     public boolean canDrown() {
-        return false;
+        return payloadc.canDrown();
     }
 
     @Override
     public void landed() {
-
+        payloadc.landed();
     }
 
     @Override
     public void wobble() {
-
+        payloadc.wobble();
     }
 
     @Override
     public void moveAt(Vec2 vec2, float v) {
-
+        payloadc.moveAt(vec2, v);
     }
 
     @Override
     public float floorSpeedMultiplier() {
-        return 0;
+        return payloadc.floorSpeedMultiplier();
     }
 
     @Override
     public boolean isValid() {
-        return false;
+        return payloadc.isValid();
     }
 
     @Override
     public float healthf() {
-        return 0;
+        return payloadc.healthf();
     }
 
     @Override
     public boolean canMine(Item item) {
-        return false;
+        return payloadc.canMine(item);
     }
 
     @Override
     public boolean offloadImmediately() {
-        return false;
+        return payloadc.offloadImmediately();
     }
 
     @Override
     public boolean mining() {
-        return false;
+        return payloadc.mining();
     }
 
     @Override
     public boolean validMine(Tile tile, boolean b) {
-        return false;
+        return payloadc.validMine(tile, b);
     }
 
     @Override
     public boolean validMine(Tile tile) {
-        return false;
+        return payloadc.validMine(tile);
     }
 
     @Override
     public boolean canMine() {
-        return false;
+        return payloadc.canMine();
     }
 
     @Override
     public int itemCapacity() {
-        return 0;
+        return payloadc.itemCapacity();
     }
 
     @Override
     public void snapSync() {
-
+        payloadc.snapSync();
     }
 
     @Override
     public void snapInterpolation() {
-
+        payloadc.snapInterpolation();
     }
 
     @Override
     public void readSync(Reads reads) {
-
+        payloadc.readSync(reads);
     }
 
     @Override
     public void writeSync(Writes writes) {
-
+        payloadc.writeSync(writes);
     }
 
     @Override
     public void readSyncManual(FloatBuffer floatBuffer) {
-
+        payloadc.readSyncManual(floatBuffer);
     }
 
     @Override
     public void writeSyncManual(FloatBuffer floatBuffer) {
-
+        payloadc.writeSyncManual(floatBuffer);
     }
 
     @Override
     public void afterSync() {
-
+        payloadc.afterSync();
     }
 
     @Override
     public void interpolate() {
-
+        payloadc.interpolate();
     }
 
     @Override
     public boolean isAdded() {
-        return false;
+        return payloadc.isAdded();
     }
 
     @Override
     public void update() {
-
+        payloadc.update();
     }
 
     @Override
     public void remove() {
-
+        payloadc.remove();
     }
 
     @Override
     public void add() {
-
+        payloadc.add();
     }
 
     @Override
     public boolean isLocal() {
-        return false;
+        return payloadc.isLocal();
     }
 
     @Override
     public boolean isRemote() {
-        return false;
+        return payloadc.isRemote();
     }
 
     @Override
     public boolean isNull() {
-        return false;
+        return payloadc.isNull();
     }
 
     @Override
     public <T extends Entityc> T self() {
-        return null;
+        return payloadc.self();
     }
 
     @Override
     public <T> T as() {
-        return null;
+        return payloadc.as();
     }
 
     @Override
     public <T> T with(Cons<T> cons) {
-        return null;
+        return payloadc.with(cons);
     }
 
     @Override
     public int classId() {
-        return 0;
+        return payloadc.classId();
     }
 
     @Override
     public boolean serialize() {
-        return false;
+        return payloadc.serialize();
     }
 
     @Override
     public void read(Reads reads) {
-
+        payloadc.read(reads);
     }
 
     @Override
     public void write(Writes writes) {
-
+        payloadc.write(writes);
     }
 
     @Override
     public void afterRead() {
-
+        payloadc.afterRead();
     }
 
     @Override
     public int id() {
-        return 0;
+        return payloadc.id();
     }
 
     @Override
     public void id(int i) {
-
+        payloadc.id(i);
     }
 
     @Override
     public EntityCollisions.SolidPred solidity() {
-        return null;
+        return payloadc.solidity();
     }
 
     @Override
     public boolean canPass(int i, int i1) {
-        return false;
+        return payloadc.canPass(i, i1);
     }
 
     @Override
     public boolean canPassOn() {
-        return false;
+        return payloadc.canPassOn();
     }
 
     @Override
     public boolean moving() {
-        return false;
+        return payloadc.moving();
     }
 
     @Override
     public void move(float v, float v1) {
-
+        payloadc.move(v, v1);
     }
 
     @Override
     public Vec2 vel() {
-        return null;
+        return payloadc.vel();
     }
 
     @Override
     public float drag() {
-        return 0;
+        return payloadc.drag();
     }
 
     @Override
     public void drag(float v) {
-
+        payloadc.drag(v);
     }
 
     @Override
     public long lastUpdated() {
-        return 0;
+        return payloadc.lastUpdated();
     }
 
     @Override
     public void lastUpdated(long l) {
-
+        payloadc.lastUpdated(l);
     }
 
     @Override
     public long updateSpacing() {
-        return 0;
+        return payloadc.updateSpacing();
     }
 
     @Override
     public void updateSpacing(long l) {
-
+        payloadc.updateSpacing(l);
     }
 
     @Override
     public Item item() {
-        return null;
+        return payloadc.item();
     }
 
     @Override
     public void clearItem() {
-
+        payloadc.clearItem();
     }
 
     @Override
     public boolean acceptsItem(Item item) {
-        return false;
+        return payloadc.acceptsItem(item);
     }
 
     @Override
     public boolean hasItem() {
-        return false;
+        return payloadc.hasItem();
     }
 
     @Override
     public void addItem(Item item) {
-
+        payloadc.addItem(item);
     }
 
     @Override
     public void addItem(Item item, int i) {
-
+        payloadc.addItem(item, i);
     }
 
     @Override
     public int maxAccepted(Item item) {
-        return 0;
+        return payloadc.maxAccepted(item);
     }
 
     @Override
     public ItemStack stack() {
-        return null;
+        return payloadc.stack();
     }
 
     @Override
     public void stack(ItemStack itemStack) {
-
+        payloadc.stack(itemStack);
     }
 
     @Override
     public float itemTime() {
-        return 0;
+        return payloadc.itemTime();
     }
 
     @Override
     public void itemTime(float v) {
-
+        payloadc.itemTime(v);
     }
 
     @Override
     public void getCollisions(Cons<QuadTree> cons) {
-
+        payloadc.getCollisions(cons);
     }
 
     @Override
     public void updateLastPosition() {
-
+        payloadc.updateLastPosition();
     }
 
     @Override
     public void collision(Hitboxc hitboxc, float v, float v1) {
-
+        payloadc.collision(hitboxc, v, v1);
     }
 
     @Override
     public float deltaLen() {
-        return 0;
+        return payloadc.deltaLen();
     }
 
     @Override
     public float deltaAngle() {
-        return 0;
+        return payloadc.deltaAngle();
     }
 
     @Override
     public boolean collides(Hitboxc hitboxc) {
-        return false;
+        return payloadc.collides(hitboxc);
     }
 
     @Override
     public void hitbox(Rect rect) {
-
+        payloadc.hitbox(rect);
     }
 
     @Override
     public void hitboxTile(Rect rect) {
-
+        payloadc.hitboxTile(rect);
     }
 
     @Override
     public float lastX() {
-        return 0;
+        return payloadc.lastX();
     }
 
     @Override
     public void lastX(float v) {
-
+        payloadc.lastX(v);
     }
 
     @Override
     public float lastY() {
-        return 0;
+        return payloadc.lastY();
     }
 
     @Override
     public void lastY(float v) {
-
+        payloadc.lastY(v);
     }
 
     @Override
     public float deltaX() {
-        return 0;
+        return payloadc.deltaX();
     }
 
     @Override
     public void deltaX(float v) {
-
+        payloadc.deltaX(v);
     }
 
     @Override
     public float deltaY() {
-        return 0;
+        return payloadc.deltaY();
     }
 
     @Override
     public void deltaY(float v) {
-
+        payloadc.deltaY(v);
     }
 
     @Override
     public float hitSize() {
-        return 0;
+        return payloadc.hitSize();
     }
 
     @Override
     public void hitSize(float v) {
-
+        payloadc.hitSize(v);
     }
 
     @Override
     public void killed() {
-
+        payloadc.killed();
     }
 
     @Override
     public void kill() {
-
+        payloadc.kill();
     }
 
     @Override
     public void heal() {
-
+        payloadc.heal();
     }
 
     @Override
     public boolean damaged() {
-        return false;
+        return payloadc.damaged();
     }
 
     @Override
     public void damagePierce(float v, boolean b) {
-
+        payloadc.damagePierce(v, b);
     }
 
     @Override
     public void damagePierce(float v) {
-
+        payloadc.damagePierce(v);
     }
 
     @Override
     public void damage(float v) {
-
+        payloadc.damage(v);
     }
 
     @Override
     public void damage(float v, boolean b) {
-
+        payloadc.damage(v, b);
     }
 
     @Override
     public void damageContinuous(float v) {
-
+        payloadc.damageContinuous(v);
     }
 
     @Override
     public void damageContinuousPierce(float v) {
-
+        payloadc.damageContinuousPierce(v);
     }
 
     @Override
     public void clampHealth() {
-
+        payloadc.clampHealth();
     }
 
     @Override
     public void heal(float v) {
-
+        payloadc.heal(v);
     }
 
     @Override
     public void healFract(float v) {
-
+        payloadc.healFract(v);
     }
 
     @Override
     public float health() {
-        return 0;
+        return payloadc.health();
     }
 
     @Override
     public void health(float v) {
-
+        payloadc.health(v);
     }
 
     @Override
     public float hitTime() {
-        return 0;
+        return payloadc.hitTime();
     }
 
     @Override
     public void hitTime(float v) {
-
+        payloadc.hitTime(v);
     }
 
     @Override
     public float maxHealth() {
-        return 0;
+        return payloadc.maxHealth();
     }
 
     @Override
     public void maxHealth(float v) {
-
+        payloadc.maxHealth(v);
     }
 
     @Override
     public boolean dead() {
-        return false;
+        return payloadc.dead();
     }
 
     @Override
     public void dead(boolean b) {
-
+        payloadc.dead(b);
     }
 
     @Override
     public float shield() {
-        return 0;
+        return payloadc.shield();
     }
 
     @Override
     public void shield(float v) {
-
+        payloadc.shield(v);
     }
 
     @Override
     public float armor() {
-        return 0;
+        return payloadc.armor();
     }
 
     @Override
     public void armor(float v) {
-
+        payloadc.armor(v);
     }
 
     @Override
     public float shieldAlpha() {
-        return 0;
+        return payloadc.shieldAlpha();
     }
 
     @Override
     public void shieldAlpha(float v) {
-
+        payloadc.shield(v);
     }
 
     @Override
     public float elevation() {
-        return 0;
+        return payloadc.elevation();
     }
 
     @Override
     public void elevation(float v) {
-
+        payloadc.elevation(v);
     }
 
     @Override
     public boolean hovering() {
         return false;
-    }
+    } // TODO Всё, что ниже
 
     @Override
     public void hovering(boolean b) {
