@@ -240,6 +240,7 @@ public class ModUnitTypes implements ContentList {
                 this.visualElevation = 0.8f;
                 this.mechStepShake = 0.15f;
                 this.mechStepParticles = true;
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
                 this.weapons.add(
                         new ModWeapon("lacerta-weapon") {
                             {
@@ -337,6 +338,7 @@ public class ModUnitTypes implements ContentList {
                 this.rippleScale = 6;
                 this.legSplashDamage = 160;
                 this.legSplashRange = 50;
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
                 this.weapons.add(
                         new ModWeapon("aquila-equip1") {
                             {
@@ -909,6 +911,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailX = 8;
                 this.trailY = 11;
                 this.trailScl = 1.8f;
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
                 this.weapons.add(
                         new ModWeapon("cenda-weapon") {
                             {
@@ -993,6 +996,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailX = 12;
                 this.trailY = 18;
                 this.trailScl = 2.8f;
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
                 this.weapons.add(
                         new ModWeapon("cenda-weapon") {
                             {
@@ -1081,6 +1085,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailX = 28;
                 this.trailY = 23;
                 this.trailScl = 2f;
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
                 int spawnTime = 1300; //why you use no created variables :(
                 abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
                 int brange = 1; //because i don't know so this varibles is need to be create before
@@ -1384,6 +1389,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 1.8F;
                 this.health = 15400;
                 this.canDrown = false;
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
                 int brange = 1;
                 this.localizedName = "Nemesis";
                 this.description = "Slow and dangerous sniper unit with railguns.";
@@ -1437,6 +1443,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 2F;
                 this.health = 26200;
                 this.canDrown = false;
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
                 int brange = 1;
                 this.localizedName = "Maverix";
                 this.description = "Heavy attack unit with magma guns and rampage railgun that mostly effective to buildings.";
