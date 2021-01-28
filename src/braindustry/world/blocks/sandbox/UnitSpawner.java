@@ -2,12 +2,15 @@ package braindustry.world.blocks.sandbox;
 
 import arc.Core;
 import arc.Events;
+import arc.func.Cons;
 import arc.func.Cons2;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.input.KeyCode;
 import arc.math.Mathf;
+import arc.math.geom.Position;
+import arc.math.geom.Rect;
 import arc.math.geom.Vec2;
 import arc.scene.ui.Dialog;
 import arc.scene.ui.Image;
@@ -21,10 +24,12 @@ import arc.util.io.Writes;
 import braindustry.content.ModFx;
 import braindustry.gen.Drawer;
 import braindustry.graphics.ModShaders;
+import braindustry.type.UnitEntry;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.*;
+import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.input.DesktopInput;
 import mindustry.io.TypeIO;
@@ -36,7 +41,9 @@ import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.Tile;
+import mindustry.world.blocks.environment.Floor;
 import mindustry.world.meta.StatUnit;
+import mindustryAddition.graphics.ModDraw;
 
 import static mindustry.Vars.world;
 
@@ -69,47 +76,13 @@ public class UnitSpawner extends Block {
         super.load();
         colorRegion = Core.atlas.find(this.name + "-color", "air");
     }
-
-    public static class UnitEntry {
-        public UnitType unitType;
-        public int amount;
-        public Vec2 pos;
-        public Team team;
-
-        public UnitEntry(UnitType unitType, Team team, int amount, Vec2 pos) {
-            this.unitType = unitType;
-            this.amount = amount;
-            this.pos = pos;
-            this.team = team;
-        }
-        public UnitEntry() {
-        }
-
-        public void spawn() {
-            for (int i = 0; i < amount; i++) {
-                Unit unit = unitType.spawn(team, pos.x, pos.y);
-            }
-        }
-        public void read(Reads read, byte revision){
-            unitType= TypeIO.readUnitType(read);
-            amount=read.i();
-            pos=TypeIO.readVec2(read);
-            team=TypeIO.readTeam(read);
-        }
-        public void write(Writes write){
-            TypeIO.writeUnitType(write,unitType);
-            write.i(amount);
-            TypeIO.writeVec2(write,pos);
-            TypeIO.writeTeam(write,team);
-        }
-    }
-
-    public class UnitSpawnerBuild extends Building implements Drawer.BuilderDrawer {
+ class UnitSpawnerBuild extends Building implements Drawer.BuilderDrawer {
         public Table tmpCont;
         Vec2 spawnPos;
         Team defaultUnitTeam;
         Seq<UnitEntry> unitEntries = new Seq<>();
         Drawer drawer;
+        Runnable rebuild;
 
         @Override
         public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
@@ -159,7 +132,14 @@ public class UnitSpawner extends Block {
                                         b.add(u.localizedName);
                                     },
                                     () -> {
-                                        unitEntries.add(new UnitEntry(u, Vars.player.team(), 1, spawnPos));
+                                        Team team = Vars.player.team();
+                                        ;
+                                        UnitEntry lastEntry = unitEntries.find(entry -> entry.unitType == u && entry.team == team);
+                                        if (lastEntry == null) {
+                                            add(new UnitEntry(u, team, 1, spawnPos));
+                                        } else {
+                                            lastEntry.amount++;
+                                        }
 //                                    this.addUnit([u.id, this.getTeam(), this.getMultiplier(), this.getSpawnPos()]);
                                     }
                             ).width(188.0f).margin(12).fillX();
@@ -228,41 +208,46 @@ public class UnitSpawner extends Block {
         protected void showUnitEntries() {
             BaseDialog dialog = new BaseDialog("@dialog.all-unit-entry");
             dialog.cont.pane((p) -> {
-                float bsize = 40.0F;
-                int countc = 0;
-                for (UnitEntry unitEntry : unitEntries) {
-                    p.table(Tex.pane, (t) -> {
-                        t.margin(4.0F).marginRight(8.0F).left();
-                        t.image(unitEntry.unitType.icon(Cicon.small)).size(24.0F).padRight(4.0F).padLeft(4.0F);
-                        t.label(() -> {
-                            return unitEntry.amount + "";
-                        }).left().width(90.0F);
-                        t.button(Tex.whiteui, Styles.clearTransi, 24.0F, () -> {
-                            this.unitEntries.remove(unitEntry);
-                            p.removeChild(t);
+                rebuild = () -> {
+                    float bsize = 40.0F;
+                    int countc = 0;
+                    for (UnitEntry unitEntry : unitEntries) {
+                        p.table(Tex.pane, (t) -> {
+                            t.margin(4.0F).marginRight(8.0F).left();
+                            t.image(unitEntry.unitType.icon(Cicon.small)).size(24.0F).padRight(4.0F).padLeft(4.0F);
+                            t.label(() -> {
+                                return unitEntry.amount + "";
+                            }).left().width(90.0F);
+                            t.button(Tex.whiteui, Styles.clearTransi, 24.0F, () -> {
+                                remove(unitEntry);
+                                p.removeChild(t);
+                                p.clearChildren();
+                                rebuild.run();
 
-                        }).size(bsize).get().getStyle().imageUp = Icon.trash;
-                        t.button("-", Styles.cleart, () -> {
-                            unitEntry.amount = Math.max(unitEntry.amount - step(unitEntry.amount), 0);
-                        }).size(bsize);
-                        t.button("+", Styles.cleart, () -> {
-                            unitEntry.amount += step(unitEntry.amount);
-                        }).size(bsize);
-                        t.button(Icon.pencil, Styles.cleari, () -> {
-                            Vars.ui.showTextInput("@configure", unitEntry.unitType.localizedName, 10, unitEntry.amount + "", true, (str) -> {
-                                if (Strings.canParsePositiveInt(str)) {
-                                    int amount = Strings.parseInt(str);
-                                    if (amount >= 0) {
-                                        unitEntry.amount = amount;
-                                        return;
+                            }).size(bsize).get().getStyle().imageUp = Icon.trash;
+                            t.button("-", Styles.cleart, () -> {
+                                unitEntry.amount = Math.max(unitEntry.amount - step(unitEntry.amount), 0);
+                            }).size(bsize);
+                            t.button("+", Styles.cleart, () -> {
+                                unitEntry.amount += step(unitEntry.amount);
+                            }).size(bsize);
+                            t.button(Icon.pencil, Styles.cleari, () -> {
+                                Vars.ui.showTextInput("@configure", unitEntry.unitType.localizedName, 10, unitEntry.amount + "", true, (str) -> {
+                                    if (Strings.canParsePositiveInt(str)) {
+                                        int amount = Strings.parseInt(str);
+                                        if (amount >= 0) {
+                                            unitEntry.amount = amount;
+                                            return;
+                                        }
                                     }
-                                }
-                            });
-                        }).size(bsize);
-                    });
-                    countc++;
-                    if (countc % 3 == 0) p.row();
-                }
+                                });
+                            }).size(bsize);
+                        });
+                        countc++;
+                        if (countc % 3 == 0) p.row();
+                    }
+                };
+                rebuild.run();
             });
 
             dialog.addCloseListener();
@@ -270,7 +255,16 @@ public class UnitSpawner extends Block {
             dialog.show();
         }
 
-        protected void spawnUnits() {
+     private void remove(UnitEntry unitEntry) {
+         unitEntries.remove(unitEntry);
+         unitEntry.remove();
+     }
+     private void add(UnitEntry unitEntry) {
+         unitEntries.add(unitEntry);
+         unitEntry.add();
+     }
+
+     protected void spawnUnits() {
             unitEntries.each(UnitEntry::spawn);
 //            unitEntries.clear();
         }
@@ -434,14 +428,28 @@ public class UnitSpawner extends Block {
 
         @Override
         public void add() {
-            super.add();
-            if (drawer != null) drawer.add();
+            if (!this.added) {
+                Groups.all.add(this);
+                Groups.build.add(this);
+                this.added = true;
+                if (drawer != null) drawer.add();
+                unitEntries.each(UnitEntry::add);
+            }
         }
 
         @Override
         public void remove() {
-            super.remove();
-            if (drawer != null) drawer.remove();
+            if (this.added) {
+                Groups.all.remove(this);
+                Groups.build.remove(this);
+                if (this.sound != null) {
+                    this.sound.stop();
+                }
+
+                unitEntries.each(UnitEntry::remove);
+                if (drawer != null) drawer.remove();
+                this.added = false;
+            }
         }
 
         @Override
@@ -544,21 +552,22 @@ public class UnitSpawner extends Block {
 
         @Override
         public void drawer() {
-            Draw.draw(Draw.z(), () -> {
+            Draw.draw(Layer.blockBuilding + 5f, () -> {
                 Draw.mixcol();
                 ModShaders.rainbow.set(this);
                 Draw.rect(UnitSpawner.this.colorRegion, getPos().x, getPos().y);
                 Draw.shader();
+//                unitEntries.each(UnitEntry::draw);
             });
         }
 
         @Override
         public void write(Writes write) {
             super.write(write);
-            TypeIO.writeVec2(write,spawnPos);
-            TypeIO.writeTeam(write,defaultUnitTeam);
+            TypeIO.writeVec2(write, spawnPos);
+            TypeIO.writeTeam(write, defaultUnitTeam);
             write.i(unitEntries.size);
-            unitEntries.each(entry->{
+            unitEntries.each(entry -> {
                 entry.write(write);
             });
         }
@@ -566,14 +575,14 @@ public class UnitSpawner extends Block {
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            spawnPos=TypeIO.readVec2(read);
-            defaultUnitTeam=TypeIO.readTeam(read);
-            float amount=read.i();
-            unitEntries=new Seq<>();
+            spawnPos = TypeIO.readVec2(read);
+            defaultUnitTeam = TypeIO.readTeam(read);
+            float amount = read.i();
+            unitEntries = new Seq<>();
             for (int i = 0; i < amount; i++) {
-                UnitEntry entry=new UnitEntry();
-                entry.read(read,revision);
-                unitEntries.add(entry);
+                UnitEntry entry = new UnitEntry();
+                entry.read(read, revision);
+                if (added)add();
             }
         }
 

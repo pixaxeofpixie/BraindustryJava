@@ -123,7 +123,7 @@ public class ModSave4 extends SaveVersion {
                         } catch (IndexOutOfBoundsException e){
                             in.skipBytes(this.lastRegionLength - 1);
                         }
-                    } else if (EntityMapping.map(typeid) == null) {
+                    } else if (typeid<0 || EntityMapping.map(typeid) == null) {
                         in.skipBytes(this.lastRegionLength - 1);
                     } else {
                         Entityc entity = (Entityc) EntityMapping.map(typeid).get();

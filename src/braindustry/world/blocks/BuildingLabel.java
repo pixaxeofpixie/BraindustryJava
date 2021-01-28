@@ -41,7 +41,7 @@ public interface BuildingLabel extends BuildingTaskQueue {
         font.getData().setScale(textSize / Scl.scl(1.0f));
         font.setUseIntegerPositions(false);
 
-        font.setColor(Color.white);
+        font.setColor(color);
 
         float z = Draw.z();
         Draw.z(Layer.overlayUI+1.f);
