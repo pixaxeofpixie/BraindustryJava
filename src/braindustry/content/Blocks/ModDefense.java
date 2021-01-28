@@ -131,7 +131,7 @@ public class ModDefense implements ContentList {
                             }
                         }
                 );
-                this.requirements(Category.turret, ItemStack.with(ModItems.odinum, 100, ModItems.graphenite, 200, Items.silicon, 140, Items.metaglass, 70, ModItems.exoticAlloy, 140));
+                this.requirements(Category.turret, ItemStack.with(ModItems.odinum, 125, ModItems.graphenite, 200, Items.silicon, 240, Items.metaglass, 210, ModItems.exoticAlloy, 140));
             }
         };
         blaze = new ItemTurret("blaze") {
@@ -149,7 +149,7 @@ public class ModDefense implements ContentList {
                 this.shots = 4;
                 this.rotate = true;
                 this.shootSound = Sounds.laser;
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 1000, Items.silicon, 1800, ModItems.chromium, 450, ModItems.odinum, 400));
+                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 300, Items.silicon, 340, ModItems.chromium, 250, ModItems.odinum, 240));
                 this.ammo(
                         ModItems.chromium, new ShrapnelBulletType() {
                             {
@@ -193,7 +193,7 @@ public class ModDefense implements ContentList {
             {
                 this.localizedName = "Brain";
                 this.description = "Fires a beam of death at enemies. Requires Phase Alloy to concentrate energy. Total destruction.";
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 570, Items.silicon, 1200, Items.surgeAlloy, 100, Items.thorium, 720, ModItems.phaseAlloy, 230, ModItems.plastic, 350));
+                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 470, Items.silicon, 500, Items.surgeAlloy, 220, Items.thorium, 420, ModItems.phaseAlloy, 230, ModItems.plastic, 250));
                 this.ammo(
                         ModItems.phaseAlloy, new LaserBulletType() {
                             {
@@ -248,7 +248,7 @@ public class ModDefense implements ContentList {
             {
                 this.localizedName = "Mind";
                 this.description = "An alternative to Brain. Fires a splash-damage beam. Requires lightweight Plastic to shoot.";
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 100, Items.silicon, 2000, Items.surgeAlloy, 100, ModItems.odinum, 1150, ModItems.phaseAlloy, 350, ModItems.plastic, 350));
+                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 340, Items.silicon, 500, Items.surgeAlloy, 200, ModItems.odinum, 115, ModItems.phaseAlloy, 250, ModItems.plastic, 250));
                 this.ammo(
                         ModItems.plastic, new ShrapnelBulletType() {
                             {
@@ -269,8 +269,8 @@ public class ModDefense implements ContentList {
                         },
                         ModItems.odinum, new LaserBulletType() {
                             {
-                                this.length = 340;
-                                this.damage = 320;
+                                this.length = 260;
+                                this.damage = 420;
                                 this.width = 40;
                                 this.lifetime = 30;
                                 this.lightningSpacing = 34;
@@ -290,14 +290,14 @@ public class ModDefense implements ContentList {
                         },
                         ModItems.exoticAlloy, new ShrapnelBulletType() {
                             {
-                                this.length = 170;
-                                this.damage = 720;
-                                this.width = 35;
+                                this.length = 160;
+                                this.damage = 710;
+                                this.width = 25;
                                 this.serrationLenScl = 8;
                                 this.serrationSpaceOffset = 120;
                                 this.serrationFadeOffset = 0;
-                                this.serrations = 17;
-                                this.serrationWidth = 6;
+                                this.serrations = 13;
+                                this.serrationWidth = 3;
                                 this.fromColor = Color.valueOf("FFF6A3");
                                 this.toColor = Color.valueOf("FFE70F");
                                 this.lifetime = 35;
@@ -306,7 +306,7 @@ public class ModDefense implements ContentList {
                             }
                         }
                 );
-                this.reloadTime = 65;
+                this.reloadTime = 70;
                 this.shots = 1;
                 this.burstSpacing = 3;
                 this.inaccuracy = 0.2f;
@@ -363,15 +363,15 @@ public class ModDefense implements ContentList {
                         this.despawnEffect = Fx.railHit;
                         this.knockback = 1;
                         this.lightning = 4;//?????????? ??????
-                        this.lightningLength = 30;//????? ??????
-                        this.lightningLengthRand = 30;//????????? ????? ?? 0 ?? 50 ????? ???????????? ? ????? ??????, ?? ???? ???????????? ?????
-                        this.lightningDamage = 78;//???? ??????
+                        this.lightningLength = 20;//????? ??????
+                        this.lightningLengthRand = 20;//????????? ????? ?? 0 ?? 50 ????? ???????????? ? ????? ??????, ?? ???? ???????????? ?????
+                        this.lightningDamage = 48;//???? ??????
                         this.lightningAngle = 15;//???? ??????????? ?????? ???????????? ???? ????
                         this.lightningCone = 50;//???????????? ???? ??????????? ??????
                         this.lightningColor = Color.valueOf("f1fc58");
                     }
                 };
-                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 250, ModItems.exoticAlloy, 400, Items.surgeAlloy, 300, ModItems.chromium, 200, ModItems.odinum, 300, ModItems.graphenite, 420, Items.metaglass, 120));
+                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 550, ModItems.exoticAlloy, 600, Items.surgeAlloy, 450, ModItems.chromium, 220, ModItems.odinum, 300, ModItems.graphenite, 720, Items.metaglass, 220));
                 this.reloadTime = 4;
             }
         };
@@ -388,7 +388,7 @@ public class ModDefense implements ContentList {
                 this.reloadTime = 10;
                 this.consumes.power(4.7f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.04f).optional(false, false);
-                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 20, Items.silicon, 200, ModItems.odinum, 120));
+                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 70, Items.silicon, 180, ModItems.odinum, 150));
             }
         };
         impulse = new ItemTurret("impulse") {
@@ -419,7 +419,7 @@ public class ModDefense implements ContentList {
                                 this.shrinkX = 0.2f;
                                 this.spin = 1.2f;
                                 this.speed = 2.1f;
-                                this.damage = 8;
+                                this.damage = 16;
                                 this.shootEffect = Fx.shockwave;
                                 this.hitColor = this.frontColor = Color.valueOf("f1fc58");
                                 this.despawnEffect = Fx.hitLancer;
@@ -428,14 +428,14 @@ public class ModDefense implements ContentList {
                                 this.lightning = 3;//?????????? ??????
                                 this.lightningLength = 3;//????? ??????
                                 this.lightningLengthRand = 7;//????????? ?????
-                                this.lightningDamage = 20;//???? ??????
+                                this.lightningDamage = 12;//???? ??????
                                 this.lightningAngle = 3;//???? ??????????? ?????? ???????????? ???? ????
                                 this.lightningCone = 20;//???????????? ???? ??????????? ??????
                                 this.lightningColor = Color.valueOf("f1fc58");
                             }
                         }
                 );
-                this.requirements(Category.turret, ItemStack.with(Items.silicon, 30, ModItems.graphenite, 20, Items.lead, 60, Items.copper, 70));
+                this.requirements(Category.turret, ItemStack.with(Items.silicon, 70, ModItems.graphenite, 50, Items.lead, 90, Items.copper, 110));
             }
         };
         katana = new ItemTurret("katana") {
@@ -457,14 +457,14 @@ public class ModDefense implements ContentList {
                         Items.surgeAlloy, artilleryIncendiary
                 );
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.1f).optional(true, true);
-                this.requirements(Category.turret, ItemStack.with(ModItems.exoticAlloy, 400, ModItems.graphenite, 400, Items.plastanium, 250, Items.silicon, 700, Items.surgeAlloy, 250, ModItems.phaseAlloy, 200));
+                this.requirements(Category.turret, ItemStack.with(ModItems.exoticAlloy, 120, ModItems.graphenite, 330, Items.plastanium, 150, Items.silicon, 200, Items.surgeAlloy, 50));
             }
         };
         neuron = new ItemTurret("neuron") {
             {
                 this.localizedName = "Neuron";
                 this.description = "A small turret that fires lasers that do splash damage. Requires power aswell as Exotic Alloy to shoot.";
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 250, Items.silicon, 400, Items.surgeAlloy, 70, Items.plastanium, 120, Items.thorium, 350));
+                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 150, Items.silicon, 150, Items.surgeAlloy, 70, Items.plastanium, 120, Items.thorium, 270));
                 this.ammo(
                         ModItems.exoticAlloy, new PointBulletType() {
                             {
@@ -524,7 +524,7 @@ public class ModDefense implements ContentList {
                 this.hasPower = true;
                 this.consumes.power(4.2f);
                 this.consumes.liquid(Liquids.cryofluid, 0.1f).optional(false, false);
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 100, Items.thorium, 100, Items.silicon, 180));
+                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 130, Items.thorium, 160, Items.silicon, 180));
             }
         };
         soul = new ItemTurret("soul") {
@@ -578,7 +578,7 @@ public class ModDefense implements ContentList {
                         ModItems.odinum, missileExplosive
                 );
                 this.consumes.liquid(Liquids.cryofluid, 0.1f).optional(false, true);
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 500, Items.plastanium, 250, Items.silicon, 500, ModItems.odinum, 460, Items.phaseFabric, 360));
+                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 500, Items.plastanium, 250, Items.silicon, 420, ModItems.odinum, 360, Items.phaseFabric, 260));
             }
         };
         synaps = new ItemTurret("synaps") {
@@ -604,8 +604,8 @@ public class ModDefense implements ContentList {
                                 this.shootEffect = Fx.railShoot;
                                 this.hitColor = this.color = Color.valueOf("fbff9e");
                                 this.despawnEffect = Fx.railHit;
-                                this.width = 3;
-                                this.lifetime = 45;
+                                this.width = 1.3f;
+                                this.lifetime = 30;
                                 this.knockback = -1;
                                 this.lightning = 4;
                                 this.lightningLength = 2;
