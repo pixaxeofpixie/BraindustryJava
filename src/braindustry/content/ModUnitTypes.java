@@ -2,6 +2,7 @@ package braindustry.content;
 
 import arc.func.Prov;
 import arc.graphics.Color;
+import arc.struct.ObjectSet;
 import braindustry.ai.types.StealthGroundAI;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedUnitType;
@@ -240,7 +241,7 @@ public class ModUnitTypes implements ContentList {
                 this.visualElevation = 0.8f;
                 this.mechStepShake = 0.15f;
                 this.mechStepParticles = true;
-                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
                         new ModWeapon("lacerta-weapon") {
                             {
@@ -338,7 +339,7 @@ public class ModUnitTypes implements ContentList {
                 this.rippleScale = 6;
                 this.legSplashDamage = 160;
                 this.legSplashRange = 50;
-                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
                         new ModWeapon("aquila-equip1") {
                             {
@@ -766,7 +767,7 @@ public class ModUnitTypes implements ContentList {
                                     }
                                 };
                             }
-                        }
+                        },
                         new ModWeapon("broadsword-weapon") {
                             {
                                 this.top = false;
@@ -796,6 +797,7 @@ public class ModUnitTypes implements ContentList {
                                     }
                                 };
                             }
+                        }
                 );
             }
         };
@@ -949,7 +951,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailX = 8;
                 this.trailY = 11;
                 this.trailScl = 1.8f;
-                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
                         new ModWeapon("cenda-weapon") {
                             {
@@ -1034,7 +1036,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailX = 12;
                 this.trailY = 18;
                 this.trailScl = 2.8f;
-                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
                         new ModWeapon("cenda-weapon") {
                             {
@@ -1108,7 +1110,7 @@ public class ModUnitTypes implements ContentList {
 
             {
                 this.range = 18;
-                this.constructor = () -> new PowerGeneratorUnit();
+                this.constructor = Types.powerNaval;
                 this.localizedName = "Vyvna";
                 this.description = "Giant atomic cruiser, produce energy and fires from railguns and rocket launchers.";
                 this.health = 21900;
@@ -1123,7 +1125,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailX = 28;
                 this.trailY = 23;
                 this.trailScl = 2f;
-                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int spawnTime = 1300; //why you use no created variables :(
                 abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
                 int brange = 1; //because i don't know so this varibles is need to be create before
@@ -1427,7 +1429,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 1.8F;
                 this.health = 15400;
                 this.canDrown = false;
-                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int brange = 1;
                 this.localizedName = "Nemesis";
                 this.description = "Slow and dangerous sniper unit with railguns.";
@@ -1481,7 +1483,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 2F;
                 this.health = 26200;
                 this.canDrown = false;
-                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting)
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int brange = 1;
                 this.localizedName = "Maverix";
                 this.description = "Heavy attack unit with magma guns and rampage railgun that mostly effective to buildings.";
@@ -1555,5 +1557,6 @@ public class ModUnitTypes implements ContentList {
         static Prov<? extends Unit> legs = EntityMapping.map("LegsUnit");
         static Prov<? extends Unit> mech = EntityMapping.map("MechUnit");
         static Prov<? extends Unit> stealthMech = StealthMechUnit::new;
+        static Prov<? extends Unit> powerNaval=PowerGeneratorUnit::new;
     }
 }
