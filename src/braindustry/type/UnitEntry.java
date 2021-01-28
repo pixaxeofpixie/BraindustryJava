@@ -1,5 +1,6 @@
 package braindustry.type;
 
+import ModVars.modFunc;
 import ModVars.modVars;
 import arc.Core;
 import arc.func.Cons;
@@ -9,6 +10,7 @@ import arc.math.geom.Rect;
 import arc.math.geom.Vec2;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import braindustry.gen.ModCall;
 import mindustry.core.World;
 import mindustry.game.Team;
 import mindustry.gen.Drawc;
@@ -28,7 +30,7 @@ public class UnitEntry implements Drawc {
     public int amount;
     public Vec2 pos;
     public Team team;
-    public boolean added=false;
+    public boolean added = false;
 
     public UnitEntry(UnitType unitType, Team team, int amount, Vec2 pos) {
         this.unitType = unitType;
@@ -46,7 +48,7 @@ public class UnitEntry implements Drawc {
 
     @Override
     public void set(float x, float y) {
-        pos.set(x,y);
+        pos.set(x, y);
     }
 
     @Override
@@ -104,39 +106,37 @@ public class UnitEntry implements Drawc {
         return y();
     }
 
-    public float x(){
+    public float x() {
         return pos.x;
     }
 
     @Override
     public void x(float x) {
-        pos.x=x;
+        pos.x = x;
     }
 
-    public float y(){
+    public float y() {
         return pos.y;
     }
 
     @Override
     public void y(float y) {
-pos.y=y;
+        pos.y = y;
     }
 
     public void draw() {
         Core.camera.bounds(viewport);
-        if (viewport.overlaps(x()-clipSize()/2f,y()-clipSize()/2f,clipSize(),clipSize()) && amount>0) {
+        if (viewport.overlaps(x() - clipSize() / 2f, y() - clipSize() / 2f, clipSize(), clipSize()) && amount > 0) {
             Draw.color(team.color);
             Draw.alpha(0.5f);
             Draw.rect(unitType.region, pos.x, pos.y);
-            if (amount>1) ModDraw.drawLabel(pos, amount + "");
+            if (amount > 1) ModDraw.drawLabel(pos, amount + "");
             Draw.reset();
         }
     }
 
     public void spawn() {
-        for (int i = 0; i < amount; i++) {
-            Unit unit = unitType.spawn(team, pos.x, pos.y);
-        }
+        ModCall.spawnUnits(unitType, pos.x, pos.y, amount,false, team, null);
     }
 
     public void read(Reads read, byte revision) {
@@ -158,15 +158,15 @@ pos.y=y;
 
     @Override
     public void remove() {
-        if (!added)return;
-        added=false;
+        if (!added) return;
+        added = false;
         Groups.draw.remove(this);
     }
 
     @Override
     public void add() {
-        if (added)return;
-        added=true;
+        if (added) return;
+        added = true;
         Groups.draw.add(this);
     }
 
@@ -187,18 +187,18 @@ pos.y=y;
 
     @Override
     public <T extends Entityc> T self() {
-        return (T)this;
+        return (T) this;
     }
 
     @Override
     public <T> T as() {
-        return (T)this;
+        return (T) this;
     }
 
     @Override
     public <T> T with(Cons<T> cons) {
-        cons.get((T)this);
-        return (T)this;
+        cons.get((T) this);
+        return (T) this;
     }
 
     @Override

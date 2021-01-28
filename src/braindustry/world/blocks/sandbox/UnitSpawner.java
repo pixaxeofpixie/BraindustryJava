@@ -2,8 +2,10 @@ package braindustry.world.blocks.sandbox;
 
 import arc.Core;
 import arc.Events;
+import arc.func.Boolf;
 import arc.func.Cons;
 import arc.func.Cons2;
+import arc.func.Intf;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
@@ -18,6 +20,7 @@ import arc.scene.ui.TextField;
 import arc.scene.ui.layout.Table;
 import arc.struct.Bits;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Strings;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
@@ -27,6 +30,7 @@ import braindustry.graphics.ModShaders;
 import braindustry.type.UnitEntry;
 import mindustry.Vars;
 import mindustry.content.Blocks;
+import mindustry.core.World;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.*;
@@ -70,6 +74,11 @@ public class UnitSpawner extends Block {
 
     public static boolean local() {
         return !Vars.net.active();
+    }
+
+    @Override
+    public void init() {
+        super.init();
     }
 
     @Override
@@ -135,9 +144,14 @@ public class UnitSpawner extends Block {
                                     () -> {
                                         Team team = Vars.player.team();
                                         ;
-                                        UnitEntry lastEntry = unitEntries.find(entry -> entry.unitType == u && entry.team == team);
+                                        UnitEntry lastEntry = unitEntries.find(entry -> {
+                                            Intf<Float> conv=(c)->(int)(c/Vars.tilesize);
+                                            int nx= conv.get(spawnPos.x),ny=conv.get(spawnPos.y);
+                                            int ex=conv.get(entry.x()),ey=conv.get(entry.y());
+                                            return entry.unitType == u && entry.team == team && ex==nx && ey==ny;
+                                        });
                                         if (lastEntry == null) {
-                                            add(new UnitEntry(u, team, 1, spawnPos));
+                                            add(new UnitEntry(u, team, 1, getPos()));
                                         } else {
                                             lastEntry.amount++;
                                         }
@@ -210,19 +224,18 @@ public class UnitSpawner extends Block {
             BaseDialog dialog = new BaseDialog("@dialog.all-unit-entry");
             dialog.cont.pane((p) -> {
                 rebuild = () -> {
+                    p.clearChildren();
                     float bsize = 40.0F;
                     int countc = 0;
                     for (UnitEntry unitEntry : unitEntries) {
                         p.table(Tex.pane, (t) -> {
-                            t.margin(4.0F).marginRight(8.0F).left();
+                            t.margin(4.0F).marginRight(0.0F).left();
                             t.image(unitEntry.unitType.icon(Cicon.small)).size(24.0F).padRight(4.0F).padLeft(4.0F);
                             t.label(() -> {
                                 return unitEntry.amount + "";
                             }).left().width(90.0F);
                             t.button(Tex.whiteui, Styles.clearTransi, 24.0F, () -> {
                                 remove(unitEntry);
-                                p.removeChild(t);
-                                p.clearChildren();
                                 rebuild.run();
 
                             }).size(bsize).get().getStyle().imageUp = Icon.trash;
@@ -256,13 +269,13 @@ public class UnitSpawner extends Block {
             dialog.show();
         }
 
-     private void remove(UnitEntry unitEntry) {
+        protected void remove(UnitEntry unitEntry) {
          unitEntries.remove(unitEntry);
          unitEntry.remove();
      }
-     private void add(UnitEntry unitEntry) {
+        protected void add(UnitEntry unitEntry) {
          unitEntries.add(unitEntry);
-         unitEntry.add();
+         if(added)unitEntry.add();
      }
 
      protected void spawnUnits() {
@@ -312,8 +325,8 @@ public class UnitSpawner extends Block {
         public void showOffsetInput(String titleText, Cons2<String, String> confirmed) {
             new Dialog(titleText) {
                 {
-                    TextField fieldX = addInput("x: ", getPos().x, true);
-                    TextField fieldY = addInput("y: ", getPos().y, false);
+                    TextField fieldX = addInput("x: ", getPos().x/Vars.tilesize, true);
+                    TextField fieldY = addInput("y: ", getPos().y/Vars.tilesize, false);
                     buttons.defaults().size(120, 54).pad(4);
                     buttons.button("@cancel", this::hide);
                     buttons.button("@ok", () -> {
@@ -343,9 +356,18 @@ public class UnitSpawner extends Block {
                     }).height(50f).get();
                     field.setFilter((f, c) -> {
 
-                        StringBuilder b = new StringBuilder(f.getText());
+                        String text = f.getText();
+                        if (text.isEmpty())return true;
+                        StringBuilder b = new StringBuilder(text);
+                        String selection = f.getSelection();
+//                        text.substring(0,f.getSelectionStart());
                         b.insert(f.getCursorPosition(), c);
-                        float num = Strings.parseFloat(b.toString(), -1f);
+                        if (!selection.isEmpty()){
+                            text=b.toString();
+                        }else{
+                            text=b.toString();
+                        }
+                        float num = Strings.parseFloat("0"+text, -1f);
                         return num >= 0f && num <= (x ? world.width() : world.height());
                     });
                     return field;
@@ -360,10 +382,10 @@ public class UnitSpawner extends Block {
                 t.defaults().size(280.0F, 60.0F);
                 t.button("@unit-spawner.edit-offset", () -> {
                     showOffsetInput("@unit-spawner.edit-offset", (sx, sy) -> {
-                        float x = Strings.parseFloat(sx);
-                        float y = Strings.parseFloat(sy);
-                        if (x >= 0f && x <= 1f && y >= 0f && y <= 1f) {
-                            configure(new Vec2(x, y));
+                        float x = Strings.parseFloat(sx,-1f);
+                        float y = Strings.parseFloat(sy,-1f);
+                        if (x >= 0f && x <= world.width() && y >= 0f && y <= world.height()) {
+                            configure(new Vec2(x, y).scl(Vars.tilesize));
                         }
                     });
                 }).growX().row();
@@ -583,7 +605,7 @@ public class UnitSpawner extends Block {
             for (int i = 0; i < amount; i++) {
                 UnitEntry entry = new UnitEntry();
                 entry.read(read, revision);
-                if (added)add();
+                add(entry);
             }
         }
 

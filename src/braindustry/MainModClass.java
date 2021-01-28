@@ -20,6 +20,7 @@ import arc.scene.ui.layout.Cell;
 import arc.struct.Seq;
 import arc.util.*;
 import braindustry.entities.bullets.ModLightningBulletType;
+import braindustry.gen.ModCall;
 import braindustry.graphics.ModShaders;
 import braindustry.input.ModBinding;
 import braindustry.ui.fragments.ModMenuFragment;
@@ -161,7 +162,7 @@ public class MainModClass extends Mod {
                 dialog.show();
 
             }).size(280.0f/2f, 60.0F);
-            table.visibility=()-> settings.cheating();
+            table.visibility=()-> settings.cheating() && (!Vars.net.active() || Vars.net.server());
         });
         Time.runTask(10f, () -> {
             BaseDialog dialog = new BaseDialog("Welcome");
@@ -221,10 +222,7 @@ public class MainModClass extends Mod {
                 getInfoDialog("","Can't spawn water unit!!!","You not on the water",color.lerp(Color.white,0.2f)).show();
                 return false;
             }
-            Unit newUnit = unitType.spawn(Vars.player.x, Vars.player.y);
-            newUnit.spawnedByCore = true;
-            Vars.player.unit().spawnedByCore = true;
-            Vars.player.unit(newUnit);
+            ModCall.spawnUnits(unitType,Vars.player.x,Vars.player.y,1,true,Vars.player.team(), Vars.player);
             return true;
         }).show();
     }

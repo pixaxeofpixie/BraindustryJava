@@ -13,6 +13,7 @@ import arc.math.Mathf;
 import arc.math.geom.Geometry;
 import arc.math.geom.QuadTree;
 import arc.math.geom.Vec2;
+import arc.struct.Seq;
 import arc.util.Structs;
 import arc.util.Time;
 import arc.util.io.Reads;
@@ -27,6 +28,7 @@ import mindustry.entities.units.StatusEntry;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Hitboxc;
+import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
@@ -34,6 +36,7 @@ import mindustry.world.Tile;
 import mindustry.world.blocks.ConstructBlock;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustryAddition.gen.CopyMechUnit;
+import mindustryAddition.gen.ModEntityMapping;
 import mindustryAddition.versions.ModEntityc;
 
 import java.util.Arrays;
@@ -127,17 +130,41 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
 
     @Override
     public void inStealth(boolean inStealth) {
-        this.inStealth=inStealth;
+        this.inStealth = inStealth;
     }
 
     @Override
     public void longPress(boolean longPress) {
-        this.longPress=longPress;
+        this.longPress = longPress;
     }
 
     @Override
     public boolean longPress() {
         return longPress;
+    }
+
+    public void setStealth() {
+        setStealth(0);
+    }
+
+    public void setStealth(float time) {
+        if (!inStealth && cooldownStealth==0) {
+            inStealth = true;
+            Groups.unit.remove(this);
+            durationStealth = 0;
+        }
+    }
+
+    public void removeStealth() {
+        removeStealth((durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
+    }
+
+    public void removeStealth(float time) {
+        if (inStealth) {
+            inStealth = false;
+            Groups.unit.add(this);
+            cooldownStealth = Math.min(stealthType.stealthCooldown, time);
+        }
     }
 
     @Override
@@ -153,14 +180,22 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
             }
             durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
             if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
-                inStealth = false;
-                Groups.unit.add(this);
-                cooldownStealth = (durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown;
+                removeStealth((durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
+                Seq<Unit> stealthUnitc = controlling().select((u) -> u instanceof StealthUnitc);
+                if (stealthUnitc.size > 0) {
+                    stealthUnitc.each(unit -> {
+                        ((StealthUnitc) unit).removeStealth();
+                    });
+                }
             }
         } else if (cooldownStealth == 0f && selectStealth()) {
-            inStealth = true;
-            durationStealth = 0;
-            Groups.unit.remove(this);
+            setStealth();
+            Seq<Unit> stealthUnitc = controlling().select((u) -> u instanceof StealthUnitc);
+            if (stealthUnitc.size > 0) {
+                stealthUnitc.each(unit -> {
+                    ((StealthUnitc) unit).setStealth();
+                });
+            }
         }
 
     }
@@ -187,7 +222,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     public float getAlpha() {
 
         try {
-            return !inStealth ? Draw.getColor().a : Vars.player.team()==team() ? 0.25f : 0f;
+            return !inStealth ? Draw.getColor().a : Vars.player.team() == team() ? 0.25f : 0f;
         } catch (NullPointerException exception) {
             return 0;
         }
@@ -323,6 +358,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
 
     @Override
     public void writeSync(Writes write) {
+        write.s(modClassId());
         super.writeSync(write);
         write.bool(inStealth);
         write.f(cooldownStealth);
@@ -361,8 +397,9 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
 
     @Override
     public int modClassId() {
-        return classId;
+        return ModEntityMapping.getId(this.getClass());
     }
+
     public int classId() {
         return modVars.MOD_CONTENT_ID;
     }

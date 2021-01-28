@@ -54,8 +54,8 @@ public class ModEntityMapping {
             if (objClass==null)return;
             Constructor<?> cons = objClass.getDeclaredConstructor();
             objClass.getField("classId").setInt(objClass,lastClass);
-            Log.info("@ @",lastClass,objClass.getName());
-//            classIdMap.put(objClass,lastClass);
+//            Log.info("@ @",lastClass,objClass.getName());
+            classIdMap.put(objClass,lastClass);
             idMap[lastClass++] = () -> {
                 try {
                     return cons.newInstance();

@@ -44,6 +44,7 @@ public class UnitPayloadcCopy  extends Unit implements Drawc, Weaponsc, Payloadc
     public <T extends Unit> UnitPayloadcCopy(T parent){
         this.parent=parent;
         payloadc =(Payloadc)parent;
+
     }
     @Override
     public float payloadUsed() {
