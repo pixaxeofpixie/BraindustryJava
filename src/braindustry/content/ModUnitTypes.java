@@ -189,11 +189,12 @@ public class ModUnitTypes implements ContentList {
                             {
                                 this.reload = 120;
                                 this.rotate = true;
+                                this.rotateSpeed = 1.2f;
                                 this.x = 10;
                                 this.y = -7f;
                                 this.shots = 24;
                                 this.shotDelay = 1;
-                                this.inaccuracy = 15;
+                                this.inaccuracy = 14;
                                 this.mirror = true;
                                 this.bullet = new SapBulletType() {
                                     {
@@ -285,6 +286,7 @@ public class ModUnitTypes implements ContentList {
                             {
                                 this.reload = 20;
                                 this.rotate = true;
+                                this.rotateSpeed = 1.6f;
                                 this.x = 10;
                                 this.y = -7f;
                                 this.shots = 2;
@@ -342,6 +344,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.x = 25;
                                 this.y = 5;
+                                this.rotateSpeed = 1.5f;
                                 this.shots = 6;
                                 this.shotDelay = 10;
                                 this.inaccuracy = 7;
@@ -366,6 +369,7 @@ public class ModUnitTypes implements ContentList {
                             {
                                 this.reload = 75;
                                 this.rotate = true;
+                                this.rotateSpeed = 0.9f;
                                 this.x = 13;
                                 this.y = -7f;
                                 this.shots = 20;
@@ -545,8 +549,8 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 40;
                                 this.mirror = true;
                                 this.shots = 2;
-                                this.x = 6;
-                                this.y = 0;
+                                this.x = 7;
+                                this.y = 1;
                                 this.rotate = true;
                                 this.bullet = Bullets.missileExplosive;
                             }
@@ -556,22 +560,24 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 0;
                                 this.y = -8f;
                                 this.shootY = -1f;
-                                this.reload = 60;
+                                this.reload = 120;
+                                this.shots = 5;
+                                this.inaccuracy = 7;
                                 this.ejectEffect = Fx.none;
-                                this.recoil = 3;
+                                this.recoil = 2;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = true;
                                 this.mirror = false;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.9f;
-                                        this.length = 50;
-                                        this.damage = 100;
+                                        this.length = 110;
+                                        this.damage = 120;
                                         this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("e88ec9");
-                                        this.color = Color.valueOf("e88ec9");
+                                        this.hitColor = Color.valueOf("D6FF33");
+                                        this.color = Color.valueOf("FFE70F");
                                         this.despawnEffect = Fx.none;
-                                        this.width = 1;
+                                        this.width = 0.7f;
                                         this.lifetime = 40;
                                         this.knockback = 1.3f;
                                     }
@@ -636,15 +642,28 @@ public class ModUnitTypes implements ContentList {
                                 this.top = false;
                                 this.y = -3f;
                                 this.x = 32;
-                                this.reload = 40;
-                                this.recoil = 2;
+                                this.reload = 150;
+                                this.recoil = 4;
                                 this.shootSound = Sounds.missile;
-                                this.shots = 5;
-                                this.inaccuracy = 0.4f;
+                                this.shots = 12;
+                                this.inaccuracy = 6.5f;
                                 this.velocityRnd = 0.2f;
                                 this.alternate = true;
                                 this.mirror = true;
-                                this.bullet = Bullets.missileExplosive;
+                                this.bullet = new SapBulletType() {
+                                    {
+                                        this.sapStrength = 0.9f;
+                                        this.length = 140;
+                                        this.damage = 120;
+                                        this.shootEffect = Fx.shootSmall;
+                                        this.hitColor = Color.valueOf("D6FF33");
+                                        this.color = Color.valueOf("FFE70F");
+                                        this.despawnEffect = Fx.none;
+                                        this.width = 0.7f;
+                                        this.lifetime = 40;
+                                        this.knockback = 1.3f;
+                                    }
+                                };
                             }
                         }
                 );
@@ -713,15 +732,28 @@ public class ModUnitTypes implements ContentList {
                                 this.top = false;
                                 this.y = -4f;
                                 this.x = 29;
-                                this.reload = 25;
+                                this.reload = 165;
                                 this.recoil = 3;
                                 this.shootSound = Sounds.missile;
-                                this.shots = 7;
-                                this.inaccuracy = 1;
+                                this.shots = 16;
+                                this.inaccuracy = 5;
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
                                 this.mirror = true;
-                                this.bullet = Bullets.missileSurge;
+                                this.bullet = new SapBulletType() {
+                                    {
+                                        this.sapStrength = 0.9f;
+                                        this.length = 140;
+                                        this.damage = 120;
+                                        this.shootEffect = Fx.shootSmall;
+                                        this.hitColor = Color.valueOf("D6FF33");
+                                        this.color = Color.valueOf("FFE70F");
+                                        this.despawnEffect = Fx.none;
+                                        this.width = 0.6f;
+                                        this.lifetime = 40;
+                                        this.knockback = 1.3f;
+                                    }
+                                };
                             }
                         }
                 );
@@ -1246,6 +1278,7 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.63f;
+                this.rotateSpeed = 4;
                 this.hitSize = 14;
                 this.armor = 12;
                 this.buildSpeed = 1.4F;
@@ -1291,10 +1324,12 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.55f;
+                this.rotateSpeed = 3;
                 this.hitSize = 20;
                 this.armor = 14;
                 this.buildSpeed = 1.5F;
                 this.health = 5100;
+                this.canDrown = false;
                 int brange = 1;
                 this.localizedName = "Intelix";
                 this.description = "Heavy stealth unit with dangerous railgun.";
@@ -1343,10 +1378,12 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.45f;
+                this.rotateSpeed = 3;
                 this.hitSize = 32;
                 this.armor = 21;
                 this.buildSpeed = 1.8F;
                 this.health = 15400;
+                this.canDrown = false;
                 int brange = 1;
                 this.localizedName = "Nemesis";
                 this.description = "Slow and dangerous sniper unit with railguns.";
@@ -1355,11 +1392,11 @@ public class ModUnitTypes implements ContentList {
                         new ModWeapon("troplex-grinder") {
                             {
                                 this.x = 15;
-                                this.y = -7;
+                                this.y = 0;
                                 this.shootY = -1f;
                                 this.reload = 90;
                                 this.ejectEffect = ModFx.magicShootEffectBig;
-                                this.recoil = 5;
+                                this.recoil = 9;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = false;
                                 this.mirror = true;
@@ -1394,10 +1431,12 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.62f;
+                this.rotateSpeed = 3;
                 this.hitSize = 38;
                 this.armor = 24;
                 this.buildSpeed = 2F;
-                this.health = 28600;
+                this.health = 26200;
+                this.canDrown = false;
                 int brange = 1;
                 this.localizedName = "Maverix";
                 this.description = "Heavy attack unit with magma guns and rampage railgun that mostly effective to buildings.";
