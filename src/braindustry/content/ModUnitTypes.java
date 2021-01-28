@@ -447,6 +447,7 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.health = 600;
                 this.range = 100;
+                this.armor = 6;
                 this.engineOffset = 3;
                 this.engineSize = 2;
                 this.rotateSpeed = 10;
@@ -454,6 +455,7 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("armor-weapon") {
                             {
+                                this.top = true;
                                 this.x = 0;
                                 this.y = -3f;
                                 this.shootY = 6;
@@ -490,13 +492,14 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.8f;
                 this.flying = true;
                 this.health = 1200;
-                this.armor = 1;
+                this.armor = 12;
                 this.range = 160;
                 this.engineOffset = 6;
                 this.rotateSpeed = 3;
                 this.weapons.add(
                         new ModWeapon("armor-weapon") {
                             {
+                                this.top = true;
                                 this.x = 5;
                                 this.y = -4f;
                                 this.shootY = 4;
@@ -537,8 +540,8 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.hitSize = 12;
                 this.engineSize = 3.2f;
-                this.armor = 2;
-                this.health = 3500;
+                this.armor = 22;
+                this.health = 2600;
                 this.range = 120;
                 this.engineOffset = 7;
                 this.rotateSpeed = 1.1f;
@@ -551,19 +554,22 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 40;
                                 this.mirror = true;
                                 this.shots = 2;
+                                this.inaccuracy = 5;
                                 this.x = 7;
                                 this.y = 1;
-                                this.rotate = true;
+                                this.rotate = false;
                                 this.bullet = Bullets.missileExplosive;
                             }
                         },
                         new ModWeapon("chainmail-weapon") {
                             {
+                                this.top = true;
                                 this.x = 0;
                                 this.y = -8f;
                                 this.shootY = -1f;
                                 this.reload = 120;
                                 this.shots = 5;
+                                this.shotDelay = 5;
                                 this.inaccuracy = 7;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
@@ -572,7 +578,7 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = false;
                                 this.bullet = new SapBulletType() {
                                     {
-                                        this.sapStrength = 0.9f;
+                                        this.sapStrength = 0.7f;
                                         this.length = 110;
                                         this.damage = 120;
                                         this.shootEffect = Fx.shootSmall;
@@ -594,16 +600,17 @@ public class ModUnitTypes implements ContentList {
             {
                 this.localizedName = "Chainmail";
                 this.constructor = Types.payload;
-                this.speed = 0.9f;
+                this.speed = 0.8f;
                 this.flying = true;
                 this.hitSize = 27;
                 this.engineSize = 7;
-                this.armor = 12;
+                this.armor = 26;
                 this.health = 10000;
                 this.rotateSpeed = 1.2f;
                 this.targetAir = true;
                 this.payloadCapacity = 300;
                 this.buildSpeed = 1.3f;
+                this.rotateShooting = false;
                 this.commandLimit = 6;
                 this.weapons.add(
                         new ModWeapon("bomb-weapon") {
@@ -622,7 +629,7 @@ public class ModUnitTypes implements ContentList {
                                         //this.shootCone = 190;
                                         this.despawnShake = 3;
                                         this.collidesAir = false;
-                                        this.lifetime = 30;
+                                        this.lifetime = 0;
                                         this.despawnEffect = ModFx.yellowBomb;
                                         this.hitEffect = Fx.massiveExplosion;
                                         this.hitSound = Sounds.plasmaboom;
@@ -641,12 +648,13 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("broadsword-weapon") {
                             {
-                                this.top = false;
+                                this.top = true;
                                 this.y = -3f;
                                 this.x = 32;
                                 this.reload = 150;
                                 this.recoil = 4;
-                                this.shootSound = Sounds.missile;
+                                this.shotDelay = 4;
+                                this.shootSound = Sounds.sap;
                                 this.shots = 12;
                                 this.inaccuracy = 6.5f;
                                 this.velocityRnd = 0.2f;
@@ -654,7 +662,7 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = true;
                                 this.bullet = new SapBulletType() {
                                     {
-                                        this.sapStrength = 0.9f;
+                                        this.sapStrength = 0.6f;
                                         this.length = 140;
                                         this.damage = 120;
                                         this.shootEffect = Fx.shootSmall;
@@ -677,8 +685,8 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.payload;
                 this.localizedName = "Helmet";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
-                this.armor = 18;
-                this.health = 29000;
+                this.armor = 36;
+                this.health = 18000;
                 this.speed = 0.6f;
                 this.rotateSpeed = 1;
                 this.accel = 0.07f;
@@ -688,7 +696,7 @@ public class ModUnitTypes implements ContentList {
                 this.commandLimit = 8;
                 this.engineOffset = 38;
                 this.engineSize = 10;
-                this.rotateShooting = true;
+                this.rotateShooting = false;
                 this.hitSize = 64;
                 this.payloadCapacity = 380;
                 this.buildSpeed = 5;
@@ -713,7 +721,7 @@ public class ModUnitTypes implements ContentList {
                                         //this.shootCone = 160;
                                         this.despawnShake = 2.1f;
                                         this.collidesAir = false;
-                                        this.lifetime = 20;
+                                        this.lifetime = 0;
                                         this.despawnEffect = ModFx.yellowBomb;
                                         this.hitEffect = Fx.massiveExplosion;
                                         this.keepVelocity = false;
@@ -735,8 +743,9 @@ public class ModUnitTypes implements ContentList {
                                 this.y = -4f;
                                 this.x = 29;
                                 this.reload = 165;
+                                this.shotDelay = 3;
                                 this.recoil = 3;
-                                this.shootSound = Sounds.missile;
+                                this.shootSound = Sounds.sap;
                                 this.shots = 16;
                                 this.inaccuracy = 5;
                                 this.velocityRnd = 0.1f;
@@ -744,7 +753,7 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = true;
                                 this.bullet = new SapBulletType() {
                                     {
-                                        this.sapStrength = 0.9f;
+                                        this.sapStrength = 0.5f;
                                         this.length = 140;
                                         this.damage = 120;
                                         this.shootEffect = Fx.shootSmall;
@@ -758,6 +767,35 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         }
+                        new ModWeapon("broadsword-weapon") {
+                            {
+                                this.top = false;
+                                this.y = -1f;
+                                this.x = 25;
+                                this.reload = 165;
+                                this.shotDelay = 10;
+                                this.recoil = 3;
+                                this.shootSound = Sounds.sap;
+                                this.shots = 32;
+                                this.inaccuracy = 5;
+                                this.velocityRnd = 0.1f;
+                                this.alternate = true;
+                                this.mirror = true;
+                                this.bullet = new SapBulletType() {
+                                    {
+                                        this.sapStrength = 0.3f;
+                                        this.length = 160;
+                                        this.damage = 60;
+                                        this.shootEffect = Fx.shootSmall;
+                                        this.hitColor = Color.valueOf("D6FF33");
+                                        this.color = Color.valueOf("FFE70F");
+                                        this.despawnEffect = Fx.none;
+                                        this.width = 0.6f;
+                                        this.lifetime = 40;
+                                        this.knockback = 1.3f;
+                                    }
+                                };
+                            }
                 );
             }
         };
