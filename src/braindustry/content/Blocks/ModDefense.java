@@ -635,10 +635,10 @@ public class ModDefense implements ContentList {
                 loopSound = ModSounds.electronCharge;
                 this.shootType = new RainbowLaserBulletType(){
                     {
-                        damage = 1400f;
+                        damage = 4560f;
                         length = 400f;
                         lifetime = 120f;
-                        width = 200f;
+                        width = 130f;
                         hittable = false;
                         absorbable = false;
                         hitEffect = Fx.hitMeltHeal;

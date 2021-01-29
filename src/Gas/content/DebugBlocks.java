@@ -19,7 +19,7 @@ public class DebugBlocks {
     }
     public static Block gasGenerator,methaneBurner;
     public void load(){
-        gasGenerator = new AllBurnerGenerator("combustion-generator") {
+       /* gasGenerator = new AllBurnerGenerator("combustion-generator") {
             {
                 this.localizedName = "Combustion Generator";
                 this.size = 2;
@@ -29,7 +29,7 @@ public class DebugBlocks {
                 this.ambientSound = Sounds.smelter;
                 this.ambientSoundVolume = 0.03F;
             }
-        };
+        };*/
         methaneBurner = new AllBurnerGenerator("methane-burner") {
             {
 //                Blocks.steamGenerator

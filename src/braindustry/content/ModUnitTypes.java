@@ -81,7 +81,7 @@ public class ModUnitTypes implements ContentList {
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 1;
                                 this.rotate = true;
-                                this.shootSound = Sounds.flame;
+                                this.shootSound = Sounds.laser;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.8f;
@@ -142,7 +142,7 @@ public class ModUnitTypes implements ContentList {
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 1;
                                 this.rotate = true;
-                                this.shootSound = Sounds.flame;
+                                this.shootSound = Sounds.laser;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.95f;
@@ -197,6 +197,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shotDelay = 1;
                                 this.inaccuracy = 14;
                                 this.mirror = true;
+                                this.shootSound = Sounds.laser;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.8f;
@@ -257,7 +258,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootStatus = StatusEffects.unmoving;
                                 this.shootStatusDuration = 300;
                                 this.firstShotDelay = 70;
-                                this.shootSound = Sounds.laser;
+                                this.shootSound = Sounds.explosionbig;
                                 this.mirror = false;
                                 this.bullet = new LaserBulletType() {
                                     {
@@ -294,6 +295,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shots = 2;
                                 this.shotDelay = 15;
                                 this.mirror = true;
+                                this.shootSound = Sounds.laserblast;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.7f;
@@ -352,6 +354,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shotDelay = 10;
                                 this.inaccuracy = 7;
                                 this.mirror = true;
+                                this.shootSound = Sounds.beam;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.8f;
@@ -379,6 +382,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shotDelay = 0.7f;
                                 this.inaccuracy = 13;
                                 this.mirror = true;
+                                this.shootSound = Sounds.beam;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.7f;
@@ -409,7 +413,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootStatus = StatusEffects.unmoving;
                                 this.shootStatusDuration = 130;
                                 this.firstShotDelay = 20;
-                                this.shootSound = Sounds.laser;
+                                this.shootSound = Sounds.lasershoot;
                                 this.mirror = false;
                                 this.bullet = new LaserBulletType() {
                                     {
@@ -439,7 +443,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        //====fly
+        //fly
         armor = new UnitType("armor") {
             {
                 this.constructor = Types.payload;
@@ -463,7 +467,7 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 20;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 1;
-                                this.shootSound = Sounds.laser;
+                                this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
                                 this.bullet = new SapBulletType() {
@@ -509,7 +513,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 6;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
-                                this.shootSound = Sounds.laser;
+                                this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = true;
                                 this.bullet = new SapBulletType() {
@@ -559,6 +563,7 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 7;
                                 this.y = 1;
                                 this.rotate = false;
+                                this.shootSound = Sounds.boom;
                                 this.bullet = Bullets.missileExplosive;
                             }
                         },
@@ -574,7 +579,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 7;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
-                                this.shootSound = Sounds.laser;
+                                this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
                                 this.bullet = new SapBulletType() {
@@ -746,7 +751,7 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 165;
                                 this.shotDelay = 3;
                                 this.recoil = 3;
-                                this.shootSound = Sounds.sap;
+                                this.shootSound = Sounds.laserblast;
                                 this.shots = 16;
                                 this.inaccuracy = 5;
                                 this.velocityRnd = 0.1f;
