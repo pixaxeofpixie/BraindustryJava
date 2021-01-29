@@ -633,6 +633,7 @@ public class ModDefense implements ContentList {
                 reloadTime = 210;
                 shootSound = ModSounds.electronShoot;
                 loopSound = ModSounds.electronCharge;
+                firingMoveFract = 1f;
                 this.shootType = new RainbowLaserBulletType(){
                     {
                         damage = 4560f;
