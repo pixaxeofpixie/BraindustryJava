@@ -154,7 +154,6 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
             durationStealth = 0;
         }
     }
-
     public void removeStealth() {
         removeStealth((durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
     }
