@@ -1,37 +1,37 @@
 ![alt tag]( https://github.com/pixaxeofpixie/pictures/blob/main/logo.png?raw=true)
-Mindustry Java Mod By Braindustry Team 
+## Java Mod By Braindustry Team 
 
 # Installation Guide
 
-### 1.Go to [releases]( https://github.com/pixaxeofpixie/Braindustry-Mod/releases ).
+* 1.Go to [releases]( https://github.com/pixaxeofpixie/Braindustry-Mod/releases ).
 
-### 2.Download the latest .jar file(if you android download -droid.jar version).
+* 2.Download the latest .jar file(if you android download -droid.jar version).
 
-### 3.Launch Mindustry.
+* 3.Launch Mindustry.
 
-### 4.Open "Mods".
+* 4.Open "Mods".
 
-### 5."Import Mod".
+* 5."Import Mod".
 
-### 6."Impot File"
+* 6."Impot File"
 
-### 7.Find file with name "braindustry2.0.jar"(android - droid-braindustry2.0.jar) and click "load".
+* 7.Find file with name "braindustry2.0.jar"(android - droid-braindustry2.0.jar) and click "load".
 
 # Build Guide
 
-## Windows/MacOSX/Linux
+## PC
 
-### 1.Download intelijIDEA.
+* 1.Download intelijIDEA.
 
-### 2.Clone this repository.
+* 2.Clone this repository.
 
-### 3.When importing is end, go to Intelij console and type:
+* 3.When importing is end, go to Intelij console and type:
 
 If you Windows  |  If you MacOSX  | If you Linux
 ------------ | ------------------------- | -------------
 gradlew jar | ./gradlew jar | gradlew jar
 
-### 4.When compilation is end, your build will be in "braindustry/build/libs"
+* 4.When compilation is end, your build will be in "braindustry/build/libs"
 
 # Mod Screenshots
 
