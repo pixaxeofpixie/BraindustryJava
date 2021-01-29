@@ -959,426 +959,426 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
 
     @Override
     public boolean hovering() {
-        return false;
-    } // TODO Всё, что ниже
+        return payloadc.hovering();
+    }
 
     @Override
     public void hovering(boolean b) {
-
+        payloadc.hovering(b);
     }
 
     @Override
     public float drownTime() {
-        return 0;
+        return payloadc.drownTime();
     }
 
     @Override
     public void drownTime(float v) {
-
+        payloadc.drownTime(v);
     }
 
     @Override
     public float splashTimer() {
-        return 0;
+        return payloadc.splashTimer();
     }
 
     @Override
     public void splashTimer(float v) {
-
+        payloadc.splashTimer(v);
     }
 
     @Override
     public void draw() {
-
+        payloadc.draw();
     }
 
     @Override
     public float mineTimer() {
-        return 0;
+        return payloadc.mineTimer();
     }
 
     @Override
     public void mineTimer(float v) {
-
+        payloadc.mineTimer(v);
     }
 
     @Override
     public Tile mineTile() {
-        return null;
+        return payloadc.mineTile();
     }
 
     @Override
     public void mineTile(Tile tile) {
-
+        payloadc.mineTile(tile);
     }
 
     @Override
     public boolean hasEffect(StatusEffect statusEffect) {
-        return false;
+        return payloadc.hasEffect(statusEffect);
     }
 
     @Override
     public float speedMultiplier() {
-        return 0;
+        return payloadc.speedMultiplier();
     }
 
     @Override
     public float damageMultiplier() {
-        return 0;
+        return payloadc.damageMultiplier();
     }
 
     @Override
     public float healthMultiplier() {
-        return 0;
+        return payloadc.healthMultiplier();
     }
 
     @Override
     public float reloadMultiplier() {
-        return 0;
+        return payloadc.reloadMultiplier();
     }
 
     @Override
     public WeaponMount[] mounts() {
-        return new WeaponMount[0];
+        return payloadc.mounts();
     }
 
     @Override
     public void mounts(WeaponMount[] weaponMounts) {
-
+        payloadc.mounts(weaponMounts);
     }
 
     @Override
     public boolean isRotate() {
-        return false;
+        return payloadc.isRotate();
     }
 
     @Override
     public float aimX() {
-        return 0;
+        return payloadc.aimX();
     }
 
     @Override
     public void aimX(float v) {
-
+        payloadc.aimX(v);
     }
 
     @Override
     public float aimY() {
-        return 0;
+        return payloadc.aimY();
     }
 
     @Override
     public void aimY(float v) {
-
+        payloadc.aimY(v);
     }
 
     @Override
     public boolean isShooting() {
-        return false;
+        return payloadc.isShooting();
     }
 
     @Override
     public void isShooting(boolean b) {
-
+        payloadc.isShooting(b);
     }
 
     @Override
     public float ammo() {
-        return 0;
+        return payloadc.ammo();
     }
 
     @Override
     public void ammo(float v) {
-
+        payloadc.ammo(v);
     }
 
     @Override
     public void controller(UnitController unitController) {
-
+        payloadc.controller(unitController);
     }
 
     @Override
     public void commandNearby(FormationPattern formationPattern) {
-
+        payloadc.commandNearby(formationPattern);
     }
 
     @Override
     public void commandNearby(FormationPattern formationPattern, Boolf<Unit> boolf) {
-
+        payloadc.commandNearby(formationPattern, boolf);
     }
 
     @Override
     public void command(Formation formation, Seq<Unit> seq) {
-
+        payloadc.command(formation, seq);
     }
 
     @Override
     public boolean isCommanding() {
-        return false;
+        return payloadc.isCommanding();
     }
 
     @Override
     public void clearCommand() {
-
+        payloadc.clearCommand();
     }
 
     @Override
     public Formation formation() {
-        return null;
+        return payloadc.formation();
     }
 
     @Override
     public void formation(Formation formation) {
-
+        payloadc.formation(formation);
     }
 
     @Override
     public Seq<Unit> controlling() {
-        return null;
+        return payloadc.controlling();
     }
 
     @Override
     public void controlling(Seq<Unit> seq) {
-
+        payloadc.controlling(seq);
     }
 
     @Override
     public float minFormationSpeed() {
-        return 0;
+        return payloadc.minFormationSpeed();
     }
 
     @Override
     public void minFormationSpeed(float v) {
-
+        payloadc.minFormationSpeed(v);
     }
 
     @Override
     public void drawBuildPlans() {
-
+        payloadc.drawBuildPlans();
     }
 
     @Override
     public void drawPlan(BuildPlan buildPlan, float v) {
-
+        payloadc.drawPlan(buildPlan, v);
     }
 
     @Override
     public void drawPlanTop(BuildPlan buildPlan, float v) {
-
+        payloadc.drawPlanTop(buildPlan, v);
     }
 
     @Override
     public boolean shouldSkip(BuildPlan buildPlan, Building building) {
-        return false;
+        return payloadc.shouldSkip(buildPlan, building);
     }
 
     @Override
     public void removeBuild(int i, int i1, boolean b) {
-
+        payloadc.removeBuild(i, i1, b);
     }
 
     @Override
     public boolean isBuilding() {
-        return false;
+        return payloadc.isBuilding();
     }
 
     @Override
     public void clearBuilding() {
-
+        payloadc.clearBuilding();
     }
 
     @Override
     public void addBuild(BuildPlan buildPlan) {
-
+        payloadc.addBuild(buildPlan);
     }
 
     @Override
     public void addBuild(BuildPlan buildPlan, boolean b) {
-
+        payloadc.addBuild(buildPlan, b);
     }
 
     @Override
     public boolean activelyBuilding() {
-        return false;
+        return payloadc.activelyBuilding();
     }
 
     @Override
     public BuildPlan buildPlan() {
-        return null;
+        return payloadc.buildPlan();
     }
 
     @Override
     public Queue<BuildPlan> plans() {
-        return null;
+        return payloadc.plans();
     }
 
     @Override
     public void plans(Queue<BuildPlan> queue) {
-
+        payloadc.plans(queue);
     }
 
     @Override
     public boolean updateBuilding() {
-        return false;
+        return payloadc.updateBuilding();
     }
 
     @Override
     public void updateBuilding(boolean b) {
-
+        payloadc.updateBuilding(b);
     }
 
     @Override
     public float clipSize() {
-        return 0;
+        return payloadc.clipSize();
     }
 
     @Override
     public float mass() {
-        return 0;
+        return payloadc.mass();
     }
 
     @Override
     public void impulse(float v, float v1) {
-
+        payloadc.impulse(v, v1);
     }
 
     @Override
     public void impulse(Vec2 vec2) {
-
+        payloadc.impulse(vec2);
     }
 
     @Override
     public void impulseNet(Vec2 vec2) {
-
+        payloadc.impulseNet(vec2);
     }
 
     @Override
     public PhysicsProcess.PhysicRef physref() {
-        return null;
+        return payloadc.physref();
     }
 
     @Override
     public void physref(PhysicsProcess.PhysicRef physicRef) {
-
+        payloadc.physref(physicRef);
     }
 
     @Override
     public boolean cheating() {
-        return false;
+        return payloadc.cheating();
     }
 
     @Override
     public Building core() {
-        return null;
+        return payloadc.core();
     }
 
     @Override
     public Building closestCore() {
-        return null;
+        return payloadc.closestCore();
     }
 
     @Override
     public Building closestEnemyCore() {
-        return null;
+        return payloadc.closestEnemyCore();
     }
 
     @Override
     public Team team() {
-        return null;
+        return payloadc.team();
     }
 
     @Override
     public void team(Team team) {
-
+        payloadc.team(team);
     }
 
     @Override
     public void set(float v, float v1) {
-
+        payloadc.set(v, v1);
     }
 
     @Override
     public void set(Position position) {
-
+        payloadc.set(position);
     }
 
     @Override
     public void trns(float v, float v1) {
-
+        payloadc.trns(v, v1);
     }
 
     @Override
     public void trns(Position position) {
-
+        payloadc.trns(position);
     }
 
     @Override
     public int tileX() {
-        return 0;
+        return payloadc.tileX();
     }
 
     @Override
     public int tileY() {
-        return 0;
+        return payloadc.tileY();
     }
 
     @Override
     public Floor floorOn() {
-        return null;
+        return payloadc.floorOn();
     }
 
     @Override
     public Block blockOn() {
-        return null;
+        return payloadc.blockOn();
     }
 
     @Override
     public boolean onSolid() {
-        return false;
+        return payloadc.onSolid();
     }
 
     @Override
     public Tile tileOn() {
-        return null;
+        return payloadc.tileOn();
     }
 
     @Override
     public float getX() {
-        return 0;
+        return payloadc.getX();
     }
 
     @Override
     public float getY() {
-        return 0;
+        return payloadc.getY();
     }
 
     @Override
     public float x() {
-        return 0;
+        return payloadc.x();
     }
 
     @Override
     public void x(float v) {
-
+        payloadc.x(v);
     }
 
     @Override
     public float y() {
-        return 0;
+        return payloadc.y();
     }
 
     @Override
     public void y(float v) {
-
+        payloadc.y(v);
     }
 
     @Override
     public float rotation() {
-        return 0;
+        return payloadc.rotation();
     }
 
     @Override
     public void rotation(float v) {
-
+        payloadc.rotation(v);
     }
 }
