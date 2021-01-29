@@ -18,7 +18,7 @@ public class ModItems implements ContentList {
                 this.localizedName = "Chromium";
                 this.description = "A very infusible resource.";
                 this.hardness = 4;
-                this.cost = 2;
+                this.cost = 1;
                 this.color = Color.valueOf("dededf");
             }
         };
@@ -27,7 +27,7 @@ public class ModItems implements ContentList {
             {
                 this.localizedName="Exo Metal";
                 this.description="Heavy organic metal with high durability and low weight.";
-                this.cost = 3;
+                this.cost = 1;
                 this.alwaysUnlocked = true;
                 this.explosiveness = 0.02f;
                 this.color = Color.valueOf("e2f723");
@@ -40,7 +40,7 @@ public class ModItems implements ContentList {
             {
                 this.localizedName = "Graphenite";
                 this.description = "Progressed synthetic metal with low weight.";
-                this.cost = 2;
+                this.cost = 1;
                 this.alwaysUnlocked = true;
                 this.color = Color.valueOf("9868AB");
                 this.explosiveness = 0;
@@ -55,7 +55,7 @@ public class ModItems implements ContentList {
                 this.description="A radioactive resource.";
                 this.radioactivity=2;
                 this.hardness=5;
-                this.cost=2;
+                this.cost=1;
                 this.color=Color.valueOf("bddedd");
             }
         };
@@ -67,7 +67,7 @@ public class ModItems implements ContentList {
                 this.flammability = 0;
                 this.explosiveness = 0;
                 this.radioactivity = 0;
-                this.cost = 2;
+                this.cost = 1.5f;
                 this.color = Color.valueOf("FF4F00");
             }
         };
@@ -79,7 +79,7 @@ public class ModItems implements ContentList {
                 this.flammability=0;
                 this.explosiveness=0;
                 this.radioactivity=0.01f;
-                this.cost=4;
+                this.cost=1.5f;
                 this.color = Color.valueOf("f6bfff");
             }
         };
@@ -87,7 +87,7 @@ public class ModItems implements ContentList {
             {
                 this.localizedName="Astronomical Bar";
                 this.description="Super-heavy and durable syntethic metal, can be only obtained from high-level bosses.";
-                this.cost = 3;
+                this.cost = 1.5f;
                 this.alwaysUnlocked = true;
                 this.explosiveness = 0.98f;
                 this.color = Color.valueOf("e868d7");
