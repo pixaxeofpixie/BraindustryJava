@@ -1,6 +1,7 @@
 package braindustry.core;
 
 import ModVars.modVars;
+import arc.util.Log;
 import arc.util.io.Reads;
 import arc.util.io.ReusableByteInStream;
 import mindustry.Vars;
@@ -21,7 +22,7 @@ public class ModNetClient {
             modVars.netClient.byteStream.setBytes(Vars.net.decompressSnapshot(data, dataLen));
             DataInputStream input = modVars.netClient.dataStream;
 
-            for(int j = 0; j < amount; ++j) {
+            for (int j = 0; j < amount; ++j) {
                 int id = input.readInt();
                 byte typeID = input.readByte();
                 Syncc entity = (Syncc) Groups.sync.getByID(id);
@@ -31,32 +32,34 @@ public class ModNetClient {
                     entity = Vars.player;
                     add = true;
                 }
-
+                int classId=255;
+                if (typeID == modVars.MOD_CONTENT_ID) {
+                    classId = input.readShort();
+                }
                 if (entity == null) {
-                    if (typeID==modVars.MOD_CONTENT_ID){
-                        int classId=input.readShort();
+                    Log.info("c: @, t: @",classId,typeID);
+                    if (typeID == modVars.MOD_CONTENT_ID) {
                         entity = (Syncc) ModEntityMapping.map(classId).get();
                     } else {
+
                         entity = (Syncc) EntityMapping.map(typeID).get();
                     }
-                    ((Syncc)entity).id(id);
-                    if (!Vars.netClient.isEntityUsed(((Syncc)entity).id())) {
+                    ((Syncc) entity).id(id);
+                    if (!Vars.netClient.isEntityUsed(((Syncc) entity).id())) {
                         add = true;
                     }
 
                     created = true;
-                } else if (typeID==modVars.MOD_CONTENT_ID) {
-                    input.readShort();
                 }
 
-                ((Syncc)entity).readSync(Reads.get(input));
+                (entity).readSync(Reads.get(input));
                 if (created) {
-                    ((Syncc)entity).snapSync();
+                    ((Syncc) entity).snapSync();
                 }
 
                 if (add) {
-                    ((Syncc)entity).add();
-                    Vars.netClient.addRemovedEntity(((Syncc)entity).id());
+                    (entity).add();
+                    Vars.netClient.addRemovedEntity((entity).id());
                 }
             }
 

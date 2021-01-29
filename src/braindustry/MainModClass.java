@@ -21,6 +21,7 @@ import arc.struct.Seq;
 import arc.util.*;
 import braindustry.entities.bullets.ModLightningBulletType;
 import braindustry.gen.ModCall;
+import braindustry.gen.ModPlayer;
 import braindustry.graphics.ModShaders;
 import braindustry.input.ModBinding;
 import braindustry.ui.fragments.ModMenuFragment;
@@ -34,6 +35,8 @@ import mindustry.game.EventType;
 import mindustry.game.EventType.*;
 import mindustry.game.Team;
 import mindustry.gen.*;
+import mindustry.input.DesktopInput;
+import mindustry.input.MobileInput;
 import mindustry.io.JsonIO;
 import mindustry.mod.Mod;
 import mindustry.type.Item;
@@ -50,14 +53,27 @@ import mindustryAddition.iu.AdvancedContentInfoDialog;
 import static ModVars.modFunc.*;
 import static ModVars.modVars.*;
 import static braindustry.input.ModBinding.*;
+import static mindustry.Vars.*;
+import static mindustry.Vars.player;
 
 public class MainModClass extends Mod {
     public static ModListener modListener;
+    void createPlayer(){
+        player = ModPlayer.create();
+        player.name = Core.settings.getString("name");
+        player.color.set(Core.settings.getInt("color-0"));
+        if(state.isGame()){
+            player.add();
+        }
+    }
     public void init() {
         if (!loaded)return;
-        print("java init");
+        createPlayer();
         modVars.init();
         ModListener.load();
+        EntityMapping.idMap[12] = ModPlayer::new;
+        EntityMapping.nameMap.put("Player", ModPlayer::new);
+        EntityMapping.nameMap.put("player", ModPlayer::new);
         AdvancedSettingsMenuDialog.init();
         Core.settings.put("uiscalechanged", false);
         ModListener.updaters.add(()->{
