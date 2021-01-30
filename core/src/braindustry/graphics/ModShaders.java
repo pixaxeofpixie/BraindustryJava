@@ -13,6 +13,7 @@ import arc.math.geom.Vec3;
 import arc.scene.ui.layout.Scl;
 import arc.struct.Seq;
 import arc.util.Time;
+import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
 import braindustry.entities.bullets.RainbowLaserBulletType;
 import mindustry.Vars;
 import mindustry.gen.Bullet;
@@ -131,8 +132,12 @@ static {
         public int offsetId = 0;
         public Bullet bullet;
         public RainbowLaserBulletType type;
+        public ContinuousRainbowLaserBulletType type2;
 
         public void set(Bullet bullet, RainbowLaserBulletType type){
+            Draw.shader(setBullet(bullet,type));
+        }
+        public void set(Bullet bullet, ContinuousRainbowLaserBulletType type){
             Draw.shader(setBullet(bullet,type));
         }
         public RainbowLaserShader() {
@@ -142,10 +147,20 @@ static {
         public Shader setBullet(Bullet bullet, RainbowLaserBulletType type) {
             offsetId = bullet.id;
             this.bullet = bullet;
+            type2=null;
             this.type = type;
+            return this;
+        }public Shader setBullet(Bullet bullet, ContinuousRainbowLaserBulletType type) {
+            offsetId = bullet.id;
+            this.bullet = bullet;
+            this.type = null;
+            type2=type;
             return this;
         }
 
+        private float getLength() {
+            return type==null?type2==null?0:type2.length:type.length;
+        }
 
         @Override
         public void apply() {
@@ -160,7 +175,7 @@ static {
             float displayScale = Vars.renderer.getDisplayScale();
             setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
             setUniformf("u_pos", bulletPos);
-            setUniformf("u_length", type.length * displayScale);
+            setUniformf("u_length", getLength() * displayScale);
             setUniformf("u_scl", displayScale);
             setUniformf("u_vecRot", new Vec2(Mathf.cosDeg(bullet.rotation()), Mathf.sinDeg(bullet.rotation())));
             setUniformf("u_offset", new Vec3(-2, 2, -0));
@@ -169,6 +184,7 @@ static {
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));
 //            this.setUniformf("offset", );
         }
+
     }
 
     public static class HoloShader extends ModLoadShader {

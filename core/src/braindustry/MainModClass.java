@@ -157,7 +157,7 @@ public class MainModClass extends Mod {
                 dialog.show();
 
             }).size(280.0f/2f, 60.0F);
-            table.visibility=()-> settings.cheating() && (!Vars.net.active() || Vars.net.server());
+            table.visibility=()-> settings.cheating() && (!Vars.net.active() || Vars.net.server()) && ui.hudfrag.shown;
         });
         Time.runTask(10f, () -> {
             BaseDialog dialog = new BaseDialog("Welcome");
