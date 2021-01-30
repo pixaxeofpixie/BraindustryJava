@@ -77,4 +77,8 @@ public class ModNetClient {
 
     public void registerCommands(CommandHandler handler) {
     }
+
+    public boolean showCheatMenu() {
+        return true;
+    }
 }

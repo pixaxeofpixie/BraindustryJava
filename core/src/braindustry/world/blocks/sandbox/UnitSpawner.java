@@ -55,6 +55,7 @@ import static mindustry.Vars.world;
 public class UnitSpawner extends Block {
     public TextureRegion colorRegion;
     public UnitSpawnerBuild currentBuilding;
+    public Color targetColor=Color.gray;
     public boolean choose = false;
 
     public UnitSpawner(String name) {
@@ -577,8 +578,9 @@ public class UnitSpawner extends Block {
         public void drawer() {
             Draw.draw(Layer.blockBuilding + 5f, () -> {
                 Draw.mixcol();
-                ModShaders.rainbow.set(this);
-                Draw.rect(UnitSpawner.this.colorRegion, getPos().x, getPos().y);
+//                ModShaders.rainbow.set(this);
+                Draw.color(targetColor);
+                Draw.rect(colorRegion, getPos().x, getPos().y);
                 Draw.shader();
 //                unitEntries.each(UnitEntry::draw);
             });

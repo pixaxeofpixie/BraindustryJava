@@ -6,13 +6,11 @@ import ModVars.Classes.UI.ModControlsDialog;
 import ModVars.Classes.UI.ModUI;
 import ModVars.Classes.UI.settings.ModOtherSettingsDialog;
 import ModVars.Classes.UI.settings.ModSettingsDialog;
-import arc.math.Mathf;
 import arc.struct.Seq;
 import braindustry.core.ModNetClient;
 import braindustry.gen.ModNetServer;
 import braindustry.gen.ModRemoteReadClient;
 import braindustry.gen.ModRemoteReadServer;
-import braindustry.input.ModBinding;
 import braindustry.input.ModKeyBinds;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
@@ -29,6 +27,7 @@ import java.lang.reflect.Constructor;
 
 import static arc.util.Log.debug;
 import static mindustry.Vars.net;
+import static mindustry.Vars.ui;
 
 public class modVars {
     public static final byte MOD_CONTENT_ID = 66;
@@ -52,15 +51,15 @@ public class modVars {
             ModRemoteReadClient.readPacket(packet.reader(), packet.type);
         });
         net.handleServer(Packets.InvokePacket.class, (con, packet) -> {
-            if(con.player == null) return;
-            try{
+            if (con.player == null) return;
+            try {
                 ModRemoteReadServer.readPacket(packet.reader(), packet.type, con.player);
-            }catch(ValidateException e){
+            } catch (ValidateException e) {
                 debug("Validation failed for '@': @", e.player, e.getMessage());
-            }catch(RuntimeException e){
-                if(e.getCause() instanceof ValidateException){
+            } catch (RuntimeException e) {
+                if (e.getCause() instanceof ValidateException) {
                     debug("Validation failed for '@': @", ((ValidateException) e.getCause()).player, e.getCause().getMessage());
-                }else{
+                } else {
                     throw e;
                 }
             }
@@ -94,9 +93,9 @@ public class modVars {
     }
 
     public static void load() {
-        modUI=new ModUI();
+        modUI = new ModUI();
         netClient = new ModNetClient();
-        netServer=new ModNetServer();
+        netServer = new ModNetServer();
         settings = new ModSettings();
     }
 
@@ -121,4 +120,8 @@ public class modVars {
         }
     }
 
+    public static boolean showCheatMenu() {
+        if (Vars.player.isLocal()) return ui.hudfrag.shown;
+        return ui.hudfrag.shown && netClient.showCheatMenu();
+    }
 }

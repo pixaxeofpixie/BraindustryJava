@@ -132,23 +132,23 @@ public class MainModClass extends Mod {
         Blocks.blockLoader.buildVisibility = BuildVisibility.shown;
         Blocks.blockUnloader.buildVisibility = BuildVisibility.shown;
         new ModCheatMenu((table)->{
-            table.button("Cheat menu",()->{
-                BaseDialog dialog=new BaseDialog("Cheat-menu");
+            table.button("@cheat-menu.title",()->{
+                BaseDialog dialog=new BaseDialog("@cheat-menu.title");
                 dialog.cont.table((t)->{
                     t.defaults().size(280.0F, 60.0F);
-                    t.button("Change team", () -> {
+                    t.button("@cheat-menu.change-team", () -> {
                         openTeamChooseDialog();
                     }).growX().row();
-                    t.button("Change unit", () -> {
+                    t.button("@cheat-menu.change-unit", () -> {
                         openUnitChooseDialog();
                     }).growX().row();
-                    t.button("Change sandbox", () -> {
+                    t.button("@cheat-menu.change-sandbox", () -> {
                         Vars.state.rules.infiniteResources=!Vars.state.rules.infiniteResources;
                     }).growX().row();
-                    t.button("Items manager", () -> {
+                    t.button("@cheat-menu.items-manager", () -> {
                         openModCheatItemsMenu();
                     }).growX().row();
-                    t.button("Unlock content", () -> {
+                    t.button("@cheat-menu.unlock-content", () -> {
                         openUnlockContentDialog();
                     }).growX().row();
                 });
@@ -157,14 +157,14 @@ public class MainModClass extends Mod {
                 dialog.show();
 
             }).size(280.0f/2f, 60.0F);
-            table.visibility=()-> settings.cheating() && (!Vars.net.active() || Vars.net.server()) && ui.hudfrag.shown;
+            table.visibility=()-> settings.cheating() && (!Vars.net.active() || Vars.net.server()) && modVars.showCheatMenu();
         });
         Time.runTask(10f, () -> {
-            BaseDialog dialog = new BaseDialog("Welcome");
+            /*BaseDialog dialog = new BaseDialog("Welcome");
             dialog.cont.add("Hello, its Braindustry Mod.").row();
             dialog.cont.image(Core.atlas.find("braindustry-java-screen2")).pad(20f).row();
             dialog.cont.button("Ok", dialog::hide).size(100f, 50f);
-            dialog.show();
+            dialog.show();*/
         });
         Boolf<BulletType> replace=(b)->(b instanceof LightningBulletType && !(b instanceof ModLightningBulletType));
         Func<BulletType,ModLightningBulletType> newBullet=(old)->{
