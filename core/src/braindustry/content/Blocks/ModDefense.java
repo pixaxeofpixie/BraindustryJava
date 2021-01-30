@@ -1,6 +1,6 @@
 package braindustry.content.Blocks;
 import braindustry.content.*;
-import braindustry.entities.bullets.RainbowLaserBulletType;
+import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
 import braindustry.world.blocks.Wall.ReflectionWall;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
@@ -634,7 +634,7 @@ public class ModDefense implements ContentList {
                 shootSound = ModSounds.electronShoot;
                 loopSound = ModSounds.electronCharge;
                 firingMoveFract = 0.4f;
-                this.shootType = new RainbowLaserBulletType(){
+                this.shootType = new ContinuousRainbowLaserBulletType(){
                     {
                         damage = 4560f;
                         length = 400f;
