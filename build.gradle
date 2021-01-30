@@ -4,7 +4,8 @@ version '1.0'
 
 sourceCompatibility = 1.8
 
-sourceSets.main.java.srcDirs = ["src"]
+sourceSets.main.java.srcDirs = ["core/src/"]
+sourceSets.main.resources.srcDirs = ["core/resources/"]
 
 repositories{
     mavenCentral()
@@ -36,6 +37,30 @@ allprojects{
 dependencies{
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
+    implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
+    implementation 'com.squareup:javapoet:1.12.1'
+}
+
+
+allprojects{
+    apply plugin: 'maven'
+    repositories{
+        mavenLocal()
+        mavenCentral()
+        maven{ url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven{ url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven{ url 'https://jitpack.io' }
+        jcenter()
+    }
+}
+project(":annotations"){
+    apply plugin: "java-library"
+
+    dependencies{
+        implementation 'com.squareup:javapoet:1.12.1'
+        implementation "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+        implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
+    }
 }
 
 task jarAndroid{
