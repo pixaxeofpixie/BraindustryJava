@@ -20,6 +20,7 @@ import mindustry.content.TechTree;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType;
 import mindustry.game.Team;
+import mindustry.gen.Building;
 import mindustry.gen.Call;
 import mindustry.gen.EntityMapping;
 import mindustry.io.TypeIO;
@@ -211,5 +212,11 @@ public class modFunc {
 
     public static void print(String text, Object... args) {
         Log.info("[@/@]: @",modInfo.file.name(), modInfo.meta.displayName, Strings.format(text, args));
+    }
+
+    public static boolean selected(Building building) {
+        if (Vars.headless)return false;
+            return Vars.control.input.frag.config.getSelectedTile() == building;
+
     }
 }

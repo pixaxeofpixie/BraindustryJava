@@ -1,5 +1,6 @@
 package braindustry.world.blocks.production;
 
+import ModVars.modFunc;
 import arc.Core;
 import arc.func.Func;
 import arc.graphics.Color;
@@ -29,10 +30,7 @@ import mindustry.ui.Styles;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.ItemSelection;
-import mindustry.world.consumers.ConsumeItemDynamic;
-import mindustry.world.consumers.ConsumeLiquid;
-import mindustry.world.consumers.ConsumePower;
-import mindustry.world.consumers.ConsumeType;
+import mindustry.world.consumers.*;
 import mindustry.world.meta.BlockFlag;
 import mindustry.world.meta.BlockGroup;
 import mindustry.world.meta.Stat;
@@ -55,7 +53,6 @@ import static ModVars.modFunc.getInfoDialog;
 public class MultiCrafter extends Block implements BlockAdvancedStats {
     public final int timerDump;
     public final int timerReBuildBars;
-    protected final DynamicBlockBars dynamicBars = new DynamicBlockBars();
     public Seq<Recipe> recipes = new Seq<>();
     public Effect craftEffect;
     public Effect updateEffect;
@@ -103,6 +100,7 @@ public class MultiCrafter extends Block implements BlockAdvancedStats {
             if (spawnEffect)
                 ModFx.changeCraft.at(tile.x, tile.y, tile.block.size * 1.1f, color, new Color(Color.black).lerp(Color.white, 8.0f));
             tile.progress = 0.0F;
+            tile.rebuildInfo();
 
         });
         if (dynamicItem) {
@@ -195,9 +193,7 @@ public class MultiCrafter extends Block implements BlockAdvancedStats {
 
     @Override
     public void setBars() {
-//        bars
-        dynamicBars.clear();
-        dynamicBars.add("health", (entity) -> {
+        bars.add("health", (entity) -> {
             Color var10003 = Pal.health;
             Objects.requireNonNull(entity);
             return (new Bar("stat.health", var10003, entity::healthf)).blink(Color.white);
@@ -205,7 +201,7 @@ public class MultiCrafter extends Block implements BlockAdvancedStats {
         if (this.hasLiquids) {
             Func<Building, Liquid> current;
             if (this.consumes.has(ConsumeType.liquid) && this.consumes.get(ConsumeType.liquid) instanceof ConsumeLiquidDynamic) {
-                dynamicBars.add("liquids", (t) -> {
+                bars.add("liquids", (t) -> {
                     MultiCrafterBuild build = (MultiCrafterBuild) t;
                     if (build == null) return new Bar("0", Color.black.cpy(), () -> 0f);
                     Seq<MultiBar.BarPart> barParts = new Seq<>();
@@ -239,7 +235,7 @@ public class MultiCrafter extends Block implements BlockAdvancedStats {
                         return entity.liquids == null ? Liquids.water : entity.liquids.current();
                     };
                 }
-                dynamicBars.add("liquid", (entity) -> {
+                bars.add("liquid", (entity) -> {
                     return new Bar(() -> {
                         return entity.liquids.get((Liquid) current.get(entity)) <= 0.001F ? Core.bundle.get("bar.liquid") : ((Liquid) current.get(entity)).localizedName;
                     }, () -> {
@@ -255,9 +251,9 @@ public class MultiCrafter extends Block implements BlockAdvancedStats {
             ConsumePower cons = this.consumes.getPower();
             boolean buffered = cons.buffered;
             float capacity = cons.capacity;
-            dynamicBars.add("power", (entity) -> {
+            bars.add("power", (entity) -> {
                 return new Bar(() -> {
-                    return buffered ? Core.bundle.format("bar.poweramount", new Object[]{Float.isNaN(entity.power.status * capacity) ? "<ERROR>" : (int) (entity.power.status * capacity)}) : Core.bundle.get("bar.power");
+                    return buffered ? Core.bundle.format("bar.poweramount", Float.isNaN(entity.power.status * capacity) ? "<ERROR>" : (int) (entity.power.status * capacity)) : Core.bundle.get("bar.power");
                 }, () -> {
                     return Pal.powerBar;
                 }, () -> {
@@ -268,7 +264,7 @@ public class MultiCrafter extends Block implements BlockAdvancedStats {
 
         if (this.hasItems && this.configurable) {
 
-            dynamicBars.add("items", (entity) -> {
+            bars.add("items", (entity) -> {
                 return new Bar(() -> {
                     return Core.bundle.format("bar.items", entity.items.total());
                 }, () -> {
@@ -287,6 +283,8 @@ public class MultiCrafter extends Block implements BlockAdvancedStats {
         public MultiCrafter block;
         public float progress;
         public float totalProgress;
+        protected Runnable rebuildBars=()->{};
+        protected Runnable rebuildCons=()->{};
 
         public MultiCrafterBuild() {
             this.block = MultiCrafter.this;
@@ -295,17 +293,48 @@ public class MultiCrafter extends Block implements BlockAdvancedStats {
         public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
             return super.init(tile, team, shouldAdd, rotation);
         }
-
-        public void displayBars(Table table) {
-            setBars();
-            for (Func<Building, Bar> bar : dynamicBars.list()) {
-                try {
-                    table.add(bar.get(this)).growX();
-                    table.row();
-                } catch (ClassCastException e) {
-                    break;
-                }
+        boolean selected=false;
+        @Override
+        public void update() {
+            super.update();
+            boolean selected=modFunc.selected(this);
+            if (!selected && this.selected){
+//                rebuildBars=rebuildCons=()->{};
             }
+            this.selected=selected;
+        }
+        public void displayConsumption(Table table) {
+            rebuildCons=()-> {
+                table.clearChildren();
+                table.clear();
+                table.left();
+                Consume[] var2 = this.block.consumes.all();
+                int var3 = var2.length;
+
+                for (Consume cons : var2) {
+                    if (!cons.isOptional() || !cons.isBoost()) {
+                        cons.build(this, table);
+                    }
+                }
+            };
+            rebuildCons.run();
+
+        }
+        public void displayBars(Table table) {
+
+            rebuildBars=()->{
+                table.clearChildren();
+//                table.defaults().growX().height(18.0F).pad(4.0F);
+                for (Func<Building, Bar> bar : bars.list()) {
+                    try {
+                        table.add(bar.get(this)).growX();
+                        table.row();
+                    } catch (ClassCastException e) {
+                        break;
+                    }
+                }
+            };
+            rebuildBars.run();
         }
 
         public void drawStatus() {
@@ -531,6 +560,11 @@ public class MultiCrafter extends Block implements BlockAdvancedStats {
         public void resetProgress() {
             this.progress = 0f;
             this.totalProgress = 0f;
+        }
+
+        public void rebuildInfo() {
+            rebuildBars.run();
+            rebuildCons.run();
         }
     }
 }
