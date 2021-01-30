@@ -27,6 +27,8 @@ import mindustry.gen.Unit;
 import mindustry.type.AmmoTypes;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
+import mindustry.entities.abilities.RepairFieldAbility;
+import mindustry.entities.abilities.ForceFieldAbility;
 import mindustry.content.Liquids;
 
 
@@ -450,9 +452,9 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Armor";
                 this.speed = 0.9f;
                 this.flying = true;
-                this.health = 600;
+                this.health = 200;
                 this.range = 100;
-                this.armor = 6;
+                this.armor = 1;
                 this.engineOffset = 3;
                 this.engineSize = 2;
                 this.rotateSpeed = 10;
@@ -496,11 +498,12 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Shield";
                 this.speed = 0.8f;
                 this.flying = true;
-                this.health = 1200;
-                this.armor = 12;
+                this.health = 600;
+                this.armor = 2;
                 this.range = 160;
                 this.engineOffset = 6;
                 this.rotateSpeed = 3;
+                abilities.add(new RepairFieldAbility(4f, 60f * 5, 40f), new ForceFieldAbility(40f, 5f, 400f, 60f * 7));
                 this.weapons.add(
                         new ModWeapon("armor-weapon") {
                             {
@@ -545,14 +548,15 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.hitSize = 12;
                 this.engineSize = 3.2f;
-                this.armor = 22;
-                this.health = 2600;
+                this.armor = 3;
+                this.health = 1600;
                 this.range = 120;
                 this.engineOffset = 7;
                 this.rotateSpeed = 1.1f;
                 this.targetAir = true;
                 this.payloadCapacity = 240;
                 this.buildSpeed = 1.6f;
+                abilities.add(new RepairFieldAbility(5f, 60f * 5, 45f), new ForceFieldAbility(65f, 5f, 480f, 60f * 7));
                 this.weapons.add(
                         new ModWeapon("shield-weapon") {
                             {
@@ -606,18 +610,19 @@ public class ModUnitTypes implements ContentList {
             {
                 this.localizedName = "Chainmail";
                 this.constructor = Types.payload;
-                this.speed = 0.8f;
+                this.speed = 0.65f;
                 this.flying = true;
                 this.hitSize = 27;
                 this.engineSize = 7;
-                this.armor = 26;
-                this.health = 10000;
+                this.armor = 8;
+                this.health = 7000;
                 this.rotateSpeed = 1.2f;
                 this.targetAir = true;
                 this.payloadCapacity = 300;
                 this.buildSpeed = 1.3f;
                 this.rotateShooting = false;
                 this.commandLimit = 6;
+                abilities.add(new RepairFieldAbility(6f, 60f * 5, 60f), new ForceFieldAbility(90f, 5f, 2300f, 60f * 7));
                 this.weapons.add(
                         new ModWeapon("bomb-weapon") {
                             {
@@ -691,8 +696,8 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.payload;
                 this.localizedName = "Helmet";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
-                this.armor = 36;
-                this.health = 18000;
+                this.armor = 9;
+                this.health = 9000;
                 this.speed = 0.6f;
                 this.rotateSpeed = 1;
                 this.accel = 0.07f;
@@ -707,6 +712,7 @@ public class ModUnitTypes implements ContentList {
                 this.payloadCapacity = 380;
                 this.buildSpeed = 5;
                 this.range = 160;
+                abilities.add(new RepairFieldAbility(7f, 60f * 4, 50f), new ForceFieldAbility(150f, 4f, 8000f, 60f * 7));
                 this.weapons.add(
                         new ModWeapon("bomb-weapon") {
                             {
@@ -1131,9 +1137,9 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = 23;
                 this.trailScl = 2f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
-                int spawnTime = 1300; //why you use no created variables :(
-                abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, -19.25f, -31.75f));
-                int brange = 1; //because i don't know so this varibles is need to be create before
+                int spawnTime = 1550;
+                abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
+                int brange = 1;
 
 
                 this.weapons.add(

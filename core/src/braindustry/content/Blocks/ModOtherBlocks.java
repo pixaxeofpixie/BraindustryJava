@@ -1,5 +1,6 @@
 package braindustry.content.Blocks;
 
+import arc.Core;
 import braindustry.content.ModItems;
 import braindustry.content.ModLiquids;
 import braindustry.world.blocks.power.BlackHoleReactor;
@@ -14,6 +15,7 @@ import mindustry.gen.Sounds;
 import mindustry.graphics.CacheLayer;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
+import mindustry.world.Block;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
@@ -21,6 +23,8 @@ import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
+import mindustry.world.blocks.storage.StorageBlock;
+import mindustryAddition.world.blocks.distribution.CrossItemBridge;
 
 import static braindustry.content.ModBlocks.*;
 public class ModOtherBlocks implements ContentList {
@@ -66,6 +70,35 @@ public class ModOtherBlocks implements ContentList {
                 this.health = 100;
                 this.speed = 0.12f;
                 this.itemCapacity = 12;
+            }
+        };
+        phaseAlloyConveyor = new CrossItemBridge("phase-alloy-conveyor") {
+            {
+                this.localizedName = "Phase Alloy Conveyor";
+                this.requirements(Category.distribution, ItemStack.with(ModItems.phaseAlloy, 5, Items.silicon, 7, Items.lead, 10, Items.graphite, 10));
+                this.range = 12;
+                this.canOverdrive = false;
+                this.hasPower = true;
+                this.consumes.power(0.3F);
+                /** custom connect filter*/
+                connectFilter = (build) -> {
+                    Block block = build.block;
+                    return block.acceptsItems || block instanceof StorageBlock;
+                };
+                //end of block
+                ItemBridge bridge = (ItemBridge) Blocks.phaseConveyor;
+                range = bridge.range;
+            }
+
+            @Override
+            public void load() {
+                ItemBridge bridge = (ItemBridge) Blocks.phaseConveyor;
+                Core.atlas.addRegion(this.name, Core.atlas.find(bridge.name));
+                super.load();
+                this.arrowRegion = bridge.arrowRegion;
+                this.bridgeRegion = bridge.bridgeRegion;
+                this.endRegion = bridge.endRegion;
+                this.region = bridge.region;
             }
         };
         surgePayloadConveyor = new PayloadConveyor("surge-payload-conveyor"){
@@ -222,8 +255,8 @@ public class ModOtherBlocks implements ContentList {
                 this.liquidDrop = ModLiquids.liquidMethane;
                 this.statusDuration = 200;
                 this.drownTime = 90;
-                this.walkEffect = Fx.smokeCloud;
-                this.drownUpdateEffect = Fx.burning;
+                this.walkEffect = Fx.freezing;
+                this.drownUpdateEffect = Fx.freezing;
             }
         };
     }
