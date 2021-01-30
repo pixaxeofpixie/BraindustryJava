@@ -79,7 +79,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.logic, ItemStack.with(), true);
             }
         };
-        exampleCrossPhaseBridge = new CrossItemBridge("phase-alloy-conveyor") {
+       /* exampleCrossPhaseBridge = new CrossItemBridge("phase-alloy-conveyor") {
             {
                 this.localizedName = "Phase Alloy Conveyor";
                 this.requirements(Category.distribution, ItemStack.with(ModItems.phaseAlloy, 5, Items.silicon, 7, Items.lead, 10, Items.graphite, 10));
@@ -87,7 +87,7 @@ public class ModBlocks implements ContentList {
                 this.canOverdrive = false;
                 this.hasPower = true;
                 this.consumes.power(0.3F);
-                /** custom connect filter*/
+                /** custom connect filter
                 connectFilter = (build) -> {
                     Block block = build.block;
                     return block.acceptsItems || block instanceof StorageBlock;
@@ -114,12 +114,12 @@ public class ModBlocks implements ContentList {
                 this.range = 4;
                 this.speed = 74.0F;
                 this.bufferCapacity = 14;
-                /** custom connect filter*/
+                /** custom connect filter
                 connectFilter = (build) -> {
                     Block block = build.block;
                     return block.acceptsItems || block instanceof StorageBlock;
                 };
-                /** default filter check blocks from connectBlocksGetter*/
+                /** default filter check blocks from connectBlocksGetter
                 connectBlocksGetter = () -> {
                     return Seq.with(Blocks.titaniumConveyor);
                 };
@@ -138,9 +138,11 @@ public class ModBlocks implements ContentList {
                 this.endRegion = bridge.endRegion;
                 this.region = bridge.region;
             }
-        };
+        };*/
         unitSpawner = new UnitSpawner("unit-spawner") {
             {
+                this.localizedName = "Unit Spawner";
+                this.description = "Powerful sandbox block, can spawn and control any unit from game and mods.";
                 this.size = 2;
                 this.requirements(Category.effect, ItemStack.empty);
             }
@@ -159,6 +161,7 @@ public class ModBlocks implements ContentList {
 
         smartRouter = new SmartRouter("smart-router") {
             {
+                this.localizedName = "Smert Router";
                 this.size = 1;
                 this.requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 this.buildCostMultiplier = 4.0F;
