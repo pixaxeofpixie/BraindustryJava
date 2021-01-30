@@ -98,7 +98,7 @@ public class MaterialReactor extends ItemLiquidGenerator {
             Draw.blend(Blending.additive);
             Draw.color(Color.valueOf("#1F74F3"));
             Draw.alpha(0.5f + Mathf.sin(Time.time * this.getEfficiency() * 0.15f) * 0.5f);
-            Draw.rect(Core.atlas.find("collos-materia-reactor-lights"), this.x, this.y);
+            Draw.rect(Core.atlas.find("braindustry-java-materia-reactor-lights"), this.x, this.y);
             Draw.alpha(1.0f);
             Draw.color();
             Draw.blend();
