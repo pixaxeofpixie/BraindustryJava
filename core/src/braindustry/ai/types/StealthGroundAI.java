@@ -87,8 +87,10 @@ public class StealthGroundAI extends AIController {
         if (target != null && !unit.within(target, radius)) {
             pathfind(fieldRepair);
 //            targets=new Teamc[0];
-        } else {
+        } else if (target != null) {
             sunit.healing(true);
+        } else {
+
         }
         if (unit.type.canBoost && !unit.onSolid()) {
             unit.elevation = Mathf.approachDelta(unit.elevation, 0f, 0.08f);
@@ -108,7 +110,8 @@ public class StealthGroundAI extends AIController {
 
     @Override
     protected boolean useFallback() {
-        return !(this.unit instanceof StealthUnitc && ((StealthUnitc) unit).mustHeal());
+        Teamc target = targetFlag(unit.x, unit.y, BlockFlag.repair, false);
+        return !(this.unit instanceof StealthUnitc && ((StealthUnitc) unit).mustHeal()) || target==null;
     }
 
     @Override
