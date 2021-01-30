@@ -87,7 +87,7 @@ KaenoGenerator.tars = new ObjectMap().of(
     Blocks.slag, Blocks.mud,
     Blocks.dirt, Blocks.mud
 );
-const KaenoPlanet = new JavaAdapter(Planet, {}, "Kaeno", Planets.sun, 3, 1);
+const KaenoPlanet = new JavaAdapter(Planet, {}, "Kaeno", Planets.sun, 3, 0.5);
 KaenoPlanet.generator = KaenoGenerator;
 KaenoPlanet.startSector = 25;
 KaenoPlanet.hasAtmosphere = false;
