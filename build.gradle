@@ -39,6 +39,10 @@ dependencies{
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
     implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
     implementation 'com.squareup:javapoet:1.12.1'
+
+    compileOnly project(":annotations")
+
+    annotationProcessor project(":annotations")
 }
 
 
@@ -60,6 +64,7 @@ project(":annotations"){
         implementation 'com.squareup:javapoet:1.12.1'
         implementation "com.github.Anuken.Arc:arc-core:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
+        implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
     }
 }
 

@@ -4,14 +4,23 @@ import arc.struct.Seq;
 import arc.util.io.Reads;
 import braindustry.gen.StealthUnitc;
 import mindustry.Vars;
+import mindustry.ai.formations.Formation;
+import mindustry.ai.types.FormationAI;
+import mindustry.ai.types.GroundAI;
+import mindustry.ai.types.LogicAI;
+import mindustry.annotations.Annotations;
 import mindustry.entities.EntityGroup;
-import mindustry.gen.Building;
-import mindustry.gen.Groups;
-import mindustry.gen.Nulls;
-import mindustry.gen.Unit;
+import mindustry.entities.units.AIController;
+import mindustry.entities.units.UnitController;
+import mindustry.gen.*;
+import mindustry.io.TypeIO;
 import mindustry.world.blocks.ControlBlock;
 
-public class ModTypeIO {
+@Annotations.TypeIOHandler
+public class ModTypeIO extends TypeIO {
+    public static UnitController readController(Reads read) {
+        return readController(read,null);
+    }
     public static Unit readUnit(Reads read) {
         byte type = read.b();
         int id = read.i();
