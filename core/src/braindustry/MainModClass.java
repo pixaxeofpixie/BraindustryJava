@@ -27,6 +27,7 @@ import braindustry.input.ModBinding;
 import braindustry.ui.fragments.ModMenuFragment;
 import mindustry.*;
 import mindustry.content.*;
+import mindustry.ctype.ContentList;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.EntityCollisions;
 import mindustry.entities.bullet.BulletType;
@@ -58,6 +59,17 @@ import static mindustry.Vars.player;
 
 public class MainModClass extends Mod {
     public static ModListener modListener;
+
+
+    @Override
+    public void registerServerCommands(CommandHandler handler) {
+        modVars.netServer.registerCommands(handler);
+    }
+
+    @Override
+    public void registerClientCommands(CommandHandler handler) {
+        modVars.netClient.registerCommands(handler);
+    }
     void createPlayer(){
         player = ModPlayer.create();
         player.name = Core.settings.getString("name");
@@ -74,40 +86,7 @@ public class MainModClass extends Mod {
         EntityMapping.idMap[12] = ModPlayer::new;
         EntityMapping.nameMap.put("Player", ModPlayer::new);
         EntityMapping.nameMap.put("player", ModPlayer::new);
-        AdvancedSettingsMenuDialog.init();
-        Core.settings.put("uiscalechanged", false);
-        ModListener.updaters.add(()->{
-            if ((Vars.state.isPlaying() || Vars.state.isPaused()) && !Core.scene.hasDialog()){
-                if (keyBinds.keyTap(unitDialogBing)){
-                    openUnitChooseDialog();
-                }
-                if (keyBinds.keyTap(teamDialogBing)){
-                    openTeamChooseDialog();
-                }
-                if (keyBinds.keyTap(unlockDialogBing)){
-                    openUnlockContentDialog();
-                }
-                if (keyBinds.keyTap(itemManagerDialogBing)){
-                    openModCheatItemsMenu();
-                }
-            }
-        });
         Events.fire(new ModEventType.ModInit());
-        EventOn(EventType.ClientLoadEvent.class,(e)->{
-        });
-
-        Vars.ui.menuGroup.remove();
-        Vars.ui.menuGroup = new WidgetGroup();
-        Vars.ui.menuGroup.setFillParent(true);
-        Vars.ui.menuGroup.touchable = Touchable.childrenOnly;
-        Vars.ui.menuGroup.visible(() -> {
-            return Vars.state.isMenu();
-        });
-        Core.scene.add(Vars.ui.menuGroup);
-        Vars.ui.menufrag=new ModMenuFragment();
-//        Vars.ui.menufrag.
-        Vars.ui.menufrag.build(Vars.ui.menuGroup);
-        AdvancedContentInfoDialog.init();
     }
     public static TextureRegion getIcon() {
 
@@ -270,17 +249,20 @@ public class MainModClass extends Mod {
         print("java loadContent");
         modAtlas=new ModAtlas();
         inTry(()->{
-            ModShaders.init();
+            if (!headless) ModShaders.init();
         });
         Events.fire(ModEventType.ModContentLoad.class);
 //        loadMaps();
-        new ModSounds().load();
-        new ModStatusEffects().load();
-        new ModItems().load();
-        new ModLiquids().load();
-        new ModUnitTypes().load();
-        new ModBlocks().load();
-        new ModTechTree().load();
+        Seq<ContentList> loads=Seq.with(
+                new ModSounds(),new ModStatusEffects(),new ModItems(),new ModLiquids(),new ModUnitTypes(),new ModBlocks(),new ModTechTree()
+        );
+        loads.each((load)->{
+            try {
+                load.load();
+            } catch (NullPointerException e){
+                if (!headless)showException(e);
+            }
+        });
         GasInit.init(true);
         Vars.content.each((c)->{
             if (c instanceof UnlockableContent) checkTranslate((UnlockableContent)c);

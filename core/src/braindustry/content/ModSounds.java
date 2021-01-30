@@ -2,6 +2,7 @@ package braindustry.content;
 
 import arc.Core;
 import arc.audio.Sound;
+import mindustry.Vars;
 import mindustry.ctype.ContentList;
 
 public class ModSounds implements ContentList {
@@ -10,6 +11,7 @@ public class ModSounds implements ContentList {
 
     @Override
     public void load() {
+        if (Vars.headless)return;
         Core.assets.load("sounds/electronShoot.ogg", Sound.class).loaded = (a) -> {
             electronShoot = (Sound)a;
         };

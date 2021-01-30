@@ -3,11 +3,13 @@ package ModVars;
 import ModVars.Classes.ModAtlas;
 import ModVars.Classes.ModSettings;
 import ModVars.Classes.UI.ModControlsDialog;
+import ModVars.Classes.UI.ModUI;
 import ModVars.Classes.UI.settings.ModOtherSettingsDialog;
 import ModVars.Classes.UI.settings.ModSettingsDialog;
+import arc.math.Mathf;
 import arc.struct.Seq;
-import arc.util.Strings;
 import braindustry.core.ModNetClient;
+import braindustry.gen.ModNetServer;
 import braindustry.gen.ModRemoteReadClient;
 import braindustry.gen.ModRemoteReadServer;
 import braindustry.input.ModBinding;
@@ -16,9 +18,7 @@ import mindustry.Vars;
 import mindustry.ctype.ContentType;
 import mindustry.game.Team;
 import mindustry.gen.EntityMapping;
-import mindustry.gen.RemoteReadServer;
 import mindustry.io.SaveIO;
-import mindustry.io.TypeIO;
 import mindustry.mod.Mods;
 import mindustry.net.Packets;
 import mindustry.net.ValidateException;
@@ -27,7 +27,6 @@ import mindustryAddition.versions.ModSave4;
 
 import java.lang.reflect.Constructor;
 
-import static ModVars.modFunc.print;
 import static arc.util.Log.debug;
 import static mindustry.Vars.net;
 
@@ -42,12 +41,13 @@ public class modVars {
     public static ModOtherSettingsDialog otherSettingsDialog;
     public static ModSettingsDialog settingsDialog;
     public static ModNetClient netClient;
+    public static ModNetServer netServer;
+    public static ModUI modUI;
     public static boolean loaded = false;
     private static int lastClass = 0;
 
     public static void init() {
         ModSave4 save4 = new ModSave4();
-        netClient = new ModNetClient();
         net.handleClient(Packets.InvokePacket.class, packet -> {
             ModRemoteReadClient.readPacket(packet.reader(), packet.type);
         });
@@ -89,16 +89,14 @@ public class modVars {
         SaveIO.versionArray.add(save4);
         SaveIO.versions.remove(save4.version);
         SaveIO.versions.put(save4.version, save4);
-        keyBinds = new ModKeyBinds();
-        keyBinds.setDefaults(ModBinding.values());
-        keyBinds.load();
-        controls = new ModControlsDialog();
-        otherSettingsDialog = new ModOtherSettingsDialog();
-        settingsDialog = new ModSettingsDialog();
+        modUI.init();
 
     }
 
     public static void load() {
+        modUI=new ModUI();
+        netClient = new ModNetClient();
+        netServer=new ModNetServer();
         settings = new ModSettings();
     }
 

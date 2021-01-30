@@ -179,20 +179,21 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
             }
             durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
             if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
-                removeStealth((durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
+//                removeStealth((durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
+                ModCall.setStealthStatus(this,false,(durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
                 Seq<Unit> stealthUnitc = controlling().select((u) -> u instanceof StealthUnitc);
                 if (stealthUnitc.size > 0) {
                     stealthUnitc.each(unit -> {
-                        ((StealthUnitc) unit).removeStealth();
+                        ModCall.setStealthStatus(unit,false,-1);
                     });
                 }
             }
         } else if (cooldownStealth == 0f && selectStealth()) {
-            setStealth();
+            ModCall.setStealthStatus(this,true,-1);
             Seq<Unit> stealthUnitc = controlling().select((u) -> u instanceof StealthUnitc);
             if (stealthUnitc.size > 0) {
                 stealthUnitc.each(unit -> {
-                    ((StealthUnitc) unit).setStealth();
+                    ModCall.setStealthStatus(unit,true,-1);
                 });
             }
         }
@@ -319,11 +320,6 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
         }
 
     }
-
-    public boolean isAI() {
-        return this.controller instanceof AIController;
-    }
-
     public void add() {
         if (!this.added) {
             Groups.all.add(this);
@@ -341,12 +337,6 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
         }
     }
 
-    public EntityCollisions.SolidPred solidity() {
-
-        return this.isFlying() ? null : EntityCollisions::solid;
-//        return this.isFlying() ? null : (x, y) -> !EntityCollisions.solid(x, y);
-    }
-
     @Override
     public void write(Writes write) {
         super.write(write);
@@ -357,7 +347,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
 
     @Override
     public void writeSync(Writes write) {
-        write.s(modClassId());
+//        write.s(modClassId());
         super.writeSync(write);
         write.bool(inStealth);
         write.f(cooldownStealth);

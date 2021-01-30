@@ -1,17 +1,14 @@
 package ModVars.Classes;
 
+import ModVars.ModEnums;
 import ModVars.modVars;
 import arc.Core;
 import arc.Events;
-import arc.scene.ui.Dialog;
-import arc.scene.ui.TextButton;
+import arc.math.Mathf;
 import arc.util.Strings;
 import braindustry.MainModClass;
 import mindustry.Vars;
 import mindustry.game.EventType;
-import mindustry.gen.Icon;
-import mindustry.gen.Tex;
-import mindustry.ui.Styles;
 
 import static ModVars.modFunc.fullName;
 import static ModVars.modVars.modInfo;
@@ -50,6 +47,20 @@ public class ModSettings {
     public void setFloat(String name, float def){
         put(name,def);
     }
+    public int getInt(String name,int def) {
+        Object o = get(name, def);
+        if (o instanceof Boolean){
+            put(name,o==(Object) true?0:1);
+            return getInt(name,def);
+        }
+        return (int) o;
+    }
+    public int getInt(String name) {
+        return getInt(name,0);
+    }
+    public void setInt(String name,int value){
+        put(name,value);
+    }
     public boolean cheating(){
         return getBool("cheat",false);
     }
@@ -61,6 +72,13 @@ public class ModSettings {
     }
     public void debug(boolean debug){
         put("debug",debug);
+    }
+    public  ModEnums.CheatLevel cheatLevel(){
+        ModEnums.CheatLevel[] values = ModEnums.CheatLevel.values();
+        return values[Mathf.mod(getInt("cheatLevel"), values.length)];
+    }
+    public void cheatLevel(ModEnums.CheatLevel value){
+        setInt("cheatLevel",value.ordinal());
     }
     private void addEvent() {
         Events.on(EventType.ClientLoadEvent.class,(e)->{
@@ -75,4 +93,6 @@ public class ModSettings {
                     }).height(84).right().row();
         });
     }
+
+
 }

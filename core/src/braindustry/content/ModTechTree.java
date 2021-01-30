@@ -6,10 +6,11 @@ import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.content.TechTree;
+import mindustry.ctype.ContentList;
 import mindustry.game.Objectives;
 //import static mindustry.game.Objectives.*;
 
-public class ModTechTree extends TechTreeManager {
+public class ModTechTree extends TechTreeManager implements ContentList {
     public TechTreeManager techTree = new TechTreeManager();
     boolean loaded = false;
 

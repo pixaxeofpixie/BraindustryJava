@@ -1,6 +1,8 @@
 package braindustry.annotations.RemoteProc;
 
 import arc.struct.Seq;
+import braindustry.annotations.ModAnnotations.*;
+import braindustry.annotations.ModAnnotations;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -20,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 @SupportedAnnotationTypes({
+        "braindustry.annotations.ModAnnotations.Remote",
         "mindustry.annotations.Annotations.Remote",
         "mindustry.annotations.Annotations.TypeIOHandler"
 })
@@ -69,7 +72,7 @@ public class CustomRemoteProcessor extends BaseProcessor {
             //last method ID used
             int lastMethodID =-1;
             //find all elements with the Remote annotation
-            elements = methods(Annotations.Remote.class);
+            elements = methods(ModAnnotations.Remote.class);
             //map of all classes to generate by name
             classMap = new HashMap<>();
             //list of all method entries
@@ -82,7 +85,7 @@ public class CustomRemoteProcessor extends BaseProcessor {
 
             //create methods
             for (Smethod element : orderedElements) {
-                Annotations.Remote annotation = element.annotation(Annotations.Remote.class);
+                ModAnnotations.Remote annotation = element.annotation(ModAnnotations.Remote.class);
 
                 //check for static
                 if (!element.is(Modifier.STATIC) || !element.is(Modifier.PUBLIC)) {
@@ -105,7 +108,7 @@ public class CustomRemoteProcessor extends BaseProcessor {
 
                 //create and add entry
                 MethodEntry method = new MethodEntry(entry.name, mindustry.annotations.BaseProcessor.getMethodName(element.e), annotation.targets(), annotation.variants(),
-                        annotation.called(), annotation.unreliable(), annotation.forward(), lastMethodID--, element.e, annotation.priority());
+                        annotation.called(), annotation.unreliable(), annotation.forward(), annotation.replaceLevel()==-1?lastMethodID--:annotation.replaceLevel(), element.e, annotation.priority());
 
                 entry.methods.add(method);
                 methods.add(method);

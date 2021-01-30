@@ -1,10 +1,13 @@
 package braindustry.core;
 
 import ModVars.modVars;
+import arc.util.CommandHandler;
 import arc.util.Log;
 import arc.util.io.Reads;
 import arc.util.io.ReusableByteInStream;
+import braindustry.annotations.ModAnnotations;
 import mindustry.Vars;
+import mindustry.annotations.Annotations;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Groups;
 import mindustry.gen.Syncc;
@@ -13,10 +16,14 @@ import mindustryAddition.gen.ModEntityMapping;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import static mindustry.Vars.*;
+import static mindustry.Vars.netClient;
+
 public class ModNetClient {
     protected ReusableByteInStream byteStream = new ReusableByteInStream();
     protected DataInputStream dataStream = new DataInputStream(byteStream);
 
+    @ModAnnotations.Remote(variants = Annotations.Variant.one, priority = Annotations.PacketPriority.low, unreliable = true,replaceLevel = 18)
     public static void entitySnapshot(short amount, short dataLen, byte[] data) {
         try {
             modVars.netClient.byteStream.setBytes(Vars.net.decompressSnapshot(data, dataLen));
@@ -66,5 +73,8 @@ public class ModNetClient {
         } catch (IOException var10) {
             throw new RuntimeException(var10);
         }
+    }
+
+    public void registerCommands(CommandHandler handler) {
     }
 }

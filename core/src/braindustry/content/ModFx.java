@@ -24,7 +24,7 @@ import mindustry.graphics.Pal;
 import static ModVars.modFunc.fullName;
 
 public class ModFx {
-    private static final float Distance1 = Core.camera.width + Core.camera.height + 50*Vars.tilesize;
+    private static final float Distance1 = Vars.headless?0:Core.camera.width + Core.camera.height + 50*Vars.tilesize;
     public static final Effect electricExplosionPart1=new Effect(20, Distance1,(e)->{
         Draw.color(Color.white, ModPal.ElectricColor, e.fin());
         Lines.stroke(e.fout() * 10.0f + 0.5f);
@@ -321,7 +321,7 @@ public class ModFx {
             spikeTurretShootsAngle = {-55f, -30f, 30f, 55f},
             spikeTurretShootsWidth = {7.6f, 9.8f, 9.8f, 7.6f},
             spikeTurretShootsHeight = {16.2f, 26.0f, 26.0f, 16.2f};
-    private static final float Distance = Core.camera.width + Core.camera.height + 30 * Vars.tilesize;
+    private static final float Distance = Vars.headless?0:Core.camera.width + Core.camera.height + 30 * Vars.tilesize;
     public static final Effect magicBulletTrail = new Effect(30, Distance, e -> {
         Draw.color(ModPal.magicLight, ModPal.magic, e.fout());
         Lines.stroke(e.fout() * 2);
