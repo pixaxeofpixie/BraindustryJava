@@ -10,11 +10,15 @@ import arc.scene.event.Touchable;
 import arc.scene.ui.layout.WidgetGroup;
 import braindustry.ModListener;
 import braindustry.gen.StealthUnitc;
+import braindustry.graphics.g3d.ModPlanetRenderer;
 import braindustry.input.ModBinding;
 import braindustry.input.ModKeyBinds;
+import braindustry.ui.dialogs.ModPlanetDialog;
 import braindustry.ui.fragments.ModMenuFragment;
 import mindustry.Vars;
+import mindustry.graphics.g3d.PlanetRenderer;
 import mindustry.ui.dialogs.BaseDialog;
+import mindustry.ui.dialogs.PlanetDialog;
 import mindustryAddition.iu.AdvancedContentInfoDialog;
 
 import static ModVars.modVars.*;
@@ -59,7 +63,8 @@ public class ModUI {
 //        Vars.ui.menufrag.
         Vars.ui.menufrag.build(Vars.ui.menuGroup);
         AdvancedContentInfoDialog.init();
-
+        Vars.renderer.planets=new ModPlanetRenderer();
+        Vars.ui.planet=new ModPlanetDialog();
         new ModCheatMenu((table) -> {
             table.button("@cheat-menu.title", () -> {
                 BaseDialog dialog = new BaseDialog("@cheat-menu.title");
