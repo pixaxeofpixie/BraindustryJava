@@ -32,7 +32,7 @@ public class ConsumeLiquidDynamic extends Consume {
             table.update(() -> {
                 if (current[0] != this.liquids.get(tile)) {
                     this.rebuild(tile, cont);
-                    current[0] = (LiquidStack[])this.liquids.get(tile);
+                    current[0] = this.liquids.get(tile);
                 }
 
             });

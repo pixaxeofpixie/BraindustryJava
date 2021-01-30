@@ -167,17 +167,11 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     }
 
     @Override
-    public void update() {
-        if (inStealth) {
-            updateLastPosition();
-        }
-        super.update();
-        cooldownStealth = Math.max(0, cooldownStealth - Time.delta);
+    public void updateStealthStatus() {
         if (inStealth) {
             while (Groups.unit.contains(u -> u == this)) {
                 Groups.unit.remove(this);
             }
-            durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
             if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
 //                removeStealth((durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
                 ModCall.setStealthStatus(this,false,(durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
@@ -197,6 +191,19 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
                 });
             }
         }
+    }
+
+    @Override
+    public void update() {
+        if (inStealth) {
+            updateLastPosition();
+        }
+        super.update();
+        cooldownStealth = Math.max(0, cooldownStealth - Time.delta);
+        if (inStealth) {
+            durationStealth = Math.min(stealthType.stealthDuration, durationStealth + Time.delta);
+        }
+        updateStealthStatus();
 
     }
 

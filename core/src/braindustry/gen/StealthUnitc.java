@@ -12,7 +12,7 @@ public interface StealthUnitc extends Boundedc , Rotc, Itemsc, Weaponsc, Physics
 
     void longPress(boolean longPress);
     boolean longPress();
-
+    void updateStealthStatus();
     void drawAlpha();
     void removeStealth();
     void removeStealth(float time);

@@ -1,6 +1,7 @@
 package braindustry.input;
 
 import arc.Core;
+import arc.scene.Group;
 import arc.util.Tmp;
 import braindustry.entities.ModUnits;
 import mindustry.Vars;
@@ -11,6 +12,11 @@ import mindustry.input.DesktopInput;
 import mindustry.world.blocks.ControlBlock;
 
 public class ModDesktopInput extends DesktopInput {
+    @Override
+    public void buildUI(Group group) {
+        super.buildUI(group);
+    }
+
     @Override
     public Unit selectedUnit() {
         Unit unit = ModUnits.closest(Vars.player.team(), Core.input.mouseWorld().x, Core.input.mouseWorld().y, 40.0F, Unitc::isAI);

@@ -131,34 +131,7 @@ public class MainModClass extends Mod {
         Blocks.blockForge.buildVisibility = BuildVisibility.shown;
         Blocks.blockLoader.buildVisibility = BuildVisibility.shown;
         Blocks.blockUnloader.buildVisibility = BuildVisibility.shown;
-        new ModCheatMenu((table)->{
-            table.button("@cheat-menu.title",()->{
-                BaseDialog dialog=new BaseDialog("@cheat-menu.title");
-                dialog.cont.table((t)->{
-                    t.defaults().size(280.0F, 60.0F);
-                    t.button("@cheat-menu.change-team", () -> {
-                        openTeamChooseDialog();
-                    }).growX().row();
-                    t.button("@cheat-menu.change-unit", () -> {
-                        openUnitChooseDialog();
-                    }).growX().row();
-                    t.button("@cheat-menu.change-sandbox", () -> {
-                        Vars.state.rules.infiniteResources=!Vars.state.rules.infiniteResources;
-                    }).growX().row();
-                    t.button("@cheat-menu.items-manager", () -> {
-                        openModCheatItemsMenu();
-                    }).growX().row();
-                    t.button("@cheat-menu.unlock-content", () -> {
-                        openUnlockContentDialog();
-                    }).growX().row();
-                });
-                dialog.addCloseListener();
-                dialog.addCloseButton();
-                dialog.show();
 
-            }).size(280.0f/2f, 60.0F);
-            table.visibility=()-> settings.cheating() && (!Vars.net.active() || Vars.net.server()) && modVars.showCheatMenu();
-        });
         Time.runTask(10f, () -> {
             /*BaseDialog dialog = new BaseDialog("Welcome");
             dialog.cont.add("Hello, its Braindustry Mod.").row();
