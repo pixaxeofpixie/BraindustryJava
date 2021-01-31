@@ -1,5 +1,4 @@
-//require("planets/arsiora");
-require("planets/Kaeno");
+require("allScripts");
 require("functions");
 //require("materiaReactor");
 //require("colors");
