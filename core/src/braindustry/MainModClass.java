@@ -174,36 +174,6 @@ public class MainModClass extends Mod {
         });
     }
 
-    public static  void openUnlockContentDialog() {
-        new UnlockContentDialog().show();
-    }
-
-    public static  void openModCheatItemsMenu() {
-        new ModCheatItemsMenu().show(()->{},()->{});
-    }
-//    private static boolean openDialog=false;
-    public static void openUnitChooseDialog() {
-        new UnitChooseDialog((unitType)->{
-            Tile tile=Vars.player.tileOn();
-            if (unitType.constructor.get() instanceof UnitWaterMove && !unitType.flying && EntityCollisions.waterSolid(Vars.player.tileX(), Vars.player.tileY())){
-                Color color=Color.valueOf(Strings.format("#@",Color.scarlet.toString()));
-                getInfoDialog("","Can't spawn water unit!!!","You not on the water",color.lerp(Color.white,0.2f)).show();
-                return false;
-            }
-            ModCall.spawnUnits(unitType,Vars.player.x,Vars.player.y,1,true,Vars.player.team(), Vars.player);
-            return true;
-        }).show();
-    }
-
-    public static  void openTeamChooseDialog() {
-        new TeamChooseDialog((team)->{
-            try {
-                Vars.player.team(team);
-            } catch (Exception exception) {
-                showException(exception);
-            }
-        }).show();
-    }
 
     public MainModClass() {
         EventOn(DisposeEvent.class,(d)->{

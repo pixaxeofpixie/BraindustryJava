@@ -12,7 +12,6 @@ import arc.scene.ui.TextArea;
 import arc.scene.ui.layout.Cell;
 import arc.scene.ui.layout.Scl;
 import arc.scene.ui.layout.Table;
-import arc.util.Log;
 import arc.util.Strings;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
@@ -30,6 +29,7 @@ import mindustry.world.Block;
 
 public class DpsMeter extends Block {
     public TextureRegion teamRegionButton;
+
     public DpsMeter(String name) {
         super(name);
         placeableLiquid = true;
@@ -40,10 +40,10 @@ public class DpsMeter extends Block {
         floating = true;
         priority = TargetPriority.turret;
         unitCapModifier = 1000;
-        health=Integer.MAX_VALUE;
-        config(MeterContainer.class,(t,conteiner)->{
-            DpsMeterBuild tile=(DpsMeterBuild)t;
-            tile.container=conteiner==null?new MeterContainer():conteiner;
+        health = Integer.MAX_VALUE;
+        config(MeterContainer.class, (t, conteiner) -> {
+            DpsMeterBuild tile = (DpsMeterBuild) t;
+            tile.container = conteiner == null ? new MeterContainer() : conteiner;
             Vars.indexer.updateIndices(tile.tile);
         });
     }
@@ -51,20 +51,23 @@ public class DpsMeter extends Block {
     @Override
     public void load() {
         super.load();
-        teamRegionButton=Core.atlas.find(name+"-team-region");
+        teamRegionButton = Core.atlas.find(name + "-team-region");
     }
 
     @Override
     protected TextureRegion[] icons() {
         return teamRegion.found() ? new TextureRegion[]{region, teamRegion} : new TextureRegion[]{region};
     }
+
     public static class MeterContainer {
-        public float time=60;
-        public Team selectedTeam=Team.derelict;
-        public boolean unit=false;
-        public MeterContainer(){
+        public float time = 60;
+        public Team selectedTeam = Team.derelict;
+        public boolean unit = false;
+
+        public MeterContainer() {
         }
     }
+
     public class DpsMeterBuild extends Building implements BuildingLabel {
         float deltaHealth = 0;
         float editHHealth = 0;
@@ -79,7 +82,7 @@ public class DpsMeter extends Block {
         @Override
         public void created() {
             super.created();
-            container=new MeterContainer();
+            container = new MeterContainer();
         }
 
         @Override
@@ -88,14 +91,14 @@ public class DpsMeter extends Block {
             if (container != null) {
                 team = container.selectedTeam;
             } else {
-                container=new MeterContainer();
+                container = new MeterContainer();
             }
 
             if (timer.get(0, container.time)) {
 //                Log.info("t");
 //                this.deltaHealth = maxHealth-this.health;
-                deltaHealth=editHHealth;
-                editHHealth=0;
+                deltaHealth = editHHealth;
+                editHHealth = 0;
 //                deltaHealth = editHHealth;
 //                editHHealth =maxHealth();
 //                health=maxHealth;
@@ -111,7 +114,7 @@ public class DpsMeter extends Block {
             }
 //            Log.info("damage @",damage);
 //            editHHealth -= damage;
-            editHHealth-=damage;
+            editHHealth -= damage;
 //            health -= damage;
         }
 
@@ -152,7 +155,7 @@ public class DpsMeter extends Block {
 
             float z = Draw.z();
             Draw.z(300);
-            font.draw(amount.toString()+"", x - block.size * 4, y + 1);
+            font.draw(amount.toString() + "", x - block.size * 4, y + 1);
             Draw.z(z);
 
             font.setUseIntegerPositions(ints);
@@ -162,7 +165,7 @@ public class DpsMeter extends Block {
         @Override
         public boolean collision(Bullet other) {
 
-            this.damage(other.damage*other.damageMultiplier()*
+            this.damage(other.damage * other.damageMultiplier() *
                     (container.unit ? 1f : other.type().buildingDamageMultiplier));
             return true;
         }
@@ -174,7 +177,7 @@ public class DpsMeter extends Block {
 
         public void addButton(Table cont, Team team) {
             cont.button(new TextureRegionDrawable(teamRegionButton).tint(team.color), Styles.clearToggleTransi, () -> {
-                container.selectedTeam=team;
+                container.selectedTeam = team;
                 configure(container);
                 deselect();
             });
@@ -182,7 +185,7 @@ public class DpsMeter extends Block {
 
         @Override
         public void buildConfiguration(Table te) {
-            te.table((table)->{
+            te.table((table) -> {
                 table.background(Styles.black6);
                 Table cont = new Table();
                 cont.defaults().size(50);
@@ -196,14 +199,14 @@ public class DpsMeter extends Block {
                         }
                     }
                 }).maxHeight(Scl.scl(40)).get();
-                scrollPane.setScrollingDisabled(true,false);
-            scrollPane.setScrollYForce(scrollPos);
-            scrollPane.update(() -> {
-                scrollPos = scrollPane.getScrollY();
-            });
-            scrollPane.setOverscroll(false, false);
+                scrollPane.setScrollingDisabled(true, false);
+                scrollPane.setScrollYForce(scrollPos);
+                scrollPane.update(() -> {
+                    scrollPos = scrollPane.getScrollY();
+                });
+                scrollPane.setOverscroll(false, false);
                 table.button(Icon.units, () -> {
-                    container.unit=!container.unit;
+                    container.unit = !container.unit;
                     configure(container);
                 });
 
@@ -220,9 +223,10 @@ public class DpsMeter extends Block {
                 }).width(100);
                 TextArea textArea = a.get();
                 textArea.setMaxLength((Float.MAX_VALUE + "").length());
+
                 textArea.setFilter(((textField, c) -> {
-                    StringBuilder b=new StringBuilder(textArea.getText());
-                    b.insert(textField.getCursorPosition(),c);
+                    StringBuilder b = new StringBuilder(textArea.getText());
+                    b.insert(textField.getCursorPosition(), c);
                     return (Strings.canParseFloat(b.toString()));
                 }));
                 //a.setMaxLength(5);
@@ -234,7 +238,7 @@ public class DpsMeter extends Block {
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            container=JsonIO.json().fromJson(MeterContainer.class,read.str());
+            container = JsonIO.json().fromJson(MeterContainer.class, read.str());
         }
 
         @Override

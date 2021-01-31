@@ -8,6 +8,7 @@ import ModVars.modVars;
 import arc.Core;
 import arc.scene.event.Touchable;
 import arc.scene.ui.layout.WidgetGroup;
+import braindustry.MainModClass;
 import braindustry.ModListener;
 import braindustry.gen.StealthUnitc;
 import braindustry.graphics.g3d.ModPlanetRenderer;
@@ -21,6 +22,7 @@ import mindustry.ui.dialogs.BaseDialog;
 import mindustry.ui.dialogs.PlanetDialog;
 import mindustryAddition.iu.AdvancedContentInfoDialog;
 
+import static ModVars.Classes.UI.CheatUI.*;
 import static ModVars.modVars.*;
 import static braindustry.MainModClass.*;
 import static braindustry.input.ModBinding.*;
@@ -43,6 +45,8 @@ public class ModUI {
                 openUnlockContentDialog();
             } else if (keyBinds.keyTap(itemManagerDialogBing) && noDialog) {
                 openModCheatItemsMenu();
+            } else if (keyBinds.keyTap(rulesEditDialogBing) && inGame){
+                openRulesEditDialog();
             }
             if (inGame && Vars.state.isPaused() && Vars.player.unit() instanceof StealthUnitc){
                 StealthUnitc unit = (StealthUnitc) Vars.player.unit();
@@ -70,21 +74,11 @@ public class ModUI {
                 BaseDialog dialog = new BaseDialog("@cheat-menu.title");
                 dialog.cont.table((t) -> {
                     t.defaults().size(280.0F, 60.0F);
-                    t.button("@cheat-menu.change-team", () -> {
-                        openTeamChooseDialog();
-                    }).growX().row();
-                    t.button("@cheat-menu.change-unit", () -> {
-                        openUnitChooseDialog();
-                    }).growX().row();
-                    t.button("@cheat-menu.change-sandbox", () -> {
-                        Vars.state.rules.infiniteResources = !Vars.state.rules.infiniteResources;
-                    }).growX().row();
-                    t.button("@cheat-menu.items-manager", () -> {
-                        openModCheatItemsMenu();
-                    }).growX().row();
-                    t.button("@cheat-menu.unlock-content", () -> {
-                        openUnlockContentDialog();
-                    }).growX().row();
+                    t.button("@cheat-menu.change-team", CheatUI::openTeamChooseDialog).growX().row();
+                    t.button("@cheat-menu.change-unit", CheatUI::openUnitChooseDialog).growX().row();
+                    t.button("@cheat-menu.edit-rules", CheatUI::openRulesEditDialog).growX().row();
+                    t.button("@cheat-menu.items-manager", CheatUI::openModCheatItemsMenu).growX().row();
+                    t.button("@cheat-menu.unlock-content", CheatUI::openUnlockContentDialog).growX().row();
                 });
                 dialog.addCloseListener();
                 dialog.addCloseButton();

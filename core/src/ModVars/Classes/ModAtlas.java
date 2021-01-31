@@ -7,7 +7,7 @@ import mindustry.Vars;
 import static ModVars.modFunc.*;
 
 public class ModAtlas {
-    public TextureRegion laser, laserEnd,flash,flareWhite;
+    public static TextureRegion laser, laserEnd,flash,flareWhite;
     public ModAtlas(){
         this.load();
     }
