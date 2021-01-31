@@ -61,6 +61,9 @@ public class ModBlocks implements ContentList {
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge,
             plasticWall, astronomicalWall, largeAstronomicalWall,
 
+    //logic
+    advancedSwitcher,
+
     //experimental
     smartRouter, turretSwitcher, blockHealer, dpsMeter, unitGenerator, unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
             exampleCrossItemBridge, exampleCrossPhaseBridge, testBlock;
@@ -72,6 +75,7 @@ public class ModBlocks implements ContentList {
         new ModPowerBlocks().load();
         new ModOtherBlocks().load();
         new ModDefense().load();
+        new ModLogicBlocks().load();
 
         testBlock = new TestBlock("test-block") {
             {

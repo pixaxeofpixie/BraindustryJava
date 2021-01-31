@@ -30,6 +30,7 @@ import static braindustry.input.ModBinding.*;
 public class ModUI {
 
     public void init() {
+        
         if (Vars.headless) return;
         AdvancedSettingsMenuDialog.init();
         Core.settings.put("uiscalechanged", false);
