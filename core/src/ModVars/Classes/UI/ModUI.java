@@ -36,17 +36,20 @@ public class ModUI {
         ModListener.updaters.add(() -> {
             boolean noDialog = !Core.scene.hasDialog();
             boolean inGame = Vars.state.isGame();
-            boolean inMenu = Vars.state.isMenu();
-            if (keyBinds.keyTap(unitDialogBing) && noDialog && inGame) {
-                openUnitChooseDialog();
-            } else if (keyBinds.keyTap(teamDialogBing) && noDialog && inGame) {
-                openTeamChooseDialog();
-            } else if (keyBinds.keyTap(unlockDialogBing) && !inMenu) {
-                openUnlockContentDialog();
-            } else if (keyBinds.keyTap(itemManagerDialogBing) && noDialog) {
-                openModCheatItemsMenu();
-            } else if (keyBinds.keyTap(rulesEditDialogBing) && inGame){
-                openRulesEditDialog();
+
+            boolean inMenu = Vars.state.isMenu() || !Vars.ui.planet.isShown();
+            if (!controls.isShown()){
+                if (keyBinds.keyTap(unitDialogBing) && noDialog && inGame) {
+                    openUnitChooseDialog();
+                } else if (keyBinds.keyTap(teamDialogBing) && noDialog && inGame) {
+                    openTeamChooseDialog();
+                } else if (keyBinds.keyTap(unlockDialogBing) && !inMenu) {
+                    openUnlockContentDialog();
+                } else if (keyBinds.keyTap(itemManagerDialogBing) && noDialog) {
+                    openModCheatItemsMenu();
+                } else if (keyBinds.keyTap(rulesEditDialogBing) && inGame && noDialog){
+                    openRulesEditDialog();
+                }
             }
             if (inGame && Vars.state.isPaused() && Vars.player.unit() instanceof StealthUnitc){
                 StealthUnitc unit = (StealthUnitc) Vars.player.unit();

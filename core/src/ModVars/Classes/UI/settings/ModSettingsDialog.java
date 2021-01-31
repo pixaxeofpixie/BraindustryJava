@@ -25,6 +25,7 @@ public class ModSettingsDialog extends Dialog {
         });
         cont.add(main);
         addCloseButton();
+        closeOnBack();
     }
 
     @Override
