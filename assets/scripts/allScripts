@@ -204,20 +204,20 @@ MizuPlanet.orbitTime = Mathf.pow((2.0 + 14.0 + 0.66), 1.5) * 80;
 MizuPlanet.accessible = true;
 
 //Сектора
-const TPolus = new SectorPreset("thermal Polus", OsorePlanet, 72);
-TPolus.alwaysUnlocked = true;
-TPolus.difficulty = 30;
-TPolus.captureWave = 30;
+//const TPolus = new SectorPreset("thermal Polus", OsorePlanet, 72);
+//TPolus.alwaysUnlocked = true;
+//TPolus.difficulty = 30;
+//TPolus.captureWave = 30;
 
-const Mpoint = new SectorPreset("melting point", OsorePlanet, 20);
+const Mpoint = new SectorPreset("melting_point", OsorePlanet, 20);
 Mpoint.alwaysUnlocked = true;
 Mpoint.difficulty = 6;
 Mpoint.captureWave = 20;
 
-const FFOf = new SectorPreset("451F", OsorePlanet, 50);
-FFOf.alwaysUnlocked = true;
-FFOf.difficulty = 8;
-FFOf.captureWave = 35;
+//const FFOf = new SectorPreset("451F", OsorePlanet, 50);
+/FFOf.alwaysUnlocked = true;
+//FFOf.difficulty = 8;
+//FFOf.captureWave = 35;
 
 //while(interplanetaryAccelerator.unlocked()){
 //  OsorePlanet.accessible = true;
