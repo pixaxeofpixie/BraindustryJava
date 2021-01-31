@@ -215,7 +215,7 @@ Mpoint.difficulty = 6;
 Mpoint.captureWave = 20;
 
 //const FFOf = new SectorPreset("451F", OsorePlanet, 50);
-/FFOf.alwaysUnlocked = true;
+//FFOf.alwaysUnlocked = true;
 //FFOf.difficulty = 8;
 //FFOf.captureWave = 35;
 
