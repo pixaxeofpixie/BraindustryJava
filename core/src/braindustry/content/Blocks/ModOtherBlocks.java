@@ -6,10 +6,7 @@ import braindustry.content.ModLiquids;
 import braindustry.world.blocks.power.BlackHoleReactor;
 import braindustry.world.blocks.production.MultiRotorDrill;
 import arc.math.geom.Vec2;
-import mindustry.content.Blocks;
-import mindustry.content.Fx;
-import mindustry.content.Items;
-import mindustry.content.Liquids;
+import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.gen.Sounds;
 import mindustry.graphics.CacheLayer;
@@ -85,20 +82,6 @@ public class ModOtherBlocks implements ContentList {
                     Block block = build.block;
                     return block.acceptsItems || block instanceof StorageBlock;
                 };
-                //end of block
-                ItemBridge bridge = (ItemBridge) Blocks.phaseConveyor;
-                range = bridge.range;
-            }
-
-            @Override
-            public void load() {
-                ItemBridge bridge = (ItemBridge) Blocks.phaseConveyor;
-                Core.atlas.addRegion(this.name, Core.atlas.find(bridge.name));
-                super.load();
-                this.arrowRegion = bridge.arrowRegion;
-                this.bridgeRegion = bridge.bridgeRegion;
-                this.endRegion = bridge.endRegion;
-                this.region = bridge.region;
             }
         };
         surgePayloadConveyor = new PayloadConveyor("surge-payload-conveyor"){
@@ -115,8 +98,9 @@ public class ModOtherBlocks implements ContentList {
                 this.isLiquid = true;
                 this.variants = 1;
                 this.blendGroup = Blocks.water;
-                this.cacheLayer = CacheLayer.tar;
+                cacheLayer = CacheLayer.slag;
                 this.speedMultiplier = 0.17f;
+                status = StatusEffects.blasted;
                 this.liquidDrop = ModLiquids.magma;
                 this.statusDuration = 240;
                 this.drownTime = 90;
@@ -216,7 +200,7 @@ public class ModOtherBlocks implements ContentList {
                 this.breakable = false;
                 this.alwaysReplace = false;
                 this.solid = true;
-                this.variants = 3;
+                this.variants = 2;
             }
         };
         dirtRocksWall = new StaticWall("dirt-rocks") {
@@ -252,6 +236,7 @@ public class ModOtherBlocks implements ContentList {
                 this.blendGroup = Blocks.water;
                 this.cacheLayer = CacheLayer.tar;
                 this.speedMultiplier = -0.15f;
+                status = StatusEffects.freezing;
                 this.liquidDrop = ModLiquids.liquidMethane;
                 this.statusDuration = 200;
                 this.drownTime = 90;

@@ -639,7 +639,7 @@ public class ModDefense implements ContentList {
                         damage = 4560f;
                         length = 400f;
                         lifetime = 120f;
-                        width = 130f;
+                        width = 30f;
                         hittable = false;
                         absorbable = false;
                         hitEffect = Fx.hitMeltHeal;
