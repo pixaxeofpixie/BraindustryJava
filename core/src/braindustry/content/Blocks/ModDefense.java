@@ -42,7 +42,7 @@ public class ModDefense implements ContentList {
                 this.reloadTime = 70;
                 this.size = 3;
                 this.shots = 1;
-                this.health = 5800;
+                this.health = 2800;
                 this.inaccuracy = 0;
                 this.shootSound = Sounds.missile;
                 this.rotateSpeed = 0.9f;
@@ -93,7 +93,7 @@ public class ModDefense implements ContentList {
                 this.health = 2890;
                 this.size = 3;
                 this.rotateSpeed = 0.9f;
-                this.shots = 2;
+                this.shots = 6;
                 this.reloadTime = 40;
                 this.hasItems = true;
                 this.hasLiquids = true;
@@ -115,7 +115,7 @@ public class ModDefense implements ContentList {
                                 this.shrinkX = 0.2f;
                                 this.spin = 3.5f;
                                 this.speed = 4.1f;
-                                this.damage = 35;
+                                this.damage = 15;
                                 this.shootEffect = Fx.railShoot;
                                 this.hitColor = this.frontColor = Color.valueOf("f1fc58");
                                 this.despawnEffect = Fx.railHit;
@@ -124,7 +124,7 @@ public class ModDefense implements ContentList {
                                 this.lightning = 3;//?????????? ??????
                                 this.lightningLength = 5;//????? ??????
                                 this.lightningLengthRand = 15;//????????? ????? ?? 0 ?? 50 ????? ???????????? ? ????? ??????, ?? ???? ???????????? ?????
-                                this.lightningDamage = 12;//???? ??????
+                                this.lightningDamage = 9;//???? ??????
                                 this.lightningAngle = 5;//???? ??????????? ?????? ???????????? ???? ????
                                 this.lightningCone = 45;//???????????? ???? ??????????? ??????
                                 this.lightningColor = Color.valueOf("f1fc58");
@@ -169,7 +169,7 @@ public class ModDefense implements ContentList {
                         },
                         ModItems.odinum, new ShrapnelBulletType() {
                             {
-                                this.length = 100;
+                                this.length = 160;
                                 this.damage = 280;
                                 this.width = 42;
                                 this.serrationLenScl = 6;
@@ -419,7 +419,7 @@ public class ModDefense implements ContentList {
                                 this.shrinkX = 0.2f;
                                 this.spin = 1.2f;
                                 this.speed = 2.1f;
-                                this.damage = 16;
+                                this.damage = 19;
                                 this.shootEffect = Fx.shockwave;
                                 this.hitColor = this.frontColor = Color.valueOf("f1fc58");
                                 this.despawnEffect = Fx.hitLancer;
@@ -428,7 +428,7 @@ public class ModDefense implements ContentList {
                                 this.lightning = 3;//?????????? ??????
                                 this.lightningLength = 3;//????? ??????
                                 this.lightningLengthRand = 7;//????????? ?????
-                                this.lightningDamage = 12;//???? ??????
+                                this.lightningDamage = 9;//???? ??????
                                 this.lightningAngle = 3;//???? ??????????? ?????? ???????????? ???? ????
                                 this.lightningCone = 20;//???????????? ???? ??????????? ??????
                                 this.lightningColor = Color.valueOf("f1fc58");
@@ -444,7 +444,7 @@ public class ModDefense implements ContentList {
                 this.description = "Strong artillery turret with powerful ammo. Requires a strong alloy to fire. Better in groups.";
                 this.range = 300;
                 this.recoilAmount = 6;
-                this.reloadTime = 15;
+                this.reloadTime = 17;
                 this.size = 4;
                 this.shots = 4;
                 this.health = 3000;
@@ -456,7 +456,7 @@ public class ModDefense implements ContentList {
                         ModItems.exoticAlloy, artilleryExplosive,
                         Items.surgeAlloy, artilleryIncendiary
                 );
-                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.1f).optional(true, true);
+                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.14f).optional(true, true);
                 this.requirements(Category.turret, ItemStack.with(ModItems.exoticAlloy, 120, ModItems.graphenite, 330, Items.plastanium, 150, Items.silicon, 200, Items.surgeAlloy, 50));
             }
         };
@@ -474,7 +474,7 @@ public class ModDefense implements ContentList {
                                 this.trailEffect = Fx.instTrail;
                                 this.despawnEffect = Fx.instBomb;
                                 this.trailSpacing = 12;
-                                this.damage = 360;
+                                this.damage = 400;
                                 this.buildingDamageMultiplier = 0.3f;
                                 this.speed = 50;
                                 this.hitShake = 1;
@@ -499,15 +499,15 @@ public class ModDefense implements ContentList {
                             }
                         }
                 );
-                this.consumes.power(4f);
-                this.consumes.liquid(Liquids.cryofluid, 0.1f).optional(false, false);
+                this.consumes.power(3f);
+                this.consumes.liquid(Liquids.cryofluid, 0.14f).optional(false, false);
                 this.reloadTime = 35;
                 this.shots = 1;
                 this.burstSpacing = 6;
                 this.inaccuracy = 1;
                 this.range = 190;
                 this.size = 2;
-                this.health = 800;
+                this.health = 1100;
             }
         };
         perlin = new TractorBeamTurret("perlin") {
@@ -599,18 +599,18 @@ public class ModDefense implements ContentList {
 
                             {
                                 this.sapStrength = 0.48f;
-                                this.length = 55;
-                                this.damage = 37;
+                                this.length = 75;
+                                this.damage = 47;
                                 this.shootEffect = Fx.railShoot;
                                 this.hitColor = this.color = Color.valueOf("fbff9e");
                                 this.despawnEffect = Fx.railHit;
-                                this.width = 1.3f;
-                                this.lifetime = 30;
+                                this.width = 1.4f;
+                                this.lifetime = 35;
                                 this.knockback = -1;
-                                this.lightning = 4;
+                                this.lightning = 6;
                                 this.lightningLength = 2;
                                 this.lightningLengthRand = 10;
-                                this.lightningDamage = 50;
+                                this.lightningDamage = 9;
                                 this.lightningAngle = 6;
                                 this.lightningCone = 12;
 //                                this.largeHit = true;
