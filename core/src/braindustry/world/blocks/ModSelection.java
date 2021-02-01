@@ -29,7 +29,7 @@ public class ModSelection {
         int i = 0;
 
         for (String item : items) {
-            ImageButton button = (ImageButton) cont.button(Tex.whiteui, Styles.clearToggleTransi, 24.0F, () -> {
+            ImageButton button = cont.button(Tex.whiteui, Styles.clearToggleTransi, 24.0F, () -> {
                 if (closeSelect) {
                     Vars.control.input.frag.config.hideConfig();
                 }
@@ -52,7 +52,7 @@ public class ModSelection {
             int remaining = 4 - i % 4;
 
             for (int j = 0; j < remaining; ++j) {
-                cont.image(Styles.black6);
+//                cont.image(Styles.black6);
             }
         }
 

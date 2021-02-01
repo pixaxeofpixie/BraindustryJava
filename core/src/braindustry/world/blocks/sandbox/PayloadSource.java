@@ -6,11 +6,15 @@ import arc.graphics.g2d.TextureRegion;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Eachable;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
 import braindustry.world.blocks.ModSelection;
 import mindustry.Vars;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.units.BuildPlan;
 import mindustry.gen.Building;
+import mindustry.io.TypeIO;
+import mindustry.type.Category;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
 import mindustry.world.blocks.ItemSelection;
@@ -29,14 +33,15 @@ public class PayloadSource extends Block {
         this.configurable = true;
         this.saveConfig = true;
         this.noUpdateDisabled = true;
+        category= Category.distribution;
         this.<Integer, PayloadSourceBuild>config(Integer.class, (tile, item) -> {
             tile.page = item;
         });
-        this.<UnlockableContent, PayloadSourceBuild>config(UnlockableContent.class, (tile, item) -> {
-            tile.output = item;
+        config(UnlockableContent.class, (tile, item) -> {
+            ((PayloadSourceBuild)tile).output=item;
         });
         this.<PayloadSourceBuild>configClear((tile) -> {
-            tile.output = null;
+//            tile.output = null;
         });
     }
 
@@ -69,10 +74,10 @@ public class PayloadSource extends Block {
 
         public void draw() {
             super.draw();
+            TextureRegion outputRegion = getRegion(output);
             if (output == null) {
                 Draw.rect("cross", this.x, this.y);
             } else {
-                TextureRegion outputRegion = getRegion(output);
                 if (outputRegion != null) {
                     Draw.rect(outputRegion, this.x, this.y);
                     Draw.color();
@@ -86,7 +91,9 @@ public class PayloadSource extends Block {
         }
 
         public void updateTile() {
-            dumpPayload(getPayload());
+            Payload payload = getPayload();
+            if (payload==null)return;
+            dumpPayload(payload);
         }
 
         protected boolean check(float size, float min, float max) {
@@ -95,10 +102,13 @@ public class PayloadSource extends Block {
 
         public void buildConfiguration(Table table) {
             table.clear();
+            table.clearChildren();
+            table.top();
             ModSelection.buildTable(table, Seq.withArrays("1..2 3..4 5..6 7>".split(" ")), () -> this.page, (page) -> {
                 this.page = page;
                 buildConfiguration(table);
-            });
+            },false);
+            if (page==-1)return;
             table.row();
             Seq<Boolf<Float>> sizes = Seq.with(
                     (f) -> check(f, 1, 2),
@@ -116,6 +126,20 @@ public class PayloadSource extends Block {
                 return sizes.get(page).get(size);
             });
             ItemSelection.buildTable(table, content, () -> output,this::configure);
+        }
+
+        @Override
+        public void read(Reads read, byte revision) {
+            super.read(read, revision);
+            page=read.i();
+            output=(UnlockableContent) TypeIO.readObject(read);
+        }
+
+        @Override
+        public void write(Writes write) {
+            super.write(write);
+            write.i(page);
+            TypeIO.writeObject(write,output);
         }
     }
 }

@@ -64,6 +64,9 @@ public class ModBlocks implements ContentList {
     //logic
     advancedSwitcher,
 
+    //sandbox
+    payloadSource,payloadVoid,
+
     //experimental
     smartRouter, turretSwitcher, blockHealer, dpsMeter, unitGenerator, unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
             exampleCrossItemBridge, exampleCrossPhaseBridge, testBlock;
@@ -76,7 +79,7 @@ public class ModBlocks implements ContentList {
         new ModOtherBlocks().load();
         new ModDefense().load();
         new ModLogicBlocks().load();
-
+        new ModSandBox().load();
         testBlock = new TestBlock("test-block") {
             {
                 this.size = 2;
@@ -145,30 +148,32 @@ public class ModBlocks implements ContentList {
         };*/
         unitSpawner = new UnitSpawner("unit-spawner") {
             {
-                this.localizedName = "Unit Spawner";
-                this.description = "Powerful sandbox block, can spawn and control any unit from game and mods.";
-                this.size = 2;
-                this.requirements(Category.effect, ItemStack.empty);
+                localizedName = "Unit Spawner";
+                description = "Powerful sandbox block, can spawn and control any unit from game and mods.";
+                size = 2;
+
+                requirements(Category.effect,BuildVisibility.sandboxOnly, ItemStack.empty);
             }
         };
         unitGenerator = new UnitPowerGenerator("unit-generator") {
             {
-                this.powerProduction = 10f;
+                powerProduction = 10f;
+                buildVisibility=BuildVisibility.debugOnly;
             }
         };
         unitNode = new UnitPowerNode("unit-node") {
             {
-                this.maxNodes = Integer.MAX_VALUE;
-
+                maxNodes = Integer.MAX_VALUE;
+                buildVisibility=BuildVisibility.debugOnly;
             }
         };
 
         smartRouter = new SmartRouter("smart-router") {
             {
-                this.localizedName = "Smert Router";
-                this.size = 1;
-                this.requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
-                this.buildCostMultiplier = 4.0F;
+                localizedName = "Smart Router";
+                size = 1;
+                requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
+                buildCostMultiplier = 4.0F;
             }
         };
         turretSwitcher = new BlockSwitcher("turret-switcher") {
@@ -189,11 +194,11 @@ public class ModBlocks implements ContentList {
                         build.charging = false;
                     }
                 };
-                this.size = 2;
-                this.laserRange = 6.0F;
-                this.health = 10000;
-                this.requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
-                this.buildCostMultiplier = 4.0F;
+                size = 2;
+                laserRange = 6.0F;
+                health = 10000;
+                requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
+                buildCostMultiplier = 4.0F;
             }
         };
         blockHealer = new BlockSwitcher("block-healer") {
@@ -208,21 +213,21 @@ public class ModBlocks implements ContentList {
                     float t = Mathf.absin(Time.time + Mathf.randomSeed(b.id, 0, 1000000), 1f, 1F) * 0.9f + 0.1f;
                     return Pal.heal.cpy().lerp(Color.black, t * (1f - b.healthf()));
                 };
-                this.size = 2;
-                this.health = 10000;
-                this.laserRange = 6.0F;
-                this.requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
-                this.buildCostMultiplier = 4.0F;
+                size = 2;
+                health = 10000;
+                laserRange = 6.0F;
+                requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
+                buildCostMultiplier = 4.0F;
             }
         };
         dpsMeter = new DpsMeter("dps-meter") {
             {
-                this.category = Category.effect;
-//                this.alwaysUnlocked=true;
-                this.buildVisibility = BuildVisibility.sandboxOnly;
-                this.health = Integer.MAX_VALUE;
-                this.size = 3;
-//                this.requirements();
+                category = Category.effect;
+//                alwaysUnlocked=true;
+                buildVisibility = BuildVisibility.sandboxOnly;
+                health = Integer.MAX_VALUE;
+                size = 3;
+//                requirements();
             }
         };
     }
