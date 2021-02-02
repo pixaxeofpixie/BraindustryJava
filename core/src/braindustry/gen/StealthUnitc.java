@@ -18,4 +18,6 @@ public interface StealthUnitc extends Boundedc , Rotc, Itemsc, Weaponsc, Physics
     void removeStealth(float time);
     void setStealth();
     void setStealth(float time);
+
+    float stealthf();
 }

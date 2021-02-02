@@ -12,6 +12,7 @@ import arc.math.geom.Vec2;
 import arc.math.geom.Vec3;
 import arc.scene.ui.layout.Scl;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Time;
 import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
 import braindustry.entities.bullets.RainbowLaserBulletType;
@@ -31,6 +32,7 @@ public class ModShaders {
     public static RainbowLaserShader rainbowLaserShader;
     public static TestShader testShader;
     public static GradientLaserShader gradientLaserShader;
+    public static IconBackgroundShader iconBackgroundShader;
 static {
     Shaders.class.getName();
 }
@@ -45,6 +47,7 @@ static {
         gradientLaserShader=new GradientLaserShader();
 
         testShader=new TestShader();
+        iconBackgroundShader=new IconBackgroundShader();
 //        defaultShader=new Shaders.LoadShader("default","default");
     }
     public static Vec2 getScreenSize(){
@@ -56,6 +59,33 @@ static {
     }
     private static Vec2 vec2(float x) {
         return vec2(x,x);
+    }
+    public static class IconBackgroundShader extends ModLoadShader{
+
+        private float length;
+        private float fromY;
+
+        public IconBackgroundShader() {
+            super("iconBackground", "default");
+        }
+
+
+        public void set(float fromY,float length) {
+            this.fromY =fromY;
+            this.length=length;
+//            Log.info("fromY: @, length: @",fromY,length);
+            super.set();
+        }
+        public void set(float fromY) {
+           set(fromY,0);
+        }
+
+        @Override
+        public void apply() {
+            super.apply();
+            setUniformf("toY", fromY);
+            setUniformf("length",length);
+        }
     }
     public static class TestShader extends ModLoadShader {
         public int offsetId=0;
@@ -285,7 +315,7 @@ static {
     }
 
     public static class RainbowShader extends ModLoadShader {
-        public int offsetId = 0;
+        public long offsetId = 0;
 
         public RainbowShader() {
             super(("rainbow"), "default");
@@ -304,7 +334,10 @@ static {
         public void set(Entityc entityc) {
             this.offsetId=entityc.id();
             super.set();
-
+        }
+        public void set(long id) {
+            this.offsetId=id;
+            super.set();
         }
     }
 
@@ -314,6 +347,12 @@ static {
         }
         public ModLoadShader(String fragment, String vertex) {
             super(loadFile(vertex + ".vert"), loadFile(fragment + ".frag"));
+        }
+
+        @Override
+        public void apply() {
+            super.apply();
+            setUniformf("u_resolution",vec2(Core.graphics.getWidth(),Core.graphics.getHeight()));
         }
 
         private static Fi loadFile(String fileName) {

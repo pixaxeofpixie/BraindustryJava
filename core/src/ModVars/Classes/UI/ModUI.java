@@ -15,6 +15,7 @@ import braindustry.graphics.g3d.ModPlanetRenderer;
 import braindustry.input.ModBinding;
 import braindustry.input.ModKeyBinds;
 import braindustry.ui.dialogs.ModPlanetDialog;
+import braindustry.ui.fragments.ModHudFragment;
 import braindustry.ui.fragments.ModMenuFragment;
 import mindustry.Vars;
 import mindustry.graphics.g3d.PlanetRenderer;
@@ -33,6 +34,7 @@ public class ModUI {
         
         if (Vars.headless) return;
         AdvancedSettingsMenuDialog.init();
+        ModHudFragment.init();
         Core.settings.put("uiscalechanged", false);
         ModListener.updaters.add(() -> {
             boolean noDialog = !Core.scene.hasDialog();
