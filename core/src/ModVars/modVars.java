@@ -6,16 +6,21 @@ import ModVars.Classes.UI.ModControlsDialog;
 import ModVars.Classes.UI.ModUI;
 import ModVars.Classes.UI.settings.ModOtherSettingsDialog;
 import ModVars.Classes.UI.settings.ModSettingsDialog;
+import arc.func.Prov;
 import arc.struct.Seq;
+import arc.util.Log;
 import braindustry.core.ModNetClient;
 import braindustry.gen.ModNetServer;
 import braindustry.gen.ModRemoteReadClient;
 import braindustry.gen.ModRemoteReadServer;
+import braindustry.gen.UnitPayloadcCopy;
 import braindustry.input.ModKeyBinds;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
 import mindustry.game.Team;
 import mindustry.gen.EntityMapping;
+import mindustry.gen.Payloadc;
+import mindustry.gen.Unit;
 import mindustry.io.SaveIO;
 import mindustry.mod.Mods;
 import mindustry.net.Packets;
@@ -64,26 +69,31 @@ public class modVars {
                 }
             }
         });
-        Vars.netServer.addPacketHandler("spawn unit", (player, line) -> {
-            try {
-                String[] args = line.split(" ");
-//                print("args: @", line, Strings.join("-", args));
-                if (args.length == 5) {
-                    UnitType type = Vars.content.getByID(ContentType.unit, Integer.parseInt(args[0]));
-                    float x = Float.parseFloat(args[1]);
-                    float y = Float.parseFloat(args[2]);
-                    int amount = Integer.parseInt(args[3]);
-                    Team team = Team.get(Integer.parseInt(args[4]));
-                    for (int i = 0; i < amount; i++) {
-                        type.spawn(team, x, y);
-                    }
-                }
-            } catch (Exception e) {
-
-            }
-        });
         for (int i = 0; i < EntityMapping.idMap.length; i++) {
+            Prov prov = EntityMapping.idMap[i];
+            if (prov==null)continue;
+            Object o = prov.get();
+            if (o instanceof Unit && o instanceof Payloadc){
+                EntityMapping.idMap[i]=()->new UnitPayloadcCopy((Unit) prov.get());
+            }
+        }
+        for (int i = 0; i < EntityMapping.nameMap.keys().toSeq().size; i++) {
+            String key=EntityMapping.nameMap.keys().toSeq().get(i);
+            Prov prov = EntityMapping.nameMap.get(key);
+            if (prov==null)continue;
+            Object o = prov.get();
+//            Log.info("key: @, o: @",key,o.toString());
+            if (o instanceof Unit && o instanceof Payloadc){
 
+                Log.info("key: @, o: @",key,o.toString());
+                EntityMapping.nameMap.put(key,()->new UnitPayloadcCopy((Unit) prov.get()));
+            }
+        }
+        for (UnitType unit : Vars.content.units()) {
+            Prov map = EntityMapping.map(unit.name);
+            if (map !=null && unit.constructor instanceof Payloadc && (unit.constructor instanceof UnitPayloadcCopy)){
+                unit.constructor=map;
+            }
         }
         SaveIO.versionArray.add(save4);
         SaveIO.versions.remove(save4.version);

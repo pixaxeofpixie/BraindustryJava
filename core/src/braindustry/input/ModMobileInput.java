@@ -2,25 +2,155 @@ package braindustry.input;
 
 import arc.Core;
 import arc.input.KeyCode;
+import arc.math.Mathf;
+import arc.math.geom.Geometry;
+import arc.math.geom.Rect;
 import arc.math.geom.Vec2;
+import arc.util.Time;
 import arc.util.Tmp;
 import braindustry.entities.ModUnits;
+import braindustry.gen.ModCall;
 import braindustry.gen.StealthMechUnit;
 import braindustry.gen.StealthUnitc;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.core.World;
+import mindustry.entities.Predict;
 import mindustry.entities.Units;
-import mindustry.gen.Building;
-import mindustry.gen.Payloadc;
-import mindustry.gen.Unit;
-import mindustry.gen.Unitc;
+import mindustry.game.Team;
+import mindustry.gen.*;
 import mindustry.input.MobileInput;
 import mindustry.input.PlaceMode;
+import mindustry.type.UnitType;
 import mindustry.world.Tile;
 import mindustry.world.blocks.ControlBlock;
 
+import static mindustry.Vars.*;
+import static mindustry.Vars.player;
+
 public class ModMobileInput extends MobileInput {
+
+    protected void updateMovement(Unit unit){
+        Rect rect = Tmp.r3;
+
+        UnitType type = unit.type;
+        if(type == null) return;
+
+        boolean omni = unit.type.omniMovement;
+        boolean allowHealing = type.canHeal;
+        boolean validHealTarget = allowHealing && target instanceof Building && ((Building)target).isValid() && target.team() == unit.team &&
+                ((Building)target).damaged() && target.within(unit, type.range);
+        boolean boosted = (unit instanceof Mechc && unit.isFlying());
+
+        //reset target if:
+        // - in the editor, or...
+        // - it's both an invalid standard target and an invalid heal target
+        if((Units.invalidateTarget(target, unit, type.range) && !validHealTarget) || state.isEditor()){
+            target = null;
+        }
+
+        targetPos.set(Core.camera.position);
+        float attractDst = 15f;
+
+        float speed = unit.realSpeed();
+        float range = unit.hasWeapons() ? unit.range() : 0f;
+        float bulletSpeed = unit.hasWeapons() ? type.weapons.first().bullet.speed : 0f;
+        float mouseAngle = unit.angleTo(unit.aimX(), unit.aimY());
+        boolean aimCursor = omni && player.shooting && type.hasWeapons() && type.faceTarget && !boosted && type.rotateShooting;
+
+        if(aimCursor){
+            unit.lookAt(mouseAngle);
+        }else{
+            unit.lookAt(unit.prefRotation());
+        }
+        Payloadc pay;
+        if(payloadTarget != null && unit instanceof Payloadc){
+            pay=unit.as();
+            targetPos.set(payloadTarget);
+            attractDst = 0f;
+
+            if(unit.within(payloadTarget, 3f * Time.delta)){
+                if(payloadTarget instanceof Vec2 && pay.hasPayload()){
+                    //vec -> dropping something
+                    tryDropPayload();
+                }else if(payloadTarget instanceof Building && pay.canPickup((Building) payloadTarget)){
+                    //building -> picking building up
+                    Call.requestBuildPayload(player, (Building) payloadTarget);
+                }else if(payloadTarget instanceof Unit && !(payloadTarget instanceof StealthUnitc) && pay.canPickup((Unit) payloadTarget)){
+                    //unit -> picking unit up
+                    ModCall.requestUnitPayload(player, (Unit) payloadTarget);
+                }
+
+                payloadTarget = null;
+            }
+        }else{
+            payloadTarget = null;
+        }
+
+        movement.set(targetPos).sub(player).limit(speed);
+        movement.setAngle(Mathf.slerp(movement.angle(), unit.vel.angle(), 0.05f));
+
+        if(player.within(targetPos, attractDst)){
+            movement.setZero();
+            unit.vel.approachDelta(Vec2.ZERO, unit.speed() * type.accel / 2f);
+        }
+
+        float expansion = 3f;
+
+        unit.hitbox(rect);
+        rect.x -= expansion;
+        rect.y -= expansion;
+        rect.width += expansion * 2f;
+        rect.height += expansion * 2f;
+
+        player.boosting = collisions.overlapsTile(rect) || !unit.within(targetPos, 85f);
+
+        if(omni){
+            unit.moveAt(movement);
+        }else{
+            unit.moveAt(Tmp.v2.trns(unit.rotation, movement.len()));
+            if(!movement.isZero()){
+                unit.vel.rotateTo(movement.angle(), unit.type.rotateSpeed * Math.max(Time.delta, 1));
+            }
+        }
+
+        //update shooting if not building + not mining
+        if(!player.unit().activelyBuilding() && player.unit().mineTile == null){
+
+            //autofire targeting
+            if(manualShooting){
+                player.shooting = !boosted;
+                unit.aim(player.mouseX = Core.input.mouseWorldX(), player.mouseY = Core.input.mouseWorldY());
+            }else if(target == null){
+                player.shooting = false;
+                BlockUnitUnit u;
+                if(Core.settings.getBool("autotarget") && !(player.unit() instanceof BlockUnitUnit &&((u=player.as())!=null) && u.tile() instanceof ControlBlock  && !((ControlBlock) u.tile()).shouldAutoTarget())){
+                    target = Units.closestTarget(unit.team, unit.x, unit.y, range, u1 -> u1.team != Team.derelict, u1 -> u1.team != Team.derelict);
+
+                    if(allowHealing && target == null){
+                        target = Geometry.findClosest(unit.x, unit.y, indexer.getDamaged(Team.sharded));
+                        if(target != null && !unit.within(target, range)){
+                            target = null;
+                        }
+                    }
+                }
+
+                //when not shooting, aim at mouse cursor
+                //this may be a bad idea, aiming for a point far in front could work better, test it out
+                unit.aim(Core.input.mouseWorldX(), Core.input.mouseWorldY());
+            }else{
+                Vec2 intercept = Predict.intercept(unit, target, bulletSpeed);
+
+                player.mouseX = intercept.x;
+                player.mouseY = intercept.y;
+                player.shooting = !boosted;
+
+                unit.aim(player.mouseX, player.mouseY);
+            }
+        }
+
+        unit.controlWeapons(player.shooting && !boosted);
+    }
     protected int tileX(float cursorX) {
         Vec2 vec = Core.input.mouseWorld(cursorX, 0.0F);
         if (this.selectedBlock()) {

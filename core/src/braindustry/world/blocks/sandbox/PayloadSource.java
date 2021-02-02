@@ -104,7 +104,7 @@ public class PayloadSource extends Block {
             table.clear();
             table.clearChildren();
             table.top();
-            ModSelection.buildTable(table, Seq.withArrays("1..2 3..4 5..6 7>".split(" ")), () -> this.page, (page) -> {
+            ModSelection.buildTable(table, Seq.with("1..2","3..4","5..6","7>"), () -> this.page, (page) -> {
                 this.page = page;
                 buildConfiguration(table);
             },false);

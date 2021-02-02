@@ -11,6 +11,7 @@ import arc.math.geom.Vec2;
 import arc.scene.ui.layout.Table;
 import arc.struct.Queue;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.ai.formations.Formation;
@@ -45,6 +46,8 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     public <T extends Unit> UnitPayloadcCopy(T parent) {
         this.parent = parent;
         payloadc = (Payloadc) parent;
+
+        Log.info("NNNNNNNNNNN");
     }
 
     @Override
@@ -54,17 +57,52 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
 
     @Override
     public boolean canPickup(Unit unit) {
-        return payloadc.canPickup(unit) && !(unit instanceof StealthUnitc);
+        Log.info("c unit: @",unit.toString());
+        return payloadc.canPickup(unit) && !isStealth(unit);
     }
 
     @Override
     public boolean canPickup(Building building) {
         return payloadc.canPickup(building);
     }
-
+    protected boolean isStealth(Object o){
+        Log.info(o.toString());
+        if (o instanceof StealthUnitc){
+            return true;
+        } else if (o instanceof UnitPayload){
+            return isStealth(((UnitPayload) o).unit);
+        }
+        return false;
+    }
+    protected void check(){
+        x=parent.x;
+        y=parent.y;
+        mounts=parent.mounts;
+        aimX=parent.aimX;
+        aimY=parent.aimY;
+        isShooting=parent.isShooting;
+        ammo=parent.ammo;
+        elevation=parent.elevation;
+        hovering=parent.hovering;
+        drownTime=parent.drownTime;
+        splashTimer=parent.splashTimer;
+        physref=parent.physref;
+        plans=parent.plans;
+        hitSize=parent.hitSize;
+        type=parent.type;
+        abilities=parent.abilities;
+        controlling=parent.controlling;
+        armor=parent.armor;
+        id=parent.id;
+        parent.controller().unit(this);
+        if(parent.isPlayer()){
+            parent.getPlayer().unit(this);
+        }
+    }
     @Override
     public boolean canPickupPayload(Payload payload) {
-        return payloadc.canPickupPayload(payload) && !((payload instanceof UnitPayload) && ((UnitPayload) payload).unit instanceof StealthUnitc);
+        Log.info("c payload: @",payload.toString());
+        return payloadc.canPickupPayload(payload) && !isStealth(payload);
     }
 
     @Override
@@ -74,12 +112,14 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
 
     @Override
     public void addPayload(Payload payload) {
-        payloadc.addPayload(payload);
+        Log.info("payload: @",payload.toString());
+         if(!isStealth(payload))payloadc.addPayload(payload);
     }
 
     @Override
     public void pickup(Unit unit) {
-        if (!(unit instanceof StealthUnitc)) payloadc.pickup(unit);
+        Log.info("unit: @",unit.toString());
+        if (!isStealth(unit)) payloadc.pickup(unit);
     }
 
     @Override
@@ -125,21 +165,26 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void moveAt(Vec2 vec2) {
         payloadc.moveAt(vec2);
+        check();
+
     }
 
     @Override
     public void approach(Vec2 vec2) {
         payloadc.approach(vec2);
+        check();
     }
 
     @Override
     public void aimLook(Position position) {
         payloadc.aimLook(position);
+        check();
     }
 
     @Override
     public void aimLook(float v, float v1) {
         payloadc.aimLook(v, v1);
+        check();
     }
 
     @Override
@@ -165,6 +210,7 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void eachGroup(Cons<Unit> cons) {
         payloadc.eachGroup(cons);
+        check();
     }
 
     @Override
@@ -205,11 +251,14 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void resetController() {
         payloadc.resetController();
+        check();
     }
 
     @Override
     public void set(UnitType unitType, UnitController unitController) {
         payloadc.set(unitType, unitController);
+        unitController.unit(this);
+        check();
     }
 
     @Override
@@ -220,16 +269,19 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void lookAt(float v) {
         payloadc.lookAt(v);
+        check();
     }
 
     @Override
     public void lookAt(Position position) {
         payloadc.lookAt(position);
+        check();
     }
 
     @Override
     public void lookAt(float v, float v1) {
         payloadc.lookAt(v, v1);
+        check();
     }
 
     @Override
@@ -250,6 +302,7 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void setType(UnitType unitType) {
         payloadc.setType(unitType);
+        check();
     }
 
     @Override
@@ -290,6 +343,7 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void type(UnitType unitType) {
         payloadc.type(unitType);
+        check();
     }
 
     @Override
@@ -320,6 +374,7 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void abilities(Seq<Ability> seq) {
         payloadc.abilities(seq);
+        check();
     }
 
     @Override
@@ -335,31 +390,37 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void setWeaponRotation(float v) {
         payloadc.setWeaponRotation(v);
+        check();
     }
 
     @Override
     public void setupWeapons(UnitType unitType) {
         payloadc.setupWeapons(unitType);
+        check();
     }
 
     @Override
     public void controlWeapons(boolean b) {
         payloadc.controlWeapons(b);
+        check();
     }
 
     @Override
     public void controlWeapons(boolean b, boolean b1) {
         payloadc.controlWeapons(b, b1);
+        check();
     }
 
     @Override
     public void aim(Position position) {
         payloadc.aim(position);
+        check();
     }
 
     @Override
     public void aim(float v, float v1) {
         payloadc.aim(v, v1);
+        check();
     }
 
     @Override
@@ -370,16 +431,19 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void apply(StatusEffect statusEffect) {
         payloadc.apply(statusEffect);
+        check();
     }
 
     @Override
     public void apply(StatusEffect statusEffect, float v) {
         payloadc.apply(statusEffect, v);
+        check();
     }
 
     @Override
     public void unapply(StatusEffect statusEffect) {
         payloadc.unapply(statusEffect);
+        check();
     }
 
     @Override
@@ -430,6 +494,7 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void moveAt(Vec2 vec2, float v) {
         payloadc.moveAt(vec2, v);
+        check();
     }
 
     @Override
@@ -505,21 +570,25 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void readSyncManual(FloatBuffer floatBuffer) {
         payloadc.readSyncManual(floatBuffer);
+        check();
     }
 
     @Override
     public void writeSyncManual(FloatBuffer floatBuffer) {
         payloadc.writeSyncManual(floatBuffer);
+        check();
     }
 
     @Override
     public void afterSync() {
         payloadc.afterSync();
+        check();
     }
 
     @Override
     public void interpolate() {
         payloadc.interpolate();
+        check();
     }
 
     @Override
@@ -530,16 +599,40 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void update() {
         payloadc.update();
+        if (added && !parent.isValid()){
+            remove();
+        }
+        check();
     }
 
     @Override
     public void remove() {
-        payloadc.remove();
+        if (added) {
+            added=false;
+            Unit parent=(Unit)payloadc;
+            parent.remove();
+            Groups.unit.remove(this);
+            Groups.all.remove(this);
+            Groups.sync.remove(this);
+        }
     }
-
+    public boolean added=false;
     @Override
     public void add() {
-        payloadc.add();
+
+        if (!added) {
+            added=true;
+            Unit parent=(Unit)payloadc;
+            parent.add();
+            Groups.all.remove(parent);
+            Groups.unit.remove(parent);
+            if (Groups.sync.contains(b->b==parent)){
+                Groups.sync.remove(parent);
+                Groups.sync.add(this);
+            }
+            Groups.unit.add(this);
+            Groups.all.add(this);
+        }
     }
 
     @Override
@@ -585,16 +678,19 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void read(Reads reads) {
         payloadc.read(reads);
+        check();
     }
 
     @Override
     public void write(Writes writes) {
         payloadc.write(writes);
+        check();
     }
 
     @Override
     public void afterRead() {
         payloadc.afterRead();
+        check();
     }
 
     @Override
@@ -605,6 +701,7 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void id(int i) {
         payloadc.id(i);
+        check();
     }
 
     @Override
@@ -630,6 +727,7 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void move(float v, float v1) {
         payloadc.move(v, v1);
+        check();
     }
 
     @Override
@@ -645,6 +743,7 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void drag(float v) {
         payloadc.drag(v);
+        check();
     }
 
     @Override
@@ -755,11 +854,13 @@ public class UnitPayloadcCopy extends Unit implements Drawc, Weaponsc, Payloadc,
     @Override
     public void hitbox(Rect rect) {
         payloadc.hitbox(rect);
+        check();
     }
 
     @Override
     public void hitboxTile(Rect rect) {
         payloadc.hitboxTile(rect);
+        check();
     }
 
     @Override

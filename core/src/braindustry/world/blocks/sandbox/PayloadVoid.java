@@ -28,7 +28,7 @@ public class PayloadVoid extends Block {
             proximity.select(b->b instanceof PayloadConveyor.PayloadConveyorBuild).map(b->(PayloadConveyor.PayloadConveyorBuild) b).each(conv->{
                 Point2 point= Geometry.d4(conv.rotation);
                 int csize = conv.block.size;
-                if (conv.nearby(point.x* csize,point.y*csize)!=this && conv.next!=this){
+                if (conv.nearby(point.x* csize,point.y*csize)==this && conv.next!=this){
                     conv.next=this;
                 }
             });
