@@ -59,7 +59,8 @@ public class ModHudFragment extends HudFragment {
 
     public static void init() {
         WidgetGroup hudGroup = ui.hudGroup;
-Seq.<Element>with(hudGroup,ui.chatfrag,ui.scriptfrag).each(Core.scene.root::removeChild);
+        hudGroup.getChildren().each(Core.scene.root::removeChild);
+        Seq.<Element>with(hudGroup,ui.chatfrag,ui.scriptfrag).each(Core.scene.root::removeChild);
         hudGroup.clearChildren();
         hudGroup.clear();
         hudGroup.remove();
@@ -67,10 +68,10 @@ Seq.<Element>with(hudGroup,ui.chatfrag,ui.scriptfrag).each(Core.scene.root::remo
         newHudGroup();
         WidgetGroup  newGroup=ui.hudGroup;
 
-        ui.hudfrag.blockfrag.build(newGroup);
+        Group group=new Group() {};
+        ui.hudfrag.blockfrag.build(group);
         ui.hudfrag=new ModHudFragment();
         ui.hudfrag.build(newGroup);
-
         ui.chatfrag.container().build(newGroup);
         ui.minimapfrag.build(newGroup);
         ui.listfrag.build(newGroup);
