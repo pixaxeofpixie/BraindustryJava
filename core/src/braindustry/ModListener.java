@@ -40,7 +40,7 @@ public class ModListener implements ApplicationListener {
     @Override
     public void dispose() {
         if (!loaded)return;
-        Log.info("А всё");
+        Log.info("");
     }
 
     @Override

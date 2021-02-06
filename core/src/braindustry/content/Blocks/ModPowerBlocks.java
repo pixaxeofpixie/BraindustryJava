@@ -145,7 +145,7 @@ public class ModPowerBlocks implements ContentList {
                 this.powerProduction = 192;
                 this.consumes.power(16f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.5f);
-                this.requirements(Category.power, ItemStack.with(ModItems.astroAlloy, 300, Items.surgeAlloy, 200, Items.graphite, 500, ModItems.odinum, 100));
+                this.requirements(Category.power, ItemStack.with(ModItems.chloroAlloy, 300, Items.surgeAlloy, 200, Items.graphite, 500, ModItems.odinum, 100));
             }
         };
         phaseAlloySolarPanel = new SolarGenerator("phase-alloy-solar-panel") {
