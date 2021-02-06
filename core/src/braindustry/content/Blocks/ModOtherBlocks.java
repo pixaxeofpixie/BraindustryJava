@@ -102,7 +102,7 @@ public class ModOtherBlocks implements ContentList {
                 this.isLiquid = true;
                 this.variants = 1;
                 this.blendGroup = Blocks.water;
-                cacheLayer = CacheLayer.slag;
+                cacheLayer = CacheLayer.tar;
                 this.speedMultiplier = 0.17f;
                 status = StatusEffects.blasted;
                 this.liquidDrop = ModLiquids.magma;
