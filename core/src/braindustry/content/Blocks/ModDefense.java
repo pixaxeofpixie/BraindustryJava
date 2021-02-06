@@ -626,7 +626,7 @@ public class ModDefense implements ContentList {
         gem = new LaserTurret("gem") {
             {
                 localizedName = "Gem";
-                requirements(Category.turret, ItemStack.with(ModItems.astroAlloy, 480));
+                requirements(Category.turret, ItemStack.with(ModItems.chloroAlloy, 480));
                 size = 14;
                 health = 240 * size * size;
                 range = 240f;
@@ -743,7 +743,7 @@ public class ModDefense implements ContentList {
                 localizedName = "Large Astronomical Wall";
                 size = 2;
                 health = 4650;
-                requirements(Category.defense, ItemStack.with(ModItems.astroAlloy, 60));
+                requirements(Category.defense, ItemStack.with(ModItems.chloroAlloy, 60));
             }
         };
 
@@ -754,7 +754,7 @@ public class ModDefense implements ContentList {
                 laserReflect=true;
                 lightningReflect=true;
                 health = 1550;
-                requirements(Category.defense, ItemStack.with(ModItems.astroAlloy, 20));
+                requirements(Category.defense, ItemStack.with(ModItems.chloroAlloy, 20));
             }
         };
     }
