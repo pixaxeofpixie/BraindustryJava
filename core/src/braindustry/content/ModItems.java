@@ -10,7 +10,7 @@ public class ModItems implements ContentList {
         Items.class.isArray();
     }
 
-    public static Item chromium, exoticAlloy, graphenite, odinum, phaseAlloy, plastic, astroAlloy;
+    public static Item chromium, exoticAlloy, graphenite, odinum, phaseAlloy, plastic, chloroAlloy;
 
     public void load() {
         chromium = new Item("chromium") {
@@ -83,17 +83,17 @@ public class ModItems implements ContentList {
                 this.color = Color.valueOf("f6bfff");
             }
         };
-        astroAlloy  = new Item("astronomical-alloy") {
+        chloroAlloy  = new Item("chloro-alloy") {
             {
-                this.localizedName="Astronomical Bar";
-                this.description="Super-heavy and durable syntethic metal, can be only obtained from high-level bosses.";
+                this.localizedName="Chlorophilum Bar";
+                this.description="Super light, strong and organical material.";
                 this.cost = 1.5f;
                 this.alwaysUnlocked = true;
-                this.explosiveness = 0.98f;
-                this.color = Color.valueOf("e868d7");
+                this.explosiveness = 0.7f;
+                this.color = Color.valueOf("4adb9e");
                 this.radioactivity = 0.94f;
-                this.flammability = 0.99f;
-                this.hardness= 999;
+                this.flammability = 0.7f;
+                this.hardness= 8;
             }
         };
     }

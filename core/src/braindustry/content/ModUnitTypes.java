@@ -21,9 +21,11 @@ import mindustry.content.UnitTypes;
 import mindustry.ctype.ContentList;
 import mindustry.entities.abilities.UnitSpawnAbility;
 import mindustry.entities.bullet.*;
+import mindustry.gen.Bullet;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Sounds;
 import mindustry.gen.Unit;
+import mindustry.graphics.Pal;
 import mindustry.type.AmmoTypes;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
@@ -37,7 +39,7 @@ public class ModUnitTypes implements ContentList {
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
             lyra, shield, tropsy, venti,
-            vyvna, tyzen, kryox, intelix, nemesis, maverix, troplex;
+            vyvna, tyzen, kryox, intelix, nemesis, maverix, griffon;
 
     public ModUnitTypes() {
         UnitTypes.class.isArray();
@@ -1557,6 +1559,148 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         }
+                );
+            }
+        };
+        //TX UNITS
+        griffon = new UnitType("griffon") {
+            {
+                this.constructor = Types.legs;
+                this.groundLayer = 60.0F;
+                this.localizedName = "Griffon";
+                this.description = "Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
+                this.health = 52000;
+                this.speed = 0.5f;
+                this.mechSideSway = 0.25f;
+                this.hitSize = 108;
+                this.rotateSpeed = 0.7f;
+                this.armor = 8f;
+                this.hovering = true;
+                this.commandLimit = 4;
+                this.legCount = 4;
+                this.legMoveSpace = 1.1f;
+                this.legPairOffset = 4;
+                this.legLength = 48;
+                this.legExtension = 8;
+                this.legBaseOffset = 2;
+                this.landShake = 2.1f;
+                this.legSpeed = 0.8f;
+                this.legLengthScl = 1f;
+               // this.buildSpeed = 0.8f;
+                this.allowLegStep = true;
+                this.visualElevation = 0.4f;
+                this.ammoType = AmmoTypes.powerHigh;
+                this.mechStepShake = 0.25f;
+                this.mechStepParticles = true;
+                this.mechStepParticles = true;
+                this.weapons.add(
+                        new ModWeapon("griffon-weapon") {
+                            {
+                                this.x = 0;
+                                this.y = -0.5f;
+                                this.shootY = 1;
+                                this.reload = 320;
+                                this.ejectEffect = Fx.blastExplosion;
+                                this.recoil = 0;
+                                this.rotate = false;
+                                this.shootStatus = StatusEffects.unmoving;
+                                this.shootStatusDuration = 220;
+                                this.shootSound = ModSounds.electronShoot;
+                                this.bullet = new ContinuousLaserBulletType() {
+                                    public void update(Bullet b) {
+                                        SubBullets.addLightning(b, this);
+                                        super.update(b);
+                                    }
+
+                                    {
+                                        this.hitSize = 14;
+                                        this.drawSize = 520;
+                                        this.width = 34;
+                                        this.length = 390;
+                                        this.lifetime = 210;
+                                        this.largeHit = true;
+                                        this.hitColor = Color.valueOf("f1fc58");
+                                        this.incendAmount = 4;
+                                        this.incendSpread = 10;
+                                        this.incendChance = 0.7f;
+                                        this.lightColor = Color.valueOf("fbffcc");
+                                        this.keepVelocity = true;
+                                        this.collides = true;
+                                        this.pierce = true;
+                                        this.hittable = true;
+                                        this.absorbable = false;
+                                        this.damage = 82;
+                                        this.shootEffect = ModFx.thunderShoot;
+                                        this.despawnEffect = ModFx.giantYellowBallHitBig;
+                                        this.knockback = 1;
+                                        this.lightning = 4;
+                                        this.lightningLength = 20;
+                                        this.lightningLengthRand = 20;
+                                        this.lightningDamage = 48;
+                                        this.lightningAngle = 15;
+                                        this.lightningCone = 50;
+                                        this.lightningColor = Color.valueOf("f1fc58");
+                                    }
+                                };
+                            }
+                        },
+                        new ModWeapon("griffon-cannon"){
+                            {
+                            y = -14f;
+                            x = 18f;
+                            shootY = 22f;
+                            mirror = true;
+                            reload = 210;
+                            shake = 10f;
+                            recoil = 10f;
+                            rotateSpeed = 1f;
+                            ejectEffect = Fx.casing3;
+                            shootSound = Sounds.artillery;
+                            rotate = true;
+                            shadow = 30f;
+
+                            bullet = new ArtilleryBulletType(3.5f, 70){{
+                                hitEffect = Fx.blastExplosion;
+                                knockback = 0.9f;
+                                lifetime = 100f;
+                                width = height = 35f;
+                                collidesTiles = collides = true;
+                                ammoMultiplier = 4f;
+                                splashDamageRadius = 105f;
+                                splashDamage = 95f;
+                                backColor = Pal.plastaniumBack;
+                                frontColor = lightningColor = Pal.plastanium;
+                                lightning = 9;
+                                lightningLength = 32;
+                                smokeEffect = Fx.shootBigSmoke2;
+                                hitShake = 10f;
+
+                                status = StatusEffects.shocked;
+                                statusDuration = 70f * 10;
+
+                                fragLifeMin = 0.3f;
+                                fragBullets = 9;
+
+                                fragBullet = new ArtilleryBulletType(2.3f, 30){{
+                                    hitEffect = Fx.railHit;
+                                    knockback = 0.7f;
+                                    lifetime = 85f;
+                                    width = height = 23f;
+                                    collidesTiles = false;
+                                    splashDamageRadius = 70f;
+                                    splashDamage = 60f;
+                                    backColor = Pal.plastaniumFront;
+                                    frontColor = lightningColor = Pal.bulletYellow;
+                                    lightning = 6;
+                                    lightningLength = 3;
+                                    smokeEffect = Fx.shootBigSmoke2;
+                                    hitShake = 6f;
+
+                                    status = StatusEffects.shocked;
+                                    statusDuration = 60f * 10;
+                                }};
+                            }};
+                        }}
                 );
             }
         };

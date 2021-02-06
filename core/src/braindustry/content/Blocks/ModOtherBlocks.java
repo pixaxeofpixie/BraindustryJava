@@ -17,6 +17,10 @@ import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
+import mindustry.world.blocks.environment.ShallowLiquid;
+import mindustry.world.blocks.legacy.*;
+import mindustry.world.blocks.environment.*;
+import mindustry.world.blocks.environment.StaticTree;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
@@ -244,5 +248,77 @@ public class ModOtherBlocks implements ContentList {
                 this.drownUpdateEffect = Fx.freezing;
             }
         };
+        blackIceWall = new StaticWall("black-ice-wall") {
+            {
+                this.localizedName = "Black Ice Wall";
+                this.breakable = false;
+                this.alwaysReplace = false;
+                this.solid = true;
+                this.variants = 2;
+            }
+        };
+        blackSnowWall = new StaticWall("black-snow-wall") {
+            {
+                this.localizedName = "Black Snow Wall";
+                this.breakable = false;
+                this.alwaysReplace = false;
+                this.solid = true;
+                this.variants = 2;
+            }
+        };
+        darkShrubs = new StaticWall("dark-shrubs") {
+            {
+                this.localizedName = "Dark Shrubs";
+                this.breakable = false;
+                this.alwaysReplace = false;
+                this.solid = true;
+                this.variants = 2;
+            }
+        };
+        blackIce = new Floor("black-ice") {
+            {
+                this.localizedName = "Black Ice";
+                this.variants = 3;
+                //attributes.set(Attribute.water, 0.6f);
+            }
+        };
+        blackSnow = new Floor("black-snow") {
+            {
+                this.localizedName = "Black Snow";
+                this.variants = 3;
+                //attributes.set(Attribute.water, 0.2f);
+            }
+        };
+        swampSandWater = new ShallowLiquid("swamp-sand-water"){{
+            speedMultiplier = 0.7f;
+            statusDuration = 60f;
+            albedo = 0.3f;
+        }};
+        swampWater = new Floor("swamp-water") {
+            {
+                this.localizedName = "Swamp Water";
+                this.isLiquid = true;
+                this.variants = 1;
+                this.blendGroup = Blocks.water;
+                this.cacheLayer = CacheLayer.water;
+                this.speedMultiplier = -0.5f;
+                status = StatusEffects.corroded;
+                this.liquidDrop = Liquids.water;
+                this.statusDuration = 120;
+                this.drownTime = 60;
+                this.walkEffect = Fx.muddy;
+                this.drownUpdateEffect = Fx.muddy;
+            }
+        };
+        greenTree = new TreeBlock("green-tree");
+
+        blackTree = new TreeBlock("black-tree");
+
+        darkPine = new StaticTree("dark-pine"){{
+            variants = 0;
+        }};
+        metallicPine = new StaticTree("metallic-pine"){{
+            variants = 0;
+        }};
     }
 }

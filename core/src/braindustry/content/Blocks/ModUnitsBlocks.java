@@ -117,5 +117,20 @@ public class ModUnitsBlocks implements ContentList {
                 );
             }
         };
+        ultraReconstructor = new Reconstructor("ultra-reconstructor") {
+            {
+                this.localizedName = "Ultra Reconstructor";
+                this.size = 11;
+                this.consumes.power(12f);
+                this.consumes.liquid(ModLiquids.liquidMethane, 1.2f).optional(false, false);
+                this.consumes.items(ItemStack.with(ModItems.graphenite, 300, Items.surgeAlloy, 300, ModItems.odinum, 200, ModItems.plastic, 150, ModItems.exoticAlloy, 200));
+                this.constructTime = 3600;
+                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, Items.surgeAlloy, 500, ModItems.odinum, 500, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
+                this.upgrades = Seq.with(
+                        new UnitType[]{ModUnitTypes.venti, ModUnitTypes.vyvna},
+                        new UnitType[]{ModUnitTypes.ibis, ModUnitTypes.griffon}
+                );
+            }
+        };
     }
 }

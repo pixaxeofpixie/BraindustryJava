@@ -39,7 +39,7 @@ public class ModBlocks implements ContentList {
 
     //environment
     magmaFloor, obsidianBlock, obsidianFloor, oreChromium, oreOdinum,
-            crimzesWall, crimzesFloor, jungleWall, jungleFloor, graysand, dirtRocksWall, liquidMethaneFloor,
+            crimzesWall, crimzesFloor, jungleWall, jungleFloor, graysand, dirtRocksWall, liquidMethaneFloor, blackIce, blackIceWall,blackSnow,blackSnowWall,blackTree,darkPine,darkShrubs,greenTree,metallicPine,swampWater,swampSandWater,
 
     //power
     differentialMagmaGenerator, grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, blackHoleReactor, phaseAlloySolarPanel,
@@ -52,7 +52,7 @@ public class ModBlocks implements ContentList {
 
     //units
     hyperAdditiveReconstructor, hyperAirFactory, hyperExponentialReconstructor, hyperGroundFactory,
-            hyperMultiplicativeReconstructor, hyperNavalFactory, hyperTetrativeReconstructor,
+            hyperMultiplicativeReconstructor, hyperNavalFactory, hyperTetrativeReconstructor, ultraReconstructor,
 
     //turrets
     axon, blaze, brain, electron, fragment, impulse, katana, mind, neuron, perlin, soul, stinger, synaps, gem, rapier,
