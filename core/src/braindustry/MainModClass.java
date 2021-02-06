@@ -82,7 +82,6 @@ public class MainModClass extends Mod {
         if (!loaded)return;
         createPlayer();
         modVars.init();
-        ModListener.load();
         EntityMapping.idMap[12] = ModPlayer::new;
         EntityMapping.nameMap.put("Player", ModPlayer::new);
         EntityMapping.nameMap.put("player", ModPlayer::new);

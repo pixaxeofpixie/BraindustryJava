@@ -16,6 +16,8 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
+import static braindustry.annotations.ModBaseProcessor.write;
+
 public class ModRemoteReadGenerator {
     /**
      * Creates a read generator that uses the supplied serializer setup.
@@ -117,7 +119,7 @@ public class ModRemoteReadGenerator {
 
         //end control flow if necessary
         Cons<CodeBlock.Builder> addEnd=(block)->{
-            block.addStatement("$1N.readPacket(read,id"+(needsPlayer?",player":"")+");",ClassName.get(parentName,className.replace("Mod","")).reflectionName()); //handle parent ids
+            block.addStatement("$1N.readPacket(read,id"+(needsPlayer?",player":"")+");",className.replace("Mod","")); //handle parent ids
         };
         if(started){
             readBlock.nextControlFlow("else");
@@ -132,9 +134,9 @@ addEnd.get(readBlock);
 //        classBuilder.alwaysQualifiedNames.add(ClassName.get(parentName,className.replace("Mod","")).reflectionName());
 //        classBuilder.originatingElements.add();
         classBuilder.addMethod(readMethod.build());
-
+        write(classBuilder,Seq.with(ClassName.get(parentName,className.replace("Mod",""))),0);
         TypeSpec spec = classBuilder.build();
 
-        JavaFile.builder(packageName, spec).build().writeTo(BaseProcessor.filer);
+//        JavaFile.builder(packageName, spec).build().writeTo(BaseProcessor.filer);
     }
 }

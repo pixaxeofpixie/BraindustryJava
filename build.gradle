@@ -37,6 +37,7 @@ allprojects{
 dependencies{
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
+//    compileOnly "com.github.Anuken.Mindustry:entities:$mindustryVersion"
     implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
     implementation 'com.squareup:javapoet:1.12.1'
 
@@ -50,6 +51,7 @@ allprojects{
     apply plugin: 'maven'
     repositories{
         mavenLocal()
+        google()
         mavenCentral()
         maven{ url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven{ url "https://oss.sonatype.org/content/repositories/releases/" }
@@ -57,14 +59,57 @@ allprojects{
         jcenter()
     }
 }
-project(":annotations"){
-    apply plugin: "java-library"
+configure(project(":annotations")){
+    tasks.withType(JavaCompile){
+        targetCompatibility = 8
+        sourceCompatibility = 8
+    }
+}
 
+//compile with java 8 compatibility for everything except the annotation project
+configure(subprojects - project(":annotations")){
+    tasks.withType(JavaCompile){
+        if(JavaVersion.current() != JavaVersion.VERSION_1_8){
+            options.compilerArgs.addAll(['--release', '14', '--enable-preview'])
+        }
+
+        doFirst{
+            options.compilerArgs = options.compilerArgs.findAll{it != '--enable-preview' }
+        }
+    }
+
+    tasks.withType(Javadoc){
+        options{
+            addStringOption('Xdoclint:none', '-quiet')
+            addBooleanOption('-enable-preview', true)
+            addStringOption('-release', '14')
+        }
+    }
+}
+project(":annotations"){
+    tasks.withType(JavaCompile){
+        if(JavaVersion.current() != JavaVersion.VERSION_1_8){
+            options.compilerArgs.addAll(['--release', '14'])
+        }
+    }
+    apply plugin: 'maven'
+    repositories{
+        mavenLocal()
+        mavenCentral()
+        maven{ url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven{ url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven{ url 'https://jitpack.io' }
+        jcenter()
+    }
+    apply plugin: "java-library"
     dependencies{
+        implementation 'com.squareup:javapoet:1.12.1'
         implementation 'com.squareup:javapoet:1.12.1'
         implementation "com.github.Anuken.Arc:arc-core:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
+        apply plugin: "java"
+//        implementation "com.github.Anuken.Mindustry:entities:$mindustryVersion"
     }
 }
 

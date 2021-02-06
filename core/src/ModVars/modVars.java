@@ -9,12 +9,14 @@ import ModVars.Classes.UI.settings.ModSettingsDialog;
 import arc.func.Prov;
 import arc.struct.Seq;
 import arc.util.Log;
+import braindustry.ModListener;
 import braindustry.core.ModNetClient;
 import braindustry.gen.ModNetServer;
 import braindustry.gen.ModRemoteReadClient;
 import braindustry.gen.ModRemoteReadServer;
 import braindustry.gen.UnitPayloadcCopy;
 import braindustry.input.ModKeyBinds;
+import mindustry.ClientLauncher;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
 import mindustry.game.Team;
@@ -47,6 +49,8 @@ public class modVars {
     public static ModNetClient netClient;
     public static ModNetServer netServer;
     public static ModUI modUI;
+    public static ModListener listener;
+    public  static ClientLauncher launcher;
     public static boolean loaded = false;
     private static int lastClass = 0;
 
@@ -107,6 +111,7 @@ public class modVars {
         netClient = new ModNetClient();
         netServer = new ModNetServer();
         settings = new ModSettings();
+        ModListener.load();
     }
 
     private static <T> void mapClasses(Class<?>... objClasses) {

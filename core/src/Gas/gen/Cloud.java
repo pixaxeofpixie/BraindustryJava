@@ -40,7 +40,7 @@ import mindustryAddition.versions.ModEntityc;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Cloud implements Pool.Poolable, Entityc, Drawc, Posc, ModEntityc {
+public class Cloud implements Pool.Poolable,  Drawc, Posc, ModEntityc {
     public static final int maxGeneration = 2;
     public static final Color tmp = new Color();
     public static final Rect rect = new Rect();

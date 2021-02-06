@@ -90,7 +90,7 @@ protected boolean is(Svar var,Class<?> c){
         CodeBlock.Builder buildBlock = CodeBlock.builder();
 
         buildBlock.addStatement(ClassName.get(TextArea.class).reflectionName()+" textArea");
-        buildBlock.addStatement(ClassName.get(Strings.class).reflectionName()+" Strings=new "+ClassName.get(Strings.class).reflectionName()+"()");
+//        buildBlock.addStatement(ClassName.get(Strings.class).reflectionName()+" Strings=new "+ClassName.get(Strings.class).reflectionName()+"()");
         for (Svar field : fields) {
             build(buildBlock,field);
 //            System.out.println(field.tname().box().toString());
@@ -102,7 +102,9 @@ protected boolean is(Svar var,Class<?> c){
         classBuilder.addMethod(buildMethod.build());
 
         TypeSpec spec = classBuilder.build();
-
-        JavaFile.builder(packageName, spec).build().writeTo(BaseProcessor.filer);
+        Seq<ClassName> imports=new Seq<>();
+        imports.add(ClassName.get(Strings.class));
+write(classBuilder,imports,0);
+//        JavaFile.builder(packageName, spec).build().writeTo(BaseProcessor.filer);
     }
 }

@@ -3,6 +3,22 @@ package braindustry.annotations;
 import mindustry.annotations.Annotations;
 
 public class ModAnnotations {
+    public  enum  Values {
+        val;
+        Object value;
+
+        public Values setValue(Object value) {
+            this.value = value;
+            return this;
+        }
+        public String getToStringValue(){
+            return value+"";
+        }
+    }
+    public @interface DefaultValue{
+        String value();
+        Class[] imports() default {};
+    }
     public @interface RulesTable{
 
     }
@@ -44,5 +60,11 @@ public class ModAnnotations {
          */
         Annotations.PacketPriority priority() default Annotations.PacketPriority.normal;
 
+    }
+
+    public @interface EntityInterface {
+    }
+
+    public @interface Import {
     }
 }
