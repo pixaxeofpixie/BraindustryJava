@@ -1616,7 +1616,7 @@ public class ModUnitTypes implements ContentList {
                                         this.hitSize = 14;
                                         this.drawSize = 520;
                                         this.width = 34;
-                                        this.length = 390;
+                                        this.length = 370;
                                         this.lifetime = 210;
                                         this.largeHit = true;
                                         this.hitColor = Color.valueOf("f1fc58");
@@ -1629,14 +1629,14 @@ public class ModUnitTypes implements ContentList {
                                         this.pierce = true;
                                         this.hittable = true;
                                         this.absorbable = false;
-                                        this.damage = 202;
+                                        this.damage = 92;
                                         this.shootEffect = ModFx.thunderShoot;
                                         this.despawnEffect = ModFx.giantYellowBallHitBig;
                                         this.knockback = 1;
                                         this.lightning = 6;
                                         this.lightningLength = 20;
                                         this.lightningLengthRand = 20;
-                                        this.lightningDamage = 72;
+                                        this.lightningDamage = 62;
                                         this.lightningAngle = 15;
                                         this.lightningCone = 50;
                                         this.lightningColor = Color.valueOf("f1fc58");
