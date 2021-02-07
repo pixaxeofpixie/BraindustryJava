@@ -39,7 +39,7 @@ public class ModUnitTypes implements ContentList {
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
             lyra, shield, tropsy, venti,
-            vyvna, tyzen, kryox, intelix, nemesis, maverix, /*spider tx*/griffon, /*flying tx*/noro, /*stealth tx*/litix, /*naval tx*/tenvy;
+            vyvna, tyzen, kryox, intelix, nemesis, maverix, griffon, noro, litix, tenvy;
 
     public ModUnitTypes() {
         UnitTypes.class.isArray();
@@ -1710,21 +1710,6 @@ public class ModUnitTypes implements ContentList {
                             }};
                         }}
                 );
-            }
-        };
-        //FLYING TX
-        noro = new UnitType("noro") {
-            {
-            }
-        };
-        //NAVAL TX
-        tenvy = new UnitType("tenvy") {
-            {
-            }
-        };
-        //STEALTH TX
-        litix = new UnitType("litix") {
-            {
             }
         };
     }
