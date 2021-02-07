@@ -39,7 +39,7 @@ public class ModUnitTypes implements ContentList {
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
             lyra, shield, tropsy, venti,
-            vyvna, tyzen, kryox, intelix, nemesis, maverix, griffon;
+            vyvna, tyzen, kryox, intelix, nemesis, maverix, /*spider tx*/griffon, /*flying tx*/noro, /*stealth tx*/litix, /*naval tx*/tenvy;
 
     public ModUnitTypes() {
         UnitTypes.class.isArray();
@@ -451,7 +451,7 @@ public class ModUnitTypes implements ContentList {
         armor = new UnitType("armor") {
             {
                 this.constructor = Types.payload;
-                this.localizedName = "Armor";
+                this.localizedName = "Myphros";
                 this.speed = 0.9f;
                 this.flying = true;
                 this.health = 200;
@@ -497,7 +497,7 @@ public class ModUnitTypes implements ContentList {
         shield = new UnitType("shield") {
             {
                 this.constructor = Types.payload;
-                this.localizedName = "Shield";
+                this.localizedName = "Nocta";
                 this.speed = 0.8f;
                 this.flying = true;
                 this.health = 660;
@@ -543,8 +543,8 @@ public class ModUnitTypes implements ContentList {
 
         chestplate = new UnitType("chestplate") {
             {
-                this.localizedName = "Chestplate";
-                this.description = "A big T3 defense unit with sap laser guns.";
+                this.localizedName = "Zenum";
+                this.description = "A big defense unit with sap laser guns.";
                 this.constructor = Types.payload;
                 this.speed = 0.6f;
                 this.flying = true;
@@ -610,7 +610,7 @@ public class ModUnitTypes implements ContentList {
 
         chainmail = new UnitType("chainmail") {
             {
-                this.localizedName = "Chainmail";
+                this.localizedName = "Dent";
                 this.constructor = Types.payload;
                 this.speed = 0.65f;
                 this.flying = true;
@@ -696,7 +696,7 @@ public class ModUnitTypes implements ContentList {
         broadsword = new UnitType("broadsword") {
             {
                 this.constructor = Types.payload;
-                this.localizedName = "Helmet";
+                this.localizedName = "Quix";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
                 this.armor = 36;
                 this.health = 9600;
@@ -1710,6 +1710,21 @@ public class ModUnitTypes implements ContentList {
                             }};
                         }}
                 );
+            }
+        };
+        //FLYING TX
+        noro = new UnitType("noro") {
+            {
+            }
+        };
+        //NAVAL TX
+        tenvy = new UnitType("tenvy") {
+            {
+            }
+        };
+        //STEALTH TX
+        litix = new UnitType("litix") {
+            {
             }
         };
     }
