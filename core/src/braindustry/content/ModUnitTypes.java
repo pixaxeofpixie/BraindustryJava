@@ -177,7 +177,7 @@ public class ModUnitTypes implements ContentList {
                 this.drag = 0.4f;
                 this.hitSize = 12;
                 this.rotateSpeed = 3;
-                this.health = 4200;
+                this.health = 3600;
                 this.hovering = true;
                 this.immunities.addAll(StatusEffects.burning, StatusEffects.melting);
                 this.legCount = 4;
@@ -233,7 +233,7 @@ public class ModUnitTypes implements ContentList {
                 this.drag = 0.4f;
                 this.hitSize = 26;
                 this.rotateSpeed = 1.6f;
-                this.health = 10000;
+                this.health = 9000;
                 this.armor = 7;
                 this.hovering = true;
                 this.commandLimit = 8;
@@ -330,7 +330,7 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.5f;
                 this.hitSize = 48;
                 this.hovering = true;
-                this.health = 22000;
+                this.health = 17000;
                 this.rotateSpeed = 2;
                 this.legCount = 8;
                 this.legMoveSpace = 1.4f;
@@ -500,7 +500,7 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Shield";
                 this.speed = 0.8f;
                 this.flying = true;
-                this.health = 600;
+                this.health = 660;
                 this.armor = 11;
                 this.range = 160;
                 this.engineOffset = 6;
@@ -617,7 +617,7 @@ public class ModUnitTypes implements ContentList {
                 this.hitSize = 27;
                 this.engineSize = 7;
                 this.armor = 26;
-                this.health = 7000;
+                this.health = 6000;
                 this.rotateSpeed = 1.2f;
                 this.targetAir = true;
                 this.payloadCapacity = 300;
@@ -699,7 +699,7 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Helmet";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
                 this.armor = 36;
-                this.health = 10000;
+                this.health = 9600;
                 this.speed = 0.6f;
                 this.rotateSpeed = 1;
                 this.accel = 0.07f;
@@ -821,7 +821,7 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Vixy";
                 this.description = "First naval unit, has powerful shrapnel gun but needs support.";
                 this.constructor = Types.naval;
-                this.health = 520;
+                this.health = 270;
                 this.speed = 1.2f;
                 this.drag = 0.17f;
                 this.hitSize = 12;
@@ -872,7 +872,7 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Lyra";
                 this.description = "A T2 sea unit with shrapnel lasers and rocketguns, good at attacking opponent's base, but needs support.";
                 this.constructor = Types.naval;
-                this.health = 850;
+                this.health = 750;
                 this.speed = 0.8f;
                 this.drag = 0.18f;
                 this.hitSize = 17;
@@ -952,7 +952,7 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Tropsy";
                 this.description = "An enlarged and improved unit created on the basis of Lyra unit.";
                 this.constructor = Types.naval;
-                this.health = 1120;
+                this.health = 3920;
                 this.speed = 0.51f;
                 this.accel = 0.16f;
                 this.rotateSpeed = 1.6f;
@@ -987,9 +987,9 @@ public class ModUnitTypes implements ContentList {
                                         this.speed = 6.7f;
                                         this.drag = 0.05f;
                                         this.splashDamageRadius = 50;
-                                        this.splashDamage = 28;
+                                        this.splashDamage = 46;
                                         this.makeFire = false;
-                                        this.lightningDamage = 7;
+                                        this.lightningDamage = 16;
                                         this.lightning = 5;
                                         this.lightningLength = 7;
                                         this.lifetime = 120;
@@ -1037,7 +1037,7 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Cenda";
                 this.description = "A large and heavy attacking naval unit built on the proven \"Tropsy\" design, but with improvements in everything.";
                 this.constructor = Types.naval;
-                this.health = 5300;
+                this.health = 9300;
                 this.speed = 0.6f;
                 this.accel = 0.13f;
                 this.rotateSpeed = 1.3f;
@@ -1072,7 +1072,7 @@ public class ModUnitTypes implements ContentList {
                                         this.speed = 2.9f;
                                         this.drag = -0.01f;
                                         this.splashDamageRadius = 30;
-                                        this.splashDamage = 22;
+                                        this.splashDamage = 42;
                                         this.homingPower = 0.1f;
                                         this.lightningDamage = 6;
                                         this.lightning = 8;
