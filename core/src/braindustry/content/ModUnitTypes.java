@@ -1569,7 +1569,7 @@ public class ModUnitTypes implements ContentList {
                 this.groundLayer = 60.0F;
                 this.localizedName = "Griffon";
                 this.description = "Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
-                this.health = 52000;
+                this.health = 12000;
                 this.speed = 0.4f;
                 this.mechSideSway = 0.25f;
                 this.hitSize = 108;
@@ -1593,31 +1593,36 @@ public class ModUnitTypes implements ContentList {
                 this.mechStepShake = 0.25f;
                 this.mechStepParticles = true;
                 this.mechStepParticles = true;
+                this.immunities = ObjectSet.with(StatusEffects.burning);
                 this.weapons.add(
                         new ModWeapon("griffon-weapon") {
                             {
-                                this.x = 0;
-                                this.y = -0.5f;
-                                this.shootY = 1;
-                                this.reload = 320;
-                                this.ejectEffect = Fx.blastExplosion;
-                                this.recoil = 0;
-                                this.rotate = false;
-                                this.shootStatus = StatusEffects.unmoving;
-                                this.shootStatusDuration = 220;
-                                this.shootSound = ModSounds.electronShoot;
+                                mirror = false;
+                                top = false;
+                                shake = 5.5f;
+                                shootY = 15f;
+                                x = y = 0f;
+
+                                firstShotDelay = ModFx.yellowLaserCharge.lifetime - 1f;
+
+                                reload = 240f;
+                                recoil = 0f;
+                                chargeSound = ModSounds.electronCharge;
+                                shootSound = ModSounds.electronShoot;
+                                continuous = true;
+                                cooldownTime = 280f;
                                 this.bullet = new ContinuousLaserBulletType() {
                                     public void update(Bullet b) {
                                         SubBullets.addLightning(b, this);
                                         super.update(b);
                                     }
-
                                     {
                                         this.hitSize = 14;
                                         this.drawSize = 520;
                                         this.width = 34;
                                         this.length = 370;
                                         this.lifetime = 210;
+                                        this.hitEffect = Fx.hitMeltHeal;
                                         this.largeHit = true;
                                         this.hitColor = Color.valueOf("f1fc58");
                                         this.incendAmount = 4;
@@ -1630,16 +1635,19 @@ public class ModUnitTypes implements ContentList {
                                         this.hittable = true;
                                         this.absorbable = false;
                                         this.damage = 92;
-                                        this.shootEffect = ModFx.thunderShoot;
-                                        this.despawnEffect = ModFx.giantYellowBallHitBig;
+                                        this.shootEffect = ModFx.yellowLaserCharge;
+                                        this.despawnEffect = ModFx.energyShrapnelSmoke;
                                         this.knockback = 1;
-                                        this.lightning = 6;
+                                        this.healPercent = 48f;
+                                        this.collidesTeam = true;
+                                        this.lightning = 20;
                                         this.lightningLength = 20;
                                         this.lightningLengthRand = 20;
                                         this.lightningDamage = 62;
                                         this.lightningAngle = 15;
                                         this.lightningCone = 50;
                                         this.lightningColor = Color.valueOf("f1fc58");
+                                        colors = new Color[]{Pal.bulletYellow.cpy().a(.2f), Pal.bulletYellow.cpy().a(.5f), Pal.bulletYellow.cpy().mul(1.2f), Color.white};
                                     }
                                 };
                             }
@@ -1650,7 +1658,7 @@ public class ModUnitTypes implements ContentList {
                             x = 18f;
                             shootY = 22f;
                             mirror = true;
-                            reload = 210;
+                            reload = 60;
                             shake = 10f;
                             recoil = 10f;
                             rotateSpeed = 1f;

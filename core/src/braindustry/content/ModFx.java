@@ -25,6 +25,18 @@ import static ModVars.modFunc.fullName;
 
 public class ModFx {
     private static final float Distance1 = Vars.headless?0:Core.camera.width + Core.camera.height + 50*Vars.tilesize;
+    public static final Effect yellowLaserCharge = new Effect(90.0F, 110.0F, (e) -> {
+        Color color = Color.valueOf("d5b2ed");
+        Draw.color(color);
+        Lines.stroke(e.fin() * 2.0F);
+        Lines.circle(e.x, e.y, 5.0F + e.fout() * 100.0F);
+        Fill.circle(e.x, e.y, e.fin() * 23.0F);
+        Angles.randLenVectors((long) e.id, 30, 50.0F * e.fout(), (x, y) -> {
+            Fill.circle(e.x + x, e.y + y, e.fin() * 5.8F);
+        });
+        Draw.color();
+        Fill.circle(e.x, e.y, e.fin() * 15.0F);
+    });
     public static final Effect electricExplosionPart1=new Effect(20, Distance1,(e)->{
         Draw.color(Color.white, ModPal.ElectricColor, e.fin());
         Lines.stroke(e.fout() * 10.0f + 0.5f);
