@@ -456,7 +456,7 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.health = 200;
                 this.range = 100;
-                this.armor = 1;
+                this.armor = 6;
                 this.engineOffset = 3;
                 this.engineSize = 2;
                 this.rotateSpeed = 10;
@@ -501,7 +501,7 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.8f;
                 this.flying = true;
                 this.health = 600;
-                this.armor = 2;
+                this.armor = 11;
                 this.range = 160;
                 this.engineOffset = 6;
                 this.rotateSpeed = 3;
@@ -550,7 +550,7 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.hitSize = 12;
                 this.engineSize = 3.2f;
-                this.armor = 3;
+                this.armor = 19;
                 this.health = 1600;
                 this.range = 120;
                 this.engineOffset = 7;
@@ -616,7 +616,7 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.hitSize = 27;
                 this.engineSize = 7;
-                this.armor = 8;
+                this.armor = 26;
                 this.health = 7000;
                 this.rotateSpeed = 1.2f;
                 this.targetAir = true;
@@ -698,8 +698,8 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.payload;
                 this.localizedName = "Helmet";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
-                this.armor = 9;
-                this.health = 9000;
+                this.armor = 36;
+                this.health = 10000;
                 this.speed = 0.6f;
                 this.rotateSpeed = 1;
                 this.accel = 0.07f;
@@ -1013,7 +1013,7 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new ShrapnelBulletType() {
                                     {
                                         this.length = 60;
-                                        this.damage = 62;
+                                        this.damage = 142;
                                         this.width = 32;
                                         this.lifetime = 35;
                                         this.serrationLenScl = 1;
@@ -1140,7 +1140,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 2f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int spawnTime = 1550;
-                abilities.add(new UnitSpawnAbility(ModUnitTypes.chestplate, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
+                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
                 int brange = 1;
 
 
@@ -1167,7 +1167,7 @@ public class ModUnitTypes implements ContentList {
                                         this.speed = 2.5f;
                                         this.drag = 0f;
                                         this.splashDamageRadius = 50;
-                                        this.splashDamage = 30;
+                                        this.splashDamage = 70;
                                         this.homingPower = 0.5f;
                                         this.lightningDamage = 10;
                                         this.lightning = 4;
@@ -1200,7 +1200,7 @@ public class ModUnitTypes implements ContentList {
                                         this.speed = 3.0f;
                                         this.drag = 0.01f;
                                         this.splashDamageRadius = 30f;
-                                        this.splashDamage = 52f;
+                                        this.splashDamage = 79f;
                                         this.homingPower = 0.2f;
                                         this.lightningDamage = 6f;
                                         this.lightning = 8;
@@ -1243,7 +1243,7 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new RailBulletType() {
                                     {
                                         this.shootEffect = ModFx.instShoot;
-                                        this.length = 700.0F;
+                                        this.length = 420.0F;
                                         this.updateEffectSeg = 60.0F;
                                         this.pierceEffect = this.hitEffect = ModFx.instHit;
                                         this.updateEffect = this.trailEffect = ModFx.instTrail;
@@ -1570,11 +1570,11 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Griffon";
                 this.description = "Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
                 this.health = 52000;
-                this.speed = 0.5f;
+                this.speed = 0.4f;
                 this.mechSideSway = 0.25f;
                 this.hitSize = 108;
                 this.rotateSpeed = 0.7f;
-                this.armor = 8f;
+                this.armor = 14f;
                 this.hovering = true;
                 this.commandLimit = 4;
                 this.legCount = 4;
@@ -1629,14 +1629,14 @@ public class ModUnitTypes implements ContentList {
                                         this.pierce = true;
                                         this.hittable = true;
                                         this.absorbable = false;
-                                        this.damage = 82;
+                                        this.damage = 202;
                                         this.shootEffect = ModFx.thunderShoot;
                                         this.despawnEffect = ModFx.giantYellowBallHitBig;
                                         this.knockback = 1;
-                                        this.lightning = 4;
+                                        this.lightning = 6;
                                         this.lightningLength = 20;
                                         this.lightningLengthRand = 20;
-                                        this.lightningDamage = 48;
+                                        this.lightningDamage = 72;
                                         this.lightningAngle = 15;
                                         this.lightningCone = 50;
                                         this.lightningColor = Color.valueOf("f1fc58");
@@ -1687,8 +1687,8 @@ public class ModUnitTypes implements ContentList {
                                     lifetime = 85f;
                                     width = height = 23f;
                                     collidesTiles = false;
-                                    splashDamageRadius = 70f;
-                                    splashDamage = 60f;
+                                    splashDamageRadius = 50f;
+                                    splashDamage = 220f;
                                     backColor = Pal.plastaniumFront;
                                     frontColor = lightningColor = Pal.bulletYellow;
                                     lightning = 6;
@@ -1697,7 +1697,7 @@ public class ModUnitTypes implements ContentList {
                                     hitShake = 6f;
 
                                     status = StatusEffects.shocked;
-                                    statusDuration = 60f * 10;
+                                    statusDuration = 60f * 7;
                                 }};
                             }};
                         }}
