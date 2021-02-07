@@ -127,7 +127,8 @@ public class ModUnitsBlocks implements ContentList {
                 this.constructTime = 7200;
                 this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, Items.surgeAlloy, 400, ModItems.odinum, 700, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
                 this.upgrades = Seq.with(
-                        new UnitType[]{ModUnitTypes.ibis, ModUnitTypes.griffon}
+                        new UnitType[]{ModUnitTypes.ibis, ModUnitTypes.griffon},
+                new UnitType[]{ModUnitTypes.nemesis, ModUnitTypes.maverix}//НЕ УДАЛЯЙ ЭТО
                 );
             }
         };
