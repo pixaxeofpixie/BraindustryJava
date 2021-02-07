@@ -56,9 +56,9 @@ public class ModUnitsBlocks implements ContentList {
                 this.localizedName = "Hyper Additive Reconstructor";
                 this.size = 3;
                 this.consumes.power(3.2f);
-                this.consumes.items(ItemStack.with(Items.silicon, 35, ModItems.graphenite, 15, Items.thorium, 20, Items.titanium, 20));
+                this.consumes.items(ItemStack.with(Items.silicon, 55, ModItems.graphenite, 25, Items.thorium, 20, Items.titanium, 30));
                 this.constructTime = 900;
-                this.requirements(Category.units, ItemStack.with(Items.copper, 200, ModItems.odinum, 100, Items.titanium, 120, Items.silicon, 90, ModItems.plastic, 20));
+                this.requirements(Category.units, ItemStack.with(Items.copper, 300, ModItems.odinum, 100, Items.titanium, 120, Items.silicon, 190, ModItems.plastic, 20));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.ibis, ModUnitTypes.aries},
                         new UnitType[]{ModUnitTypes.armor, ModUnitTypes.shield},
@@ -72,8 +72,8 @@ public class ModUnitsBlocks implements ContentList {
                 this.localizedName = "Hyper Exponential Reconstructor";
                 this.size = 7;
                 this.consumes.power(7f);
-                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.1f).optional(false, false);
-                this.consumes.items(ItemStack.with(Items.silicon, 100, ModItems.graphenite, 100, Items.titanium, 125, Items.plastanium, 75, ModItems.plastic, 50));
+                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.3f).optional(false, false);
+                this.consumes.items(ItemStack.with(Items.silicon, 120, ModItems.graphenite, 100, Items.titanium, 125, Items.plastanium, 75));
                 this.constructTime = 2100;
                 this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 1200, Items.titanium, 900, ModItems.odinum, 500, Items.plastanium, 200, Items.phaseFabric, 300, Items.silicon, 130));
                 this.upgrades = Seq.with(
@@ -88,8 +88,8 @@ public class ModUnitsBlocks implements ContentList {
             {
                 this.localizedName = "Hyper Multiplicative Reconstructor";
                 this.size = 5;
-                this.consumes.power(6.2f);
-                this.consumes.items(ItemStack.with(Items.silicon, 60, ModItems.graphenite, 50, Items.metaglass, 30, Items.titanium, 30, ModItems.odinum, 30));
+                this.consumes.power(12.2f);
+                this.consumes.items(ItemStack.with(Items.silicon, 300, ModItems.graphenite, 250, Items.metaglass, 130, Items.titanium, 70, ModItems.odinum, 70, ModItems.plastic, 50));
                 this.constructTime = 1620;
                 this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 600, Items.titanium, 300, Items.silicon, 300, ModItems.odinum, 500, ModItems.plastic, 100));
                 this.upgrades = Seq.with(
@@ -106,7 +106,7 @@ public class ModUnitsBlocks implements ContentList {
                 this.size = 9;
                 this.consumes.power(9f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.3f).optional(false, false);
-                this.consumes.items(ItemStack.with(ModItems.graphenite, 300, Items.surgeAlloy, 300, ModItems.odinum, 200, ModItems.plastic, 150, ModItems.exoticAlloy, 200));
+                this.consumes.items(ItemStack.with(ModItems.graphenite, 800, Items.surgeAlloy, 400, ModItems.odinum, 500, ModItems.plastic, 250, ModItems.exoticAlloy, 210));
                 this.constructTime = 3600;
                 this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, Items.surgeAlloy, 500, ModItems.odinum, 500, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
                 this.upgrades = Seq.with(
@@ -121,13 +121,12 @@ public class ModUnitsBlocks implements ContentList {
             {
                 this.localizedName = "Ultra Reconstructor";
                 this.size = 11;
-                this.consumes.power(12f);
+                this.consumes.power(120f);
                 this.consumes.liquid(ModLiquids.liquidMethane, 1.2f).optional(false, false);
-                this.consumes.items(ItemStack.with(ModItems.graphenite, 300, Items.surgeAlloy, 300, ModItems.odinum, 200, ModItems.plastic, 150, ModItems.exoticAlloy, 200));
-                this.constructTime = 3600;
-                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, Items.surgeAlloy, 500, ModItems.odinum, 500, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
+                this.consumes.items(ItemStack.with(Items.silicon, 1700, ModItems.graphenite, 2200, Items.surgeAlloy, 1700, ModItems.odinum, 2000, ModItems.plastic, 1000, ModItems.exoticAlloy, 700));
+                this.constructTime = 7200;
+                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, Items.surgeAlloy, 400, ModItems.odinum, 700, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
                 this.upgrades = Seq.with(
-                        new UnitType[]{ModUnitTypes.venti, ModUnitTypes.vyvna},
                         new UnitType[]{ModUnitTypes.ibis, ModUnitTypes.griffon}
                 );
             }
