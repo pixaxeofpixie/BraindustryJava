@@ -168,8 +168,8 @@ public class ModOtherBlocks implements ContentList {
                 this.tier = 8;
                 rotatorPoints.add(new Vec2(2, 2), new Vec2(2, 6), new Vec2(6, 2), new Vec2(6, 6));
                 this.rotateSpeed = 3.2f;
-                this.consumes.power(5.8F);
-                this.consumes.liquid(ModLiquids.magma, 0.2F);
+                this.consumes.power(6.8F);
+                this.consumes.liquid(ModLiquids.magma, 0.4F);
             }
         };
         quarryDrill = new Drill("quarry-drill") {
@@ -178,11 +178,11 @@ public class ModOtherBlocks implements ContentList {
                 this.description = "A fastest, most efficient gigantic drill.";
                 this.size = 5;
                 this.health = 260;
-                this.drillTime = 225;
+                this.drillTime = 210;
                 this.tier = 5;
                 this.drawRim = true;
                 this.consumes.power(2f);
-                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.12f).optional(false, false);
+                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.1f).optional(false, false);
                 this.hasLiquids = true;
                 this.liquidCapacity = 60;
                 this.rotateSpeed = 5;
