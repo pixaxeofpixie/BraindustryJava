@@ -736,20 +736,22 @@ public class ModDefense implements ContentList {
             }
         };
         //please add description :3 /*Zelaux: NO*/ /*PixaxeOfPixie: YEEAS*/
-        largeAstronomicalWall = new ReflectionWall("astronomical-alloy-wall-large") {
+        largeChloroWall = new ReflectionWall("chloro-wall-large") {
             {
                 laserReflect=true;
                 lightningReflect=true;
-                localizedName = "Large Astronomical Wall";
+                localizedName = "Large Chloro Wall";
+                description = "Big organic wall with ability to reflect enemy lasers.";
                 size = 2;
                 health = 4650;
                 requirements(Category.defense, ItemStack.with(ModItems.chloroAlloy, 60));
             }
         };
 
-        astronomicalWall = new ReflectionWall("astronomical-alloy-wall") {
+        chloroWall = new ReflectionWall("chloro-wall") {
             {
-                localizedName = "Astronomical Wall";
+                localizedName = "Chloro Wall";
+                description = "Strong organic wall with ability to reflect enemy lasers.";
                 size = 1;
                 laserReflect=true;
                 lightningReflect=true;

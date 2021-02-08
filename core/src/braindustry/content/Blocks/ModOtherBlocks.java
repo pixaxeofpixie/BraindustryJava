@@ -198,9 +198,9 @@ public class ModOtherBlocks implements ContentList {
                 this.variants = 2;
             }
         };
-        jungleWall = new StaticWall("jungle-wall") {
+        jungleWall = new StaticWall("jungle-shrubs") {
             {
-                this.localizedName = "Jungle Wall";
+                this.localizedName = "Jungle Shrubs";
                 this.breakable = false;
                 this.alwaysReplace = false;
                 this.solid = true;
@@ -216,15 +216,15 @@ public class ModOtherBlocks implements ContentList {
                 this.variants = 2;
             }
         };
-        jungleFloor = new Floor("jungle-floor") {
+        jungleFloor = new Floor("jungle-grass") {
             {
-                this.localizedName = "Jungle Floor";
+                this.localizedName = "Jungle Grass";
                 this.variants = 3;
             }
         };
         crimzesFloor = new Floor("crimzes-floor") {
             {
-                this.localizedName = "crimzes Floor";
+                this.localizedName = "Crimzes Floor";
                 this.variants = 3;
             }
         };
