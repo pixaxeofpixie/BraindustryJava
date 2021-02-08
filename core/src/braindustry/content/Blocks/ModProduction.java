@@ -103,7 +103,7 @@ public class ModProduction implements ContentList {
                 this.craftTime = 90;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(2.5f);
-                this.consumes.items(ItemStack.with(Items.metaglass, 2, Items.titanium, 2));
+                this.consumes.items(ItemStack.with(Items.metaglass, 2, Items.titanium, 1));
                 this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 80, Items.titanium, 100, Items.metaglass, 120, Items.silicon, 200, ModItems.graphenite, 200));
                 this.outputItem = new ItemStack(ModItems.chromium, 1);
             }
@@ -121,7 +121,7 @@ public class ModProduction implements ContentList {
                 this.craftTime = 90;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(1.2f);
-                this.consumes.items(ItemStack.with(Items.sporePod, 1, Items.thorium, 2, Items.titanium, 1));
+                this.consumes.items(ItemStack.with(Items.sporePod, 1, Items.thorium, 3, Items.titanium, 1));
                 this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 40, Items.lead, 100, Items.graphite, 80, ModItems.graphenite, 100, Items.metaglass, 80));
                 this.outputItem = new ItemStack(ModItems.exoticAlloy, 2);
             }
@@ -137,10 +137,10 @@ public class ModProduction implements ContentList {
                 this.craftTime = 50;
                 this.updateEffect = Fx.steam;
                 this.consumes.power(4f);
-                this.consumes.liquid(Liquids.water, 0.1f);
+                this.consumes.liquid(Liquids.water, 0.2f);
                 this.consumes.items(ItemStack.with(ModItems.graphenite, 1));
                 this.requirements(Category.crafting, ItemStack.with(Items.lead, 50, Items.thorium, 80, Items.silicon, 70, Items.titanium, 50, ModItems.graphenite, 85));
-                this.outputLiquid = new LiquidStack(ModLiquids.liquidGraphenite, 32f);
+                this.outputLiquid = new LiquidStack(ModLiquids.liquidGraphenite, 12f);
             }
         };
         grapheniteForge = new GenericSmelter("graphenite-forge") {
@@ -156,9 +156,9 @@ public class ModProduction implements ContentList {
                 this.craftTime = 70;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(1.2f);
-                this.consumes.items(ItemStack.with(Items.graphite, 1, Items.silicon, 1, Items.titanium, 1));
+                this.consumes.items(ItemStack.with(Items.graphite, 2, Items.silicon, 1, Items.titanium, 1));
                 this.requirements(Category.crafting, ItemStack.with(Items.lead, 100, Items.titanium, 30, Items.thorium, 40, Items.silicon, 70, Items.graphite, 80));
-                this.outputItem = new ItemStack(ModItems.graphenite, 1);
+                this.outputItem = new ItemStack(ModItems.graphenite, 2);
             }
         };
         hyperAlloySmelter = new GenericSmelter("hyper-alloy-smelter") {
@@ -190,12 +190,12 @@ public class ModProduction implements ContentList {
                 this.hasPower = true;
                 this.hasLiquids = false;
                 this.hasItems = true;
-                this.craftTime = 90;
+                this.craftTime = 120;
                 this.updateEffect = Fx.plasticburn;
-                this.consumes.power(1.2f);
-                this.consumes.items(ItemStack.with(Items.thorium, 3, Items.silicon, 4, Items.sand, 9));
+                this.consumes.power(6f);
+                this.consumes.items(ItemStack.with(Items.thorium, 6, Items.silicon, 3, Items.sand, 14));
                 this.requirements(Category.crafting, ItemStack.with(Items.metaglass, 200, Items.titanium, 90, Items.phaseFabric, 80, Items.silicon, 200, ModItems.graphenite, 180));
-                this.outputItem = new ItemStack(Items.phaseFabric, 3);
+                this.outputItem = new ItemStack(Items.phaseFabric, 5);
             }
         };
         magmaMixer = new GenericCrafter("magma-mixer") {
@@ -209,8 +209,8 @@ public class ModProduction implements ContentList {
                 this.craftTime = 70;
                 this.updateEffect = Fx.steam;
                 this.consumes.power(6f);
-                this.consumes.liquid(Liquids.slag, 0.1f);
-                this.consumes.items(ItemStack.with(Items.copper, 4));
+                this.consumes.liquid(Liquids.slag, 0.3f);
+                this.consumes.items(ItemStack.with(Items.copper, 8));
                 this.requirements(Category.crafting, ItemStack.with(Items.lead, 150, ModItems.chromium, 200, Items.silicon, 90, Items.metaglass, 100, ModItems.graphenite, 85));
                 this.outputLiquid = new LiquidStack(ModLiquids.magma, 26f);
             }
@@ -237,12 +237,12 @@ public class ModProduction implements ContentList {
                 this.consumes.power(2.2f);
                 this.consumes.items(ItemStack.with(
                         Items.graphite, 3,
-                        Items.silicon, 1,
+                        Items.silicon, 2,
                         Items.titanium, 1,
-                        Items.blastCompound, 1
+                        Items.pyratite, 1
                 ));
-                this.consumes.liquid(Liquids.oil,
-                        0.04f);
+                this.consumes.liquid(Liquids.water,
+                        0.1f);
                 this.requirements(this.category, ItemStack.with(
                         Items.lead, 240,
                         ModItems.graphenite, 120,
@@ -268,9 +268,9 @@ public class ModProduction implements ContentList {
                 this.craftTime = 100;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(3f);
-                this.consumes.items(ItemStack.with(Items.plastanium, 1, Items.thorium, 1, Items.titanium, 1));
+                this.consumes.items(ItemStack.with(Items.plastanium, 1, Items.thorium, 3, Items.titanium, 1));
                 this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 60, Items.titanium, 100, Items.metaglass, 50, Items.silicon, 150, Items.graphite, 80));
-                this.outputItem = new ItemStack(ModItems.odinum, 1);
+                this.outputItem = new ItemStack(ModItems.odinum, 2);
             }
         };
         phaseAlloySmelter = new GenericSmelter("phase-alloy-smelter") {
@@ -285,8 +285,8 @@ public class ModProduction implements ContentList {
                 this.hasItems = true;
                 this.craftTime = 90;
                 this.updateEffect = Fx.plasticburn;
-                this.consumes.power(2f);
-                this.consumes.items(ItemStack.with(Items.plastanium, 2, Items.surgeAlloy, 1, Items.phaseFabric, 1));
+                this.consumes.power(3f);
+                this.consumes.items(ItemStack.with(Items.plastanium, 1, Items.surgeAlloy, 1, Items.phaseFabric, 2));
                 this.requirements(Category.crafting, ItemStack.with(Items.phaseFabric, 100, Items.plastanium, 100, Items.thorium, 400, ModItems.exoticAlloy, 270, ModItems.graphenite, 380));
                 this.outputItem = new ItemStack(ModItems.phaseAlloy, 2);
             }
@@ -318,7 +318,7 @@ public class ModProduction implements ContentList {
                 this.size = 2;
                 this.consumes.power(3f);
                 this.consumes.liquid(Liquids.cryofluid, 0.1f);
-                this.consumes.items(ItemStack.with(Items.thorium, 1));
+                this.consumes.items(ItemStack.with(Items.thorium, 2));
                 this.outputLiquid = new LiquidStack(ModLiquids.thoriumRefrigerant, 16f);
                 this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 200, Items.thorium, 200, Items.titanium, 100, Items.metaglass, 130, ModItems.graphenite, 190));
                 this.updateEffect = Fx.purify;
