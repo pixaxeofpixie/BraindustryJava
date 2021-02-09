@@ -699,7 +699,7 @@ public class ModUnitTypes implements ContentList {
                 this.localizedName = "Quix";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
                 this.armor = 36;
-                this.health = 9600;
+                this.health = 10600;
                 this.speed = 0.6f;
                 this.rotateSpeed = 1;
                 this.accel = 0.07f;
@@ -767,7 +767,7 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = true;
                                 this.bullet = new SapBulletType() {
                                     {
-                                        this.sapStrength = 0.5f;
+                                        this.sapStrength = 0.6f;
                                         this.length = 140;
                                         this.damage = 120;
                                         this.shootEffect = Fx.shootSmall;
@@ -797,7 +797,7 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = true;
                                 this.bullet = new SapBulletType() {
                                     {
-                                        this.sapStrength = 0.3f;
+                                        this.sapStrength = 0.4f;
                                         this.length = 160;
                                         this.damage = 60;
                                         this.shootEffect = Fx.shootSmall;
@@ -1386,7 +1386,7 @@ public class ModUnitTypes implements ContentList {
                 this.hitSize = 20;
                 this.armor = 14;
                 this.buildSpeed = 1.5F;
-                this.health = 5100;
+                this.health = 4100;
                 this.canDrown = false;
                 int brange = 1;
                 this.localizedName = "Intelix";
@@ -1440,7 +1440,7 @@ public class ModUnitTypes implements ContentList {
                 this.hitSize = 32;
                 this.armor = 21;
                 this.buildSpeed = 1.8F;
-                this.health = 15400;
+                this.health = 12400;
                 this.canDrown = false;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int brange = 1;
@@ -1468,10 +1468,10 @@ public class ModUnitTypes implements ContentList {
                                         this.updateEffect = this.trailEffect = ModFx.instTrail;
                                         this.hitEffect = Fx.blastExplosion;
                                         this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 900.0F;
+                                        this.damage = 1100.0F;
                                         this.pierceDamageFactor = 0.85F;
                                         this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 0.70f;
+                                        this.buildingDamageMultiplier = 1.3f;
                                         this.speed = brange;
                                         this.hitShake = 6f;
                                     }
@@ -1494,7 +1494,7 @@ public class ModUnitTypes implements ContentList {
                 this.hitSize = 38;
                 this.armor = 24;
                 this.buildSpeed = 2F;
-                this.health = 26200;
+                this.health = 18200;
                 this.canDrown = false;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int brange = 1;
@@ -1523,10 +1523,10 @@ public class ModUnitTypes implements ContentList {
                                         this.updateEffect = this.trailEffect = ModFx.magicBulletTrail;
                                         this.hitEffect = Fx.blastExplosion;
                                         this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 1250.0F;
+                                        this.damage = 1790.0F;
                                         this.pierceDamageFactor = 1.2F;
                                         this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 0.9f;
+                                        this.buildingDamageMultiplier = 1.6f;
                                         this.speed = brange;
                                         this.hitShake = 5f;
                                     }
@@ -1569,7 +1569,7 @@ public class ModUnitTypes implements ContentList {
                 this.groundLayer = 60.0F;
                 this.localizedName = "Griffon";
                 this.description = "Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
-                this.health = 12000;
+                this.health = 22000;
                 this.speed = 0.4f;
                 this.mechSideSway = 0.25f;
                 this.hitSize = 108;
