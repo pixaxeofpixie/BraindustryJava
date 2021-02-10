@@ -4,11 +4,13 @@ import mindustry.Vars;
 import mindustry.type.Planet;
 import mindustry.type.SectorPreset;
 
+import static ModVars.modFunc.fullName;
+
 public class ModSectorPresent {
     public static SectorPreset meltingPoint, FFOf;
 
     public void load() {
-        Planet osorePlanet = Vars.content.planets().find(p -> p.name.toLowerCase().contains("osore"));
+        Planet osorePlanet = Vars.content.planets().find(p -> p.name.toLowerCase().contains("osore") && p.name.startsWith(fullName("")));
         meltingPoint = new SectorPreset("melting-point", osorePlanet, 20){
             {
                 localizedName="Melting point";
