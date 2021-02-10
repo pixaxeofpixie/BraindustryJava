@@ -389,7 +389,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.beam;
                                 this.bullet = new SapBulletType() {
                                     {
-                                        this.sapStrength = 0.7f;
+                                        this.sapStrength = 0.6f;
                                         this.length = 350;
                                         this.damage = 90;
                                         this.shootEffect = Fx.shootSmall;
@@ -455,7 +455,7 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.9f;
                 this.flying = true;
                 this.health = 200;
-                this.range = 100;
+                this.range = 70;
                 this.armor = 6;
                 this.engineOffset = 3;
                 this.engineSize = 2;
@@ -502,7 +502,7 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.health = 660;
                 this.armor = 11;
-                this.range = 160;
+                this.range = 90;
                 this.engineOffset = 6;
                 this.rotateSpeed = 3;
                 abilities.add(new RepairFieldAbility(4f, 60f * 5, 40f), new ForceFieldAbility(40f, 5f, 400f, 60f * 7));
@@ -550,9 +550,9 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.hitSize = 12;
                 this.engineSize = 3.2f;
-                this.armor = 19;
+                this.armor = 18;
                 this.health = 1600;
-                this.range = 120;
+                this.range = 110;
                 this.engineOffset = 7;
                 this.rotateSpeed = 1.1f;
                 this.targetAir = true;
@@ -612,11 +612,11 @@ public class ModUnitTypes implements ContentList {
             {
                 this.localizedName = "Dent";
                 this.constructor = Types.payload;
-                this.speed = 0.65f;
+                this.speed = 0.8f;
                 this.flying = true;
                 this.hitSize = 27;
                 this.engineSize = 7;
-                this.armor = 26;
+                this.armor = 32;
                 this.health = 6000;
                 this.rotateSpeed = 1.2f;
                 this.targetAir = true;
@@ -698,9 +698,9 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.payload;
                 this.localizedName = "Quix";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
-                this.armor = 36;
-                this.health = 10600;
-                this.speed = 0.6f;
+                this.armor = 42;
+                this.health = 11000;
+                this.speed = 0.5f;
                 this.rotateSpeed = 1;
                 this.accel = 0.07f;
                 this.drag = 0.02f;
@@ -713,7 +713,7 @@ public class ModUnitTypes implements ContentList {
                 this.hitSize = 64;
                 this.payloadCapacity = 380;
                 this.buildSpeed = 5;
-                this.range = 160;
+                this.range = 140;
                 abilities.add(new RepairFieldAbility(7f, 60f * 4, 50f), new ForceFieldAbility(150f, 4f, 8000f, 60f * 7));
                 this.weapons.add(
                         new ModWeapon("bomb-weapon") {
