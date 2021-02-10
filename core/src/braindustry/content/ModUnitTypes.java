@@ -1502,7 +1502,7 @@ public class ModUnitTypes implements ContentList {
                 this.description = "Heavy attack unit with magma guns and rampage railgun that mostly effective to buildings.";
 
                 this.weapons.add(
-                        new ModWeapon("troplex-grinder2") {
+                        new ModWeapon("troplex-grinder-3") {
                             {
                                 this.x = 0;
                                 this.y = -8;
@@ -1569,14 +1569,14 @@ public class ModUnitTypes implements ContentList {
                 this.groundLayer = 60.0F;
                 this.localizedName = "Griffon";
                 this.description = "Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
-                this.health = 22000;
+                this.health = 24000;
                 this.speed = 0.4f;
                 this.mechSideSway = 0.25f;
                 this.hitSize = 108;
                 this.rotateSpeed = 0.7f;
                 this.armor = 14f;
                 this.hovering = true;
-                this.commandLimit = 4;
+                this.commandLimit = 6;
                 this.legCount = 4;
                 this.legMoveSpace = 1.1f;
                 this.legPairOffset = 4;
