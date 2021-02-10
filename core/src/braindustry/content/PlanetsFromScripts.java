@@ -21,7 +21,7 @@ public class PlanetsFromScripts {
                 bloom = true;
             }
         };
-        osore =new Planet("Osore",zetsubo,3,0.7f){
+        osore =new Planet("osore",zetsubo,3,0.7f){
             {
                 generator=new OsorePlanetGenerator();
                 startSector=25;
@@ -33,7 +33,7 @@ public class PlanetsFromScripts {
                accessible = true;
             }
         };
-        mizu=new Planet("Mizu", zetsubo, 3, 1f){
+        mizu=new Planet("mizu", zetsubo, 3, 1f){
             {
                 generator =new MizuGenerator();
                 startSector = 25;
