@@ -1286,7 +1286,7 @@ public class ModUnitTypes implements ContentList {
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.9f;
                 this.hitSize = 8;
-                this.armor = 8;
+                this.armor = 4;
                 this.buildSpeed = 1.0F;
                 this.health = 310;
                 this.localizedName = "Tyzen";
@@ -1338,7 +1338,7 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.63f;
                 this.rotateSpeed = 4;
                 this.hitSize = 14;
-                this.armor = 12;
+                this.armor = 6;
                 this.buildSpeed = 1.4F;
                 this.health = 1300;
                 this.localizedName = "Kryox";
@@ -1384,7 +1384,7 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.55f;
                 this.rotateSpeed = 3;
                 this.hitSize = 20;
-                this.armor = 14;
+                this.armor = 8;
                 this.buildSpeed = 1.5F;
                 this.health = 4100;
                 this.canDrown = false;
@@ -1438,7 +1438,7 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.45f;
                 this.rotateSpeed = 3;
                 this.hitSize = 32;
-                this.armor = 21;
+                this.armor = 11;
                 this.buildSpeed = 1.8F;
                 this.health = 12400;
                 this.canDrown = false;
@@ -1450,12 +1450,12 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("troplex-grinder") {
                             {
-                                this.x = 15;
-                                this.y = 0;
+                                this.x = -15;
+                                this.y = 3;
                                 this.shootY = -1f;
                                 this.reload = 90;
                                 this.ejectEffect = ModFx.magicShootEffectBig;
-                                this.recoil = 9;
+                                this.recoil = 3;
                                 this.shootSound = Sounds.laser;
                                 this.rotate = false;
                                 this.mirror = true;
@@ -1492,7 +1492,7 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.62f;
                 this.rotateSpeed = 3;
                 this.hitSize = 38;
-                this.armor = 24;
+                this.armor = 14;
                 this.buildSpeed = 2F;
                 this.health = 18200;
                 this.canDrown = false;
@@ -1517,10 +1517,10 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new RailBulletType() {
                                     {
                                         this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 380.0F;
+                                        this.length = 340.0F;
                                         this.updateEffectSeg = 70.0F;
                                         this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
-                                        this.updateEffect = this.trailEffect = ModFx.magicBulletTrail;
+                                        this.updateEffect = this.trailEffect = ModFx.instTrail;
                                         this.hitEffect = Fx.blastExplosion;
                                         this.smokeEffect = Fx.shootBig2;
                                         this.damage = 1790.0F;
@@ -1535,10 +1535,10 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("intelix-weapon") {
                             {
-                                this.x = 19;
+                                this.x = 21;
                                 this.y = 0;
                                 this.shootY = -1f;
-                                this.reload = 100;
+                                this.reload = 50;
                                 this.ejectEffect = Fx.fireballsmoke;
                                 this.recoil = 3f;
                                 this.shots = 7;
@@ -1549,8 +1549,8 @@ public class ModUnitTypes implements ContentList {
                                 this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.magma){
                                     {
-                                        damage = 198;
-                                        speed = 1.8f;
+                                        damage = 98;
+                                        speed = 1.9f;
                                         drag = -0.01f;
                                         shootEffect = Fx.lightningShoot;
                                         lifetime = 95f;
@@ -1569,7 +1569,7 @@ public class ModUnitTypes implements ContentList {
                 this.groundLayer = 60.0F;
                 this.localizedName = "Griffon";
                 this.description = "Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
-                this.health = 24000;
+                this.health = 26000;
                 this.speed = 0.4f;
                 this.mechSideSway = 0.25f;
                 this.hitSize = 108;
@@ -1605,7 +1605,7 @@ public class ModUnitTypes implements ContentList {
 
                                 firstShotDelay = ModFx.yellowLaserCharge.lifetime - 1f;
 
-                                reload = 240f;
+                                reload = 440f;
                                 recoil = 0f;
                                 chargeSound = ModSounds.electronCharge;
                                 shootSound = ModSounds.electronShoot;
@@ -1658,10 +1658,10 @@ public class ModUnitTypes implements ContentList {
                             x = 18f;
                             shootY = 22f;
                             mirror = true;
-                            reload = 60;
+                            reload = 40;
                             shake = 10f;
                             recoil = 10f;
-                            rotateSpeed = 1f;
+                            rotateSpeed = 1.2f;
                             ejectEffect = Fx.casing3;
                             shootSound = Sounds.artillery;
                             rotate = true;
@@ -1671,36 +1671,36 @@ public class ModUnitTypes implements ContentList {
                                 hitEffect = Fx.blastExplosion;
                                 knockback = 0.9f;
                                 lifetime = 100f;
-                                width = height = 35f;
+                                width = height = 25f;
                                 collidesTiles = collides = true;
                                 ammoMultiplier = 4f;
-                                splashDamageRadius = 105f;
-                                splashDamage = 95f;
+                                splashDamageRadius = 55f;
+                                splashDamage = 220f;
                                 backColor = Pal.plastaniumBack;
                                 frontColor = lightningColor = Pal.plastanium;
-                                lightning = 9;
-                                lightningLength = 32;
+                                lightning = 18;
+                                lightningLength = 9;
                                 smokeEffect = Fx.shootBigSmoke2;
                                 hitShake = 10f;
 
                                 status = StatusEffects.shocked;
                                 statusDuration = 70f * 10;
 
-                                fragLifeMin = 0.3f;
-                                fragBullets = 9;
+                                fragLifeMin = 0.4f;
+                                fragBullets = 12;
 
                                 fragBullet = new ArtilleryBulletType(2.3f, 30){{
                                     hitEffect = Fx.railHit;
                                     knockback = 0.7f;
                                     lifetime = 85f;
-                                    width = height = 23f;
+                                    width = height = 17f;
                                     collidesTiles = false;
-                                    splashDamageRadius = 50f;
-                                    splashDamage = 220f;
+                                    splashDamageRadius = 30f;
+                                    splashDamage = 110f;
                                     backColor = Pal.plastaniumFront;
                                     frontColor = lightningColor = Pal.bulletYellow;
-                                    lightning = 6;
-                                    lightningLength = 3;
+                                    lightning = 9;
+                                    lightningLength = 4;
                                     smokeEffect = Fx.shootBigSmoke2;
                                     hitShake = 6f;
 
