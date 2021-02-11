@@ -33,9 +33,10 @@ public class ModShaders {
     public static TestShader testShader;
     public static GradientLaserShader gradientLaserShader;
     public static IconBackgroundShader iconBackgroundShader;
-static {
-    Shaders.class.getName();
-}
+
+    static {
+        Shaders.class.getName();
+    }
 
     public static void init() {
         rainbow = new RainbowShader();
@@ -44,23 +45,27 @@ static {
         fractalPyramid = new FractalPyramidShader();
         holo = new HoloShader();
         rainbowLaserShader = new RainbowLaserShader();
-        gradientLaserShader=new GradientLaserShader();
+        gradientLaserShader = new GradientLaserShader();
 
-        testShader=new TestShader();
-        iconBackgroundShader=new IconBackgroundShader();
+        testShader = new TestShader();
+        iconBackgroundShader = new IconBackgroundShader();
 //        defaultShader=new Shaders.LoadShader("default","default");
     }
-    public static Vec2 getScreenSize(){
+
+    public static Vec2 getScreenSize() {
         Vec2 screenSize = new Vec2(Core.graphics.getWidth(), Core.graphics.getHeight());
         return screenSize;
     }
+
     private static Vec2 vec2(float x, float y) {
-        return new Vec2(x,y);
+        return new Vec2(x, y);
     }
+
     private static Vec2 vec2(float x) {
-        return vec2(x,x);
+        return vec2(x, x);
     }
-    public static class IconBackgroundShader extends ModLoadShader{
+
+    public static class IconBackgroundShader extends ModLoadShader {
 
         private float length;
         private float fromY;
@@ -70,46 +75,51 @@ static {
         }
 
 
-        public void set(float fromY,float length) {
-            this.fromY =fromY;
-            this.length=length;
+        public void set(float fromY, float length) {
+            this.fromY = fromY;
+            this.length = length;
 //            Log.info("fromY: @, length: @",fromY,length);
             super.set();
         }
+
         public void set(float fromY) {
-           set(fromY,0);
+            set(fromY, 0);
         }
 
         @Override
         public void apply() {
             super.apply();
             setUniformf("toY", fromY);
-            setUniformf("length",length);
+            setUniformf("length", length);
         }
     }
+
     public static class TestShader extends ModLoadShader {
-        public int offsetId=0;
-        public Vec2 pos=new Vec2();
+        public int offsetId = 0;
+        public Vec2 pos = new Vec2();
 
         public TestShader() {
-            super("test", "default");
+            super("test", "test");
         }
-        public void setPos(Position pos){
+
+        public void setPos(Position pos) {
             this.pos.set(pos);
             Draw.shader(this);
         }
-        public void setPos(Vec2 pos){
+
+        public void setPos(Vec2 pos) {
             this.pos.set(pos);
         }
+
         @Override
         public void apply() {
             super.apply();
             float u_time = Time.time / Scl.scl(10);
 
             setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
-            Vec2 screenSize = getScreenSize();
-            setUniformf("iResolution", screenSize);
-            Vec2 cameraOffset=Core.camera.position.cpy().sub(Core.camera.width/2f,Core.camera.height/2f);
+            Log.info("Time.delta: @",Time.delta);
+            setUniformf("u_delta", Time.delta/60.f);
+            Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
             float displayScale = Vars.renderer.getDisplayScale();
             setUniformf("u_pos", pos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
             setUniformf("u_dscl", displayScale);
@@ -118,6 +128,7 @@ static {
 //            this.setUniformf("offset", );
         }
     }
+
     public static class GradientLaserShader extends ModLoadShader {
         public int offsetId = 0;
         public Bullet bullet;
@@ -129,12 +140,12 @@ static {
             super("gradientLaser", "default");
         }
 
-        public Shader setBullet(Bullet bullet, RainbowLaserBulletType type,Color from,Color to) {
+        public Shader setBullet(Bullet bullet, RainbowLaserBulletType type, Color from, Color to) {
             offsetId = bullet.id;
             this.bullet = bullet;
             this.type = type;
-            this.from=from;
-            this.to=to;
+            this.from = from;
+            this.to = to;
             return this;
         }
 
@@ -148,67 +159,75 @@ static {
             Vec2 screenSize = getScreenSize();
             setUniformf("iResolution", screenSize);
             Vec2 bulletPos = new Vec2(bullet.y, bullet.x);
-            Vec2 cameraOffset=Core.camera.position.cpy().sub(Core.camera.width/2f,Core.camera.height/2f);
+            Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
             float displayScale = Vars.renderer.getDisplayScale();
             setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
             setUniformf("u_pos", bulletPos);
             setUniformf("u_length", type.length * displayScale);
             setUniformf("u_scl", displayScale);
-            setUniformf("u_fromColor",from);
-            setUniformf("u_toColor",to);
+            setUniformf("u_fromColor", from);
+            setUniformf("u_toColor", to);
         }
     }
+
     public static class RainbowLaserShader extends ModLoadShader {
         public int offsetId = 0;
         public Bullet bullet;
         public RainbowLaserBulletType type;
         public ContinuousRainbowLaserBulletType type2;
+        private int applyCount=0;
 
-        public void set(Bullet bullet, RainbowLaserBulletType type){
-            Draw.shader(setBullet(bullet,type));
-        }
-        public void set(Bullet bullet, ContinuousRainbowLaserBulletType type){
-            Draw.shader(setBullet(bullet,type));
-        }
         public RainbowLaserShader() {
             super("rainbowLaser", "default");
         }
 
+        public void set(Bullet bullet, RainbowLaserBulletType type) {
+            setBullet(bullet, type);
+            set();
+        }
+
+        public void set(Bullet bullet, ContinuousRainbowLaserBulletType type) {
+            setBullet(bullet, type);
+            set();
+        }
         public Shader setBullet(Bullet bullet, RainbowLaserBulletType type) {
             offsetId = bullet.id;
             this.bullet = bullet;
-            type2=null;
+            type2 = null;
             this.type = type;
             return this;
-        }public Shader setBullet(Bullet bullet, ContinuousRainbowLaserBulletType type) {
+        }
+
+        public Shader setBullet(Bullet bullet, ContinuousRainbowLaserBulletType type) {
             offsetId = bullet.id;
             this.bullet = bullet;
             this.type = null;
-            type2=type;
+            type2 = type;
             return this;
         }
 
         private float getLength() {
-            return type==null?type2==null?0:type2.length:type.length;
+            return type == null ? type2 == null ? 0 : type2.length : type.length;
         }
 
         @Override
         public void apply() {
-            super.apply();
             float u_time = Time.time / Scl.scl(10);
-
             setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
             Vec2 screenSize = getScreenSize();
             setUniformf("iResolution", screenSize);
             Vec2 bulletPos = new Vec2(bullet.y, bullet.x);
-            Vec2 cameraOffset=Core.camera.position.cpy().sub(Core.camera.width/2f,Core.camera.height/2f);
+            Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
             float displayScale = Vars.renderer.getDisplayScale();
             setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
             setUniformf("u_pos", bulletPos);
             setUniformf("u_length", getLength() * displayScale);
             setUniformf("u_scl", displayScale);
             setUniformf("u_vecRot", new Vec2(Mathf.cosDeg(bullet.rotation()), Mathf.sinDeg(bullet.rotation())));
-            setUniformf("u_offset", new Vec3(-2, 2, -0));
+            setUniformf("u_offset", new Vec3(
+                    -2, 2, -0));
+            Log.info("rot: @",bullet.rotation());
+            setUniformf("u_bulletRot",bullet.rotation());
 
             setUniformf("u_grow", new Vec2(900, 900));
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));
@@ -261,16 +280,16 @@ static {
 
             float displayScale = Vars.renderer.getDisplayScale();
             this.setUniformf("u_texsize", new Vec2(logo.texture.width, logo.texture.height));
-            Vec2 logoSize=vec2(logo.width,logo.height);
-            Vec2 logoTexSize=vec2(logo.texture.width,logo.texture.height);
-            this.setUniformf("u_uv", vec2(logo.u,logo.v));
+            Vec2 logoSize = vec2(logo.width, logo.height);
+            Vec2 logoTexSize = vec2(logo.texture.width, logo.texture.height);
+            this.setUniformf("u_uv", vec2(logo.u, logo.v));
 
-            this.setUniformf("u_uv2", vec2(logo.u2,logo.v2));
+            this.setUniformf("u_uv2", vec2(logo.u2, logo.v2));
             setUniformf("u_campos", Core.camera.position);
-            this.setUniformf("u_texsize", logo.texture.width,logo.texture.height);
+            this.setUniformf("u_texsize", logo.texture.width, logo.texture.height);
             this.setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100, 100));
-            this.setUniformf("u_timeMul", Time.time/10f);
-            this.setUniformf("u_yOffset",  2.f);
+            this.setUniformf("u_timeMul", Time.time / 10f);
+            this.setUniformf("u_yOffset", 2.f);
             this.setUniformf("u_force", force);
             this.setUniformf("u_scl", Scl.scl(4));
             this.setUniformf("u_resolution", getScreenSize());
@@ -332,35 +351,38 @@ static {
         }
 
         public void set(Entityc entityc) {
-            this.offsetId=entityc.id();
+            this.offsetId = entityc.id();
             super.set();
         }
+
         public void set(long id) {
-            this.offsetId=id;
+            this.offsetId = id;
             super.set();
         }
     }
 
     public static class ModLoadShader extends Shader {
-        public void set(){
-            Draw.shader(this);
-        }
         public ModLoadShader(String fragment, String vertex) {
             super(loadFile(vertex + ".vert"), loadFile(fragment + ".frag"));
+        }
+
+        private static Fi loadFile(String fileName) {
+            Seq<Fi> modShaders = Seq.with(modInfo.root.child("shaders").list());
+            Fi foundFile = modShaders.find(fi -> fi.name().equals(fileName));
+            if (foundFile == null) {
+                return Core.files.internal("shaders/" + (fileName));
+            }
+            return foundFile;
+        }
+
+        public void set() {
+            Draw.shader(this);
         }
 
         @Override
         public void apply() {
             super.apply();
-            setUniformf("u_resolution",vec2(Core.graphics.getWidth(),Core.graphics.getHeight()));
-        }
-
-        private static Fi loadFile(String fileName) {
-            Seq<Fi> modShaders = Seq.with(modInfo.root.child("shaders").list());
-            if (modShaders.find(fi -> fi.name().equals(fileName)) == null) {
-                return Core.files.internal("shaders/" + (fileName));
-            }
-            return modInfo.root.child("shaders").child(fileName);
+            setUniformf("u_resolution", vec2(Core.graphics.getWidth(), Core.graphics.getHeight()));
         }
 
     }

@@ -29,7 +29,7 @@ public class PlanetsFromScripts {
                 hasAtmosphere = false;
                 meshLoader = () -> new HexMesh(this, 8);
                 orbitRadius = 11.2f;
-                rotateTime = Float.POSITIVE_INFINITY; //Õ» Œ√ƒ¿
+                rotateTime = Float.POSITIVE_INFINITY;
                 orbitTime = Mathf.pow((2.0f + 14.0f + 0.66f), 1.5f) * 80;
                 accessible = true;
             }
