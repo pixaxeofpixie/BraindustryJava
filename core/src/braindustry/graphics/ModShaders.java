@@ -133,6 +133,7 @@ public class ModShaders {
         public int offsetId = 0;
         public Bullet bullet;
         public RainbowLaserBulletType type;
+        public ContinuousRainbowLaserBulletType type2;
         private Color from;
         private Color to;
 
@@ -140,15 +141,37 @@ public class ModShaders {
             super("gradientLaser", "default");
         }
 
-        public Shader setBullet(Bullet bullet, RainbowLaserBulletType type, Color from, Color to) {
-            offsetId = bullet.id;
-            this.bullet = bullet;
-            this.type = type;
+        public void set(Bullet bullet, RainbowLaserBulletType type, Color from, Color to) {
+            setBullet(bullet, type,from,to);
+            set();
+        }
+
+        public void set(Bullet bullet, ContinuousRainbowLaserBulletType type, Color from, Color to) {
+            setBullet(bullet, type,from,to);
+            set();
+        }
+        public Shader setColors(Color from,Color to){
             this.from = from;
             this.to = to;
             return this;
         }
-
+        public Shader setBullet(Bullet bullet, RainbowLaserBulletType type, Color from, Color to) {
+            offsetId = bullet.id;
+            this.bullet = bullet;
+            this.type = type;
+            type2=null;
+            return setColors(from,to);
+        }
+        public Shader setBullet(Bullet bullet, ContinuousRainbowLaserBulletType type, Color from, Color to) {
+            offsetId = bullet.id;
+            this.bullet = bullet;
+            this.type = null;
+            type2=type;
+            return setColors(from,to);
+        }
+private float getLength(){
+            return type==null?type2.length:type.length;
+}
 
         @Override
         public void apply() {
@@ -163,7 +186,7 @@ public class ModShaders {
             float displayScale = Vars.renderer.getDisplayScale();
             setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
             setUniformf("u_pos", bulletPos);
-            setUniformf("u_length", type.length * displayScale);
+            setUniformf("u_length", getLength() * displayScale);
             setUniformf("u_scl", displayScale);
             setUniformf("u_fromColor", from);
             setUniformf("u_toColor", to);
