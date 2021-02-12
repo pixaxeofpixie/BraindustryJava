@@ -110,7 +110,7 @@ public class GasConduit extends GasBlock implements Autotiler {
     public TextureRegion[] icons() {
 //        new Color((Color)null);
         if (!this.drawBottom) return super.icons();
-        return new TextureRegion[]{Core.atlas.find("conduit-bottom"), this.topRegions[0]};
+        return new TextureRegion[]{Core.atlas.find(name+"-bottom"), this.topRegions[0]};
     }
 
     public boolean blends(Tile tile, int rotation, int otherx, int othery, int otherrot, Block o) {

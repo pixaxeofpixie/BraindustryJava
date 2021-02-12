@@ -52,6 +52,7 @@ public class modVars {
     public static ModListener listener;
     public  static ClientLauncher launcher;
     public static boolean loaded = false;
+    public static boolean packSprites;
     private static int lastClass = 0;
 
     public static void init() {

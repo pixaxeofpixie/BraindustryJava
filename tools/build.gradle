@@ -343,7 +343,8 @@ task pack(dependsOn: [classes, configurations.runtimeClasspath]){
         }
 
         //run generation task; generate all needed sprites
-        file(genFolder).mkdirs()javaexec{
+        file(genFolder).mkdirs()
+        javaexec{
             main = "braindustry.tools.ModImagePacker"
             classpath = sourceSets.main.runtimeClasspath
             workingDir = genFolder

@@ -1,5 +1,6 @@
 package braindustry.tools;
 
+import ModVars.modVars;
 import arc.Core;
 import arc.files.Fi;
 import arc.graphics.g2d.Draw;
@@ -36,6 +37,7 @@ public class ModImagePacker extends ImagePacker {
 
     public static void main(String[] args) throws Exception {
         Vars.headless = true;
+        modVars.packSprites=true;
         ArcNativesLoader.load();
         Log.logger = new Log.NoopLogHandler();
         Vars.content = new ModContentLoader();
@@ -68,9 +70,14 @@ public class ModImagePacker extends ImagePacker {
                 }
             }
         });
+
         Core.atlas = new TextureAtlas() {
             public AtlasRegion find(String name) {
                 if (!regionCache.containsKey(name)) {
+                    if (regionCache.containsKey("error")){
+                        ((GenRegion) regionCache.get("error")).invalid=true;
+                        return (AtlasRegion) regionCache.get("error");
+                    }
                     GenRegion region = new GenRegion(name, (Fi)null);
                     region.invalid = true;
                     return region;
@@ -101,6 +108,7 @@ public class ModImagePacker extends ImagePacker {
         cont.removeAll((u) -> {
             return u instanceof ConstructBlock || u == Blocks.air;
         });
+        modVars.packSprites=false;
     }
 
     static String texname(UnlockableContent c) {
@@ -145,7 +153,8 @@ public class ModImagePacker extends ImagePacker {
     }
 
     static void err(String message, Object... args) {
-        throw new IllegalArgumentException(Strings.format(message, args));
+        Log.err(message,args);
+//        throw new IllegalArgumentException(Strings.format(message, args));
     }
 
     static class GenRegion extends TextureAtlas.AtlasRegion {

@@ -100,6 +100,7 @@ public class modFunc {
     }
 
     public static String fullName(String name){
+        if (packSprites)return name;
         return Strings.format("@-@",modInfo==null?"braindustry":modInfo.name,name);
     }
 

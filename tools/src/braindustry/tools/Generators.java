@@ -247,7 +247,7 @@ public class Generators {
                 }
             }
 
-            colors.save("../../../assets/sprites/block_colors");
+//            colors.save("../../../assets/sprites/block_colors");
         });
 
         if (false) {
@@ -274,30 +274,32 @@ public class Generators {
                 });
             });
         }
+if (false){
 
-        ModImagePacker.generate("item-icons", () -> {
-            for(UnlockableContent item : Seq.<UnlockableContent>withArrays(content.items(), content.liquids())){
-                Image base = ModImagePacker.get(item.getContentType().name() + "-" + item.name);
-                for(Cicon icon : Cicon.scaled){
-                    //if(icon.size == base.width) continue;
-                    Image image = new Image(icon.size, icon.size);
-                    image.drawScaled(base);
-                    image.save(item.getContentType().name() + "-" + item.name + "-" + icon.name(), false);
+    ModImagePacker.generate("item-icons", () -> {
+        for(UnlockableContent item : Seq.<UnlockableContent>withArrays(content.items(), content.liquids())){
+            Image base = ModImagePacker.get(item.getContentType().name() + "-" + item.name);
+            for(Cicon icon : Cicon.scaled){
+                //if(icon.size == base.width) continue;
+                Image image = new Image(icon.size, icon.size);
+                image.drawScaled(base);
+                image.save(item.getContentType().name() + "-" + item.name + "-" + icon.name(), false);
 
-                    if(icon == Cicon.medium){
-                        image.save("../ui/" + item.getContentType() + "-" + item.name + "-icon");
-                    }
+                if(icon == Cicon.medium){
+                    image.save("../ui/" + item.getContentType() + "-" + item.name + "-icon");
+                }
 
-                    if(icon == logicIcon){
-                        image.save(item.name + "-icon-logic");
-                    }
+                if(icon == logicIcon){
+                    image.save(item.name + "-icon-logic");
                 }
             }
-        });
+        }
+    });
+}
 
         ModImagePacker.generate("unit-icons", () -> content.units().each(type -> {
             if(type.isHidden()) return; //hidden units don't generate
-
+//Log.info("type: @",type.name);
             ObjectSet<String> outlined = new ObjectSet<>();
 
             try{

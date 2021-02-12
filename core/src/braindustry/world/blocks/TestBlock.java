@@ -40,7 +40,10 @@ public class TestBlock extends Block {
 
     @Override
     public void load() {
-
+if (modVars.packSprites){
+    super.load();
+    return;
+}
         Core.atlas.addRegion(this.name, Core.atlas.find(fullName("testBlock")));
         super.load();
 //        this.region=Core.atlas.find(getFullName("testBlock"));
