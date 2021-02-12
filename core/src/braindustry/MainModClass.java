@@ -1,65 +1,79 @@
 package braindustry;
 
 import Gas.GasInit;
-import ModVars.Classes.UI.settings.AdvancedSettingsMenuDialog;
-import arc.func.Boolf;
-import arc.func.Func;
-import arc.graphics.Color;
-import arc.scene.event.Touchable;
-import arc.scene.ui.layout.WidgetGroup;
-import arc.struct.ObjectMap;
-import braindustry.content.*;
 import ModVars.Classes.ModAtlas;
 import ModVars.Classes.ModEventType;
-import ModVars.Classes.UI.Cheat.*;
 import ModVars.modVars;
-import arc.*;
+import arc.Core;
+import arc.Events;
+import arc.func.Boolf;
+import arc.func.Func;
 import arc.graphics.g2d.TextureRegion;
-import arc.scene.ui.*;
+import arc.scene.ui.Image;
+import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Cell;
+import arc.struct.ObjectMap;
 import arc.struct.Seq;
-import arc.util.*;
+import arc.util.CommandHandler;
+import braindustry.content.*;
+import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.ModLightningBulletType;
-import braindustry.gen.ModCall;
 import braindustry.gen.ModPlayer;
 import braindustry.graphics.ModShaders;
-import braindustry.input.ModBinding;
+import braindustry.type.StealthUnitType;
 import braindustry.ui.fragments.ModMenuFragment;
-import mindustry.*;
-import mindustry.content.*;
+import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.ctype.ContentList;
 import mindustry.ctype.UnlockableContent;
-import mindustry.entities.EntityCollisions;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.bullet.LightningBulletType;
 import mindustry.game.EventType;
-import mindustry.game.EventType.*;
+import mindustry.game.EventType.ClientLoadEvent;
+import mindustry.game.EventType.DisposeEvent;
 import mindustry.game.Team;
-import mindustry.gen.*;
-import mindustry.input.DesktopInput;
-import mindustry.input.MobileInput;
+import mindustry.gen.Call;
+import mindustry.gen.EntityMapping;
+import mindustry.gen.Tex;
 import mindustry.io.JsonIO;
 import mindustry.mod.Mod;
 import mindustry.type.Item;
+import mindustry.type.UnitType;
 import mindustry.ui.Styles;
-import mindustry.ui.dialogs.*;
+import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
-import mindustry.world.Tile;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.meta.BuildVisibility;
-import mindustryAddition.iu.AdvancedContentInfoDialog;
 
 import static ModVars.modFunc.*;
 import static ModVars.modVars.*;
-import static braindustry.input.ModBinding.*;
 import static mindustry.Vars.*;
-import static mindustry.Vars.player;
 
 public class MainModClass extends Mod {
     public static ModListener modListener;
 
+
+    public MainModClass() {
+        EventOn(DisposeEvent.class, (d) -> {
+            if (Vars.ui.menufrag instanceof ModMenuFragment) ((ModMenuFragment) Vars.ui.menufrag).dispose();
+            Vars.ui.dispose();
+        });
+        modInfo = Vars.mods.getMod(this.getClass());
+        modVars.load();
+        EventOn(ClientLoadEvent.class, (e) -> {
+            constructor();
+        });
+    }
+
+    public static TextureRegion getIcon() {
+
+//        if (modInfo==null)modInfo = Vars.mods.getMod(mod.getClass());
+//        print("modInfo: @",modInfo);
+        if (modInfo == null || modInfo.iconTexture == null) return Core.atlas.find("nomap");
+        return new TextureRegion(modInfo.iconTexture);
+    }
 
     @Override
     public void registerServerCommands(CommandHandler handler) {
@@ -70,16 +84,23 @@ public class MainModClass extends Mod {
     public void registerClientCommands(CommandHandler handler) {
         modVars.netClient.registerCommands(handler);
     }
-    void createPlayer(){
+
+    void createPlayer() {
         player = ModPlayer.create();
         player.name = Core.settings.getString("name");
         player.color.set(Core.settings.getInt("color-0"));
-        if(state.isGame()){
+        if (state.isGame()) {
             player.add();
         }
     }
+
     public void init() {
-        if (!loaded)return;
+        if (!loaded) return;
+        Events.on(EventType.UnitDestroyEvent.class, (e) -> {
+            Seq<UnitType> types = Seq.with(ModUnitTypes.lyra,ModUnitTypes.lyra);
+            if (types.contains(e.unit.type))
+            Call.createBullet(new AngelContinuousBulletType(), Team.derelict, 0f, 0f, 90f, 1200f, 0f, 230f);
+        });
         createPlayer();
         modVars.init();
         EntityMapping.idMap[12] = ModPlayer::new;
@@ -87,16 +108,11 @@ public class MainModClass extends Mod {
         EntityMapping.nameMap.put("player", ModPlayer::new);
         Events.fire(new ModEventType.ModInit());
     }
-    public static TextureRegion getIcon() {
 
-//        if (modInfo==null)modInfo = Vars.mods.getMod(mod.getClass());
-//        print("modInfo: @",modInfo);
-        if (modInfo==null||modInfo.iconTexture == null) return Core.atlas.find("nomap");
-        return new TextureRegion(modInfo.iconTexture);
+    private void showUnitChangeDialog() {
     }
-    private void showUnitChangeDialog(){
-    }
-    private void showUnlockDialog(){
+
+    private void showUnlockDialog() {
         BaseDialog dialog = new BaseDialog("Unlock content dialog");
         dialog.cont.table(i -> {
             i.table(t -> {
@@ -123,47 +139,38 @@ public class MainModClass extends Mod {
         dialog.addCloseButton();
         dialog.show();
     }
+
     private void constructor() {
-        if (!loaded)return;
+        if (!loaded) return;
         modInfo = Vars.mods.getMod(this.getClass());
+        Seq.with(Blocks.blockForge, Blocks.blockLoader, Blocks.blockUnloader).each(b -> b.buildVisibility = BuildVisibility.shown);
         Blocks.interplanetaryAccelerator.buildVisibility = BuildVisibility.shown;
-        Blocks.blockForge.buildVisibility = BuildVisibility.shown;
-        Blocks.blockLoader.buildVisibility = BuildVisibility.shown;
-        Blocks.blockUnloader.buildVisibility = BuildVisibility.shown;
+        Boolf<BulletType> replace = (b) -> (b instanceof LightningBulletType && !(b instanceof ModLightningBulletType));
+        Func<BulletType, ModLightningBulletType> newBullet = (old) -> {
 
-        Time.runTask(10f, () -> {
-            /*BaseDialog dialog = new BaseDialog("Welcome");
-            dialog.cont.add("Hello, its Braindustry Mod.").row();
-            dialog.cont.image(Core.atlas.find("braindustry-java-screen2")).pad(20f).row();
-            dialog.cont.button("Ok", dialog::hide).size(100f, 50f);
-            dialog.show();*/
-        });
-        Boolf<BulletType> replace=(b)->(b instanceof LightningBulletType && !(b instanceof ModLightningBulletType));
-        Func<BulletType,ModLightningBulletType> newBullet=(old)->{
-
-            ModLightningBulletType newType=new ModLightningBulletType();
-            JsonIO.copy(old,newType);
+            ModLightningBulletType newType = new ModLightningBulletType();
+            JsonIO.copy(old, newType);
             return newType;
         };
-        Vars.content.each((c)->{
-            if (c instanceof UnlockableContent){
-                UnlockableContent content=(UnlockableContent)c;
-                if (content instanceof Block){
-                    if (content instanceof Turret){
-                        if (content instanceof PowerTurret){
-                            PowerTurret powerTurret=(PowerTurret)content;
-                            if (replace.get(powerTurret.shootType)){
-                                powerTurret.shootType=newBullet.get(powerTurret.shootType);
+        Vars.content.each((c) -> {
+            if (c instanceof UnlockableContent) {
+                UnlockableContent content = (UnlockableContent) c;
+                if (content instanceof Block) {
+                    if (content instanceof Turret) {
+                        if (content instanceof PowerTurret) {
+                            PowerTurret powerTurret = (PowerTurret) content;
+                            if (replace.get(powerTurret.shootType)) {
+                                powerTurret.shootType = newBullet.get(powerTurret.shootType);
                             }
-                        } else if (content instanceof ItemTurret){
-                            ItemTurret itemTurret=(ItemTurret)content;
-                            ObjectMap<Item,BulletType> toReplace=new ObjectMap<>();
-                            for (ObjectMap.Entry<Item, BulletType> entry: itemTurret.ammoTypes.entries()) {
-                                if (replace.get(entry.value)){
-                                    toReplace.put(entry.key,entry.value);
+                        } else if (content instanceof ItemTurret) {
+                            ItemTurret itemTurret = (ItemTurret) content;
+                            ObjectMap<Item, BulletType> toReplace = new ObjectMap<>();
+                            for (ObjectMap.Entry<Item, BulletType> entry : itemTurret.ammoTypes.entries()) {
+                                if (replace.get(entry.value)) {
+                                    toReplace.put(entry.key, entry.value);
                                 }
                             }
-                            for (ObjectMap.Entry<Item, BulletType> entry: toReplace.entries()) {
+                            for (ObjectMap.Entry<Item, BulletType> entry : toReplace.entries()) {
                                 itemTurret.ammoTypes.put(entry.key, newBullet.get(entry.value));
                             }
                         }
@@ -173,43 +180,30 @@ public class MainModClass extends Mod {
         });
     }
 
-
-    public MainModClass() {
-        EventOn(DisposeEvent.class,(d)->{
-            if (Vars.ui.menufrag instanceof ModMenuFragment)((ModMenuFragment)Vars.ui.menufrag).dispose();
-            Vars.ui.dispose();
-        });
-        modInfo = Vars.mods.getMod(this.getClass());
-        modVars.load();
-        EventOn(ClientLoadEvent.class, (e) -> {
-            constructor();
-        });
-    }
-
     public void loadContent() {
         modInfo = Vars.mods.getMod(this.getClass());
         print("java loadContent");
-        modAtlas=new ModAtlas();
-        inTry(()->{
+        modAtlas = new ModAtlas();
+        inTry(() -> {
             if (!headless) ModShaders.init();
         });
         Events.fire(ModEventType.ModContentLoad.class);
 //        loadMaps();
-        Seq<ContentList> loads=Seq.with(
-                new ModSounds(),new ModStatusEffects(),new ModItems(),new ModLiquids(),new ModUnitTypes(),new ModBlocks(),new ModTechTree()
+        Seq<ContentList> loads = Seq.with(
+                new ModSounds(), new ModStatusEffects(), new ModItems(), new ModLiquids(), new ModUnitTypes(), new ModBlocks(), new ModTechTree()
         );
-        loads.each((load)->{
+        loads.each((load) -> {
             try {
                 load.load();
-            } catch (NullPointerException e){
-                if (!headless)showException(e);
+            } catch (NullPointerException e) {
+                if (!headless) showException(e);
             }
         });
         GasInit.init(true);
-        Vars.content.each((c)->{
-            if (c instanceof UnlockableContent) checkTranslate((UnlockableContent)c);
+        Vars.content.each((c) -> {
+            if (c instanceof UnlockableContent) checkTranslate((UnlockableContent) c);
         });
-        loaded=true;
+        loaded = true;
     }
 
 }
