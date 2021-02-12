@@ -1571,9 +1571,7 @@ public class ModUnitTypes implements ContentList {
         //TX UNITS
         griffon = new UnitType("griffon") {
             {
-                Events.on(EventType.UnitDestroyEvent.class, (e) -> {
-                    Call.createBullet(new AngelContinuousBulletType(), Team.derelict, 0f, 0f, 90f, 1200f, 0f, 230f);
-                });
+
                 this.constructor = Types.legs;
                 this.groundLayer = 60.0F;
                 this.localizedName = "Griffon";

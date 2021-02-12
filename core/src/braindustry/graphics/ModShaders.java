@@ -20,6 +20,7 @@ import arc.util.Time;
 import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
 import braindustry.entities.bullets.RainbowLaserBulletType;
+import braindustry.type.LengthBulletType;
 import braindustry.world.blocks.TestBlock;
 import mindustry.Vars;
 import mindustry.gen.Bullet;
@@ -182,8 +183,7 @@ public class ModShaders {
     public static class GradientLaserShader extends ModLoadShader {
         public int offsetId = 0;
         public Bullet bullet;
-        public RainbowLaserBulletType type;
-        public ContinuousRainbowLaserBulletType type2;
+        public LengthBulletType type;
         private Color from;
         private Color to;
 
@@ -191,12 +191,7 @@ public class ModShaders {
             super("gradientLaser", "default");
         }
 
-        public void set(Bullet bullet, RainbowLaserBulletType type, Color from, Color to) {
-            setBullet(bullet, type, from, to);
-            set();
-        }
-
-        public void set(Bullet bullet, ContinuousRainbowLaserBulletType type, Color from, Color to) {
+        public void set(Bullet bullet, LengthBulletType type, Color from, Color to) {
             setBullet(bullet, type, from, to);
             set();
         }
@@ -207,24 +202,15 @@ public class ModShaders {
             return this;
         }
 
-        public Shader setBullet(Bullet bullet, RainbowLaserBulletType type, Color from, Color to) {
+        public Shader setBullet(Bullet bullet, LengthBulletType type, Color from, Color to) {
             offsetId = bullet.id;
             this.bullet = bullet;
             this.type = type;
-            type2 = null;
-            return setColors(from, to);
-        }
-
-        public Shader setBullet(Bullet bullet, ContinuousRainbowLaserBulletType type, Color from, Color to) {
-            offsetId = bullet.id;
-            this.bullet = bullet;
-            this.type = null;
-            type2 = type;
             return setColors(from, to);
         }
 
         private float getLength() {
-            return type == null ? type2.length : type.length;
+            return type!=null?type.length():0;
         }
 
         @Override
@@ -245,72 +231,57 @@ public class ModShaders {
             setUniformf("u_fromColor", from);
             setUniformf("u_toColor", to);
         }
-
+    }
         public static class RainbowLaserShader extends ModLoadShader {
-        public int offsetId = 0;
-        public Bullet bullet;
-        public RainbowLaserBulletType type;
-        public ContinuousRainbowLaserBulletType type2;
-        private int applyCount = 0;
+            public int offsetId = 0;
+            public Bullet bullet;
+            public LengthBulletType type;
+            private int applyCount = 0;
 
-        public RainbowLaserShader() {
-            super("rainbowLaser", "default");
-        }
+            public RainbowLaserShader() {
+                super("rainbowLaser", "default");
+            }
 
-        public void set(Bullet bullet, RainbowLaserBulletType type) {
-            setBullet(bullet, type);
-            set();
-        }
+            public void set(Bullet bullet, LengthBulletType type) {
+                setBullet(bullet, type);
+                set();
+            }
 
-        public void set(Bullet bullet, ContinuousRainbowLaserBulletType type) {
-            setBullet(bullet, type);
-            set();
-        }
+            public Shader setBullet(Bullet bullet, LengthBulletType type) {
+                offsetId = bullet.id;
+                this.bullet = bullet;
+                this.type = type;
+                return this;
+            }
 
-        public Shader setBullet(Bullet bullet, RainbowLaserBulletType type) {
-            offsetId = bullet.id;
-            this.bullet = bullet;
-            type2 = null;
-            this.type = type;
-            return this;
-        }
+            private float getLength() {
+                return type == null ? 0:type.length();
+            }
 
-        public Shader setBullet(Bullet bullet, ContinuousRainbowLaserBulletType type) {
-            offsetId = bullet.id;
-            this.bullet = bullet;
-            this.type = null;
-            type2 = type;
-            return this;
-        }
+            @Override
+            public void apply() {
+                float u_time = Time.time / Scl.scl(10);
+                setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
+                Vec2 screenSize = getScreenSize();
+                setUniformf("iResolution", screenSize);
+                Vec2 bulletPos = new Vec2(bullet.y, bullet.x);
+                Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
+                float displayScale = Vars.renderer.getDisplayScale();
+                setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
+                setUniformf("u_pos", bulletPos);
+                setUniformf("u_length", getLength() * displayScale);
+                setUniformf("u_scl", displayScale);
+                setUniformf("u_vecRot", new Vec2(Mathf.cosDeg(bullet.rotation()), Mathf.sinDeg(bullet.rotation())));
+                setUniformf("u_offset", new Vec3(
+                        -2, 2, -0));
+                Log.info("rot: @", bullet.rotation());
+                setUniformf("u_bulletRot", bullet.rotation());
 
-        private float getLength() {
-            return type == null ? type2 == null ? 0 : type2.length : type.length;
-        }
-
-        @Override
-        public void apply() {
-            float u_time = Time.time / Scl.scl(10);
-            setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
-            Vec2 screenSize = getScreenSize();
-            setUniformf("iResolution", screenSize);
-            Vec2 bulletPos = new Vec2(bullet.y, bullet.x);
-            Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
-            float displayScale = Vars.renderer.getDisplayScale();
-            setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
-            setUniformf("u_pos", bulletPos);
-            setUniformf("u_length", getLength() * displayScale);
-            setUniformf("u_scl", displayScale);
-            setUniformf("u_vecRot", new Vec2(Mathf.cosDeg(bullet.rotation()), Mathf.sinDeg(bullet.rotation())));
-            setUniformf("u_offset", new Vec3(
-                    -2, 2, -0));
-            Log.info("rot: @", bullet.rotation());
-            setUniformf("u_bulletRot", bullet.rotation());
-
-            setUniformf("u_grow", new Vec2(900, 900));
+                setUniformf("u_grow", new Vec2(900, 900));
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));
 //            this.setUniformf("offset", );
+            }
         }
-        
     public static class HoloShader extends ModLoadShader {
         public int offsetId = 0;
         public TextureRegion logo;
