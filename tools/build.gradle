@@ -338,13 +338,12 @@ task pack(dependsOn: [classes, configurations.runtimeClasspath]){
 
         //copy in new sprites
         copy{
-            from "../assets/sprites/"
+            from "../core/assets-raw/sprites/"
             into "../core/assets-raw/sprites_out/"
         }
 
         //run generation task; generate all needed sprites
-        file(genFolder).mkdirs()
-        javaexec{
+        file(genFolder).mkdirs()javaexec{
             main = "braindustry.tools.ModImagePacker"
             classpath = sourceSets.main.runtimeClasspath
             workingDir = genFolder
@@ -383,17 +382,17 @@ task pack(dependsOn: [classes, configurations.runtimeClasspath]){
         println("\n\nPacking normal 4096 sprites...\n\n")
 
         //pack normal sprites
-        TexturePacker.process(new File(rootDir, "core/assets-raw/sprites_out/").absolutePath, new File(rootDir, "core/assets/sprites/").absolutePath, "sprites.atlas")
+//        TexturePacker.process(new File(rootDir, "core/assets-raw/sprites_out/").absolutePath, new File(rootDir, "core/assets/sprites/").absolutePath, "sprites.atlas")
 
         println("\n\nPacking fallback 2048 sprites...\n\n")
 
         //replace config file contents
-        fileTree(dir: '../core/assets-raw/sprites_out/', include: "**/*.json").visit{ file ->
-            if(!file.isDirectory()) file.file.text = file.file.text.replace("4096", "2048")
-        }
+//        fileTree(dir: '../core/assets-raw/sprites_out/', include: "**/*.json").visit{ file ->
+//            if(!file.isDirectory()) file.file.text = file.file.text.replace("4096", "2048")
+//        }
 
         //pack fallback 2048x2048 sprites
-        TexturePacker.process(new File(rootDir, "core/assets-raw/sprites_out/").absolutePath, new File(rootDir, "core/assets/sprites/fallback/").absolutePath, "sprites.atlas")
+//        TexturePacker.process(new File(rootDir, "core/assets-raw/sprites_out/").absolutePath, new File(rootDir, "core/assets/sprites/fallback/").absolutePath, "sprites.atlas")
     }
 }
 
