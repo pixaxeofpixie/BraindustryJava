@@ -15,6 +15,7 @@ import arc.scene.ui.layout.Cell;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.CommandHandler;
+import arc.util.Log;
 import braindustry.content.*;
 import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.ModLightningBulletType;
@@ -62,6 +63,7 @@ public class MainModClass extends Mod {
         });
         modInfo = Vars.mods.getMod(this.getClass());
         modVars.load();
+        Log.info("Looool");
         EventOn(ClientLoadEvent.class, (e) -> {
             constructor();
         });

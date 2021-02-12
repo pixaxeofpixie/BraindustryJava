@@ -4,7 +4,7 @@ version '1.0'
 
 sourceCompatibility = 1.8
 
-//sourceSets.main.java.srcDirs = ["core/src/"]
+sourceSets.main.java.srcDirs = ["core/starter/"]
 //sourceSets.main.resources.srcDirs = ["core/resources/"]
 
 repositories{
@@ -67,6 +67,7 @@ dependencies{
     implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
     implementation "com.github.Anuken.Mindustry:tools:$mindustryVersion"
     implementation 'com.squareup:javapoet:1.12.1'
+    implementation project(":core")
 
 }
 
@@ -194,7 +195,7 @@ project(":core"){
 
         compileOnly project(":annotations")
         annotationProcessor project(":annotations")
-        annotationProcessor 'com.github.Anuken:jabel:34e4c172e65b3928cd9eabe1993654ea79c409cd'
+//        annotationProcessor 'com.github.Anuken:jabel:34e4c172e65b3928cd9eabe1993654ea79c409cd'
 
     }
 
@@ -231,9 +232,9 @@ project(":tools"){
         implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:tools:$mindustryVersion"
-        implementation arcModule("natives:natives-desktop")
-        implementation arcModule("natives:natives-freetype-desktop")
-        implementation arcModule("backends:backend-headless")
+        compile arcModule("natives:natives-desktop")
+        compile arcModule("natives:natives-freetype-desktop")
+        compile arcModule("backends:backend-headless")
     }
 }
 task jarAndroid{

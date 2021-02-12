@@ -1,7 +1,7 @@
 name: "braindustry-java"
 displayName: "Braindustry"
 author: "Braindustry Team & MotrONa & G0rillaGlue"
-main: "braindustry.MainModClass"
+main: "braindustry.Starter"
 version: 2.0
 minGameVersion: 123
 
