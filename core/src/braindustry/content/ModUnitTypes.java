@@ -1,5 +1,6 @@
 package braindustry.content;
 
+import arc.Events;
 import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.ObjectSet;
@@ -8,23 +9,26 @@ import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedUnitType;
 import braindustry.entities.Advanced.UnitExtensions;
 import braindustry.entities.PowerGeneratorUnit;
+import braindustry.entities.ModUnits;
+import mindustry.game.EventType.UnitDestroyEvent;
 import braindustry.entities.bullets.AdamBulletType;
+import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.EveBulletType;
 import braindustry.gen.StealthMechUnit;
 import braindustry.type.ModWeapon;
 import braindustry.type.PowerUnitType;
+import mindustry.game.EventType;
 import braindustry.type.StealthUnitType;
 import mindustry.content.Bullets;
 import mindustry.content.Fx;
+import static ModVars.modFunc.EventOn;
 import mindustry.content.StatusEffects;
 import mindustry.content.UnitTypes;
 import mindustry.ctype.ContentList;
 import mindustry.entities.abilities.UnitSpawnAbility;
 import mindustry.entities.bullet.*;
-import mindustry.gen.Bullet;
-import mindustry.gen.EntityMapping;
-import mindustry.gen.Sounds;
-import mindustry.gen.Unit;
+import mindustry.game.Team;
+import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.type.AmmoTypes;
 import mindustry.type.UnitType;
@@ -32,6 +36,8 @@ import mindustry.world.Block;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ForceFieldAbility;
 import mindustry.content.Liquids;
+
+import static ModVars.modFunc.EventOn;
 
 
 public class ModUnitTypes implements ContentList {
@@ -1565,6 +1571,9 @@ public class ModUnitTypes implements ContentList {
         //TX UNITS
         griffon = new UnitType("griffon") {
             {
+                Events.on(EventType.UnitDestroyEvent.class, (e) -> {
+                    Call.createBullet(new AngelContinuousBulletType(), Team.derelict, 0f, 0f, 90f, 1200f, 0f, 230f);
+                });
                 this.constructor = Types.legs;
                 this.groundLayer = 60.0F;
                 this.localizedName = "Griffon";

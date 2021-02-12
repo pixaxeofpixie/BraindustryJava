@@ -17,6 +17,7 @@ import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Time;
+import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
 import braindustry.entities.bullets.RainbowLaserBulletType;
 import braindustry.world.blocks.TestBlock;
@@ -244,9 +245,8 @@ public class ModShaders {
             setUniformf("u_fromColor", from);
             setUniformf("u_toColor", to);
         }
-    }
 
-    public static class RainbowLaserShader extends ModLoadShader {
+        public static class RainbowLaserShader extends ModLoadShader {
         public int offsetId = 0;
         public Bullet bullet;
         public RainbowLaserBulletType type;
@@ -310,9 +310,7 @@ public class ModShaders {
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));
 //            this.setUniformf("offset", );
         }
-
-    }
-
+        
     public static class HoloShader extends ModLoadShader {
         public int offsetId = 0;
         public TextureRegion logo;
