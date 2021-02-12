@@ -1,5 +1,6 @@
 #define HIGHP
 uniform sampler2D u_texture;
+uniform sampler2D region;
 varying vec2 v_texCoords;
 varying lowp vec4 v_color;
 uniform vec2 u_resolution,u_pos;
@@ -29,5 +30,6 @@ void main(){
         gray.r=0.;
     }
     vec4 color = texture2D(u_texture, v_texCoords);
+    color=texture2D(region,uv);
     gl_FragColor = vec4(gray.rgb*color.rgb, color.a*v_color.a);
 }

@@ -3,6 +3,8 @@ package braindustry.graphics;
 import arc.Core;
 import arc.files.Fi;
 import arc.graphics.Color;
+import arc.graphics.Pixmap;
+import arc.graphics.Texture;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.graphics.gl.Shader;
@@ -11,11 +13,13 @@ import arc.math.geom.Position;
 import arc.math.geom.Vec2;
 import arc.math.geom.Vec3;
 import arc.scene.ui.layout.Scl;
+import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Time;
 import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
 import braindustry.entities.bullets.RainbowLaserBulletType;
+import braindustry.world.blocks.TestBlock;
 import mindustry.Vars;
 import mindustry.gen.Bullet;
 import mindustry.gen.Entityc;
@@ -97,9 +101,20 @@ public class ModShaders {
     public static class TestShader extends ModLoadShader {
         public int offsetId = 0;
         public Vec2 pos = new Vec2();
+        private ObjectMap<TextureRegion, Texture> textureMap = new ObjectMap<>();
+        private TextureRegion region;
+        private Texture selectedTexture;
 
         public TestShader() {
             super("test", "test");
+        }
+
+        @Override
+        public void dispose() {
+            super.dispose();
+            for (ObjectMap.Entry<TextureRegion, Texture> entry : textureMap.entries()) {
+                entry.value.dispose();
+            }
         }
 
         public void setPos(Position pos) {
@@ -111,21 +126,55 @@ public class ModShaders {
             this.pos.set(pos);
         }
 
+        public void set(Vec2 pos) {
+            setPos(pos);
+            set();
+        }
+
+        public void set(Position pos) {
+            setPos(pos);
+            set();
+        }
+
         @Override
         public void apply() {
             super.apply();
             float u_time = Time.time / Scl.scl(10);
 
             setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
-            Log.info("Time.delta: @",Time.delta);
-            setUniformf("u_delta", Time.delta/60.f);
+            Log.info("Time.delta: @", Time.delta);
+            setUniformf("u_delta", Time.delta / 60.f);
             Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
             float displayScale = Vars.renderer.getDisplayScale();
             setUniformf("u_pos", pos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
             setUniformf("u_dscl", displayScale);
             setUniformf("u_scl", Vars.renderer.getScale());
+            if (selectedTexture != null) {
+                selectedTexture.bind(3);
+                setUniformi("region", 3);
+            }
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));
 //            this.setUniformf("offset", );
+        }
+
+        public void set(TestBlock.TestBlockBuild me, TextureRegion region) {
+            setPos(me);
+            setRegion(region);
+            set();
+        }
+
+        private void setRegion(TextureRegion region) {
+            this.region = region;
+            if (textureMap.containsKey(region)){
+                selectedTexture=textureMap.get(region);
+            } else {
+                Pixmap pixmap=new Pixmap(region.width,region.height);
+
+//                pixmap.draw(region);
+
+                textureMap.put(region,new Texture(pixmap));
+                setRegion(region);
+            }
         }
     }
 
@@ -142,36 +191,40 @@ public class ModShaders {
         }
 
         public void set(Bullet bullet, RainbowLaserBulletType type, Color from, Color to) {
-            setBullet(bullet, type,from,to);
+            setBullet(bullet, type, from, to);
             set();
         }
 
         public void set(Bullet bullet, ContinuousRainbowLaserBulletType type, Color from, Color to) {
-            setBullet(bullet, type,from,to);
+            setBullet(bullet, type, from, to);
             set();
         }
-        public Shader setColors(Color from,Color to){
+
+        public Shader setColors(Color from, Color to) {
             this.from = from;
             this.to = to;
             return this;
         }
+
         public Shader setBullet(Bullet bullet, RainbowLaserBulletType type, Color from, Color to) {
             offsetId = bullet.id;
             this.bullet = bullet;
             this.type = type;
-            type2=null;
-            return setColors(from,to);
+            type2 = null;
+            return setColors(from, to);
         }
+
         public Shader setBullet(Bullet bullet, ContinuousRainbowLaserBulletType type, Color from, Color to) {
             offsetId = bullet.id;
             this.bullet = bullet;
             this.type = null;
-            type2=type;
-            return setColors(from,to);
+            type2 = type;
+            return setColors(from, to);
         }
-private float getLength(){
-            return type==null?type2.length:type.length;
-}
+
+        private float getLength() {
+            return type == null ? type2.length : type.length;
+        }
 
         @Override
         public void apply() {
@@ -198,7 +251,7 @@ private float getLength(){
         public Bullet bullet;
         public RainbowLaserBulletType type;
         public ContinuousRainbowLaserBulletType type2;
-        private int applyCount=0;
+        private int applyCount = 0;
 
         public RainbowLaserShader() {
             super("rainbowLaser", "default");
@@ -213,6 +266,7 @@ private float getLength(){
             setBullet(bullet, type);
             set();
         }
+
         public Shader setBullet(Bullet bullet, RainbowLaserBulletType type) {
             offsetId = bullet.id;
             this.bullet = bullet;
@@ -249,8 +303,8 @@ private float getLength(){
             setUniformf("u_vecRot", new Vec2(Mathf.cosDeg(bullet.rotation()), Mathf.sinDeg(bullet.rotation())));
             setUniformf("u_offset", new Vec3(
                     -2, 2, -0));
-            Log.info("rot: @",bullet.rotation());
-            setUniformf("u_bulletRot",bullet.rotation());
+            Log.info("rot: @", bullet.rotation());
+            setUniformf("u_bulletRot", bullet.rotation());
 
             setUniformf("u_grow", new Vec2(900, 900));
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));

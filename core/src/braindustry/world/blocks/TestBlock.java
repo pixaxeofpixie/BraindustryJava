@@ -61,7 +61,7 @@ public class TestBlock extends Block {
         @Override
         public void buildConfiguration(Table table) {
             super.buildConfiguration(table);
-            Building me=this;
+            TestBlockBuild me=this;
             table.table((t) -> {
                 t.button(Icon.terminal, () -> {
                     ModFx.Spirals.at(this.x, this.y, size, Pal.lancerLaser);
@@ -71,7 +71,7 @@ public class TestBlock extends Block {
                         @Override
                         public void draw() {
                             Draw.draw(Draw.z(),()->{
-                                ModShaders.testShader.setPos(me);
+                                ModShaders.testShader.set(me,me.block.region);
                                 super.draw();
                                 Draw.shader();
                             });
