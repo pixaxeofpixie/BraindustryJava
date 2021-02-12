@@ -25,6 +25,7 @@ import mindustry.ctype.UnlockableContent;
 import mindustry.game.Team;
 import mindustry.gen.Legsc;
 import mindustry.gen.Mechc;
+import mindustry.gen.Unit;
 import mindustry.graphics.BlockRenderer;
 import mindustry.graphics.Pal;
 import mindustry.graphics.ScorchGenerator;
@@ -96,6 +97,7 @@ public class Generators {
                         }
 
                         output.save("cracks-" + size + "-" + i);
+
                     }
                 }
             });
@@ -324,14 +326,15 @@ if (false){
                 outliner.get(type.footRegion);
                 outliner.get(type.legBaseRegion);
                 outliner.get(type.baseJointRegion);
-                if(type.constructor.get() instanceof Legsc) outliner.get(type.legRegion);
+                Unit unit = type.constructor.get();
+                if(unit instanceof Legsc) outliner.get(type.legRegion);
 
                 Image image = outline.get(ModImagePacker.get(type.region));
 
                 image.save(type.name + "-outline");
 
                 //draw mech parts
-                if(type.constructor.get() instanceof Mechc){
+                if(unit instanceof Mechc){
                     image.drawCenter(type.baseRegion);
                     image.drawCenter(type.legRegion);
                     image.drawCenter(type.legRegion, true, false);
