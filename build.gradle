@@ -4,17 +4,38 @@ version '1.0'
 
 sourceCompatibility = 1.8
 
-sourceSets.main.java.srcDirs = ["core/src/"]
-sourceSets.main.resources.srcDirs = ["core/resources/"]
+//sourceSets.main.java.srcDirs = ["core/src/"]
+//sourceSets.main.resources.srcDirs = ["core/resources/"]
 
 repositories{
     mavenCentral()
     maven{ url 'https://www.jitpack.io' }
 }
+buildscript{
+    ext{
 
+        mindustryVersion = 'v123.1'
+    }
+    repositories{
+        mavenLocal()
+        mavenCentral()
+        google()
+        maven{ url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven{ url 'https://jitpack.io' }
+    }
+
+    dependencies{
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.11'
+        classpath "com.github.anuken:packr:-SNAPSHOT"
+        classpath "com.github.Anuken.Arc:packer:$mindustryVersion"
+        classpath "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+        classpath "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
+        classpath "com.github.Anuken.Mindustry:core:$mindustryVersion"
+        classpath "com.github.Anuken.Mindustry:tools:$mindustryVersion"
+    }
+}
 ext{
     //the build number that this mod is made for
-    mindustryVersion = 'v123.1'
     //version of SDK you will be using
     sdkVersion = '30'
     sdkRoot = System.getenv("ANDROID_HOME")
@@ -22,6 +43,12 @@ ext{
     doExec = { cmd ->
         def proc = cmd.execute(null, new File("$buildDir/libs"))
         proc.waitForProcessOutput(System.out, System.err)
+    }
+    arcModule = { String name ->
+            //skip to last submodule
+            if(name.contains(':')) name = name.split(':').last()
+            return "com.github.Anuken.Arc:$name:$mindustryVersion"
+
     }
 }
 
@@ -37,13 +64,10 @@ allprojects{
 dependencies{
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
-//    compileOnly "com.github.Anuken.Mindustry:entities:$mindustryVersion"
     implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
+    implementation "com.github.Anuken.Mindustry:tools:$mindustryVersion"
     implementation 'com.squareup:javapoet:1.12.1'
 
-    compileOnly project(":annotations")
-
-    annotationProcessor project(":annotations")
 }
 
 
@@ -59,10 +83,12 @@ allprojects{
         jcenter()
     }
 }
+
+//addProj("tools")
 configure(project(":annotations")){
     tasks.withType(JavaCompile){
         targetCompatibility = 8
-        sourceCompatibility = 8
+        sourceCompatibility = 14
     }
 }
 
@@ -86,6 +112,7 @@ configure(subprojects - project(":annotations")){
         }
     }
 }
+
 project(":annotations"){
     tasks.withType(JavaCompile){
         if(JavaVersion.current() != JavaVersion.VERSION_1_8){
@@ -103,16 +130,112 @@ project(":annotations"){
     }
     apply plugin: "java-library"
     dependencies{
-        implementation 'com.squareup:javapoet:1.12.1'
-        implementation 'com.squareup:javapoet:1.12.1'
-        implementation "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+      implementation 'com.squareup:javapoet:1.12.1'
+        compile "com.github.Anuken.Arc:arc-core:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
+        implementation "com.github.Anuken.Mindustry:tools:$mindustryVersion"
+//                if(name!="tools")compile  project(":tools")
+//        implementation  project(":core")
+
         apply plugin: "java"
 //        implementation "com.github.Anuken.Mindustry:entities:$mindustryVersion"
     }
 }
 
+project(":core"){
+    apply plugin: "java-library"
+
+    compileJava.options.fork = true
+
+    task preGen{
+        outputs.upToDateWhen{ false }
+//        generateLocales()
+//        writeVersion()
+//        writeProcessors()
+//        writePlugins()
+    }
+
+    task copyChangelog{
+        doLast{
+            if (true)return ;
+            def props = loadVersionProps()
+            def androidVersion = props['androidBuildCode'].toInteger() - 2
+            def loglines = file("../changelog").text.split("\n")
+            def notice = "[This is a truncated changelog, see Github for full notes]"
+            def maxLength = 460
+
+            def androidLogList = [notice] + loglines.findAll{ line -> !line.endsWith("]") || line.endsWith("[Mobile]") || line.endsWith("[Android]")}
+            def result = ""
+            androidLogList.forEach{line ->
+                if(result.length() + line.length() + 1 < maxLength){
+                    result += line + "\n"
+                }
+            }
+            def changelogs = file("../fastlane/metadata/android/en-US/changelogs/")
+            new File(changelogs, androidVersion + ".txt").text = (result)
+        }
+    }
+
+    dependencies{
+        compileJava.dependsOn(preGen)
+
+        api "org.lz4:lz4-java:1.4.1"
+        api arcModule("arc-core")
+        api arcModule("extensions:freetype")
+        api arcModule("extensions:g3d")
+        api arcModule("extensions:fx")
+        api arcModule("extensions:arcnet")
+//        compileOnly "com.github.Anuken.Mindustry:entities:$mindustryVersion"
+        implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
+        implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
+        implementation "com.github.Anuken.Mindustry:tools:$mindustryVersion"
+//        api "com.github.Anuken:rhino:$rhinoVersion"
+
+        compileOnly project(":annotations")
+        annotationProcessor project(":annotations")
+        annotationProcessor 'com.github.Anuken:jabel:34e4c172e65b3928cd9eabe1993654ea79c409cd'
+
+    }
+
+    afterEvaluate{
+        task mergedJavadoc(type: Javadoc){
+            if (true)return null;
+            def blacklist = [project(":ios"), project(":desktop"), project(":server"), project(":annotations")]
+            if(findProject(":android") != null){
+                blacklist += project(":android")
+            }
+
+            source rootProject.subprojects.collect{ project ->
+                if(!blacklist.contains(project) && project.hasProperty("sourceSets")){
+                    return project.sourceSets.main.allJava
+                }
+            }
+
+            classpath = files(rootProject.subprojects.collect { project ->
+                if(!blacklist.contains(project) && project.hasProperty("sourceSets")){
+                    return project.sourceSets.main.compileClasspath
+                }
+            })
+            destinationDir = new File(buildDir, 'javadoc')
+        }
+    }
+}
+
+project(":tools"){
+    apply plugin: "java"
+    dependencies {
+
+        implementation project(":core")
+
+        implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
+        implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
+        implementation "com.github.Anuken.Mindustry:tools:$mindustryVersion"
+        implementation arcModule("natives:natives-desktop")
+        implementation arcModule("natives:natives-freetype-desktop")
+        implementation arcModule("backends:backend-headless")
+    }
+}
 task jarAndroid{
     dependsOn "jar"
 
@@ -137,7 +260,7 @@ jar{
         include "mod.hjson"
     }
 
-    from("assets/"){
+    from("core/assets/"){
         include "**"
     }
 }
