@@ -97,9 +97,9 @@ public class MainModClass extends Mod {
     public void init() {
         if (!loaded) return;
         Events.on(EventType.UnitDestroyEvent.class, (e) -> {
-            Seq<UnitType> types = Seq.with(ModUnitTypes.lyra,ModUnitTypes.lyra);
+            Seq<UnitType> types = Seq.with(ModUnitTypes.griffon);
             if (types.contains(e.unit.type))
-            Call.createBullet(new AngelContinuousBulletType(), Team.derelict, 0f, 0f, 90f, 1200f, 0f, 230f);
+                Call.createBullet(new AngelContinuousBulletType(), Team.derelict, 0f, 0f, 90f, 1200f, 0f, 230f);
         });
         createPlayer();
         modVars.init();
