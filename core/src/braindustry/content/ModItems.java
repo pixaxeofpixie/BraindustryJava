@@ -60,10 +60,10 @@ public class ModItems implements ContentList {
             }
         };
 
-        phaseAlloy = new Item("phase-alloy") {
+        phaseAlloy = new Item("dense-composite") {
             {
-                this.localizedName = "Phase Alloy";
-                this.description = "This alloy combines features of Platanium, Surge Alloy and Phase fabric.";
+                this.localizedName = "Dense Composite";
+                this.description = "This composite material combines features of Platanium, Surge Alloy and Phase fabric.";
                 this.flammability = 0;
                 this.explosiveness = 0;
                 this.radioactivity = 0;

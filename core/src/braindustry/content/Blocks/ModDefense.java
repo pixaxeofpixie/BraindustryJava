@@ -652,6 +652,47 @@ public class ModDefense implements ContentList {
                 consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
             }
         };
+        shinigami = new ItemTurret("shinigami"){
+            {
+            float brange = range = 620f;
+            localizedName = "Shinigami";
+            description = "Railgun turret to defense from higher tiers of units, consumes Dense Composite to shoot, don't use this turret at buildings";
+            requirements(Category.turret, ItemStack.with(Items.copper, 1000, Items.metaglass, 600, Items.surgeAlloy, 300, Items.plastanium, 200, Items.silicon, 600));
+            ammo(
+                    ModItems.phaseAlloy, new PointBulletType(){{
+                        shootEffect = Fx.lightningShoot;
+                        hitEffect = Fx.instHit;
+                        smokeEffect = Fx.reactorsmoke;
+                        trailEffect = ModFx.shinigamiTrail;
+                        despawnEffect = ModFx.instBomb;
+                        trailSpacing = 25f;
+                        damage = 5230;
+                        buildingDamageMultiplier = 0.2f;
+                        speed = brange;
+                        hitShake = 9f;
+                        ammoMultiplier = 2f;
+                    }}
+            );
+            maxAmmo = 40;
+            ammoPerShot = 4;
+            rotateSpeed = 2f;
+            reloadTime = 200f;
+            ammoUseEffect = Fx.casing3Double;
+            recoilAmount = 5f;
+            restitution = 0.009f;
+            cooldown = 0.009f;
+            shootShake = 4f;
+            shots = 1;
+            size = 4;
+            shootCone = 3f;
+            shootSound = Sounds.railgun;
+            unitSort = (u, x, y) -> -u.maxHealth;
+            coolantMultiplier = 0.6f;
+            health = 260 * size * size;
+            coolantUsage = 1.4f;
+            consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
+            consumes.powerCond(24f, TurretBuild::isActive);
+        }};
         exoticAlloyWallLarge = new Wall("exotic-alloy-wall-large") {
             {
                 this.localizedName = "Exotic Alloy Wall Large";

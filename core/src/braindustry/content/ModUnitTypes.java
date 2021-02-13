@@ -44,8 +44,8 @@ public class ModUnitTypes implements ContentList {
     public static UnitType
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
-            lyra, shield, tropsy, venti,
-            vyvna, tyzen, kryox, intelix, nemesis, maverix, griffon, noro, litix, tenvy;
+            lyra, shield, tropsy, venti, vyvna, tyzen, kryox, intelix,
+            nemesis, maverix, griffon, moureno, litix, tenvy;
 
     public ModUnitTypes() {
         UnitTypes.class.isArray();

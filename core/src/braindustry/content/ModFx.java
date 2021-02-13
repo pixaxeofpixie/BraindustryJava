@@ -710,4 +710,15 @@ public class ModFx {
         });
     });
 
+    public static final Effect shinigamiTrail = new Effect(48.0F, (e) -> {
+        for (int i = 0; i < 2; ++i) {
+            Draw.color(i == 0 ? ModPal.unitOrange : ModPal.unitOrangeLight);
+            float m = i == 0 ? 1.2F : 0.8F;
+            float rot = e.rotation + 180.0F;
+            float w = 15.0F * e.fout() * m;
+            Drawf.tri(e.x, e.y, w, (40.0F + Mathf.randomSeedRange((long) e.id, 20.0F)) * m, rot);
+            Drawf.tri(e.x, e.y, w, 10.0F * m, rot + 180.0F);
+        }
+
+    });
 }
