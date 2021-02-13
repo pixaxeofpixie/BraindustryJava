@@ -13,9 +13,11 @@ repositories {
 }
 buildscript {
     ext {
-        prop = new Properties().with { p -> p.load(file('gradle.properties').newReader()); return p }
-        serverModFolder = prop["serverModFolder"]
-        gameModFolder = prop["gameModFolder"]
+//        prop = new Properties().with { p -> p.load(file('gradle.properties').newReader()); return p }
+//        serverModFolder = prop["serverModFolder"]
+//        gameModFolder = prop["gameModFolder"]
+        serverModFolder=null;
+        gameModFolder=null;
         mindustryVersion = 'v123.1'
     }
     repositories {
@@ -53,16 +55,6 @@ ext {
 
     }
 }
-
-//java 8 backwards compatibility flag
-allprojects {
-    tasks.withType(JavaCompile) {
-        if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
-            options.compilerArgs.addAll(['--release', '8'])
-        }
-    }
-}
-
 dependencies {
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
@@ -75,6 +67,11 @@ dependencies {
 
 
 allprojects {
+    tasks.withType(JavaCompile) {
+        if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
+            options.compilerArgs.addAll(['--release', '8'])
+        }
+    }
     apply plugin: 'maven'
     repositories {
         mavenLocal()
@@ -87,7 +84,6 @@ allprojects {
     }
 }
 
-//addProj("tools")
 configure(project(":annotations")) {
     tasks.withType(JavaCompile) {
         targetCompatibility = 8
@@ -185,8 +181,8 @@ project(":core") {
 
     afterEvaluate {
         task mergedJavadoc(type: Javadoc) {
-            if (true) return null;
-            def blacklist = [project(":ios"), project(":desktop"), project(":server"), project(":annotations")]
+//            if (true) return null;
+            def blacklist = [ project(":annotations")]
             if (findProject(":android") != null) {
                 blacklist += project(":android")
             }
@@ -254,38 +250,6 @@ jar {
 
     from("core/assets/") {
         include "**"
-    }
-
-    ext {
-        copyToWay = { String way ->
-            dir=project.getProjectDir();
-            archiveFileName = "${dir.name}Desktop.jar"
-            try {
-                delete {
-                    delete "$way/${archiveFileName}"
-                }
-                copy {
-                    from "$buildDir/libs/${archiveFileName}"
-                    StringBuilder builder=new StringBuilder();
-                    for (i in 0..<(dir.absolutePath.count("/")+dir.absolutePath.count("\\")+1)) {
-                        builder.append("../")
-                    }
-                    into "${builder.toString()}$way/${archiveFileName}"
-                    println("${archiveFileName} copy to $way/${archiveFileName}")
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    doLast{
-        if (serverModFolder != null) {
-            copyToWay(serverModFolder)
-        }
-        if (gameModFolder != null){
-            copyToWay(gameModFolder)
-        }
     }
 }
 task deploy(type: Jar) {

@@ -107,13 +107,9 @@ public class ModImagePacker extends ImagePacker {
         Log.info("&ly[Generator]&lc Total time to generate: &lg@&lcms", Time.elapsed());
         Log.info("&ly[Generator]&lc Total images created: &lg@", Image.total());
         Image.dispose();
-        Seq<UnlockableContent> cont = Seq.withArrays(new Object[]{Vars.content.blocks(), Vars.content.items(), Vars.content.liquids(), Vars.content.units()});
-        cont.removeAll((u) -> {
-            return u instanceof ConstructBlock || u == Blocks.air;
-        });
-        notExistNames.each(name->{
-            Log.warn("Region does not exist: @",name);
-        });
+//        notExistNames.each(name->{
+//            Log.warn("Region does not exist: @",name);
+//        });
         modVars.packSprites=false;
     }
 
