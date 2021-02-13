@@ -92,7 +92,7 @@ public class modVars {
 //            Log.info("key: @, o: @",key,o.toString());
             if (o instanceof Unit && o instanceof Payloadc){
 
-                Log.info("key: @, o: @",key,o.toString());
+//                Log.info("key: @, o: @",key,o.toString());
                 EntityMapping.nameMap.put(key,()->new UnitPayloadcCopy((Unit) prov.get()));
             }
         }

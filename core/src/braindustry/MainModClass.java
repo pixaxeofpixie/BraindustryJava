@@ -65,7 +65,6 @@ public class MainModClass extends Mod {
         });
         modInfo = Vars.mods.getMod(this.getClass());
         modVars.load();
-        Log.info("Looool");
         EventOn(ClientLoadEvent.class, (e) -> {
             constructor();
         });

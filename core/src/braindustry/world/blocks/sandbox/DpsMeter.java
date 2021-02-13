@@ -56,7 +56,7 @@ public class DpsMeter extends Block {
 
     @Override
     protected TextureRegion[] icons() {
-        return teamRegion.found() ? new TextureRegion[]{region, teamRegion} : new TextureRegion[]{region};
+        return this.teamRegion.found() ? new TextureRegion[]{this.region, this.teamRegions[Team.sharded.id]} : new TextureRegion[]{this.region};
     }
 
     public static class MeterContainer {
