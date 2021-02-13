@@ -14,8 +14,8 @@ repositories{
 buildscript{
     ext{
         prop=new Properties().with{ p -> p.load(file('gradle.properties').newReader()); return p }
-        serverModFolder=prop.hasProperty("serverModFolder")?prop["serverModFolder"]:""
-        gameModFolder=prop.hasProperty("gameModFolder")?prop["gameModFolder"]:""
+        serverModFolder=prop["serverModFolder"]
+        gameModFolder=prop["gameModFolder"]
         mindustryVersion = 'v123.1'
     }
     repositories{
@@ -244,9 +244,6 @@ task pjar{
 }
 jar{
     archiveFileName = "${project.archivesBaseName}Desktop.jar"
-    println "some"
-    println serverModFolder
-    println gameModFolder
     from{
         configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
     }
@@ -257,6 +254,12 @@ jar{
 
     from("core/assets/"){
         include "**"
+    }
+    doLast{
+
+        println "some"
+        println serverModFolder
+        println gameModFolder
     }
 }
 
