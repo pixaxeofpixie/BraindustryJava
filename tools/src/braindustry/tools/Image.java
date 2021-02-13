@@ -27,7 +27,7 @@ public class Image{
     }
 
     Image(BufferedImage src){
-        this.image = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        this.image = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_4BYTE_ABGR_PRE);
         this.graphics = image.createGraphics();
         this.graphics.drawImage(src, 0, 0, null);
         this.width = image.getWidth();
@@ -37,7 +37,7 @@ public class Image{
     }
 
     Image(int width, int height){
-        this(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
+        this(new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR_PRE));
     }
 
     Image copy(){
