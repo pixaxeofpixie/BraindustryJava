@@ -212,7 +212,11 @@ public class modFunc {
     }
 
     public static void print(String text, Object... args) {
-        Log.info("[@/@]: @",modInfo.file.name(), modInfo.meta.displayName, Strings.format(text, args));
+        if (true){
+            Log.info("[@]",modInfo.name, Strings.format(text, args));
+            return;
+        }
+        Log.info("[@/@]: @",modInfo.name, modInfo.meta.displayName, Strings.format(text, args));
     }
 
     public static boolean selected(Building building) {

@@ -1599,7 +1599,7 @@ public class ModUnitTypes implements ContentList {
                 this.ammoType = AmmoTypes.powerHigh;
                 this.mechStepShake = 0.25f;
                 this.mechStepParticles = true;
-                this.mechStepParticles = true;
+//                this.mechStepParticles = true;
                 this.immunities = ObjectSet.with(StatusEffects.burning);
                 this.weapons.add(
                         new ModWeapon("griffon-weapon") {
