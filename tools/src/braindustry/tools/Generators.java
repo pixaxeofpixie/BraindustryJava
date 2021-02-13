@@ -301,7 +301,7 @@ if (false){
 
         ModImagePacker.generate("unit-icons", () -> content.units().each(type -> {
             if(type.isHidden()) return; //hidden units don't generate
-//Log.info("type: @",type.name);
+Log.info("type: @",type.name);
             ObjectSet<String> outlined = new ObjectSet<>();
 
             try{

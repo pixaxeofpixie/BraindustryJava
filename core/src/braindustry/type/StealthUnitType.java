@@ -1,5 +1,6 @@
 package braindustry.type;
 
+import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -54,6 +55,16 @@ public class StealthUnitType extends UnitType {
         Draw.rect(this.shadowRegion, unit.x + -12.0F * e, unit.y + -13.0F * e, unit.rotation - 90.0F);
         Draw.color();
     }
+
+    @Override
+    public void drawOutline(Unit unit) {
+        Draw.reset();
+        applyColor(unit);
+        if (Core.atlas.isFound(this.outlineRegion)) {
+            Draw.rect(this.outlineRegion, unit.x, unit.y, unit.rotation - 90.0F);
+        }
+    }
+
     public <T extends Unit & Legsc> void drawLegs(T unit) {
         this.applyColor(unit);
         Leg[] legs = ((Legsc)unit).legs();

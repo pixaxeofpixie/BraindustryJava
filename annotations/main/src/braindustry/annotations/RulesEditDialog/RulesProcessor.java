@@ -105,6 +105,7 @@ protected boolean is(Svar var,Class<?> c){
         Seq<ClassName> imports=new Seq<>();
         imports.add(ClassName.get(Strings.class));
 write(classBuilder,imports,0);
+imports.clear();
 //        JavaFile.builder(packageName, spec).build().writeTo(BaseProcessor.filer);
     }
 }

@@ -52,7 +52,7 @@ public abstract class PowerUnitType extends UnitType {
         Seq<TextureRegion> plasmas=new Seq<>();
         int i=0;
         for (TextureRegion plasma=Core.atlas.find(this.name+"-plasma-"+i);Core.atlas.isFound(plasma);plasma=Core.atlas.find(this.name+"-plasma-"+(++i))){
-            plasmas.add(plasma);
+           if (!modVars.packSprites) plasmas.add(plasma);
         }
         this.plasmaRegions =new TextureRegion[plasmas.size];
         for (int j = 0; j < plasmaRegions.length; j++) {

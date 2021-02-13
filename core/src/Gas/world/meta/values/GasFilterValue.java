@@ -26,10 +26,8 @@ public class GasFilterValue implements StatValue {
 
     public void display(Table table) {
         Seq<Gas> list = new Seq<>();
-        Iterator<Gas> var3 = Vars.content.<Gas>getBy(ContentType.typeid_UNUSED).iterator();
 
-        while(var3.hasNext()) {
-            Gas gas = var3.next();
+        for (Gas gas : Vars.content.<Gas>getBy(ContentType.typeid_UNUSED)) {
             if (!gas.isHidden() && this.filter.get(gas)) {
                 list.add(gas);
             }
@@ -41,6 +39,7 @@ public class GasFilterValue implements StatValue {
                 table.add("/");
             }
         }
+        list.clear();
 
     }
 }

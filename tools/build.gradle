@@ -345,9 +345,13 @@ task pack(dependsOn: [classes, configurations.runtimeClasspath]){
         //run generation task; generate all needed sprites
         file(genFolder).mkdirs()
         javaexec{
+            maxHeapSize="4048m"
+            args("-Xmx4048m")
             main = "braindustry.tools.ModImagePacker"
             classpath = sourceSets.main.runtimeClasspath
             workingDir = genFolder
+//            jvmArgs ("-Xmx2024m")
+//            systemProperties("-Xmx2024m")
         }
 
         copy{

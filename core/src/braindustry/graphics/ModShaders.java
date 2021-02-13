@@ -144,7 +144,7 @@ public class ModShaders {
             float u_time = Time.time / Scl.scl(10);
 
             setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
-            Log.info("Time.delta: @", Time.delta);
+//            Log.info("Time.delta: @", Time.delta);
             setUniformf("u_delta", Time.delta / 60.f);
             Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
             float displayScale = Vars.renderer.getDisplayScale();
@@ -274,7 +274,7 @@ public class ModShaders {
                 setUniformf("u_vecRot", new Vec2(Mathf.cosDeg(bullet.rotation()), Mathf.sinDeg(bullet.rotation())));
                 setUniformf("u_offset", new Vec3(
                         -2, 2, -0));
-                Log.info("rot: @", bullet.rotation());
+//                Log.info("rot: @", bullet.rotation());
                 setUniformf("u_bulletRot", bullet.rotation());
 
                 setUniformf("u_grow", new Vec2(900, 900));

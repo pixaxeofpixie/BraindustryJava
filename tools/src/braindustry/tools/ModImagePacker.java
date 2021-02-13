@@ -70,13 +70,14 @@ public class ModImagePacker extends ImagePacker {
                 }
             }
         });
-
+        Seq<String> notExistNames=new Seq<>();
         Core.atlas = new TextureAtlas() {
             public AtlasRegion find(String name) {
                 if (!regionCache.containsKey(name)) {
-                    if (regionCache.containsKey("error")){
-                        ((GenRegion) regionCache.get("error")).invalid=true;
-                        return (AtlasRegion) regionCache.get("error");
+//                    if(!notExistNames.contains(name))notExistNames.add(name);
+                    ((GenRegion)error).addName(name);
+                    if (error!=null){
+                        return error;
                     }
                     GenRegion region = new GenRegion(name, (Fi)null);
                     region.invalid = true;
@@ -98,6 +99,8 @@ public class ModImagePacker extends ImagePacker {
                 return regionCache.containsKey(s);
             }
         };
+        ((GenRegion) regionCache.get("error")).invalid=true;
+        Core.atlas.setErrorRegion("error");
         Draw.scl = 1.0F / (float)Core.atlas.find("scale_marker").width;
         Time.mark();
         Generators.generate();
@@ -107,6 +110,9 @@ public class ModImagePacker extends ImagePacker {
         Seq<UnlockableContent> cont = Seq.withArrays(new Object[]{Vars.content.blocks(), Vars.content.items(), Vars.content.liquids(), Vars.content.units()});
         cont.removeAll((u) -> {
             return u instanceof ConstructBlock || u == Blocks.air;
+        });
+        notExistNames.each(name->{
+            Log.warn("Region does not exist: @",name);
         });
         modVars.packSprites=false;
     }
@@ -159,7 +165,9 @@ public class ModImagePacker extends ImagePacker {
 
     static class GenRegion extends TextureAtlas.AtlasRegion {
         boolean invalid;
+        String regionName="unknown";
         Fi path;
+        Seq<String> notExistNames=new Seq<>();
 
         GenRegion(String name, Fi path) {
             if (name == null) {
@@ -175,10 +183,23 @@ public class ModImagePacker extends ImagePacker {
         }
 
         static void validate(TextureRegion region) {
-            if (((GenRegion)region).invalid) {
-                err("Region does not exist: @", ((GenRegion)region).name);
+            GenRegion genRegion = (GenRegion) region;
+            if (genRegion.invalid) {
+                Seq<String> names = genRegion.notExistNames;
+                if (names.size==1){
+                    err("Region does not exist: @", names.first());
+                }else if(names.size==0){
+//                    err("Region does not exist0: @", genRegion.name);
+                }else {
+                    err("Regions does not exist: @", names.toString(", "));
+                }
+                names.clear();
             }
 
+        }
+
+        public void addName(String name) {
+            if (!notExistNames.contains(name))notExistNames.add(name);
         }
     }
 }

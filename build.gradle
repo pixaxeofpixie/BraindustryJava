@@ -89,7 +89,7 @@ allprojects{
 configure(project(":annotations")){
     tasks.withType(JavaCompile){
         targetCompatibility = 8
-        sourceCompatibility = 14
+        sourceCompatibility = 8
     }
 }
 
@@ -158,24 +158,6 @@ project(":core"){
     }
 
     task copyChangelog{
-        doLast{
-            if (true)return ;
-            def props = loadVersionProps()
-            def androidVersion = props['androidBuildCode'].toInteger() - 2
-            def loglines = file("../changelog").text.split("\n")
-            def notice = "[This is a truncated changelog, see Github for full notes]"
-            def maxLength = 460
-
-            def androidLogList = [notice] + loglines.findAll{ line -> !line.endsWith("]") || line.endsWith("[Mobile]") || line.endsWith("[Android]")}
-            def result = ""
-            androidLogList.forEach{line ->
-                if(result.length() + line.length() + 1 < maxLength){
-                    result += line + "\n"
-                }
-            }
-            def changelogs = file("../fastlane/metadata/android/en-US/changelogs/")
-            new File(changelogs, androidVersion + ".txt").text = (result)
-        }
     }
 
     dependencies{
