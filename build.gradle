@@ -144,18 +144,18 @@ project(":annotations") {
 configure (project(":core")){
 
     tasks.withType(JavaCompile) {
+        options.compilerArgs.addAll(['-release', '8'])
         if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
-            options.compilerArgs.addAll(['-release', '8'])
         }
 
         doFirst {
-            options.compilerArgs = options.compilerArgs.findAll { it != '--enable-preview' }
+//            options.compilerArgs = options.compilerArgs.findAll { it != '--enable-preview' }
         }
     }
 
     tasks.withType(Javadoc) {
         options {
-            addStringOption('Xdoclint:none', '-quiet')
+//            addStringOption('Xdoclint:none', '-quiet')
             addStringOption('-release', '8')
         }
     }
@@ -199,7 +199,7 @@ project(":core") {
 
     afterEvaluate {
         task mergedJavadoc(type: Javadoc) {
-//            if (true) return null;
+            if (true) return null;
             def blacklist = [ project(":annotations")]
             if (findProject(":android") != null) {
                 blacklist += project(":android")
