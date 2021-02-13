@@ -53,23 +53,23 @@ public class Generators {
     );
     static final Cicon logicIcon = Cicon.medium;
 
-    public static void generate(){
+    public static void generate() {
         ObjectMap<Block, Image> gens = new ObjectMap<>();
         Fi.get("../editor").mkdirs();
         if (false) {
             ModImagePacker.generate("cracks", () -> {
                 RidgedPerlin r = new RidgedPerlin(1, 3);
-                for(int size = 1; size <= BlockRenderer.maxCrackSize; size++){
+                for (int size = 1; size <= BlockRenderer.maxCrackSize; size++) {
                     int dim = size * 32;
                     int steps = BlockRenderer.crackRegions;
-                    for(int i = 0; i < steps; i++){
-                        float fract = i / (float)steps;
+                    for (int i = 0; i < steps; i++) {
+                        float fract = i / (float) steps;
 
                         Image image = new Image(dim, dim);
-                        for(int x = 0; x < dim; x++){
-                            for(int y = 0; y < dim; y++){
-                                float dst = Mathf.dst((float)x/dim, (float)y/dim, 0.5f, 0.5f) * 2f;
-                                if(dst < 1.2f && r.getValue(x, y, 1f / 40f) - dst*(1f-fract) > 0.16f){
+                        for (int x = 0; x < dim; x++) {
+                            for (int y = 0; y < dim; y++) {
+                                float dst = Mathf.dst((float) x / dim, (float) y / dim, 0.5f, 0.5f) * 2f;
+                                if (dst < 1.2f && r.getValue(x, y, 1f / 40f) - dst * (1f - fract) > 0.16f) {
                                     image.draw(x, y, Color.white);
                                 }
                             }
@@ -79,17 +79,17 @@ public class Generators {
                         int rad = 3;
 
                         //median filter
-                        for(int x = 0; x < output.width; x++){
-                            for(int y = 0; y < output.height; y++){
+                        for (int x = 0; x < output.width; x++) {
+                            for (int y = 0; y < output.height; y++) {
                                 int whites = 0, clears = 0;
-                                for(int cx = -rad; cx < rad; cx++){
-                                    for(int cy = -rad; cy < rad; cy++){
+                                for (int cx = -rad; cx < rad; cx++) {
+                                    for (int cy = -rad; cy < rad; cy++) {
                                         int wx = Mathf.clamp(cx + x, 0, output.width - 1), wy = Mathf.clamp(cy + y, 0, output.height - 1);
                                         Color color = image.getColor(wx, wy);
-                                        if(color.a > 0.5f){
-                                            whites ++;
-                                        }else{
-                                            clears ++;
+                                        if (color.a > 0.5f) {
+                                            whites++;
+                                        } else {
+                                            clears++;
                                         }
                                     }
                                 }
@@ -110,28 +110,29 @@ public class Generators {
             Seq<Block> blockList = content.blocks();
             Image colors = new Image(blockList.size, 1);
 
-            for(Block block : blockList){
-                if(block.isAir() || block instanceof ConstructBlock || block instanceof OreBlock || block instanceof LegacyBlock) continue;
+            for (Block block : blockList) {
+                if (block.isAir() || block instanceof ConstructBlock || block instanceof OreBlock || block instanceof LegacyBlock)
+                    continue;
 
                 block.load();
 
                 TextureRegion[] regions = block.getGeneratedIcons();
 
-                if(block instanceof Floor){
-                    for(TextureRegion region : block.variantRegions()){
-                        ModImagePacker.GenRegion gen = (ModImagePacker.GenRegion)region;
-                        if(gen.path == null) continue;
+                if (block instanceof Floor) {
+                    for (TextureRegion region : block.variantRegions()) {
+                        ModImagePacker.GenRegion gen = (ModImagePacker.GenRegion) region;
+                        if (gen.path == null) continue;
                         gen.path.copyTo(Fi.get("../editor/editor-" + gen.path.name()));
                     }
                 }
 
                 Image shardTeamTop = null;
 
-                if(block.teamRegion.found()){
+                if (block.teamRegion.found()) {
                     Image teamr = ModImagePacker.get(block.teamRegion);
 
-                    for(Team team : Team.all){
-                        if(team.hasPalette){
+                    for (Team team : Team.all) {
+                        if (team.hasPalette) {
                             Image out = new Image(teamr.width, teamr.height);
                             teamr.each((x, y) -> {
                                 int color = teamr.getColor(x, y).rgba8888();
@@ -140,41 +141,41 @@ public class Generators {
                             });
                             out.save(block.name + "-team-" + team.name);
 
-                            if(team == Team.sharded){
+                            if (team == Team.sharded) {
                                 shardTeamTop = out;
                             }
                         }
                     }
                 }
 
-                if(regions.length == 0){
+                if (regions.length == 0) {
                     continue;
                 }
 
-                try{
+                try {
                     Image last = null;
-                    if(block.outlineIcon){
+                    if (block.outlineIcon) {
                         int radius = 4;
-                        ModImagePacker.GenRegion region = (ModImagePacker.GenRegion)regions[regions.length - 1];
+                        ModImagePacker.GenRegion region = (ModImagePacker.GenRegion) regions[regions.length - 1];
                         Image base = ModImagePacker.get(region);
                         Image out = last = new Image(region.width, region.height);
-                        for(int x = 0; x < out.width; x++){
-                            for(int y = 0; y < out.height; y++){
+                        for (int x = 0; x < out.width; x++) {
+                            for (int y = 0; y < out.height; y++) {
 
                                 Color color = base.getColor(x, y);
                                 out.draw(x, y, color);
-                                if(color.a < 1f){
+                                if (color.a < 1f) {
                                     boolean found = false;
                                     outer:
-                                    for(int rx = -radius; rx <= radius; rx++){
-                                        for(int ry = -radius; ry <= radius; ry++){
-                                            if(Mathf.dst(rx, ry) <= radius && base.getColor(rx + x, ry + y).a > 0.01f){
+                                    for (int rx = -radius; rx <= radius; rx++) {
+                                        for (int ry = -radius; ry <= radius; ry++) {
+                                            if (Mathf.dst(rx, ry) <= radius && base.getColor(rx + x, ry + y).a > 0.01f) {
                                                 found = true;
                                                 break outer;
                                             }
                                         }
                                     }
-                                    if(found){
+                                    if (found) {
                                         out.draw(x, y, block.outlineColor);
                                     }
                                 }
@@ -189,32 +190,32 @@ public class Generators {
                     Image image = ModImagePacker.get(regions[0]);
 
                     int i = 0;
-                    for(TextureRegion region : regions){
+                    for (TextureRegion region : regions) {
                         i++;
-                        if(i != regions.length || last == null){
+                        if (i != regions.length || last == null) {
                             image.draw(region);
-                        }else{
+                        } else {
                             image.draw(last);
                         }
 
                         //draw shard (default team top) on top of first sprite
-                        if(region == block.teamRegions[Team.sharded.id] && shardTeamTop != null){
+                        if (region == block.teamRegions[Team.sharded.id] && shardTeamTop != null) {
                             image.draw(shardTeamTop);
                         }
                     }
 
-                    if(!(regions.length == 1 && regions[0] == Core.atlas.find(block.name) && shardTeamTop == null)){
+                    if (!(regions.length == 1 && regions[0] == Core.atlas.find(block.name) && shardTeamTop == null)) {
                         image.save("block-" + block.name + "-full");
                     }
 
                     image.save("../editor/" + block.name + "-icon-editor");
 
-                    for(Cicon icon : Cicon.scaled){
+                    for (Cicon icon : Cicon.scaled) {
                         Image scaled = new Image(icon.size, icon.size);
                         scaled.drawScaled(image);
                         scaled.save("../ui/block-" + block.name + "-" + icon.name());
 
-                        if(icon == logicIcon && block.synthetic() && block.buildVisibility != BuildVisibility.hidden){
+                        if (icon == logicIcon && block.synthetic() && block.buildVisibility != BuildVisibility.hidden) {
                             image.save(block.name + "-icon-logic");
                         }
                     }
@@ -222,14 +223,14 @@ public class Generators {
                     boolean hasEmpty = false;
                     Color average = new Color();
                     float asum = 0f;
-                    for(int x = 0; x < image.width; x++){
-                        for(int y = 0; y < image.height; y++){
+                    for (int x = 0; x < image.width; x++) {
+                        for (int y = 0; y < image.height; y++) {
                             Color color = image.getColor(x, y);
-                            average.r += color.r*color.a;
-                            average.g += color.g*color.a;
-                            average.b += color.b*color.a;
+                            average.r += color.r * color.a;
+                            average.g += color.g * color.a;
+                            average.b += color.b * color.a;
                             asum += color.a;
-                            if(color.a < 0.9f){
+                            if (color.a < 0.9f) {
                                 hasEmpty = true;
                             }
                         }
@@ -237,15 +238,15 @@ public class Generators {
 
                     average.mul(1f / asum);
 
-                    if(block instanceof Floor){
+                    if (block instanceof Floor) {
                         average.mul(0.8f);
-                    }else{
+                    } else {
                         average.mul(1.1f);
                     }
                     //encode square sprite in alpha channel
                     average.a = hasEmpty ? 0.1f : 1f;
                     colors.draw(block.id, 0, average);
-                }catch(NullPointerException e){
+                } catch (NullPointerException e) {
                     Log.err("Block &ly'@'&lr has an null region!", block);
                 }
             }
@@ -258,11 +259,11 @@ public class Generators {
                 content.blocks().<ShallowLiquid>each(b -> b instanceof ShallowLiquid, floor -> {
                     Image overlay = ModImagePacker.get(floor.liquidBase.region);
                     int index = 0;
-                    for(TextureRegion region : floor.floorBase.variantRegions()){
+                    for (TextureRegion region : floor.floorBase.variantRegions()) {
                         Image res = new Image(32, 32);
                         res.draw(ModImagePacker.get(region));
-                        for(int x = 0; x < res.width; x++){
-                            for(int y = 0; y < res.height; y++){
+                        for (int x = 0; x < res.width; x++) {
+                            for (int y = 0; y < res.height; y++) {
                                 Color color = overlay.getColor(x, y).a(floor.liquidOpacity);
                                 res.draw(x, y, color);
                             }
@@ -277,48 +278,48 @@ public class Generators {
                 });
             });
         }
-if (false){
+        if (false) {
 
-    ModImagePacker.generate("item-icons", () -> {
-        for(UnlockableContent item : Seq.<UnlockableContent>withArrays(content.items(), content.liquids())){
-            Image base = ModImagePacker.get(item.getContentType().name() + "-" + item.name);
-            for(Cicon icon : Cicon.scaled){
-                //if(icon.size == base.width) continue;
-                Image image = new Image(icon.size, icon.size);
-                image.drawScaled(base);
-                image.save(item.getContentType().name() + "-" + item.name + "-" + icon.name(), false);
+            ModImagePacker.generate("item-icons", () -> {
+                for (UnlockableContent item : Seq.<UnlockableContent>withArrays(content.items(), content.liquids())) {
+                    Image base = ModImagePacker.get(item.getContentType().name() + "-" + item.name);
+                    for (Cicon icon : Cicon.scaled) {
+                        //if(icon.size == base.width) continue;
+                        Image image = new Image(icon.size, icon.size);
+                        image.drawScaled(base);
+                        image.save(item.getContentType().name() + "-" + item.name + "-" + icon.name(), false);
 
-                if(icon == Cicon.medium){
-                    image.save("../ui/" + item.getContentType() + "-" + item.name + "-icon");
+                        if (icon == Cicon.medium) {
+                            image.save("../ui/" + item.getContentType() + "-" + item.name + "-icon");
+                        }
+
+                        if (icon == logicIcon) {
+                            image.save(item.name + "-icon-logic");
+                        }
+                    }
                 }
-
-                if(icon == logicIcon){
-                    image.save(item.name + "-icon-logic");
-                }
-            }
+            });
         }
-    });
-}
 
         ModImagePacker.generate("unit-icons", () -> content.units().each(type -> {
-            if(type.isHidden()) return; //hidden units don't generate
-Log.info("type: @",type.name);
+            if (type.isHidden()) return; //hidden units don't generate
+//            Log.info("type: @", type.name);
             ObjectSet<String> outlined = new ObjectSet<>();
 
-            try{
+            try {
                 type.load();
                 type.init();
 
                 Color outc = Pal.darkerMetal;
                 Func<Image, Image> outline = i -> i.outline(3, outc);
                 Cons<TextureRegion> outliner = t -> {
-                    if(t != null && t.found()){
+                    if (t != null && t.found()) {
                         ModImagePacker.replace(t, outline.get(ModImagePacker.get(t)));
                     }
                 };
 
-                for(Weapon weapon : type.weapons){
-                    if(outlined.add(weapon.name) && ModImagePacker.has(weapon.name)){
+                for (Weapon weapon : type.weapons) {
+                    if (outlined.add(weapon.name) && ModImagePacker.has(weapon.name)) {
                         outline.get(ModImagePacker.get(weapon.name)).save(weapon.name + "-outline");
                     }
                 }
@@ -328,14 +329,14 @@ Log.info("type: @",type.name);
                 outliner.get(type.legBaseRegion);
                 outliner.get(type.baseJointRegion);
                 Unit unit = type.constructor.get();
-                if(unit instanceof Legsc) outliner.get(type.legRegion);
+                if (unit instanceof Legsc) outliner.get(type.legRegion);
 
                 Image image = outline.get(ModImagePacker.get(type.region));
 
                 image.save(type.name + "-outline");
 
                 //draw mech parts
-                if(unit instanceof Mechc){
+                if (unit instanceof Mechc) {
                     image.drawCenter(type.baseRegion);
                     image.drawCenter(type.legRegion);
                     image.drawCenter(type.legRegion, true, false);
@@ -343,12 +344,12 @@ Log.info("type: @",type.name);
                 }
 
                 //draw outlines
-                for(Weapon weapon : type.weapons){
+                for (Weapon weapon : type.weapons) {
                     weapon.load();
 
                     image.draw(outline.get(ModImagePacker.get(weapon.region)),
-                            (int)(weapon.x / Draw.scl + image.width / 2f - weapon.region.width / 2f),
-                            (int)(-weapon.y / Draw.scl + image.height / 2f - weapon.region.height / 2f),
+                            (int) (weapon.x / Draw.scl + image.width / 2f - weapon.region.width / 2f),
+                            (int) (-weapon.y / Draw.scl + image.height / 2f - weapon.region.height / 2f),
                             weapon.flipSprite, false);
                 }
 
@@ -361,12 +362,12 @@ Log.info("type: @",type.name);
 
                 image.draw(cell, image.width / 2 - cell.width / 2, image.height / 2 - cell.height / 2);
 
-                for(Weapon weapon : type.weapons){
+                for (Weapon weapon : type.weapons) {
                     weapon.load();
 
                     image.draw(weapon.top ? outline.get(ModImagePacker.get(weapon.region)) : ModImagePacker.get(weapon.region),
-                            (int)(weapon.x / Draw.scl + image.width / 2f - weapon.region.width / 2f),
-                            (int)(-weapon.y / Draw.scl + image.height / 2f - weapon.region.height / 2f),
+                            (int) (weapon.x / Draw.scl + image.width / 2f - weapon.region.width / 2f),
+                            (int) (-weapon.y / Draw.scl + image.height / 2f - weapon.region.height / 2f),
                             weapon.flipSprite, false);
                 }
 
@@ -380,10 +381,10 @@ Log.info("type: @",type.name);
                 int splits = 3;
                 float degrees = rand.random(360f);
                 float offsetRange = Math.max(image.width, image.height) * 0.15f;
-                Vec2 offset = new Vec2(1, 1).rotate(rand.random(360f)).setLength(rand.random(0, offsetRange)).add(image.width/2f, image.height/2f);
+                Vec2 offset = new Vec2(1, 1).rotate(rand.random(360f)).setLength(rand.random(0, offsetRange)).add(image.width / 2f, image.height / 2f);
 
                 Image[] wrecks = new Image[splits];
-                for(int i = 0; i < wrecks.length; i++){
+                for (int i = 0; i < wrecks.length; i++) {
                     wrecks[i] = new Image(image.width, image.height);
                 }
 
@@ -392,33 +393,33 @@ Log.info("type: @",type.name);
 
                 image.each((x, y) -> {
                     //add darker cracks on top
-                    boolean rValue = Math.max(r.getValue(x, y, 1f / (20f + image.width/8f)), 0) > 0.16f;
+                    boolean rValue = Math.max(r.getValue(x, y, 1f / (20f + image.width / 8f)), 0) > 0.16f;
                     //cut out random chunks with voronoi
-                    boolean vval = vn.noise(x, y, 1f / (14f + image.width/40f)) > 0.47;
+                    boolean vval = vn.noise(x, y, 1f / (14f + image.width / 40f)) > 0.47;
 
-                    float dst =  offset.dst(x, y);
+                    float dst = offset.dst(x, y);
                     //distort edges with random noise
-                    float noise = (float) Noise.rawNoise(dst / (9f + image.width/70f)) * (60 + image.width/30f);
-                    int section = (int)Mathf.clamp(Mathf.mod(offset.angleTo(x, y) + noise + degrees, 360f) / 360f * splits, 0, splits - 1);
-                    if(!vval) wrecks[section].draw(x, y, image.getColor(x, y).mul(rValue ? 0.7f : 1f));
+                    float noise = (float) Noise.rawNoise(dst / (9f + image.width / 70f)) * (60 + image.width / 30f);
+                    int section = (int) Mathf.clamp(Mathf.mod(offset.angleTo(x, y) + noise + degrees, 360f) / 360f * splits, 0, splits - 1);
+                    if (!vval) wrecks[section].draw(x, y, image.getColor(x, y).mul(rValue ? 0.7f : 1f));
                 });
 
-                for(int i = 0; i < wrecks.length; i++){
+                for (int i = 0; i < wrecks.length; i++) {
                     wrecks[i].save(type.name + "-wreck" + i);
                 }
 
-                for(Cicon icon : Cicon.scaled){
+                for (Cicon icon : Cicon.scaled) {
                     Vec2 size = Scaling.fit.apply(image.width, image.height, icon.size, icon.size);
-                    Image scaled = new Image((int)size.x, (int)size.y);
+                    Image scaled = new Image((int) size.x, (int) size.y);
 
                     scaled.drawScaled(image);
                     scaled.save("../ui/unit-" + type.name + "-" + icon.name());
 
-                    if(icon == logicIcon){
+                    if (icon == logicIcon) {
                         scaled.save(type.name + "-icon-logic");
                     }
                 }
-            }catch(IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 Log.err("WARNING: Skipping unit @: @", type.name, e.getMessage());
             }
 
@@ -428,19 +429,19 @@ Log.info("type: @",type.name);
             content.blocks().<OreBlock>each(b -> b instanceof OreBlock, ore -> {
                 Item item = ore.itemDrop;
 
-                for(int i = 0; i < 3; i++){
+                for (int i = 0; i < 3; i++) {
                     //get base image to draw on
                     Image image = new Image(32, 32);
                     Image shadow = ModImagePacker.get(item.name + (i + 1));
 
                     int offset = image.width / tilesize - 1;
 
-                    for(int x = 0; x < image.width; x++){
-                        for(int y = offset; y < image.height; y++){
+                    for (int x = 0; x < image.width; x++) {
+                        for (int y = offset; y < image.height; y++) {
                             Color color = shadow.getColor(x, y - offset);
 
                             //draw semi transparent background
-                            if(color.a > 0.001f){
+                            if (color.a > 0.001f) {
                                 color.set(0, 0, 0, 0.3f);
                                 image.draw(x, y, color);
                             }
@@ -452,7 +453,7 @@ Log.info("type: @",type.name);
                     image.save("../editor/editor-ore-" + item.name + (i + 1));
 
                     image.save("block-" + ore.name + "-full");
-                    for(Cicon icon : Cicon.scaled){
+                    for (Cicon icon : Cicon.scaled) {
                         Image scaled = new Image(icon.size, icon.size);
                         scaled.drawScaled(image);
                         scaled.save("../ui/block-" + ore.name + "-" + icon.name());
@@ -464,43 +465,44 @@ Log.info("type: @",type.name);
         ModImagePacker.generate("edges", () -> {
             content.blocks().<Floor>each(b -> b instanceof Floor && !(b instanceof OverlayFloor), floor -> {
 
-                if(ModImagePacker.has(floor.name + "-edge") || floor.blendGroup != floor){
+                if (ModImagePacker.has(floor.name + "-edge") || floor.blendGroup != floor) {
                     return;
                 }
 
-                try{
+                try {
                     Image image = gens.get(floor, ModImagePacker.get(floor.getGeneratedIcons()[0]));
                     Image edge = ModImagePacker.get("edge-stencil");
                     Image result = new Image(edge.width, edge.height);
 
-                    for(int x = 0; x < edge.width; x++){
-                        for(int y = 0; y < edge.height; y++){
+                    for (int x = 0; x < edge.width; x++) {
+                        for (int y = 0; y < edge.height; y++) {
                             result.draw(x, y, edge.getColor(x, y).mul(image.getColor(x % image.width, y % image.height)));
                         }
                     }
 
                     result.save("../blocks/environment/" + floor.name + "-edge");
 
-                }catch(Exception ignored){}
+                } catch (Exception ignored) {
+                }
             });
         });
 
         ModImagePacker.generate("scorches", () -> {
-            for(int size = 0; size < 10; size++){
-                for(int i = 0; i < 3; i++){
+            for (int size = 0; size < 10; size++) {
+                for (int i = 0; i < 3; i++) {
                     ScorchGenerator gen = new ScorchGenerator();
                     double multiplier = 30;
                     double ss = size * multiplier / 20.0;
 
                     gen.seed = Mathf.random(100000);
-                    gen.size += size*multiplier;
+                    gen.size += size * multiplier;
                     gen.scale = gen.size / 80f * 18f;
                     //gen.nscl -= size * 0.2f;
-                    gen.octaves += ss/3.0;
-                    gen.pers += ss/10.0/5.0;
+                    gen.octaves += ss / 3.0;
+                    gen.pers += ss / 10.0 / 5.0;
 
                     gen.scale += Mathf.range(3f);
-                    gen.scale -= ss*2f;
+                    gen.scale -= ss * 2f;
                     gen.nscl -= Mathf.random(1f);
 
                     Pixmap out = gen.generate();

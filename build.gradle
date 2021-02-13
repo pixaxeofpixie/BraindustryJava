@@ -141,7 +141,25 @@ project(":annotations") {
 //        implementation "com.github.Anuken.Mindustry:entities:$mindustryVersion"
     }
 }
+configure (project(":core")){
 
+    tasks.withType(JavaCompile) {
+        if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
+            options.compilerArgs.addAll(['-release', '8'])
+        }
+
+        doFirst {
+            options.compilerArgs = options.compilerArgs.findAll { it != '--enable-preview' }
+        }
+    }
+
+    tasks.withType(Javadoc) {
+        options {
+            addStringOption('Xdoclint:none', '-quiet')
+            addStringOption('-release', '8')
+        }
+    }
+}
 project(":core") {
     apply plugin: "java-library"
 
