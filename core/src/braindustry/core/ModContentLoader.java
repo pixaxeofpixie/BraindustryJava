@@ -66,6 +66,9 @@ public class ModContentLoader extends ContentLoader {
     public ModContentLoader(){
         clear();
     }
+    public ModContentLoader(Cons<ContentList> cons){
+        createModContent(cons);
+    }
 
     /** Clears all initialized content.*/
     public void clear(){

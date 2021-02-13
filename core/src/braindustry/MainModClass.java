@@ -112,13 +112,7 @@ public class MainModClass extends Mod {
     private void constructor() {
         if (!loaded) return;
         modInfo = Vars.mods.getMod(this.getClass());
-        Events.on(EventType.UnitDestroyEvent.class, (e) -> {
-            Seq<UnitType> types = Seq.with(ModUnitTypes.griffon);
-            Unit unit = e.unit;
-            if (types.contains(unit.type)) {
-                Call.createBullet(ModBullets.deathLaser, unit.team, unit.x, unit.y, unit.rotation+90f, 1200f, 0f, 230f);
-            }
-        });
+
         Seq.with(Blocks.blockForge, Blocks.blockLoader, Blocks.blockUnloader).each(b -> b.buildVisibility = BuildVisibility.shown);
         Blocks.interplanetaryAccelerator.buildVisibility = BuildVisibility.shown;
         Boolf<BulletType> replace = (b) -> (b instanceof LightningBulletType && !(b instanceof ModLightningBulletType));
@@ -158,7 +152,7 @@ public class MainModClass extends Mod {
 
     public void loadContent() {
         modInfo = Vars.mods.getMod(this.getClass());
-        print("java loadContent");
+        print("loading mod content...");
         modAtlas = new ModAtlas();
         inTry(() -> {
             if (!headless) ModShaders.init();
@@ -168,7 +162,7 @@ public class MainModClass extends Mod {
         /*Seq<ContentList> loads = Seq.with(
                 new ModSounds(), new ModStatusEffects(), new ModItems(), new ModLiquids(), new ModUnitTypes(), new ModBlocks(), new ModTechTree()
         );*/
-        new ModContentLoader().createModContent((load) -> {
+        new ModContentLoader((load) -> {
             try {
                 load.load();
             } catch (NullPointerException e) {

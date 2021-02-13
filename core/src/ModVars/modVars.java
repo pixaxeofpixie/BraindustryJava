@@ -10,6 +10,7 @@ import arc.func.Prov;
 import arc.struct.Seq;
 import arc.util.Log;
 import braindustry.ModListener;
+import braindustry.core.ModLogic;
 import braindustry.core.ModNetClient;
 import braindustry.gen.ModNetServer;
 import braindustry.gen.ModRemoteReadClient;
@@ -49,6 +50,7 @@ public class modVars {
     public static ModNetClient netClient;
     public static ModNetServer netServer;
     public static ModUI modUI;
+    public static ModLogic logic;
     public static ModListener listener;
     public  static ClientLauncher launcher;
     public static boolean loaded = false;
@@ -112,7 +114,9 @@ public class modVars {
         netClient = new ModNetClient();
         netServer = new ModNetServer();
         settings = new ModSettings();
+
         ModListener.load();
+        listener.add(logic=new ModLogic());
     }
 
     private static <T> void mapClasses(Class<?>... objClasses) {

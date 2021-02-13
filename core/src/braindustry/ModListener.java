@@ -12,7 +12,7 @@ import mindustry.game.EventType;
 import static ModVars.modVars.*;
 import static mindustry.Vars.ui;
 
-public class ModListener implements ApplicationListener {
+public class ModListener extends ApplicationCore {
     public static Seq<Runnable> updaters=new Seq<>();
     protected class Editor extends ApplicationCore {
 
@@ -40,16 +40,23 @@ public class ModListener implements ApplicationListener {
     @Override
     public void dispose() {
         if (!loaded)return;
-        Log.info("");
+        super.dispose();
+    }
+
+    @Override
+    public void setup() {
+
     }
 
     @Override
     public void init() {
         if (!loaded)return;
+        super.init();
     }
 
     public void update() {
         updaters.each(Runnable::run);
+        super.update();
     }
 
 }
