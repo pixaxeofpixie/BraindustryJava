@@ -144,7 +144,7 @@ project(":annotations") {
 configure (project(":core")){
 
     tasks.withType(JavaCompile) {
-        options.compilerArgs.addAll(['-release', '8'])
+        options.compilerArgs.addAll(['--release', '8'])
         if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
         }
 
