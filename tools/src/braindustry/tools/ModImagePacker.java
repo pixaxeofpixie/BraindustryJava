@@ -123,7 +123,7 @@ public class ModImagePacker extends ImagePacker {
 
     static void generate(String name, Runnable run) {
         Time.mark();
-        Log.info("[Generator]Start @",name);
+        Log.info("&ly[Generator]&lc Start &lm@&lc",name);
         run.run();
         Log.info("&ly[Generator]&lc Time to generate &lm@&lc: &lg@&lcms", name, Time.elapsed());
     }
