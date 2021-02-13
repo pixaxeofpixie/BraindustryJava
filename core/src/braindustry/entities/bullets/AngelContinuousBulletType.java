@@ -9,10 +9,12 @@ import mindustry.entities.bullet.ContinuousLaserBulletType;
 import mindustry.gen.Bullet;
 
 public class AngelContinuousBulletType extends ContinuousLaserBulletType implements LengthBulletType {
+    public Color firstColor=Color.black.cpy();
+    public Color secondColor=Color.white.cpy();
     @Override
     public void draw(Bullet b) {
         Draw.draw(Draw.z(),()->{
-            ModShaders.gradientLaserShader.set(b, this, Color.acid,Color.black);
+            ModShaders.gradientLaserShader.set(b, this, firstColor,secondColor);
             super.draw(b);
             Draw.shader();
         });

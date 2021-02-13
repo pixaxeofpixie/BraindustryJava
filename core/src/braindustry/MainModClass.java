@@ -17,6 +17,7 @@ import arc.struct.Seq;
 import arc.util.CommandHandler;
 import arc.util.Log;
 import braindustry.content.*;
+import braindustry.core.ModContentLoader;
 import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.ModLightningBulletType;
 import braindustry.gen.ModPlayer;
@@ -36,6 +37,7 @@ import mindustry.game.Team;
 import mindustry.gen.Call;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Tex;
+import mindustry.gen.Unit;
 import mindustry.io.JsonIO;
 import mindustry.mod.Mod;
 import mindustry.type.Item;
@@ -98,11 +100,7 @@ public class MainModClass extends Mod {
 
     public void init() {
         if (!loaded) return;
-        Events.on(EventType.UnitDestroyEvent.class, (e) -> {
-            Seq<UnitType> types = Seq.with(ModUnitTypes.griffon);
-            if (types.contains(e.unit.type))
-                Call.createBullet(new AngelContinuousBulletType(), Team.derelict, 0f, 0f, 90f, 1200f, 0f, 230f);
-        });
+
         createPlayer();
         modVars.init();
         EntityMapping.idMap[12] = ModPlayer::new;
@@ -111,40 +109,16 @@ public class MainModClass extends Mod {
         Events.fire(new ModEventType.ModInit());
     }
 
-    private void showUnitChangeDialog() {
-    }
-
-    private void showUnlockDialog() {
-        BaseDialog dialog = new BaseDialog("Unlock content dialog");
-        dialog.cont.table(i -> {
-            i.table(t -> {
-                final int buttonSize = 20;
-                for (Team team : Team.all) {
-                    if (Seq.with(Team.all).indexOf(team) % 20 == 0) t.row();
-                    ImageButton button = new ImageButton(Tex.whitePane, Styles.clearToggleTransi);
-                    button.clearChildren();
-                    Image image = new Image();
-                    button.background(image.getDrawable()).setColor(team.color);
-                    Cell<Image> imageCell = button.add(image).color(team.color).size(buttonSize);
-                    button.clicked(() -> {
-                        try {
-                            Vars.player.team(team);
-                        } catch (Exception exception) {
-                            showException(exception);
-                        }
-                        dialog.hide();
-                    });
-                    t.add(button).color(team.color).width(buttonSize).height(buttonSize).pad(6);
-                }
-            });
-        }).width(360).bottom().center();
-        dialog.addCloseButton();
-        dialog.show();
-    }
-
     private void constructor() {
         if (!loaded) return;
         modInfo = Vars.mods.getMod(this.getClass());
+        Events.on(EventType.UnitDestroyEvent.class, (e) -> {
+            Seq<UnitType> types = Seq.with(ModUnitTypes.griffon);
+            Unit unit = e.unit;
+            if (types.contains(unit.type)) {
+                Call.createBullet(ModBullets.deathLaser, unit.team, unit.x, unit.y, unit.rotation+90f, 1200f, 0f, 230f);
+            }
+        });
         Seq.with(Blocks.blockForge, Blocks.blockLoader, Blocks.blockUnloader).each(b -> b.buildVisibility = BuildVisibility.shown);
         Blocks.interplanetaryAccelerator.buildVisibility = BuildVisibility.shown;
         Boolf<BulletType> replace = (b) -> (b instanceof LightningBulletType && !(b instanceof ModLightningBulletType));
@@ -191,10 +165,10 @@ public class MainModClass extends Mod {
         });
         Events.fire(ModEventType.ModContentLoad.class);
 //        loadMaps();
-        Seq<ContentList> loads = Seq.with(
+        /*Seq<ContentList> loads = Seq.with(
                 new ModSounds(), new ModStatusEffects(), new ModItems(), new ModLiquids(), new ModUnitTypes(), new ModBlocks(), new ModTechTree()
-        );
-        loads.each((load) -> {
+        );*/
+        new ModContentLoader().createModContent((load) -> {
             try {
                 load.load();
             } catch (NullPointerException e) {

@@ -54,7 +54,7 @@ public class ModContentLoader extends ContentLoader {
             new ModItems(),
             new ModStatusEffects(),
             new ModLiquids(),
-//            new ModBullets(),
+            new ModBullets(),
 //            new ModAmmoTypes(),
             new ModUnitTypes(),
             new ModBlocks(),
@@ -92,6 +92,14 @@ public class ModContentLoader extends ContentLoader {
         loadModContent=true;
         for (ContentList list : modContent) {
             list.load();
+        }
+        loadModContent=false;
+    }
+    public void createModContent(Cons<ContentList> cons){
+        loadModContent=true;
+        for (ContentList list : modContent) {
+            cons.get(list);
+//            list.load();
         }
         loadModContent=false;
     }
