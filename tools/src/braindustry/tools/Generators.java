@@ -55,6 +55,7 @@ public class Generators {
 
     public static void generate(){
         ObjectMap<Block, Image> gens = new ObjectMap<>();
+        Fi.get("../editor").mkdirs();
         if (false) {
             ModImagePacker.generate("cracks", () -> {
                 RidgedPerlin r = new RidgedPerlin(1, 3);
