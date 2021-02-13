@@ -25,7 +25,7 @@ void main(){
         gray=vec3(0);
     }
     if (dst(u_pos,gl_FragCoord.xy)<8.*u_dscl){
-        gray.r=1;
+        gray.r=1.;
     } else{
         gray.r=0.;
     }
