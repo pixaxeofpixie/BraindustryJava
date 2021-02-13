@@ -7,26 +7,26 @@ sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = ["core/starter/"]
 //sourceSets.main.resources.srcDirs = ["core/resources/"]
 
-repositories{
+repositories {
     mavenCentral()
-    maven{ url 'https://www.jitpack.io' }
+    maven { url 'https://www.jitpack.io' }
 }
-buildscript{
-    ext{
-        prop=new Properties().with{ p -> p.load(file('gradle.properties').newReader()); return p }
-        serverModFolder=prop["serverModFolder"]
-        gameModFolder=prop["gameModFolder"]
+buildscript {
+    ext {
+        prop = new Properties().with { p -> p.load(file('gradle.properties').newReader()); return p }
+        serverModFolder = prop["serverModFolder"]
+        gameModFolder = prop["gameModFolder"]
         mindustryVersion = 'v123.1'
     }
-    repositories{
+    repositories {
         mavenLocal()
         mavenCentral()
         google()
-        maven{ url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven{ url 'https://jitpack.io' }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url 'https://jitpack.io' }
     }
 
-    dependencies{
+    dependencies {
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.11'
         classpath "com.github.anuken:packr:-SNAPSHOT"
         classpath "com.github.Anuken.Arc:packer:$mindustryVersion"
@@ -36,7 +36,7 @@ buildscript{
         classpath "com.github.Anuken.Mindustry:tools:$mindustryVersion"
     }
 }
-ext{
+ext {
     //the build number that this mod is made for
     //version of SDK you will be using
     sdkVersion = '30'
@@ -47,23 +47,23 @@ ext{
         proc.waitForProcessOutput(System.out, System.err)
     }
     arcModule = { String name ->
-            //skip to last submodule
-            if(name.contains(':')) name = name.split(':').last()
-            return "com.github.Anuken.Arc:$name:$mindustryVersion"
+        //skip to last submodule
+        if (name.contains(':')) name = name.split(':').last()
+        return "com.github.Anuken.Arc:$name:$mindustryVersion"
 
     }
 }
 
 //java 8 backwards compatibility flag
-allprojects{
-    tasks.withType(JavaCompile){
-        if(JavaVersion.current() != JavaVersion.VERSION_1_8){
+allprojects {
+    tasks.withType(JavaCompile) {
+        if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
             options.compilerArgs.addAll(['--release', '8'])
         }
     }
 }
 
-dependencies{
+dependencies {
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
     implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
@@ -74,41 +74,41 @@ dependencies{
 }
 
 
-allprojects{
+allprojects {
     apply plugin: 'maven'
-    repositories{
+    repositories {
         mavenLocal()
         google()
         mavenCentral()
-        maven{ url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven{ url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven{ url 'https://jitpack.io' }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
         jcenter()
     }
 }
 
 //addProj("tools")
-configure(project(":annotations")){
-    tasks.withType(JavaCompile){
+configure(project(":annotations")) {
+    tasks.withType(JavaCompile) {
         targetCompatibility = 8
         sourceCompatibility = 8
     }
 }
 
 //compile with java 8 compatibility for everything except the annotation project
-configure(subprojects - project(":annotations")){
-    tasks.withType(JavaCompile){
-        if(JavaVersion.current() != JavaVersion.VERSION_1_8){
+configure(subprojects - project(":annotations")) {
+    tasks.withType(JavaCompile) {
+        if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
             options.compilerArgs.addAll(['--release', '14', '--enable-preview'])
         }
 
-        doFirst{
-            options.compilerArgs = options.compilerArgs.findAll{it != '--enable-preview' }
+        doFirst {
+            options.compilerArgs = options.compilerArgs.findAll { it != '--enable-preview' }
         }
     }
 
-    tasks.withType(Javadoc){
-        options{
+    tasks.withType(Javadoc) {
+        options {
             addStringOption('Xdoclint:none', '-quiet')
             addBooleanOption('-enable-preview', true)
             addStringOption('-release', '14')
@@ -116,24 +116,24 @@ configure(subprojects - project(":annotations")){
     }
 }
 
-project(":annotations"){
-    tasks.withType(JavaCompile){
-        if(JavaVersion.current() != JavaVersion.VERSION_1_8){
+project(":annotations") {
+    tasks.withType(JavaCompile) {
+        if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
             options.compilerArgs.addAll(['--release', '14'])
         }
     }
     apply plugin: 'maven'
-    repositories{
+    repositories {
         mavenLocal()
         mavenCentral()
-        maven{ url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven{ url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven{ url 'https://jitpack.io' }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
         jcenter()
     }
     apply plugin: "java-library"
-    dependencies{
-      implementation 'com.squareup:javapoet:1.12.1'
+    dependencies {
+        implementation 'com.squareup:javapoet:1.12.1'
         compile "com.github.Anuken.Arc:arc-core:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
@@ -146,23 +146,23 @@ project(":annotations"){
     }
 }
 
-project(":core"){
+project(":core") {
     apply plugin: "java-library"
 
     compileJava.options.fork = true
 
-    task preGen{
-        outputs.upToDateWhen{ false }
+    task preGen {
+        outputs.upToDateWhen { false }
 //        generateLocales()
 //        writeVersion()
 //        writeProcessors()
 //        writePlugins()
     }
 
-    task copyChangelog{
+    task copyChangelog {
     }
 
-    dependencies{
+    dependencies {
         compileJava.dependsOn(preGen)
 
         api "org.lz4:lz4-java:1.4.1"
@@ -183,22 +183,22 @@ project(":core"){
 
     }
 
-    afterEvaluate{
-        task mergedJavadoc(type: Javadoc){
-            if (true)return null;
+    afterEvaluate {
+        task mergedJavadoc(type: Javadoc) {
+            if (true) return null;
             def blacklist = [project(":ios"), project(":desktop"), project(":server"), project(":annotations")]
-            if(findProject(":android") != null){
+            if (findProject(":android") != null) {
                 blacklist += project(":android")
             }
 
-            source rootProject.subprojects.collect{ project ->
-                if(!blacklist.contains(project) && project.hasProperty("sourceSets")){
+            source rootProject.subprojects.collect { project ->
+                if (!blacklist.contains(project) && project.hasProperty("sourceSets")) {
                     return project.sourceSets.main.allJava
                 }
             }
 
             classpath = files(rootProject.subprojects.collect { project ->
-                if(!blacklist.contains(project) && project.hasProperty("sourceSets")){
+                if (!blacklist.contains(project) && project.hasProperty("sourceSets")) {
                     return project.sourceSets.main.compileClasspath
                 }
             })
@@ -207,7 +207,7 @@ project(":core"){
     }
 }
 
-project(":tools"){
+project(":tools") {
     apply plugin: "java"
     dependencies {
 
@@ -221,57 +221,77 @@ project(":tools"){
         compile arcModule("backends:backend-headless")
     }
 }
-task jarAndroid{
+task jarAndroid {
     dependsOn "jar"
 
-    doLast{
+    doLast {
         //collect dependencies needed for desugaring
         def files = (configurations.compileClasspath.asList() + configurations.runtimeClasspath.asList() + [new File("$sdkRoot/platforms/android-$sdkVersion/android.jar")])
-        def dependencies = files.collect{ "--classpath $it.path" }.join(" ")
+        def dependencies = files.collect { "--classpath $it.path" }.join(" ")
 
         //dex and desugar files - this requires d8 in your PATH
         doExec("d8 $dependencies --min-api 14 --output ${project.archivesBaseName}Android.jar ${project.archivesBaseName}Desktop.jar")
     }
 }
-task pjar{
+task pjar {
     dependsOn "tools:pack"
     dependsOn "jar"
-    doFirst{
+    doFirst {
     }
-    doLast{
+    doLast {
 
     }
 }
-jar{
+jar {
     archiveFileName = "${project.archivesBaseName}Desktop.jar"
-    from{
-        configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 
-    from(rootDir){
+    from(rootDir) {
         include "mod.hjson"
     }
 
-    from("core/assets/"){
+    from("core/assets/") {
         include "**"
     }
-    doLast{
 
-        println "some"
-        println serverModFolder
-        println gameModFolder
+    ext {
+        copyToWay = { String way ->
+            archiveFileName = "${project.getProjectDir().name}Desktop.jar"
+            try {
+                delete {
+                    delete "$way/${archiveFileName}"
+                }
+                copy {
+                    from "$buildDir/libs/${archiveFileName}"
+                    into "$way/${archiveFileName}"
+                    println("${archiveFileName} copy to $way/${archiveFileName}")
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    doLast{
+        if (serverModFolder != null) {
+            copyToWay(serverModFolder)
+        }
+        if (gameModFolder != null){
+            copyToWay(gameModFolder)
+        }
     }
 }
-
-task deploy(type: Jar){
+task deploy(type: Jar) {
     dependsOn jarAndroid
     dependsOn jar
     archiveFileName = "${project.archivesBaseName}.jar"
 
-    from{ [zipTree("$buildDir/libs/${project.archivesBaseName}Desktop.jar"), zipTree("$buildDir/libs/${project.archivesBaseName}Android.jar")] }
+    from { [zipTree("$buildDir/libs/${project.archivesBaseName}Desktop.jar"), zipTree("$buildDir/libs/${project.archivesBaseName}Android.jar")] }
 
-    doLast{
-        delete{ delete "$buildDir/libs/${project.archivesBaseName}Desktop.jar" }
-        delete{ delete "$buildDir/libs/${project.archivesBaseName}Android.jar" }
+    doLast {
+        delete { delete "$buildDir/libs/${project.archivesBaseName}Desktop.jar" }
+        delete { delete "$buildDir/libs/${project.archivesBaseName}Android.jar" }
     }
 }
