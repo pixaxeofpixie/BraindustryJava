@@ -258,14 +258,19 @@ jar {
 
     ext {
         copyToWay = { String way ->
-            archiveFileName = "${project.getProjectDir().name}Desktop.jar"
+            dir=project.getProjectDir();
+            archiveFileName = "${dir.name}Desktop.jar"
             try {
                 delete {
                     delete "$way/${archiveFileName}"
                 }
                 copy {
                     from "$buildDir/libs/${archiveFileName}"
-                    into "$way/${archiveFileName}"
+                    StringBuilder builder=new StringBuilder();
+                    for (i in 0..<(dir.absolutePath.count("/")+dir.absolutePath.count("\\")+1)) {
+                        builder.append("../")
+                    }
+                    into "${builder.toString()}$way/${archiveFileName}"
                     println("${archiveFileName} copy to $way/${archiveFileName}")
                 }
             } catch (Exception e) {
