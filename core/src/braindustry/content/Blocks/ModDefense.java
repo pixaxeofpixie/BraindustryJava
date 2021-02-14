@@ -656,8 +656,8 @@ public class ModDefense implements ContentList {
             {
             float brange = range = 620f;
             localizedName = "Shinigami";
-            description = "Railgun turret to defense from higher tiers of units, consumes Dense Composite to shoot, don't use this turret at buildings";
-            requirements(Category.turret, ItemStack.with(Items.copper, 1000, Items.metaglass, 600, Items.surgeAlloy, 300, Items.plastanium, 200, Items.silicon, 600));
+            description = "Railgun turret to defense from higher tiers of units, consumes Dense Composite to shoot, don't use this turret to attack buildings";
+            requirements(Category.turret, ItemStack.with(ModItems.graphenite, 1000, Items.metaglass, 600, ModItems.phaseAlloy, 400, Items.plastanium, 900, Items.silicon, 1400));
             ammo(
                     ModItems.phaseAlloy, new PointBulletType(){{
                         shootEffect = Fx.lightningShoot;
@@ -666,7 +666,7 @@ public class ModDefense implements ContentList {
                         trailEffect = ModFx.shinigamiTrail;
                         despawnEffect = ModFx.instBomb;
                         trailSpacing = 25f;
-                        damage = 5230;
+                        damage = 6780;
                         buildingDamageMultiplier = 0.2f;
                         speed = brange;
                         hitShake = 9f;
@@ -674,16 +674,16 @@ public class ModDefense implements ContentList {
                     }}
             );
             maxAmmo = 40;
-            ammoPerShot = 4;
-            rotateSpeed = 2f;
-            reloadTime = 200f;
+            ammoPerShot = 5;
+            rotateSpeed = 1.5f;
+            reloadTime = 260f;
             ammoUseEffect = Fx.casing3Double;
-            recoilAmount = 5f;
+            recoilAmount = 10f;
             restitution = 0.009f;
-            cooldown = 0.009f;
-            shootShake = 4f;
+            cooldown = 0.01f;
+            shootShake = 6f;
             shots = 1;
-            size = 4;
+            size = 8;
             shootCone = 3f;
             shootSound = Sounds.railgun;
             unitSort = (u, x, y) -> -u.maxHealth;

@@ -21,7 +21,7 @@ public class ModLogic  implements ApplicationListener {
                 float anglePart=360f/5f;
                 for (float i = 0; i < 360f/anglePart; i++) {
 //                    print("i: @,anglePart: @",i,anglePart);
-                    Call.createBullet(ModBullets.deathLaser, unit.team, unit.x, unit.y, (360f+unit.rotation+90f+anglePart/2f +anglePart*i)%360f, 1200f, 1f, 10f);
+                    Call.createBullet(ModBullets.deathLaser, unit.team, unit.x, unit.y, (360f+unit.rotation+90f+anglePart/2f +anglePart*i)%360f, 1200f, 1f, 30f);
                 }
             }
         });

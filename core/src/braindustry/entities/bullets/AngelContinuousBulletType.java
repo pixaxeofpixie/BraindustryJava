@@ -4,6 +4,7 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.util.Time;
+import braindustry.graphics.ModPal;
 import braindustry.graphics.ModShaders;
 import braindustry.type.LengthBulletType;
 import mindustry.Vars;
@@ -19,7 +20,7 @@ import mindustry.gen.Entityc;
 import mindustry.gen.Velc;
 
 public class AngelContinuousBulletType extends ContinuousLaserBulletType implements LengthBulletType {
-    public Color firstColor=Color.black.cpy();
+    public Color firstColor= ModPal.eveBackColor;
     public Color secondColor=Color.white.cpy();
     {
         speed=1f;
