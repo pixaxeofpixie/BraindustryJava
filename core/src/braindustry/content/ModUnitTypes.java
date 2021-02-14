@@ -1539,7 +1539,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("intelix-weapon") {
+                        new ModWeapon("maverix-weapon") {
                             {
                                 this.x = 21;
                                 this.y = 0;
