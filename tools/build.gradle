@@ -415,39 +415,9 @@ task pack(dependsOn: [classes, configurations.runtimeClasspath]){
 task genSprites(dependsOn: classes, type: JavaExec){
     finalizedBy 'antialiasGen'
 
-    main = "mindustry.tools.ImagePacker"
+    main = "braindustry.tools.ModImagePacker"
     classpath = sourceSets.main.runtimeClasspath
     jvmArgs("-Djava.awt.headless=true")
     standardInput = System.in
     workingDir = genFolder
-}
-
-task updateBundles(dependsOn: classes, type: JavaExec){
-    file(genFolder).mkdirs()
-
-    main = "mindustry.tools.BundleLauncher"
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = "../core/assets/bundles/"
-}
-
-task fontgen(dependsOn: classes, type: JavaExec){
-    main = "mindustry.tools.FontGenerator"
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = "../"
-}
-
-task icongen(dependsOn: classes, type: JavaExec){
-    main = "mindustry.tools.IconConverter"
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = "../core/assets-raw"
-}
-
-task updateScripts(dependsOn: classes, type: JavaExec){
-    main = "mindustry.tools.ScriptMainGenerator"
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = "../"
 }

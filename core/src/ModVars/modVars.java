@@ -76,30 +76,32 @@ public class modVars {
                 }
             }
         });
-        for (int i = 0; i < EntityMapping.idMap.length; i++) {
-            Prov prov = EntityMapping.idMap[i];
-            if (prov==null)continue;
-            Object o = prov.get();
-            if (o instanceof Unit && o instanceof Payloadc){
-                EntityMapping.idMap[i]=()->new UnitPayloadcCopy((Unit) prov.get());
+        if (false){
+            for (int i = 0; i < EntityMapping.idMap.length; i++) {
+                Prov prov = EntityMapping.idMap[i];
+                if (prov==null)continue;
+                Object o = prov.get();
+                if (o instanceof Unit && o instanceof Payloadc){
+                    EntityMapping.idMap[i]=()->new UnitPayloadcCopy((Unit) prov.get());
+                }
             }
-        }
-        for (int i = 0; i < EntityMapping.nameMap.keys().toSeq().size; i++) {
-            String key=EntityMapping.nameMap.keys().toSeq().get(i);
-            Prov prov = EntityMapping.nameMap.get(key);
-            if (prov==null)continue;
-            Object o = prov.get();
+            for (int i = 0; i < EntityMapping.nameMap.keys().toSeq().size; i++) {
+                String key=EntityMapping.nameMap.keys().toSeq().get(i);
+                Prov prov = EntityMapping.nameMap.get(key);
+                if (prov==null)continue;
+                Object o = prov.get();
 //            Log.info("key: @, o: @",key,o.toString());
-            if (o instanceof Unit && o instanceof Payloadc){
+                if (o instanceof Unit && o instanceof Payloadc){
 
 //                Log.info("key: @, o: @",key,o.toString());
-                EntityMapping.nameMap.put(key,()->new UnitPayloadcCopy((Unit) prov.get()));
+                    EntityMapping.nameMap.put(key,()->new UnitPayloadcCopy((Unit) prov.get()));
+                }
             }
-        }
-        for (UnitType unit : Vars.content.units()) {
-            Prov map = EntityMapping.map(unit.name);
-            if (map !=null && unit.constructor instanceof Payloadc && (unit.constructor instanceof UnitPayloadcCopy)){
-                unit.constructor=map;
+            for (UnitType unit : Vars.content.units()) {
+                Prov map = EntityMapping.map(unit.name);
+                if (map !=null && unit.constructor instanceof Payloadc && (unit.constructor instanceof UnitPayloadcCopy)){
+                    unit.constructor=map;
+                }
             }
         }
         SaveIO.versionArray.add(save4);
@@ -111,11 +113,11 @@ public class modVars {
 
     public static void load() {
         modUI = new ModUI();
-        netClient = new ModNetClient();
-        netServer = new ModNetServer();
         settings = new ModSettings();
 
         ModListener.load();
+        listener.add(netClient = new ModNetClient());
+        listener.add(netServer = new ModNetServer());
         listener.add(logic=new ModLogic());
     }
 
@@ -141,7 +143,7 @@ public class modVars {
     }
 
     public static boolean showCheatMenu() {
-        if (Vars.player.isLocal()) return ui.hudfrag.shown;
+//        if (Vars.player.isLocal()) return ui.hudfrag.shown;
         return ui.hudfrag.shown && netClient.showCheatMenu();
     }
 }

@@ -77,23 +77,25 @@ public class ModPlayer extends Player {
         }
 
         this.unit = ModTypeIO.readUnit(read);
-        /*if (!islocal) {
-            this.x_LAST_ = this.x;
-            this.x_TARGET_ = read.f();
+        if (!islocal) {
+            read.f();
+//            this.x_LAST_ = this.x;
+//            this.x_TARGET_ = read.f();
         } else {
             read.f();
-            this.x_LAST_ = this.x;
-            this.x_TARGET_ = this.x;
+//            this.x_LAST_ = this.x;
+//            this.x_TARGET_ = this.x;
         }
 
         if (!islocal) {
-            this.y_LAST_ = this.y;
-            this.y_TARGET_ = read.f();
+            read.f();
+//            this.y_LAST_ = this.y;
+//            this.y_TARGET_ = read.f();
         } else {
             read.f();
-            this.y_LAST_ = this.y;
-            this.y_TARGET_ = this.y;
-        }*/
+//            this.y_LAST_ = this.y;
+//            this.y_TARGET_ = this.y;
+        }
         snapInterpolation();
 
         this.afterSync();
@@ -101,11 +103,34 @@ public class ModPlayer extends Player {
 
     @Override
     public void write(Writes write) {
-        super.write(write);
+        write.s(0);
+        write.bool(this.admin);
+        write.bool(this.boosting);
+        TypeIO.writeColor(write, this.color);
+        write.f(this.mouseX);
+        write.f(this.mouseY);
+        TypeIO.writeString(write, this.name);
+        write.bool(this.shooting);
+        TypeIO.writeTeam(write, this.team);
+        write.bool(this.typing);
+        TypeIO.writeUnit(write, this.unit);
+        write.f(this.x);
+        write.f(this.y);
     }
 
     @Override
     public void writeSync(Writes write) {
-        super.writeSync(write);
+        write.bool(this.admin);
+        write.bool(this.boosting);
+        TypeIO.writeColor(write, this.color);
+        write.f(this.mouseX);
+        write.f(this.mouseY);
+        TypeIO.writeString(write, this.name);
+        write.bool(this.shooting);
+        TypeIO.writeTeam(write, this.team);
+        write.bool(this.typing);
+        ModTypeIO.writeUnit(write, this.unit);
+        write.f(this.x);
+        write.f(this.y);
     }
 }

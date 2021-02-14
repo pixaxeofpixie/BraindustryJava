@@ -269,6 +269,9 @@ jar {
     from("core/assets/") {
         include "**"
     }
+    doLast{
+//        doExec("python ../../cmp.py")
+    }
 }
 task deploy(type: Jar) {
     dependsOn jarAndroid

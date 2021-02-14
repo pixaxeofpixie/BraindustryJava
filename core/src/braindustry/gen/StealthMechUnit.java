@@ -14,6 +14,7 @@ import arc.math.geom.Geometry;
 import arc.math.geom.QuadTree;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Structs;
 import arc.util.Time;
 import arc.util.io.Reads;
@@ -76,7 +77,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     public void setType(UnitType type) {
         if (!(type instanceof StealthUnitType)) return;
         super.setType(type);
-        stealthType = (StealthUnitType) type;
+        type(type);
     }
 
     public boolean selectStealth() {
@@ -246,6 +247,13 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     }
 
     public void draw() {
+        if (stealthType==null){
+            if (type instanceof StealthUnitType){
+                stealthType=(StealthUnitType)type;
+            } else {
+                Log.info("@ my type @",toString(),type);
+            }
+        }
 //        if (getAlpha()==0)return;
         float tx;
         float ty;
@@ -269,7 +277,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
 
             Draw.color();
         }
-        stealthType.alpha = getAlpha();
+      if (stealthType!=null)  stealthType.alpha = getAlpha();
         this.type.draw(this);
 
         for (StatusEntry e : this.statuses) {
@@ -371,6 +379,13 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
         write.f(durationStealth);
     }
 
+    @Override
+    public void type(UnitType type) {
+        if (type instanceof StealthUnitType) {
+            this.type = type;
+            stealthType = (StealthUnitType) type;
+        }
+    }
     @Override
     public void read(Reads read) {
         super.read(read);

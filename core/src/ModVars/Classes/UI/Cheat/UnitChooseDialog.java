@@ -21,9 +21,11 @@ public class UnitChooseDialog extends BaseDialog {
         final int buttonSize=100;
         ScrollPane pane = new ScrollPane(table);
         pane.setScrollingDisabled(true, false);
+        int[] index={0};
         for (UnitType unitType : Vars.content.units()) {
             if (unitType == UnitTypes.block)continue;
-            if (Vars.content.units().indexOf(unitType)%5==0)table.row();
+            index[0]++;
+            if (index[0]%5==0)table.row();
             Button button = new Button();
             button.clearChildren();
             Image image = new Image(unitType.region);

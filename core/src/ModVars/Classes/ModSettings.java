@@ -95,4 +95,12 @@ public class ModSettings {
     }
 
 
+    public void cheatLevelServer( ModEnums.CheatLevel level) {
+        setInt("server-var-cheatLevel",level.ordinal());
+    }
+
+    public ModEnums.CheatLevel cheatLevelServer() {
+        ModEnums.CheatLevel[] values = ModEnums.CheatLevel.values();
+        return values[Mathf.mod(getInt("server-var-cheatLevel"), values.length)];
+    }
 }

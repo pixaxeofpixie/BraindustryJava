@@ -1719,6 +1719,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
+
     }
 
     private static class Types {

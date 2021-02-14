@@ -82,7 +82,7 @@ public class ModUI {
                     t.defaults().size(280.0F, 60.0F);
                     t.button("@cheat-menu.change-team", CheatUI::openTeamChooseDialog).growX().row();
                     t.button("@cheat-menu.change-unit", CheatUI::openUnitChooseDialog).growX().row();
-                    t.button("@cheat-menu.edit-rules", CheatUI::openRulesEditDialog).growX().row();
+                   if (!Vars.net.client()) t.button("@cheat-menu.edit-rules", CheatUI::openRulesEditDialog).growX().row();
                     t.button("@cheat-menu.items-manager", CheatUI::openModCheatItemsMenu).growX().row();
                     t.button("@cheat-menu.unlock-content", CheatUI::openUnlockContentDialog).growX().row();
                 });
@@ -91,7 +91,7 @@ public class ModUI {
                 dialog.show();
 
             }).size(280.0f / 2f, 60.0F);
-            table.visibility = () -> settings.cheating() && (!Vars.net.active() || Vars.net.server()) && modVars.showCheatMenu();
+            table.visibility = () -> CheatUI.visibility.get();
         });
         keyBinds = new ModKeyBinds();
         keyBinds.setDefaults(ModBinding.values());

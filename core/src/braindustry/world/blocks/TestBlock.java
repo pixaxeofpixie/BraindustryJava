@@ -9,6 +9,7 @@ import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
 import arc.util.Eachable;
+import arc.util.Log;
 import arc.util.Strings;
 import braindustry.content.ModFx;
 import braindustry.graphics.ModShaders;
@@ -66,6 +67,9 @@ if (modVars.packSprites){
             super.buildConfiguration(table);
             TestBlockBuild me=this;
             table.table((t) -> {
+                t.button(Icon.up,()->{
+                    Log.info("@",Vars.content.units().map(u->Strings.format("@.id=@",u.name,u.id)).toString("\n"));
+                });
                 t.button(Icon.terminal, () -> {
                     ModFx.Spirals.at(this.x, this.y, size, Pal.lancerLaser);
                 });

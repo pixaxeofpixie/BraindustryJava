@@ -1,14 +1,13 @@
 package ModVars.Classes.UI;
 
-import ModVars.Classes.ModAtlas;
 import ModVars.Classes.UI.Cheat.ModCheatItemsMenu;
 import ModVars.Classes.UI.Cheat.TeamChooseDialog;
 import ModVars.Classes.UI.Cheat.UnitChooseDialog;
 import ModVars.Classes.UI.Cheat.UnlockContentDialog;
 import ModVars.modVars;
 import arc.Core;
+import arc.func.Prov;
 import arc.graphics.Color;
-import arc.graphics.g2d.TextureAtlas;
 import arc.graphics.g2d.TextureRegion;
 import arc.scene.style.TextureRegionDrawable;
 import arc.scene.ui.ScrollPane;
@@ -22,51 +21,69 @@ import mindustry.Vars;
 import mindustry.entities.EntityCollisions;
 import mindustry.game.Rules;
 import mindustry.game.Team;
+import mindustry.gen.Unit;
 import mindustry.gen.UnitWaterMove;
 import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Tile;
 
-import java.awt.*;
-
-import static ModVars.modFunc.*;
+import static ModVars.modFunc.getInfoDialog;
+import static ModVars.modFunc.showException;
+import static ModVars.modVars.settings;
 import static mindustry.Vars.*;
 
 public class CheatUI {
-    public static  void openUnlockContentDialog() {
+    public static Prov<Boolean> visibility= modVars::showCheatMenu;
+    static Runnable rebuildTeamValue = () -> {
+    };
+
+    public static void openUnlockContentDialog() {
         new UnlockContentDialog().show();
     }
 
-    public static  void openModCheatItemsMenu() {
-        new ModCheatItemsMenu().show(()->{},()->{});
+    public static void openModCheatItemsMenu() {
+        if (!visibility.get() || net.client())return;
+        new ModCheatItemsMenu().show(() -> {
+        }, () -> {
+        });
     }
+
     //    private static boolean openDialog=false;
     public static void openUnitChooseDialog() {
-        new UnitChooseDialog((unitType)->{
-            Tile tile= Vars.player.tileOn();
-            if (unitType.constructor.get() instanceof UnitWaterMove && !unitType.flying && EntityCollisions.waterSolid(Vars.player.tileX(), Vars.player.tileY())){
-                Color color=Color.valueOf(Strings.format("#@",Color.scarlet.toString()));
-                getInfoDialog("","Can't spawn water unit!!!","You not on the water",color.lerp(Color.white,0.2f)).show();
+        if (!visibility.get())return;
+        new UnitChooseDialog((unitType) -> {
+            Tile tile = Vars.player.tileOn();
+            Unit unit = unitType.constructor.get();
+            unit.type=unitType;
+            EntityCollisions.SolidPred solidity = unit.solidity();
+            if ((tile==null)|| solidity!=null && solidity.solid(tile.x,tile.y)) {
+                Color color = Color.valueOf(Strings.format("#@", Color.scarlet));
+                getInfoDialog("", "Can't spawn this unit!!!", "The selected unit type cannot be created on this block", color.lerp(Color.white, 0.2f)).show();
                 return false;
             }
-            ModCall.spawnUnits(unitType,Vars.player.x,Vars.player.y,1,true,Vars.player.team(), Vars.player);
+            ModCall.setNewUnit(unitType);
             return true;
         }).show();
     }
+
     protected static void addButton(Table cont, Team team) {
         TextureRegion white = new TextureRegion(Core.atlas.white());
-        white.width=white.height=38;
-        cont.button(new TextureRegionDrawable(white,1f).tint(team.color), Styles.clearTransi    , () -> {
-            modVars.settings.setInt("cheat-team",team.id);
+        white.width = white.height = 38;
+        cont.button(new TextureRegionDrawable(white, 1f).tint(team.color), Styles.clearTransi, () -> {
+            modVars.settings.setInt("cheat-team", team.id);
             rebuildTeamValue.run();
         });
     }
-    static Runnable rebuildTeamValue=()->{};
-    public static void openRulesEditDialog(){
-        BaseDialog dialog=new BaseDialog("@cheat-menu.rules-edit.title");
+
+    public static void openRulesEditDialog() {
+        if (net.client() ||!visibility.get()) {
+//            modFunc.getInfoDialog("@cant-open-rules-dialog","","@you-on-server",Color.scarlet);
+            return;
+        }
+        BaseDialog dialog = new BaseDialog("@cheat-menu.rules-edit.title");
         ScrollPane mainPain = dialog.cont.pane(pane -> {
-            Log.info("pane size(@,@)",pane.getWidth(),pane.getHeight());
+            Log.info("pane size(@,@)", pane.getWidth(), pane.getHeight());
             ScrollPane scrollPane = pane.pane(p -> {
                 p.defaults().size(40).left();
                 for (Team team : Team.all) {
@@ -112,10 +129,12 @@ public class CheatUI {
         dialog.addCloseButton();
         dialog.show();
     }
-    public static  void openTeamChooseDialog() {
-        new TeamChooseDialog((team)->{
+
+    public static void openTeamChooseDialog() {
+        if (!visibility.get())return;
+        new TeamChooseDialog((team) -> {
             try {
-                Vars.player.team(team);
+                ModCall.setTeam(team);
             } catch (Exception exception) {
                 showException(exception);
             }
