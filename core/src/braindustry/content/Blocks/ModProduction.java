@@ -172,6 +172,7 @@ public class ModProduction implements ContentList {
                 this.hasPower = true;
                 this.hasLiquids = false;
                 this.hasItems = true;
+                this.itemCapacity = 30;
                 this.craftTime = 120;
                 this.updateEffect = Fx.plasticburn;
                 this.consumes.power(6f);
