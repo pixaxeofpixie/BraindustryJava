@@ -10,6 +10,7 @@ import braindustry.entities.Advanced.AdvancedUnitType;
 import braindustry.entities.Advanced.UnitExtensions;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.entities.ModUnits;
+import braindustry.graphics.ModPal;
 import mindustry.game.EventType.UnitDestroyEvent;
 import braindustry.entities.bullets.AdamBulletType;
 import braindustry.entities.bullets.AngelContinuousBulletType;
@@ -1539,7 +1540,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("intelix-weapon") {
+                        new ModWeapon("maverix-weapon") {
                             {
                                 this.x = 21;
                                 this.y = 0;
@@ -1720,6 +1721,105 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
+        moureno = new PowerUnitType("mouriena") {
+            {
+                this.range = 40;
+                this.constructor = Types.powerNaval;
+                this.localizedName = "Mouriena";
+                this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers.";
+                this.health = 62000;
+                this.speed = 0.6f;
+                this.accel = 0.12f;
+                this.rotateSpeed = 0.9f;
+                this.drag = 0.35f;
+                this.hitSize = 124.0F;
+                this.armor = 2;
+                this.rotateShooting = false;
+                this.trailLength = 240;
+                this.trailX = 36;
+                this.trailY = 28;
+                this.trailScl = 1.5f;
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
+                int spawnTime = 1680;
+                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 25.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -25.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 28.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -28.25f, -48.75f));
+                int brange = 1;
+
+
+                this.weapons.add(
+                        new ModWeapon("mouriena-weapon0") {
+                            {
+                                this.x = 0;
+                                this.y = -40;
+                                this.shootY = -1f;
+                                this.reload = 20f;
+                                this.ejectEffect = Fx.burning;
+                                this.recoil = 1;
+                                this.shots = 6;
+                                this.rotate = true;
+                                this.shootSound = Sounds.sap;
+                                this.alternate = true;
+                                this.bullet = new ShrapnelBulletType() {
+                                    {
+                                        this.length = 95.0F;
+                                        this.damage = 135.0F;
+                                        this.width = 29.0F;
+                                        this.lifetime = 32.0F;
+                                        this.serrationLenScl = 3.0F;
+                                        this.serrationSpaceOffset = 1.0F;
+                                        this.serrationFadeOffset = 0.0F;
+                                        this.serrations = 5;
+                                        this.serrationWidth = 51.0F;
+                                        this.fromColor = Color.valueOf("77387f");
+                                        this.toColor = Color.valueOf("30153f");
+                                        this.shootEffect = Fx.sparkShoot;
+                                        this.smokeEffect = Fx.sparkShoot;
+                                    }
+                                };
+                            }
+                        },
+                        new ModWeapon("mouriena-weapon"){{
+                            top = false;
+                            y = -5f;
+                            x = 48f;
+                            reload = 60f;
+                            recoil = 7f;
+                            shots = 4;
+                            shake = 3f;
+                            rotate = true;
+                            mirror = true;
+                            ejectEffect = ModFx.foxShoot;
+                            shootSound = Sounds.artillery;
+                            bullet = new ArtilleryBulletType(3f, 8, "shell"){{
+                                hitEffect = ModFx.adamExplosion;
+                                knockback = 1.2f;
+                                lifetime = 110f;
+                                width = height = 22f;
+                                collides = true;
+                                collidesTiles = true;
+                                splashDamageRadius = 28f;
+                                splashDamage = 140f;
+                                backColor = ModPal.contrastRedDark;
+                                frontColor = ModPal.contrastRedLight;
+                                }
+                            };
+                        }
+                    }
+                );
+            }
+
+            public Block getGeneratorBlock() {
+                return ModBlocks.unitGenerator;
+            }
+
+            public void init() {
+                super.init();
+            }
+
+            @Override
+            public Block getNodeBlock() {
+                return ModBlocks.unitNode;
+            }
+        };
     }
 
     private static class Types {
