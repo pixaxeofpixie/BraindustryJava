@@ -3,7 +3,7 @@ package braindustry.maps.generators;
 import arc.struct.ObjectMap;
 import mindustry.content.Blocks;
 import mindustry.world.Block;
-import braindustry.content.Blocks.ModOtherBlocks;
+import braindustry.content.ModBlocks;
 
 public class OsorePlanetGenerator extends ModPlanetGenerator{
     public OsorePlanetGenerator(){
