@@ -6,6 +6,7 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Font;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
+import arc.math.geom.Vec2;
 import arc.scene.style.TextureRegionDrawable;
 import arc.scene.ui.ScrollPane;
 import arc.scene.ui.TextArea;
@@ -14,7 +15,12 @@ import arc.scene.ui.layout.Scl;
 import arc.scene.ui.layout.Table;
 import arc.util.Strings;
 import arc.util.io.Reads;
+import arc.util.io.ReusableByteInStream;
+import arc.util.io.ReusableByteOutStream;
 import arc.util.io.Writes;
+import braindustry.gen.ModBuilding;
+import braindustry.tools.ModReads;
+import braindustry.tools.ModWrites;
 import braindustry.world.blocks.BuildingLabel;
 import mindustry.Vars;
 import mindustry.entities.TargetPriority;
@@ -23,9 +29,14 @@ import mindustry.gen.Building;
 import mindustry.gen.Bullet;
 import mindustry.gen.Icon;
 import mindustry.io.JsonIO;
+import mindustry.io.TypeIO;
 import mindustry.ui.Fonts;
 import mindustry.ui.Styles;
 import mindustry.world.Block;
+import mindustryAddition.graphics.ModDraw;
+
+import java.io.DataOutputStream;
+import java.util.Arrays;
 
 public class DpsMeter extends Block {
     public TextureRegion teamRegionButton;
@@ -46,6 +57,21 @@ public class DpsMeter extends Block {
             tile.container = conteiner == null ? new MeterContainer() : conteiner;
             Vars.indexer.updateIndices(tile.tile);
         });
+        config(Team.class, (t, team) -> {
+            DpsMeterBuild tile = (DpsMeterBuild) t;
+            tile.container.selectedTeam=team==null?Team.derelict:team;
+            Vars.indexer.updateIndices(tile.tile);
+        });
+        config(Float.class, (t, time) -> {
+            DpsMeterBuild tile = (DpsMeterBuild) t;
+            tile.container.time=time==null?0f:time;
+            Vars.indexer.updateIndices(tile.tile);
+        });
+        config(Boolean.class, (t, unit) -> {
+            DpsMeterBuild tile = (DpsMeterBuild) t;
+            tile.container.unit= unit != null && unit;
+            Vars.indexer.updateIndices(tile.tile);
+        });
     }
 
     @Override
@@ -63,12 +89,23 @@ public class DpsMeter extends Block {
         public float time = 60;
         public Team selectedTeam = Team.derelict;
         public boolean unit = false;
-
         public MeterContainer() {
+        }
+
+        public void write(Writes write) {
+            write.bool(unit);
+            write.f(time);
+            TypeIO.writeTeam(write,selectedTeam);
+        }
+
+        public void read(Reads read) {
+            unit=read.bool();
+            time=read.f();
+            selectedTeam=TypeIO.readTeam(read);
         }
     }
 
-    public class DpsMeterBuild extends Building implements BuildingLabel {
+    public class DpsMeterBuild extends ModBuilding implements BuildingLabel {
         float deltaHealth = 0;
         float editHHealth = 0;
         MeterContainer container;
@@ -78,7 +115,9 @@ public class DpsMeter extends Block {
         public void playerPlaced(Object config) {
             configure(config);
         }
-
+protected void configure(){
+            configure(container);
+}
         @Override
         public void created() {
             super.created();
@@ -141,6 +180,7 @@ public class DpsMeter extends Block {
             } else {
                 amount = new StringBuilder("" + (int) Mathf.round(deltaHealth, 1f));
             }
+            Strings.replace(amount,"-","");
             while (amount.length() < 7) {
                 amount.insert(0, "0");
             }
@@ -152,11 +192,11 @@ public class DpsMeter extends Block {
             font.setUseIntegerPositions(false);
 
             font.setColor(Color.white);
-
+            ModDraw.drawLabel(x-block.size*4f,y+1,amount.toString());
             float z = Draw.z();
-            Draw.z(300);
-            font.draw(amount.toString() + "", x - block.size * 4, y + 1);
-            Draw.z(z);
+//            Draw.z(300);
+//            font.draw(amount.toString() + "", x - block.size * 4, y + 1);
+//            Draw.z(z);
 
             font.setUseIntegerPositions(ints);
             font.getData().setScale(1);
@@ -178,7 +218,7 @@ public class DpsMeter extends Block {
         public void addButton(Table cont, Team team) {
             cont.button(new TextureRegionDrawable(teamRegionButton).tint(team.color), Styles.clearToggleTransi, () -> {
                 container.selectedTeam = team;
-                configure(container);
+                configure();
                 deselect();
             });
         }
@@ -207,7 +247,7 @@ public class DpsMeter extends Block {
                 scrollPane.setOverscroll(false, false);
                 table.button(Icon.units, () -> {
                     container.unit = !container.unit;
-                    configure(container);
+                    configure();
                 });
 
                 table.row();
@@ -219,7 +259,7 @@ public class DpsMeter extends Block {
                     } else {
                         container.time = 60f;
                     }
-                    configure(container);
+                    configure();
                 }).width(100);
                 TextArea textArea = a.get();
                 textArea.setMaxLength((Float.MAX_VALUE + "").length());

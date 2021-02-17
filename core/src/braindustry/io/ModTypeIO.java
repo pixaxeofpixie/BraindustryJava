@@ -1,33 +1,107 @@
 package braindustry.io;
 
-import arc.struct.Seq;
-import arc.util.Log;
-import arc.util.Strings;
+import arc.math.geom.Point2;
+import arc.struct.IntSeq;
+import arc.util.Nullable;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import braindustry.gen.StealthUnitc;
+import braindustry.world.blocks.sandbox.DpsMeter;
 import mindustry.Vars;
-import mindustry.ai.formations.Formation;
-import mindustry.ai.types.FormationAI;
-import mindustry.ai.types.GroundAI;
-import mindustry.ai.types.LogicAI;
 import mindustry.annotations.Annotations;
+import mindustry.content.TechTree;
 import mindustry.ctype.ContentType;
+import mindustry.ctype.UnlockableContent;
 import mindustry.entities.EntityGroup;
-import mindustry.entities.units.AIController;
+import mindustry.entities.units.UnitCommand;
 import mindustry.entities.units.UnitController;
-import mindustry.gen.*;
+import mindustry.gen.Building;
+import mindustry.gen.Groups;
+import mindustry.gen.Nulls;
+import mindustry.gen.Unit;
 import mindustry.io.TypeIO;
-import mindustry.type.UnitType;
+import mindustry.logic.LAccess;
 import mindustry.world.blocks.ControlBlock;
 
 @Annotations.TypeIOHandler
 public class ModTypeIO extends TypeIO {
     public static UnitController readController(Reads read) {
-        return readController(read,null);
+        return readController(read, null);
     }
 
+    public static void writeObject(Writes write, Object object) {
+        if (object instanceof DpsMeter.MeterContainer) {
+            write.b(-1);
+            ((DpsMeter.MeterContainer) object).write(write);
+        } else {
+            TypeIO.writeObject(write, object);
+        }
+    }
 
+    @Nullable
+    public static Object readObject(Reads read) {
+        {
+            byte type = read.b();
+            int i;
+            switch(type) {
+                case -1:
+                    DpsMeter.MeterContainer container=new DpsMeter.MeterContainer();
+                    container.read(read);
+                    return  container;
+                case 0:
+                    return null;
+                case 1:
+                    return read.i();
+                case 2:
+                    return read.l();
+                case 3:
+                    return read.f();
+                case 4:
+                    return readString(read);
+                case 5:
+                    return Vars.content.getByID(ContentType.all[read.b()], read.s());
+                case 6:
+                    short length = read.s();
+                    IntSeq arr = new IntSeq();
+
+                    for(i = 0; i < length; ++i) {
+                        arr.add(read.i());
+                    }
+
+                    return arr;
+                case 7:
+                    return new Point2(read.i(), read.i());
+                case 8:
+                    byte len = read.b();
+                    Point2[] out = new Point2[len];
+
+                    for(i = 0; i < len; ++i) {
+                        out[i] = Point2.unpack(read.i());
+                    }
+
+                    return out;
+                case 9:
+                    return TechTree.getNotNull((UnlockableContent)Vars.content.getByID(ContentType.all[read.b()], read.s()));
+                case 10:
+                    return read.bool();
+                case 11:
+                    return read.d();
+                case 12:
+                    return Vars.world.build(read.i());
+                case 13:
+                    return LAccess.all[read.s()];
+                case 14:
+                    i = read.i();
+                    byte[] bytes = new byte[i];
+                    read.b(bytes);
+                    return bytes;
+                case 15:
+                    return UnitCommand.all[read.b()];
+                default:
+                    throw new IllegalArgumentException("Unknown object type: " + type);
+            }
+        }
+    }
     public static Unit readUnit(Reads read) {
         byte type = read.b();
         int id = read.i();
@@ -35,10 +109,10 @@ public class ModTypeIO extends TypeIO {
             return Nulls.unit;
         } else if (type == 2) {
             Unit unit = Groups.unit.getByID(id);
-            if (unit==null) {
-                EntityGroup<Unit> stealthUnits=new EntityGroup<>(Unit.class, true, true);
+            if (unit == null) {
+                EntityGroup<Unit> stealthUnits = new EntityGroup<>(Unit.class, true, true);
                 Groups.all.each((entityc -> {
-                    if (entityc instanceof StealthUnitc && ((StealthUnitc) entityc).inStealth()){
+                    if (entityc instanceof StealthUnitc && ((StealthUnitc) entityc).inStealth()) {
                         stealthUnits.add((Unit) entityc);
                     }
                 }));
@@ -50,7 +124,7 @@ public class ModTypeIO extends TypeIO {
         } else {
             Building tile = Vars.world.build(id);
             ControlBlock cont;
-            return tile instanceof ControlBlock && (cont = (ControlBlock)tile) == (ControlBlock)tile ? cont.unit() : Nulls.unit;
+            return tile instanceof ControlBlock && (cont = (ControlBlock) tile) == (ControlBlock) tile ? cont.unit() : Nulls.unit;
         }
     }
 }
