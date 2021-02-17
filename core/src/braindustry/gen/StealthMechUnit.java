@@ -14,6 +14,7 @@ import arc.math.geom.Geometry;
 import arc.math.geom.QuadTree;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
+import arc.util.Interval;
 import arc.util.Log;
 import arc.util.Structs;
 import arc.util.Time;
@@ -52,6 +53,8 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     StealthUnitType stealthType;
     boolean check = false, check2 = false;
     private boolean clicked = false;
+    public Interval timer=new Interval(10);
+    private static final float stealthCheckDuration=12;
 
     public StealthMechUnit() {
         super();
@@ -151,7 +154,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     public void setStealth(float time) {
         if (!inStealth && cooldownStealth==0) {
             inStealth = true;
-            Groups.unit.remove(this);
+            ModCall.checkStealthStatus(this,inStealth);
             durationStealth = 0;
         }
     }
@@ -172,7 +175,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     public void removeStealth(float time) {
         if (inStealth) {
             inStealth = false;
-            Groups.unit.add(this);
+            ModCall.checkStealthStatus(this,inStealth);
             cooldownStealth = Math.min(stealthType.stealthCooldown, time);
         }
     }
@@ -180,9 +183,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     @Override
     public void updateStealthStatus() {
         if (inStealth) {
-            while (Groups.unit.contains(u -> u == this)) {
-                Groups.unit.remove(this);
-            }
+            if(timer.get(0,stealthCheckDuration))ModCall.checkStealthStatus(this,true);
             if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
 //                removeStealth((durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
                 ModCall.setStealthStatus(this,false,(durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
@@ -206,7 +207,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
 
     @Override
     public void update() {
-        if (inStealth) {
+        if (!Groups.unit.contains(u -> u == this)) {
             updateLastPosition();
         }
         super.update();

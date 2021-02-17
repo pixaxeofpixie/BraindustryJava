@@ -7,20 +7,19 @@ import ModVars.Classes.UI.ModUI;
 import ModVars.Classes.UI.settings.ModOtherSettingsDialog;
 import ModVars.Classes.UI.settings.ModSettingsDialog;
 import arc.func.Prov;
+import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Log;
 import braindustry.ModListener;
 import braindustry.core.ModLogic;
 import braindustry.core.ModNetClient;
-import braindustry.gen.ModNetServer;
-import braindustry.gen.ModRemoteReadClient;
-import braindustry.gen.ModRemoteReadServer;
-import braindustry.gen.UnitPayloadcCopy;
+import braindustry.gen.*;
 import braindustry.input.ModKeyBinds;
 import mindustry.ClientLauncher;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
 import mindustry.game.Team;
+import mindustry.gen.Building;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Payloadc;
 import mindustry.gen.Unit;
@@ -81,28 +80,22 @@ public class modVars {
                 Prov prov = EntityMapping.idMap[i];
                 if (prov==null)continue;
                 Object o = prov.get();
-                if (o instanceof Unit && o instanceof Payloadc){
-                    EntityMapping.idMap[i]=()->new UnitPayloadcCopy((Unit) prov.get());
+                if (o instanceof Building && !(o instanceof ModBuilding)){
+                    EntityMapping.idMap[i]=ModBuilding::new;
                 }
             }
-            for (int i = 0; i < EntityMapping.nameMap.keys().toSeq().size; i++) {
-                String key=EntityMapping.nameMap.keys().toSeq().get(i);
-                Prov prov = EntityMapping.nameMap.get(key);
-                if (prov==null)continue;
-                Object o = prov.get();
-//            Log.info("key: @, o: @",key,o.toString());
-                if (o instanceof Unit && o instanceof Payloadc){
-
-//                Log.info("key: @, o: @",key,o.toString());
-                    EntityMapping.nameMap.put(key,()->new UnitPayloadcCopy((Unit) prov.get()));
+            Seq<Runnable> runners=new Seq<>();
+            for (ObjectMap.Entry<String, Prov> entry : EntityMapping.nameMap) {
+                if (entry.value==null)continue;
+                Object o = entry.value.get();
+                if (o instanceof Building && !(o instanceof ModBuilding)){
+                    runners.add(()->{
+                        EntityMapping.nameMap.put(entry.key, ModBuilding::new);
+                    });
                 }
             }
-            for (UnitType unit : Vars.content.units()) {
-                Prov map = EntityMapping.map(unit.name);
-                if (map !=null && unit.constructor instanceof Payloadc && (unit.constructor instanceof UnitPayloadcCopy)){
-                    unit.constructor=map;
-                }
-            }
+            runners.each(Runnable::run);
+            runners.clear();
         }
         SaveIO.versionArray.add(save4);
         SaveIO.versions.remove(save4.version);

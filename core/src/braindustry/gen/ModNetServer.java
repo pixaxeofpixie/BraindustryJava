@@ -68,8 +68,8 @@ public class ModNetServer implements ApplicationListener {
         player.unit().spawnedByCore=true;
         player.unit(unit);
     }
-    @ModAnnotations.Remote(called = Annotations.Loc.server)
-    public static void spawnUnits(UnitType type, float x, float y, int amount, boolean spawnerByCore, @Nullable Team team, @Nullable UnitController controller){
+    @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
+    public static void spawnUnits(Player player,UnitType type, float x, float y, int amount, boolean spawnerByCore, @Nullable Team team, @Nullable UnitController controller){
         for (int i = 0; i < amount; i++) {
             Unit unit=type.spawn(team==null?Team.derelict:team,x,y);
             unit.spawnedByCore(spawnerByCore);
@@ -99,6 +99,19 @@ public class ModNetServer implements ApplicationListener {
                 } else {
                     stealthUnit.removeStealth(value);
                 }
+            }
+//            stealthUnit.inStealth(inStealth);
+        }
+    }
+    @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.both)
+    public static void checkStealthStatus(Player player,Unit unit,boolean inStealth){
+        if (unit instanceof StealthUnitc){
+            if (inStealth){
+                while (Groups.unit.contains(u -> u == unit)) {
+                    Groups.unit.remove(unit);
+                }
+            } else if (!Groups.unit.contains(u -> u == unit)) {
+                Groups.unit.add(unit);
             }
 //            stealthUnit.inStealth(inStealth);
         }
