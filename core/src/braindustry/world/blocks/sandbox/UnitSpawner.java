@@ -61,6 +61,7 @@ public class UnitSpawner extends Block {
     public UnitSpawner(String name) {
         super(name);
         this.update = true;
+        sync=true;
         this.configurable = true;
         Events.on(EventType.TapEvent.class, (e) -> {
             if (e.player == Vars.player && choose && currentBuilding != null) {
@@ -603,6 +604,10 @@ public class UnitSpawner extends Block {
             spawnPos = TypeIO.readVec2(read);
             defaultUnitTeam = TypeIO.readTeam(read);
             float amount = read.i();
+            if (unitEntries!=null){
+                unitEntries.each(UnitEntry::remove);
+                unitEntries.clear();
+            }
             unitEntries = new Seq<>();
             for (int i = 0; i < amount; i++) {
                 UnitEntry entry = new UnitEntry();

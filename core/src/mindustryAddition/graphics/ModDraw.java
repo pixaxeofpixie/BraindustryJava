@@ -34,4 +34,16 @@ public class ModDraw {
     public static void drawLabel(Vec2 pos,String text){
         drawLabel(pos,Color.white,text);
     }
+    public static void drawLabel(float x,float y, float textSize, Color color, String text){
+        drawLabel(new Vec2(x,y),textSize,color,text);
+    }
+    public static void drawLabel(float x,float y,float textSize,String text){
+        drawLabel(x,y,textSize,Color.white,text);
+    }
+    public static void drawLabel(float x,float y,Color color,String text){
+        drawLabel(x,y,0.23f,color,text);
+    }
+    public static void drawLabel(float x,float y,String text){
+        drawLabel(x,y,Color.white,text);
+    }
 }
