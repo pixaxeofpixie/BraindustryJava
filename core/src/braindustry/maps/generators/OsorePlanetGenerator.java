@@ -8,18 +8,18 @@ import braindustry.content.ModBlocks;
 public class OsorePlanetGenerator extends ModPlanetGenerator{
     public OsorePlanetGenerator(){
         arr = new Block[][]{
-                {ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModOtherBlocks.magmaFloor, Blocks.dirt, Blocks.dirt},
-                {Blocks.dirt, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModOtherBlocks.magmaFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt},
-                {ModOtherBlocks.magmaFloor, Blocks.dirt, Blocks.mud, Blocks.craters, Blocks.stone, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.dirt, Blocks.dirt},
-                {ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, ModOtherBlocks.magmaFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.dirt},
-                {ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModOtherBlocks.magmaFloor, Blocks.dirt},
-                {ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, ModOtherBlocks.magmaFloor, Blocks.dirt},
-                {ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor},
-                {ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt},
-                {ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.mud, ModOtherBlocks.magmaFloor, Blocks.dirt, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt},
-                {Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.dirt, ModOtherBlocks.magmaFloor, Blocks.dirt, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt},
-                {ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.dirt, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.dirt},
-                {ModOtherBlocks.magmaFloor, ModOtherBlocks.magmaFloor, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.stone, ModOtherBlocks.magmaFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModOtherBlocks.magmaFloor, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt},
+                {Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt},
+                {ModBlocks.magmaFloor, Blocks.dirt, Blocks.mud, Blocks.craters, Blocks.stone, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, ModBlocks.magmaFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, ModBlocks.magmaFloor, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, ModBlocks.magmaFloor, ModBlocks.magmaFloor},
+                {ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt},
+                {Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.dirt, ModBlocks.magmaFloor, Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.stone, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModBlocks.magmaFloor, Blocks.dirt},
                 {Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.dirt}
 
        };
