@@ -666,7 +666,7 @@ public class ModDefense implements ContentList {
                         trailEffect = ModFx.shinigamiTrail;
                         despawnEffect = ModFx.instBomb;
                         trailSpacing = 25f;
-                        damage = 6780;
+                        damage = 9180;
                         buildingDamageMultiplier = 0.2f;
                         speed = brange;
                         hitShake = 9f;

@@ -289,12 +289,12 @@ public class ModOtherBlocks implements ContentList {
                 //attributes.set(Attribute.water, 0.2f);
             }
         };
-        swampSandWater = new ShallowLiquid("swamp-sand-water"){{
+        swampSandWater = new ShallowLiquid("swamp-sand-water-floor"){{
             speedMultiplier = 0.7f;
             statusDuration = 60f;
             albedo = 0.3f;
         }};
-        swampWater = new Floor("swamp-water") {
+        swampWater = new Floor("swamp-water-floor") {
             {
                 this.localizedName = "Swamp Water";
                 this.isLiquid = true;

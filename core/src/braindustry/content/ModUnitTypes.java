@@ -1741,7 +1741,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 1.5f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 int spawnTime = 1680;
-                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 25.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -25.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 28.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -28.25f, -48.75f));
+                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 28.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -28.25f, -48.75f));
                 int brange = 1;
 
 
@@ -1780,7 +1780,7 @@ public class ModUnitTypes implements ContentList {
                         new ModWeapon("mouriena-weapon"){{
                             top = false;
                             y = -5f;
-                            x = 48f;
+                            x = 42f;
                             reload = 60f;
                             recoil = 7f;
                             shots = 4;
@@ -1798,8 +1798,8 @@ public class ModUnitTypes implements ContentList {
                                 collidesTiles = true;
                                 splashDamageRadius = 28f;
                                 splashDamage = 140f;
-                                backColor = ModPal.contrastRedDark;
-                                frontColor = ModPal.contrastRedLight;
+                                backColor = ModPal.unitOrange;
+                                frontColor = ModPal.unitOrangeLight;
                                 }
                             };
                         }
