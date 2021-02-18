@@ -661,7 +661,7 @@ public class ModUnitTypes implements ContentList {
                                         this.collides = false;
                                         this.healPercent = 15;
                                         this.splashDamage = 450;
-                                        this.splashDamageRadius = 220;
+                                        this.splashDamageRadius = 110;
                                     }
                                 };
                             }
@@ -753,7 +753,7 @@ public class ModUnitTypes implements ContentList {
                                         this.collides = false;
                                         this.healPercent = 10;
                                         this.splashDamage = 400;
-                                        this.splashDamageRadius = 170;
+                                        this.splashDamageRadius = 110;
                                     }
                                 };
                             }
@@ -904,7 +904,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.flame;
                                 this.bullet = new ShrapnelBulletType() {
                                     {
-                                        this.length = 60;
+                                        this.length = 70;
                                         this.damage = 100;
                                         this.width = 24;
                                         this.serrationLenScl = 6;
@@ -937,7 +937,7 @@ public class ModUnitTypes implements ContentList {
                                         this.width = 10;
                                         this.height = 20;
                                         this.shrinkY = 0.1f;
-                                        this.drag = -0.1f;
+                                        this.drag = 0.1f;
                                         this.splashDamageRadius = 20;
                                         this.splashDamage = 45;
                                         this.lifetime = 45;
