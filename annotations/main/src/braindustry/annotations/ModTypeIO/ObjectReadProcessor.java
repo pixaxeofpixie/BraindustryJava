@@ -45,6 +45,7 @@ public class ObjectReadProcessor extends ModBaseProcessor {
                 .addMethod(MethodSpec.methodBuilder("map").addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .returns(TypeName.get(Prov.class)).addParameter(Class.class, "c").addStatement("return classMap.get(c)").build());
         writableInterface = ClassName.get(packageName, "WritableInterface");
+        idBuilder.addMethod(mapClassMethod());
         idBuilder.addMethod(getByIdMethod());
         idBuilder.addMethod(containsMethod());
         CodeBlock.Builder idStore = CodeBlock.builder();
@@ -53,9 +54,10 @@ public class ObjectReadProcessor extends ModBaseProcessor {
         int offset = configurationAnnotation.offset();
         elements.each(element -> {
             int id = -(elements.indexOf(element) + offset+1);
-            idStore.addStatement("idMap.put($L, $L::new)", id, element.asType().cname());
-            idStore.addStatement("nameMap.put($L, $L)",  element.asType().cname() + ".class",id);
-            idStore.addStatement("classMap.put($L, $L::new)", element.asType().cname() + ".class", element.asType().cname());
+            idStore.addStatement("mapClass($L,$L.class,$L::new)",id,element.asType().cname(),element.asType().cname());
+//            idStore.addStatement("idMap.put($L, $L::new)", id, element.asType().cname());
+//            idStore.addStatement("nameMap.put($L, $L)",  element.asType().cname() + ".class",id);
+//            idStore.addStatement("classMap.put($L, $L::new)", element.asType().cname() + ".class", element.asType().cname());
         });
 
 
@@ -64,6 +66,15 @@ public class ObjectReadProcessor extends ModBaseProcessor {
         Seq<ClassName> imports = Seq.with();
         imports.add(ClassName.get(Log.class));
         write(idBuilder, imports,0);
+    }
+    private MethodSpec mapClassMethod(){
+        MethodSpec.Builder method = MethodSpec.methodBuilder("mapClass").addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(void.class).addParameter(int.class, "id").addParameter(Class.class,"aClass").addParameter(Prov.class,"prov");
+
+        method.addStatement("idMap.put(id, prov)");
+        method.addStatement("nameMap.put(aClass, id)");
+        method.addStatement("classMap.put(aClass, prov)");
+        return method.build();
     }
     private MethodSpec getByIdMethod() {
         MethodSpec.Builder method = MethodSpec.methodBuilder("getById").addModifiers(Modifier.PUBLIC, Modifier.STATIC)
