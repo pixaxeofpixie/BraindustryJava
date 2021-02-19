@@ -56,6 +56,7 @@ ext {
     }
 }
 dependencies {
+    compile project(":core")
     implementation project(":core")
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
@@ -258,6 +259,7 @@ task pjar {
     }
 }
 jar {
+    dependsOn "core:jar"
     archiveFileName = "${project.archivesBaseName}Desktop.jar"
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
