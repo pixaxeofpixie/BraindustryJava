@@ -69,18 +69,11 @@ public class ModNetServer implements ApplicationListener {
         player.unit(unit);
     }
     @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
-    public static void spawnUnits(Player player,UnitType type, float x, float y, int amount, boolean spawnerByCore, @Nullable Team team, @Nullable UnitController controller){
+    public static void spawnUnits(Player player,UnitType type, float x, float y, int amount, boolean spawnerByCore, Team team){
         for (int i = 0; i < amount; i++) {
             Unit unit=type.spawn(team==null?Team.derelict:team,x,y);
             unit.spawnedByCore(spawnerByCore);
-            if (controller!=null){
-                if (controller instanceof Player) {
-                    controller.unit().spawnedByCore(true);
-                    ((Player) controller).team(team);
-                }
 
-                unit.controller(controller);
-            }
         }
     }
     @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)

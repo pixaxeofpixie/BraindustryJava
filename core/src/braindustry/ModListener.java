@@ -22,7 +22,7 @@ public class ModListener extends ApplicationCore {
         }
     }
     public static void load(){
-        Log.info("\n @",ui);
+//        Log.info("\n @",ui);
         listener=new ModListener();
         if (Vars.platform instanceof ClientLauncher){
             launcher=(ClientLauncher) Vars.platform;

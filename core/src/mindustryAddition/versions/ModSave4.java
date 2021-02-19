@@ -16,12 +16,12 @@ import mindustry.gen.Entityc;
 import mindustry.gen.Groups;
 import mindustry.io.SaveVersion;
 import mindustry.io.TypeIO;
+import mindustry.world.Tile;
 import mindustryAddition.gen.ModEntityMapping;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.util.Iterator;
 
 public class ModSave4 extends SaveVersion {
     public ModSave4() {
@@ -36,10 +36,8 @@ public class ModSave4 extends SaveVersion {
         }
 
         stream.writeInt(data.size);
-        Iterator var3 = data.iterator();
 
-        while (var3.hasNext()) {
-            Teams.TeamData team = (Teams.TeamData) var3.next();
+        for (Teams.TeamData team : data) {
             stream.writeInt(team.team.id);
             stream.writeInt(team.blocks.size);
 
@@ -53,10 +51,8 @@ public class ModSave4 extends SaveVersion {
         }
 
         stream.writeInt(Groups.all.count(Entityc::serialize));
-        var3 = Groups.all.iterator();
 
-        while (var3.hasNext()) {
-            Entityc entity = (Entityc) var3.next();
+        for (Entityc entity : Groups.all) {
             if (entity.serialize()) {
                 this.writeChunk(stream, true, (out) -> {
                     int id = entity.classId();
@@ -65,7 +61,7 @@ public class ModSave4 extends SaveVersion {
                         int classId = ModEntityMapping.getId(entity.getClass());
                         out.writeShort(classId);
 //                        Log.info("typeid: @ @",classId,entity.getClass().getName());
-                    } else if (id==modVars.MOD_CONTENT_ID) {
+                    } else if (id == modVars.MOD_CONTENT_ID) {
                         out.writeByte(Byte.MAX_VALUE - 1);
                     } else {
                         out.writeByte(id);
@@ -74,6 +70,76 @@ public class ModSave4 extends SaveVersion {
                 });
             }
         }
+    }
+
+    @Override
+    public void writeChunk(DataOutput output, IORunner<DataOutput> runner) throws IOException {
+        super.writeChunk(output, runner);
+    }
+
+    Tile cTile;
+    @Override
+    public void writeMap(DataOutput stream) throws IOException {
+        stream.writeShort(Vars.world.width());
+        stream.writeShort(Vars.world.height());
+
+        int i;
+        Tile tile;
+        for(i = 0; i < Vars.world.width() * Vars.world.height(); ++i) {
+            tile = Vars.world.rawTile(i % Vars.world.width(), i / Vars.world.width());
+            stream.writeShort(tile.floorID());
+            stream.writeShort(tile.overlayID());
+            int consecutives = 0;
+
+            for(int j = i + 1; j < Vars.world.width() * Vars.world.height() && consecutives < 255; ++j) {
+                Tile nextTile = Vars.world.rawTile(j % Vars.world.width(), j / Vars.world.width());
+                if (nextTile.floorID() != tile.floorID() || nextTile.overlayID() != tile.overlayID()) {
+                    break;
+                }
+
+                ++consecutives;
+            }
+
+            stream.writeByte(consecutives);
+            i += consecutives;
+        }
+
+        for(i = 0; i < Vars.world.width() * Vars.world.height(); ++i) {
+            tile = Vars.world.rawTile(i % Vars.world.width(), i / Vars.world.width());
+            stream.writeShort(tile.blockID());
+            boolean savedata = tile.block().saveData;
+            byte packed = (byte)((tile.build != null ? 1 : 0) | (savedata ? 2 : 0));
+            stream.writeByte(packed);
+            if (tile.build != null) {
+                if (tile.isCenter()) {
+                    stream.writeBoolean(true);
+                    cTile=tile;
+                    this.writeChunk(stream, true, (out) -> {
+                        out.writeByte(cTile.build.version());
+                        cTile.build.writeAll(Writes.get(out));
+                    });
+                } else {
+                    stream.writeBoolean(false);
+                }
+            } else if (savedata) {
+                stream.writeByte(tile.data);
+            } else {
+                int consecutives = 0;
+
+                for(int j = i + 1; j < Vars.world.width() * Vars.world.height() && consecutives < 255; ++j) {
+                    Tile nextTile = Vars.world.rawTile(j % Vars.world.width(), j / Vars.world.width());
+                    if (nextTile.blockID() != tile.blockID()) {
+                        break;
+                    }
+
+                    ++consecutives;
+                }
+
+                stream.writeByte(consecutives);
+                i += consecutives;
+            }
+        }
+
     }
 
     @Override

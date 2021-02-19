@@ -131,6 +131,7 @@ project(":annotations") {
     dependencies {
         implementation 'com.squareup:javapoet:1.12.1'
         compile "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+//        compileOnly project(":core")
         implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:tools:$mindustryVersion"

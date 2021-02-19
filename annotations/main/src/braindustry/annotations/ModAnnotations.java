@@ -2,8 +2,24 @@ package braindustry.annotations;
 
 import mindustry.annotations.Annotations;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 public class ModAnnotations {
-    public  enum  Values {
+    @Target({ElementType.TYPE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface WritableObject{
+
+    }
+    @Target({ElementType.METHOD})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface WritableObjectsConfig {
+        Class[] value() default {};
+        int offset() default 0;
+    }
+    public enum Values {
         val;
         Object value;
 
@@ -11,21 +27,30 @@ public class ModAnnotations {
             this.value = value;
             return this;
         }
-        public String getToStringValue(){
-            return value+"";
+
+        public String getToStringValue() {
+            return value + "";
         }
     }
-    public @interface DefaultValue{
+
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DefaultValue {
         String value();
+
         Class[] imports() default {};
     }
-    public @interface RulesTable{
+
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface RulesTable {
 
     }
+
+    @Retention(RetentionPolicy.SOURCE)
     public @interface Rules {
 
     }
 
+    @Retention(RetentionPolicy.SOURCE)
     public @interface Remote {
         /**
          * Specifies the locations from which this method can be invoked.
@@ -62,9 +87,11 @@ public class ModAnnotations {
 
     }
 
+    @Retention(RetentionPolicy.SOURCE)
     public @interface EntityInterface {
     }
 
+    @Retention(RetentionPolicy.SOURCE)
     public @interface Import {
     }
 }

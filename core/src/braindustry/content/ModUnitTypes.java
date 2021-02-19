@@ -1823,10 +1823,10 @@ public class ModUnitTypes implements ContentList {
     }
 
     private static class Types {
-        static Prov<? extends Unit> payload = EntityMapping.map("PayloadUnit");
-        static Prov<? extends Unit> naval = EntityMapping.map("UnitWaterMove");
-        static Prov<? extends Unit> legs = EntityMapping.map("LegsUnit");
-        static Prov<? extends Unit> mech = EntityMapping.map("MechUnit");
+        static Prov<? extends Unit> payload = PayloadUnit::create;
+        static Prov<? extends Unit> naval =UnitWaterMove::create;
+        static Prov<? extends Unit> legs =LegsUnit::create;
+        static Prov<? extends Unit> mech =MechUnit::create;
         static Prov<? extends Unit> stealthMech = StealthMechUnit::new;
         static Prov<? extends Unit> powerNaval=PowerGeneratorUnit::new;
     }

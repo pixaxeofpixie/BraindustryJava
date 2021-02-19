@@ -18,7 +18,9 @@ import arc.util.io.Reads;
 import arc.util.io.ReusableByteInStream;
 import arc.util.io.ReusableByteOutStream;
 import arc.util.io.Writes;
+import braindustry.annotations.ModAnnotations;
 import braindustry.gen.ModBuilding;
+import braindustry.gen.WritableInterface;
 import braindustry.tools.ModReads;
 import braindustry.tools.ModWrites;
 import braindustry.world.blocks.BuildingLabel;
@@ -84,8 +86,8 @@ public class DpsMeter extends Block {
     protected TextureRegion[] icons() {
         return this.teamRegion.found() ? new TextureRegion[]{this.region, this.teamRegions[Team.sharded.id]} : new TextureRegion[]{this.region};
     }
-
-    public static class MeterContainer {
+    @ModAnnotations.WritableObject
+    public static class MeterContainer implements  WritableInterface {
         public float time = 60;
         public Team selectedTeam = Team.derelict;
         public boolean unit = false;
