@@ -73,7 +73,7 @@ public class ModTypeIO extends TypeIO {
         byte type = read.b();
         int i;
         WritableInterface writable = ObjectOperations.getById(type);
-        Log.info("type=@,obj=@", type, writable);
+//        Log.info("type=@,obj=@", type, writable);
         if (writable != null) {
             writable.read(read);
             return writable;

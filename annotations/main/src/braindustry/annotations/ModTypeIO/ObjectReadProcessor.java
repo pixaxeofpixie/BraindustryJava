@@ -82,7 +82,7 @@ public class ObjectReadProcessor extends ModBaseProcessor {
         method.beginControlFlow("try");
         method.addStatement("Class aClass=obj.getClass()");
         method.addStatement("int id=nameMap.get(aClass,Integer.MIN_VALUE)");
-        method.addStatement("Log.info(\"class(@).id: @\",aClass.getName(),nameMap.get(aClass))");
+//        method.addStatement("Log.info(\"class(@).id: @\",aClass.getName(),nameMap.get(aClass))");
         method.addStatement("$L w=($L)obj", writableInterface, writableInterface);
         method.addStatement("write.b(id)");
         method.addStatement("w.write(write)");
@@ -91,7 +91,7 @@ public class ObjectReadProcessor extends ModBaseProcessor {
         method.addCode("catch (IllegalArgumentException e){throw e;}");
 //        cont.addCode("");
         method.beginControlFlow(/*"catch (NullPointerException e){\n}"+*/" catch (Exception e)");
-        method.addStatement("Log.err(e)");
+//        method.addStatement("Log.err(e)");
         method.endControlFlow();
         method.addStatement("return false");
         return method.build();
