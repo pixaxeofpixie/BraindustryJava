@@ -2,6 +2,7 @@ package braindustry.annotations.RemoteProc;
 
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import braindustry.annotations.ModAnnotations;
 import mindustry.annotations.Annotations;
 import mindustry.annotations.BaseProcessor;
 import mindustry.annotations.util.Smethod;
@@ -17,6 +18,7 @@ public class ModTypeIOResolver extends TypeIOResolver {
     public static ClassSerializer resolve(BaseProcessor processor)  {
         ClassSerializer out = new ClassSerializer(new ObjectMap<>(), new ObjectMap<>(), new ObjectMap<>());
         Seq<Stype> types = processor.types(Annotations.TypeIOHandler.class);
+        types.addAll(processor.types(ModAnnotations.TypeIOHandler.class));
         Seq<Smethod> usedMethods = new Seq<>();
        types.add(types.first().superclass());
         for(Stype type : types){

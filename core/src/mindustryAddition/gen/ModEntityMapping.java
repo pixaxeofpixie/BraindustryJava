@@ -2,18 +2,15 @@ package mindustryAddition.gen;
 
 import Gas.gen.Cloud;
 import ModVars.modFunc;
-import ModVars.modVars;
 import arc.func.Prov;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
-import arc.util.Log;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedPayloadUnit;
 import braindustry.entities.Advanced.AdvancedUnitWaterMove;
 import braindustry.entities.AmmoDistributeUnit;
 import braindustry.entities.PowerGeneratorUnit;
-import braindustry.gen.StealthMechUnit;
-import mindustry.gen.*;
+import braindustry.gen.StealthMechUnitHand;
 import mindustryAddition.versions.ModEntityc;
 
 import java.lang.reflect.Constructor;
@@ -40,7 +37,7 @@ public class ModEntityMapping {
                 AdvancedLegsUnit.class,
                 AdvancedPayloadUnit.class,
                 AdvancedUnitWaterMove.class,
-                StealthMechUnit.class,
+                StealthMechUnitHand.class,
                 Cloud.class,
                 null
         );

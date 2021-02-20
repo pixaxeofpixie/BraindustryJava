@@ -1,5 +1,6 @@
 package ModVars;
 
+import ModVars.Classes.ModAssets;
 import ModVars.Classes.ModAtlas;
 import ModVars.Classes.ModSettings;
 import ModVars.Classes.UI.ModControlsDialog;
@@ -41,6 +42,7 @@ public class modVars {
     private static final int classOffset = 40;
     public static ModSettings settings;
     public static ModAtlas modAtlas;
+    public static ModAssets modAssets;
     public static Mods.LoadedMod modInfo;
     public static ModKeyBinds keyBinds;
     public static ModControlsDialog controls;
@@ -107,6 +109,7 @@ public class modVars {
     public static void load() {
         modUI = new ModUI();
         settings = new ModSettings();
+        modAssets=new ModAssets();
 
         ModListener.load();
         listener.add(netClient = new ModNetClient());

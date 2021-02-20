@@ -1,44 +1,33 @@
 package braindustry.content;
 
-import arc.Events;
 import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.ObjectSet;
 import braindustry.ai.types.StealthGroundAI;
-import braindustry.entities.Advanced.AdvancedLegsUnit;
-import braindustry.entities.Advanced.AdvancedUnitType;
-import braindustry.entities.Advanced.UnitExtensions;
+import braindustry.annotations.ModAnnotations;
 import braindustry.entities.PowerGeneratorUnit;
-import braindustry.entities.ModUnits;
-import braindustry.graphics.ModPal;
-import mindustry.game.EventType.UnitDestroyEvent;
 import braindustry.entities.bullets.AdamBulletType;
-import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.EveBulletType;
-import braindustry.gen.StealthMechUnit;
+import braindustry.gen.StealthMechUnitHand;
+import braindustry.gen.Stealthc;
+import braindustry.graphics.ModPal;
 import braindustry.type.ModWeapon;
 import braindustry.type.PowerUnitType;
-import mindustry.game.EventType;
 import braindustry.type.StealthUnitType;
 import mindustry.content.Bullets;
 import mindustry.content.Fx;
-import static ModVars.modFunc.EventOn;
 import mindustry.content.StatusEffects;
 import mindustry.content.UnitTypes;
 import mindustry.ctype.ContentList;
+import mindustry.entities.abilities.ForceFieldAbility;
+import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.UnitSpawnAbility;
 import mindustry.entities.bullet.*;
-import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.type.AmmoTypes;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
-import mindustry.entities.abilities.RepairFieldAbility;
-import mindustry.entities.abilities.ForceFieldAbility;
-import mindustry.content.Liquids;
-
-import static ModVars.modFunc.EventOn;
 
 
 public class ModUnitTypes implements ContentList {
@@ -47,6 +36,8 @@ public class ModUnitTypes implements ContentList {
             cenda, chainmail, chestplate, ibis, lacerta,
             lyra, shield, tropsy, venti, vyvna, tyzen, kryox, intelix,
             nemesis, maverix, griffon, moureno, litix, tenvy;
+//    public static @ModAnnotations.EntityDef({Stealthc.class,Unitc.class, Mechc.class, })
+//    UnitType test;
 
     public ModUnitTypes() {
         UnitTypes.class.isArray();
@@ -55,6 +46,7 @@ public class ModUnitTypes implements ContentList {
     @Override
     public void load() {
         //====spiders
+
         ibis = new UnitType("ibis") {
             {
                 this.constructor = Types.legs;
@@ -1130,7 +1122,7 @@ public class ModUnitTypes implements ContentList {
 
             {
                 this.range = 18;
-                this.constructor = Types.powerNaval;
+                this.constructor = Types.naval;
                 this.localizedName = "Vyvna";
                 this.description = "Giant atomic cruiser, produce energy and fires from railguns and rocket launchers.";
                 this.health = 21900;
@@ -1287,10 +1279,10 @@ public class ModUnitTypes implements ContentList {
             {
                 this.mineSpeed = 8.0F;
                 this.mineTier = 2;
-                stealthDuration=2f*60f;
-                stealthCooldown=2f*60f;
+                stealthDuration = 2f * 60f;
+                stealthCooldown = 2f * 60f;
                 this.constructor = Types.stealthMech;
-                this.defaultController= StealthGroundAI::new;
+                this.defaultController = StealthGroundAI::new;
                 this.speed = 0.9f;
                 this.hitSize = 8;
                 this.armor = 4;
@@ -1338,10 +1330,10 @@ public class ModUnitTypes implements ContentList {
             {
                 this.mineSpeed = 9.0F;
                 this.mineTier = 2;
-                stealthDuration=3f*60f;
-                stealthCooldown=2.5f*60f;
+                stealthDuration = 3f * 60f;
+                stealthCooldown = 2.5f * 60f;
                 this.constructor = Types.stealthMech;
-                this.defaultController= StealthGroundAI::new;
+                this.defaultController = StealthGroundAI::new;
                 this.speed = 0.63f;
                 this.rotateSpeed = 4;
                 this.hitSize = 14;
@@ -1365,7 +1357,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = false;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet = new LiquidBulletType(ModLiquids.magma){
+                                this.bullet = new LiquidBulletType(ModLiquids.magma) {
                                     {
                                         damage = 57;
                                         speed = 2.1f;
@@ -1384,10 +1376,10 @@ public class ModUnitTypes implements ContentList {
             {
                 this.mineSpeed = 8.5F;
                 this.mineTier = 3;
-                stealthDuration=4f*60f;
-                stealthCooldown=5f*60f;
+                stealthDuration = 4f * 60f;
+                stealthCooldown = 5f * 60f;
                 this.constructor = Types.stealthMech;
-                this.defaultController= StealthGroundAI::new;
+                this.defaultController = StealthGroundAI::new;
                 this.speed = 0.55f;
                 this.rotateSpeed = 3;
                 this.hitSize = 20;
@@ -1438,10 +1430,10 @@ public class ModUnitTypes implements ContentList {
             {
                 this.mineSpeed = 9F;
                 this.mineTier = 3;
-                stealthDuration= 5f*60f;
-                stealthCooldown= 6f*60f;
+                stealthDuration = 5f * 60f;
+                stealthCooldown = 6f * 60f;
                 this.constructor = Types.stealthMech;
-                this.defaultController= StealthGroundAI::new;
+                this.defaultController = StealthGroundAI::new;
                 this.speed = 0.45f;
                 this.rotateSpeed = 3;
                 this.hitSize = 32;
@@ -1492,10 +1484,10 @@ public class ModUnitTypes implements ContentList {
             {
                 this.mineSpeed = 9F;
                 this.mineTier = 4;
-                stealthDuration=7f*60f;
-                stealthCooldown=3f*60f;
+                stealthDuration = 7f * 60f;
+                stealthCooldown = 3f * 60f;
                 this.constructor = Types.stealthMech;
-                this.defaultController= StealthGroundAI::new;
+                this.defaultController = StealthGroundAI::new;
                 this.speed = 0.62f;
                 this.rotateSpeed = 3;
                 this.hitSize = 38;
@@ -1554,7 +1546,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotateSpeed = 1.4f;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet = new LiquidBulletType(ModLiquids.magma){
+                                this.bullet = new LiquidBulletType(ModLiquids.magma) {
                                     {
                                         damage = 98;
                                         speed = 1.9f;
@@ -1594,7 +1586,7 @@ public class ModUnitTypes implements ContentList {
                 this.landShake = 2.1f;
                 this.legSpeed = 0.8f;
                 this.legLengthScl = 1f;
-               // this.buildSpeed = 0.8f;
+                // this.buildSpeed = 0.8f;
                 this.allowLegStep = true;
                 this.visualElevation = 0.4f;
                 this.ammoType = AmmoTypes.powerHigh;
@@ -1624,6 +1616,7 @@ public class ModUnitTypes implements ContentList {
                                         SubBullets.addLightning(b, this);
                                         super.update(b);
                                     }
+
                                     {
                                         this.hitSize = 14;
                                         this.drawSize = 520;
@@ -1660,63 +1653,64 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("griffon-cannon"){
+                        new ModWeapon("griffon-cannon") {
                             {
-                            y = -14f;
-                            x = 18f;
-                            shootY = 22f;
-                            mirror = true;
-                            reload = 40;
-                            shake = 10f;
-                            recoil = 10f;
-                            rotateSpeed = 1.2f;
-                            ejectEffect = Fx.casing3;
-                            shootSound = Sounds.artillery;
-                            rotate = true;
-                            shadow = 30f;
+                                y = -14f;
+                                x = 18f;
+                                shootY = 22f;
+                                mirror = true;
+                                reload = 40;
+                                shake = 10f;
+                                recoil = 10f;
+                                rotateSpeed = 1.2f;
+                                ejectEffect = Fx.casing3;
+                                shootSound = Sounds.artillery;
+                                rotate = true;
+                                shadow = 30f;
 
-                            bullet = new ArtilleryBulletType(3.5f, 70){{
-                                hitEffect = Fx.blastExplosion;
-                                knockback = 0.9f;
-                                lifetime = 100f;
-                                width = height = 25f;
-                                collidesTiles = collides = true;
-                                ammoMultiplier = 4f;
-                                splashDamageRadius = 55f;
-                                splashDamage = 220f;
-                                backColor = Pal.plastaniumBack;
-                                frontColor = lightningColor = Pal.plastanium;
-                                lightning = 18;
-                                lightningLength = 9;
-                                smokeEffect = Fx.shootBigSmoke2;
-                                hitShake = 10f;
-
-                                status = StatusEffects.shocked;
-                                statusDuration = 70f * 10;
-
-                                fragLifeMin = 0.4f;
-                                fragBullets = 12;
-
-                                fragBullet = new ArtilleryBulletType(2.3f, 30){{
-                                    hitEffect = Fx.railHit;
-                                    knockback = 0.7f;
-                                    lifetime = 85f;
-                                    width = height = 17f;
-                                    collidesTiles = false;
-                                    splashDamageRadius = 30f;
-                                    splashDamage = 110f;
-                                    backColor = Pal.plastaniumFront;
-                                    frontColor = lightningColor = Pal.bulletYellow;
-                                    lightning = 9;
-                                    lightningLength = 4;
+                                bullet = new ArtilleryBulletType(3.5f, 70) {{
+                                    hitEffect = Fx.blastExplosion;
+                                    knockback = 0.9f;
+                                    lifetime = 100f;
+                                    width = height = 25f;
+                                    collidesTiles = collides = true;
+                                    ammoMultiplier = 4f;
+                                    splashDamageRadius = 55f;
+                                    splashDamage = 220f;
+                                    backColor = Pal.plastaniumBack;
+                                    frontColor = lightningColor = Pal.plastanium;
+                                    lightning = 18;
+                                    lightningLength = 9;
                                     smokeEffect = Fx.shootBigSmoke2;
-                                    hitShake = 6f;
+                                    hitShake = 10f;
 
                                     status = StatusEffects.shocked;
-                                    statusDuration = 60f * 7;
+                                    statusDuration = 70f * 10;
+
+                                    fragLifeMin = 0.4f;
+                                    fragBullets = 12;
+
+                                    fragBullet = new ArtilleryBulletType(2.3f, 30) {{
+                                        hitEffect = Fx.railHit;
+                                        knockback = 0.7f;
+                                        lifetime = 85f;
+                                        width = height = 17f;
+                                        collidesTiles = false;
+                                        splashDamageRadius = 30f;
+                                        splashDamage = 110f;
+                                        backColor = Pal.plastaniumFront;
+                                        frontColor = lightningColor = Pal.bulletYellow;
+                                        lightning = 9;
+                                        lightningLength = 4;
+                                        smokeEffect = Fx.shootBigSmoke2;
+                                        hitShake = 6f;
+
+                                        status = StatusEffects.shocked;
+                                        statusDuration = 60f * 7;
+                                    }};
                                 }};
-                            }};
-                        }}
+                            }
+                        }
                 );
             }
         };
@@ -1724,7 +1718,7 @@ public class ModUnitTypes implements ContentList {
         moureno = new PowerUnitType("mouriena") {
             {
                 this.range = 40;
-                this.constructor = Types.powerNaval;
+                this.constructor = Types.naval;
                 this.localizedName = "Mouriena";
                 this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers.";
                 this.health = 62000;
@@ -1777,33 +1771,35 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("mouriena-weapon"){{
-                            top = false;
-                            y = -5f;
-                            x = 42f;
-                            reload = 60f;
-                            recoil = 7f;
-                            shots = 4;
-                            shake = 3f;
-                            rotate = true;
-                            mirror = true;
-                            ejectEffect = ModFx.foxShoot;
-                            shootSound = Sounds.artillery;
-                            bullet = new ArtilleryBulletType(3f, 8, "shell"){{
-                                hitEffect = ModFx.adamExplosion;
-                                knockback = 1.2f;
-                                lifetime = 110f;
-                                width = height = 22f;
-                                collides = true;
-                                collidesTiles = true;
-                                splashDamageRadius = 28f;
-                                splashDamage = 140f;
-                                backColor = ModPal.unitOrange;
-                                frontColor = ModPal.unitOrangeLight;
-                                }
-                            };
+                        new ModWeapon("mouriena-weapon") {
+                            {
+                                top = false;
+                                y = -5f;
+                                x = 42f;
+                                reload = 60f;
+                                recoil = 7f;
+                                shots = 4;
+                                shake = 3f;
+                                rotate = true;
+                                mirror = true;
+                                ejectEffect = ModFx.foxShoot;
+                                shootSound = Sounds.artillery;
+                                bullet = new ArtilleryBulletType(3f, 8, "shell") {
+                                    {
+                                        hitEffect = ModFx.adamExplosion;
+                                        knockback = 1.2f;
+                                        lifetime = 110f;
+                                        width = height = 22f;
+                                        collides = true;
+                                        collidesTiles = true;
+                                        splashDamageRadius = 28f;
+                                        splashDamage = 140f;
+                                        backColor = ModPal.unitOrange;
+                                        frontColor = ModPal.unitOrangeLight;
+                                    }
+                                };
+                            }
                         }
-                    }
                 );
             }
 
@@ -1824,10 +1820,10 @@ public class ModUnitTypes implements ContentList {
 
     private static class Types {
         static Prov<? extends Unit> payload = PayloadUnit::create;
-        static Prov<? extends Unit> naval =UnitWaterMove::create;
-        static Prov<? extends Unit> legs =LegsUnit::create;
-        static Prov<? extends Unit> mech =MechUnit::create;
-        static Prov<? extends Unit> stealthMech = StealthMechUnit::new;
-        static Prov<? extends Unit> powerNaval=PowerGeneratorUnit::new;
+        static Prov<? extends Unit> naval = UnitWaterMove::create;
+        static Prov<? extends Unit> legs = LegsUnit::create;
+        static Prov<? extends Unit> mech = MechUnit::create;
+        static Prov<? extends Unit> stealthMech = StealthMechUnitHand::new;
+//        static Prov<? extends Unit> powerNaval = PowerGeneratorUnit::new;
     }
 }

@@ -213,7 +213,7 @@ public class modFunc {
 
     public static void print(String text, Object... args) {
         if (true){
-            Log.info("[@]",modInfo.name, Strings.format(text, args));
+            Log.info("[@] @",modInfo.name, Strings.format(text, args));
             return;
         }
         Log.info("[@/@]: @",modInfo.name, modInfo.meta.displayName, Strings.format(text, args));

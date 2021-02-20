@@ -153,14 +153,10 @@ public class MainModClass extends Mod {
         modInfo = Vars.mods.getMod(this.getClass());
         print("loading mod content...");
         modAtlas = new ModAtlas();
+        Events.fire(ModEventType.ModContentLoad.class);
         inTry(() -> {
             if (!headless) ModShaders.init();
         });
-        Events.fire(ModEventType.ModContentLoad.class);
-//        loadMaps();
-        /*Seq<ContentList> loads = Seq.with(
-                new ModSounds(), new ModStatusEffects(), new ModItems(), new ModLiquids(), new ModUnitTypes(), new ModBlocks(), new ModTechTree()
-        );*/
         new ModContentLoader((load) -> {
             try {
                 load.load();

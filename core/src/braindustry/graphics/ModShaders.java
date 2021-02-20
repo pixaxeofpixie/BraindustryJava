@@ -1,5 +1,6 @@
 package braindustry.graphics;
 
+import ModVars.modVars;
 import arc.Core;
 import arc.files.Fi;
 import arc.graphics.Color;
@@ -413,8 +414,9 @@ public class ModShaders {
         }
 
         private static Fi loadFile(String fileName) {
-            Seq<Fi> modShaders = Seq.with(modInfo.root.child("shaders").list());
-            Fi foundFile = modShaders.find(fi -> fi.name().equals(fileName));
+//            Seq<Fi> modShaders = Seq.with(modInfo.root.child("shaders").list());
+//            Fi foundFile = modShaders.find(fi -> fi.name().equals(fileName));
+            Fi foundFile= modVars.modAssets.get("shaders",fileName);
             if (foundFile == null) {
                 return Core.files.internal("shaders/" + (fileName));
             }

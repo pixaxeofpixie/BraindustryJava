@@ -1,7 +1,6 @@
 package braindustry.input;
 
 import arc.Core;
-import arc.input.KeyCode;
 import arc.math.Mathf;
 import arc.math.geom.Geometry;
 import arc.math.geom.Rect;
@@ -10,7 +9,6 @@ import arc.util.Time;
 import arc.util.Tmp;
 import braindustry.entities.ModUnits;
 import braindustry.gen.ModCall;
-import braindustry.gen.StealthMechUnit;
 import braindustry.gen.StealthUnitc;
 import mindustry.Vars;
 import mindustry.content.Fx;

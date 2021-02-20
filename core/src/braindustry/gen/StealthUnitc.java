@@ -1,7 +1,10 @@
 package braindustry.gen;
 
+import braindustry.annotations.ModAnnotations;
+import mindustry.annotations.Annotations;
 import mindustry.gen.*;
 
+@ModAnnotations.EntityInterface
 public interface StealthUnitc extends Boundedc , Rotc, Itemsc, Weaponsc, Physicsc, Flyingc, Posc, Statusc, Shieldc, Minerc, Builderc, Hitboxc, Velc, Healthc, Teamc, Drawc, Entityc, Syncc, Commanderc, Unitc {
     boolean healing();
     void healing(boolean healing);
