@@ -135,7 +135,7 @@ public class ModPowerBlocks implements ContentList {
             {
                 this.localizedName = "Blackhole Reactor";
                 this.description = "Create power from small Blackhole in center.";
-                this.size = 14;
+                this.size = 6;
                 this.hasPower = true;
                 this.hasLiquids = true;
                 this.hasItems = false;

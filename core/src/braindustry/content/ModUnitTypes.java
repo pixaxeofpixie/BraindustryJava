@@ -666,11 +666,11 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("broadsword-weapon") {
+                        new ModWeapon("moureno-laser-weapon") {
                             {
                                 this.top = true;
                                 this.y = -3f;
-                                this.x = 32;
+                                this.x = 22;
                                 this.reload = 150;
                                 this.recoil = 4;
                                 this.shotDelay = 4;
@@ -1738,7 +1738,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailLength = 240;
                 this.trailX = 36;
                 this.trailY = 28;
-                this.trailScl = 1.5f;
+                this.trailScl = 0.9f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 int spawnTime = 1680;
                 abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 28.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -28.25f, -48.75f));
@@ -1746,44 +1746,55 @@ public class ModUnitTypes implements ContentList {
 
 
                 this.weapons.add(
-                        new ModWeapon("mouriena-weapon0") {
-                            {
-                                this.x = 0;
-                                this.y = -40;
-                                this.shootY = -1f;
-                                this.reload = 20f;
-                                this.ejectEffect = Fx.burning;
-                                this.recoil = 1;
-                                this.shots = 6;
-                                this.rotate = true;
-                                this.shootSound = Sounds.sap;
-                                this.alternate = true;
-                                this.bullet = new ShrapnelBulletType() {
-                                    {
-                                        this.length = 95.0F;
-                                        this.damage = 135.0F;
-                                        this.width = 29.0F;
-                                        this.lifetime = 32.0F;
-                                        this.serrationLenScl = 3.0F;
-                                        this.serrationSpaceOffset = 1.0F;
-                                        this.serrationFadeOffset = 0.0F;
-                                        this.serrations = 5;
-                                        this.serrationWidth = 51.0F;
-                                        this.fromColor = Color.valueOf("77387f");
-                                        this.toColor = Color.valueOf("30153f");
-                                        this.shootEffect = Fx.sparkShoot;
-                                        this.smokeEffect = Fx.sparkShoot;
+                        new ModWeapon("vela-weapon"){{
+                            mirror = false;
+                            top = false;
+                            shake = 6f;
+                            shootY = 13f;
+                            x = y = 0f;
+
+                            firstShotDelay = ModFx.yellowLaserCharge.lifetime - 1f;
+
+                            reload = 150f;
+                            recoil = 0f;
+                            chargeSound = ModSounds.electronCharge;
+                            shootSound = ModSounds.electronShoot;
+                            continuous = true;
+                            cooldownTime = 210f;
+
+                            bullet = new ContinuousLaserBulletType(){{
+                                damage = 26f;
+                                length = 170f;
+                                hitEffect = Fx.hitMeltHeal;
+                                drawSize = 420f;
+                                lifetime = 160f;
+                                shake = 1f;
+                                despawnEffect = Fx.smokeCloud;
+                                smokeEffect = Fx.none;
+
+                                shootEffect = ModFx.thunderShoot;
+
+                                incendChance = 0.08f;
+                                incendSpread = 5f;
+                                incendAmount = 1;
+
+                                //constant healing
+                                healPercent = 15f;
+                                collidesTeam = true;
+
+                                colors = new Color[]{ModPal.blackHoleLaserColor.cpy().a(2.4f), ModPal.blackHoleLaserColor.cpy().a(.4f), ModPal.blackHoleLaserColor.cpy().mul(1.9f), Color.white};
                                     }
                                 };
                             }
                         },
+
                         new ModWeapon("mouriena-weapon"){{
                             top = false;
                             y = -5f;
-                            x = 42f;
+                            x = 38f;
                             reload = 60f;
                             recoil = 7f;
-                            shots = 4;
+                            shots = 5;
                             shake = 3f;
                             rotate = true;
                             mirror = true;
