@@ -120,15 +120,16 @@ public class ModUnitsBlocks implements ContentList {
         ultraReconstructor = new Reconstructor("ultra-reconstructor") {
             {
                 this.localizedName = "Ultra Reconstructor";
+                this.description = "Giant reconstructor for production of collosal TX Units, consumes Liquid Methane and engame rare resources";
                 this.size = 11;
-                this.consumes.power(120f);
+                this.consumes.power(96f);
                 this.consumes.liquid(ModLiquids.liquidMethane, 1.2f).optional(false, false);
-                this.consumes.items(ItemStack.with(Items.silicon, 1700, ModItems.graphenite, 2200, Items.surgeAlloy, 1700, ModItems.odinum, 2000, ModItems.plastic, 1000, ModItems.exoticAlloy, 700));
+                this.consumes.items(ItemStack.with(Items.silicon, 1700, ModItems.graphenite, 2200, Items.surgeAlloy, 1700, ModItems.odinum, 2000, ModItems.plastic, 1000, ModItems.chloroAlloy, 300));
                 this.constructTime = 7200;
                 this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, Items.surgeAlloy, 400, ModItems.odinum, 700, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
                 this.upgrades = Seq.with(
-                        new UnitType[]{ModUnitTypes.ibis, ModUnitTypes.griffon},
-                new UnitType[]{ModUnitTypes.nemesis, ModUnitTypes.maverix}//НЕ УДАЛЯЙ ЭТО
+                        new UnitType[]{ModUnitTypes.aquila, ModUnitTypes.griffon},
+                        new UnitType[]{ModUnitTypes.vyvna, ModUnitTypes.moureno}
                 );
             }
         };

@@ -292,6 +292,7 @@ public class ModOtherBlocks implements ContentList {
         swampSandWater = new ShallowLiquid("swamp-sand-water-floor"){{
             speedMultiplier = 0.7f;
             statusDuration = 60f;
+            variants = 1;
             albedo = 0.3f;
         }};
         swampWater = new Floor("swamp-water-floor") {

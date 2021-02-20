@@ -26,7 +26,7 @@ import static ModVars.modFunc.fullName;
 public class ModFx {
     private static final float Distance1 = Vars.headless?0:Core.camera.width + Core.camera.height + 50*Vars.tilesize;
     public static final Effect yellowLaserCharge = new Effect(90.0F, 110.0F, (e) -> {
-        Color color = Color.valueOf("d5b2ed");
+        Color color = ModPal.dendriteYellow;
         Draw.color(color);
         Lines.stroke(e.fin() * 2.0F);
         Lines.circle(e.x, e.y, 5.0F + e.fout() * 100.0F);
