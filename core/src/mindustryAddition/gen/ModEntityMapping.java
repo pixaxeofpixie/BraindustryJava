@@ -10,7 +10,7 @@ import braindustry.entities.Advanced.AdvancedPayloadUnit;
 import braindustry.entities.Advanced.AdvancedUnitWaterMove;
 import braindustry.entities.AmmoDistributeUnit;
 import braindustry.entities.PowerGeneratorUnit;
-import braindustry.gen.StealthMechUnitHand;
+import braindustry.gen.StealthMechUnit;
 import mindustryAddition.versions.ModEntityc;
 
 import java.lang.reflect.Constructor;
@@ -37,7 +37,7 @@ public class ModEntityMapping {
                 AdvancedLegsUnit.class,
                 AdvancedPayloadUnit.class,
                 AdvancedUnitWaterMove.class,
-                StealthMechUnitHand.class,
+                StealthMechUnit.class,
                 Cloud.class,
                 null
         );

@@ -4,12 +4,9 @@ import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.ObjectSet;
 import braindustry.ai.types.StealthGroundAI;
-import braindustry.annotations.ModAnnotations;
-import braindustry.entities.PowerGeneratorUnit;
 import braindustry.entities.bullets.AdamBulletType;
 import braindustry.entities.bullets.EveBulletType;
-import braindustry.gen.StealthMechUnitHand;
-import braindustry.gen.Stealthc;
+import braindustry.gen.StealthMechUnit;
 import braindustry.graphics.ModPal;
 import braindustry.type.ModWeapon;
 import braindustry.type.PowerUnitType;
@@ -1823,7 +1820,7 @@ public class ModUnitTypes implements ContentList {
         static Prov<? extends Unit> naval = UnitWaterMove::create;
         static Prov<? extends Unit> legs = LegsUnit::create;
         static Prov<? extends Unit> mech = MechUnit::create;
-        static Prov<? extends Unit> stealthMech = StealthMechUnitHand::new;
+        static Prov<? extends Unit> stealthMech = StealthMechUnit::new;
 //        static Prov<? extends Unit> powerNaval = PowerGeneratorUnit::new;
     }
 }

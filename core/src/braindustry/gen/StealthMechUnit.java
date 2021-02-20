@@ -42,7 +42,7 @@ import mindustryAddition.versions.ModEntityc;
 
 import java.util.Arrays;
 
-public class StealthMechUnitHand extends CopyMechUnit implements StealthUnitc, ModEntityc {
+public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEntityc {
     public static int classId = 0;
     public boolean inStealth = false;
     public float cooldownStealth = 0;
@@ -55,7 +55,7 @@ public class StealthMechUnitHand extends CopyMechUnit implements StealthUnitc, M
     public Interval timer=new Interval(10);
     private static final float stealthCheckDuration=12;
 
-    public StealthMechUnitHand() {
+    public StealthMechUnit() {
         super();
 
         /*
@@ -67,8 +67,8 @@ public class StealthMechUnitHand extends CopyMechUnit implements StealthUnitc, M
         this.buildAlpha = 0.0F;*/
     }
 
-    public static StealthMechUnitHand create() {
-        return new StealthMechUnitHand();
+    public static StealthMechUnit create() {
+        return new StealthMechUnit();
     }
 
     public String toString() {
