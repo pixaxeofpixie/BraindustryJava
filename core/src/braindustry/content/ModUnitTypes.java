@@ -1457,7 +1457,7 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("troplex-grinder") {
                             {
-                                this.x = -15;
+                                this.x = -16;
                                 this.y = 3;
                                 this.shootY = -1f;
                                 this.reload = 90;
@@ -1524,7 +1524,7 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new RailBulletType() {
                                     {
                                         this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 340.0F;
+                                        this.length = 370.0F;
                                         this.updateEffectSeg = 70.0F;
                                         this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
                                         this.updateEffect = this.trailEffect = ModFx.instTrail;
@@ -1550,7 +1550,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 3f;
                                 this.shots = 7;
                                 this.inaccuracy = 16.0f;
-                                this.rotate = true;
+                                this.rotate = false;
                                 this.rotateSpeed = 1.4f;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
@@ -1792,7 +1792,7 @@ public class ModUnitTypes implements ContentList {
                         new ModWeapon("mouriena-weapon"){{
                             top = false;
                             y = -5f;
-                            x = 38f;
+                            x = 32f;
                             reload = 60f;
                             recoil = 7f;
                             shots = 5;
@@ -1809,7 +1809,7 @@ public class ModUnitTypes implements ContentList {
                                 collides = true;
                                 collidesTiles = true;
                                 splashDamageRadius = 28f;
-                                splashDamage = 140f;
+                                splashDamage = 220f;
                                 backColor = ModPal.unitOrange;
                                 frontColor = ModPal.unitOrangeLight;
                                 }
