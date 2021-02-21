@@ -1741,7 +1741,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 0.9f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 int spawnTime = 1680;
-                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 32.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -32.25f, -48.75f));
+                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -36.25f, -48.75f));
                 int brange = 1;
 
 
