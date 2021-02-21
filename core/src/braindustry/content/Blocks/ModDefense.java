@@ -693,24 +693,24 @@ public class ModDefense implements ContentList {
             consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
             consumes.powerCond(24f, TurretBuild::isActive);
         }};
-        exoticAlloyWallLarge = new Wall("exotic-alloy-wall-large") {
+        exoticAlloyWallLarge = new Wall("dense-composite-wall-large") {
             {
-                this.localizedName = "Exotic Alloy Wall Large";
-                this.description = "A bigger Exotic Alloy wall, creates lightings when shot.";
+                this.localizedName = "Dense Composite Wall Large";
+                this.description = "A bigger Dense Composite Wall, creates lightings when shot.";
                 this.health = 4060;
                 this.size = 2;
-                this.requirements(Category.defense, ItemStack.with(ModItems.exoticAlloy, 22, ModItems.graphenite, 8));
-                this.lightningChance = 0.09f;
+                this.requirements(Category.defense, ItemStack.with(ModItems.phaseAlloy, 22));
+                this.lightningChance = 0.24f;
             }
         };
-        exoticAlloyWall = new Wall("exotic-alloy-wall") {
+        exoticAlloyWall = new Wall("dense-composite-wall") {
             {
-                this.localizedName = "Exotic Alloy Wall";
-                this.description = "An Exotic Alloy wall, creates lightnings when shot.";
+                this.localizedName = "Dense Composite Wall";
+                this.description = "An Dense Composite Wall, creates lightnings when shot.";
                 this.health = 1160;
                 this.size = 1;
-                this.requirements(Category.defense, ItemStack.with(ModItems.exoticAlloy, 6, ModItems.graphenite, 2));
-                this.lightningChance = 0.08f;
+                this.requirements(Category.defense, ItemStack.with(ModItems.phaseAlloy, 6));
+                this.lightningChance = 0.2f;
             }
         };
         grapheniteWallLarge = new Wall("graphenite-wall-large") {
