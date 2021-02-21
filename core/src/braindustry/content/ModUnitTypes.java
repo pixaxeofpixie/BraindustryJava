@@ -973,7 +973,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 1.8f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
-                        new ModWeapon("cenda-weapon") {
+                        new ModWeapon("cenda-weapon3") {
                             {
                                 this.reload = 60;
                                 this.x = 0;
@@ -1101,12 +1101,13 @@ public class ModUnitTypes implements ContentList {
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
                                 this.rotate = true;
+                                this.rotateSpeed = 1.8f;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new ShrapnelBulletType() {
                                     {
                                         this.length = 130;
-                                        this.damage = 92;
+                                        this.damage = 222;
                                         this.width = 58;
                                         this.lifetime = 20;
                                         this.serrationLenScl = 2;
@@ -1302,14 +1303,14 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("tyzen-weapon") {
                             {
-                                this.x = 5;
+                                this.x = 6;
                                 this.y = 0;
                                 this.shootY = -1f;
                                 this.reload = 20f;
                                 this.ejectEffect = Fx.burning;
                                 this.recoil = 1;
                                 this.shots = 2;
-                                this.rotate = true;
+                                this.rotate = false;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new ShrapnelBulletType() {
@@ -1354,7 +1355,7 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("kryox-weapon") {
                             {
-                                this.x = 10;
+                                this.x = 11;
                                 this.y = 0;
                                 this.shootY = -1f;
                                 this.reload = 34;
@@ -1457,8 +1458,8 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("troplex-grinder") {
                             {
-                                this.x = -16;
-                                this.y = 3;
+                                this.x = -17;
+                                this.y = 4;
                                 this.shootY = -1f;
                                 this.reload = 90;
                                 this.ejectEffect = ModFx.magicShootEffectBig;
@@ -1542,7 +1543,7 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("maverix-weapon") {
                             {
-                                this.x = 21;
+                                this.x = 22;
                                 this.y = 0;
                                 this.shootY = -1f;
                                 this.reload = 50;
@@ -1551,7 +1552,6 @@ public class ModUnitTypes implements ContentList {
                                 this.shots = 7;
                                 this.inaccuracy = 16.0f;
                                 this.rotate = false;
-                                this.rotateSpeed = 1.4f;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.magma){
@@ -1723,7 +1723,7 @@ public class ModUnitTypes implements ContentList {
 
         moureno = new PowerUnitType("mouriena") {
             {
-                this.range = 40;
+                this.range = 200;
                 this.constructor = Types.powerNaval;
                 this.localizedName = "Mouriena";
                 this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers.";
@@ -1751,12 +1751,14 @@ public class ModUnitTypes implements ContentList {
                             top = false;
                             shake = 6f;
                             shootY = 13f;
-                            x = y = 0f;
+                            x = 0f;
+                            y = -4f;
                             rotate = true;
+                            rotateSpeed = 0.9f;
 
                             firstShotDelay = ModFx.blackHoleLaserCharge.lifetime - 1f;
 
-                            reload = 150f;
+                            reload = 220f;
                             recoil = 0f;
                             chargeSound = ModSounds.electronCharge;
                             shootSound = ModSounds.electronShoot;
@@ -1764,8 +1766,8 @@ public class ModUnitTypes implements ContentList {
                             cooldownTime = 210f;
 
                             bullet = new ContinuousLaserBulletType(){{
-                                damage = 26f;
-                                length = 170f;
+                                damage = 267f;
+                                length = 220f;
                                 hitEffect = Fx.hitMeltHeal;
                                 drawSize = 420f;
                                 lifetime = 160f;
@@ -1791,13 +1793,15 @@ public class ModUnitTypes implements ContentList {
 
                         new ModWeapon("mouriena-weapon"){{
                             top = false;
-                            y = -5f;
+                            y = -3f;
                             x = 32f;
-                            reload = 60f;
+                            reload = 30f;
                             recoil = 7f;
-                            shots = 5;
+                            shots = 2;
+                            shots = 2;
                             shake = 3f;
                             rotate = true;
+                            rotateSpeed = 1.3f;
                             mirror = true;
                             ejectEffect = ModFx.foxShoot;
                             shootSound = Sounds.artillery;
@@ -1805,7 +1809,8 @@ public class ModUnitTypes implements ContentList {
                                 hitEffect = ModFx.adamExplosion;
                                 knockback = 1.2f;
                                 lifetime = 110f;
-                                width = height = 22f;
+                                width = 21f;
+                                height = 23f;
                                 collides = true;
                                 collidesTiles = true;
                                 splashDamageRadius = 28f;
