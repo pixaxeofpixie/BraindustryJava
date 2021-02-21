@@ -161,6 +161,7 @@ public class UnitEntry implements Drawc, WritableInterface {
 
     public void draw() {
         Core.camera.bounds(viewport);
+        Draw.reset();
         if (viewport.overlaps(x() - clipSize() / 2f, y() - clipSize() / 2f, clipSize(), clipSize()) && amount > 0) {
             Draw.color(team.color);
             Draw.alpha(0.5f);

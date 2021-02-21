@@ -105,8 +105,6 @@ public class Generators {
         }
 
         ModImagePacker.generate("block-icons", () -> {
-//            here
-            // TODO: 12.02.2021 Errors may be
             Seq<Block> blockList = content.blocks();
             Image colors = new Image(blockList.size, 1);
 
@@ -122,7 +120,7 @@ public class Generators {
                     for (TextureRegion region : block.variantRegions()) {
                         ModImagePacker.GenRegion gen = (ModImagePacker.GenRegion) region;
                         if (gen.path == null) continue;
-                        gen.path.copyTo(Fi.get("../editor/editor-" + gen.path.name()));
+//                        gen.path.copyTo(Fi.get("../editor/editor-" + gen.path.name()));
                     }
                 }
 
@@ -208,7 +206,7 @@ public class Generators {
                         image.save("block-" + block.name + "-full");
                     }
 
-                    image.save("../editor/" + block.name + "-icon-editor");
+                    //image.save("../editor/" + block.name + "-icon-editor");
 
                     for (Cicon icon : Cicon.scaled) {
                         Image scaled = new Image(icon.size, icon.size);

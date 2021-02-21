@@ -50,6 +50,16 @@ if (modVars.packSprites){
 //        this.region=Core.atlas.find(getFullName("testBlock"));
     }
 
+    public TextureRegion editorIcon() {
+        if (this.editorIcon == null) {
+            this.editorIcon = Core.atlas.find(this.name + "-icon-editor");
+            float v = editorIcon.v;
+            float v2 = editorIcon.v2;
+            editorIcon.v= v2;
+            editorIcon.v2=v;
+        }
+        return editorIcon;
+    }
     @Override
     public void drawRequestRegion(BuildPlan req, Eachable<BuildPlan> list) {
         TextureRegion reg = this.getRequestRegion(req, list);
@@ -138,6 +148,7 @@ if (modVars.packSprites){
 
         public void draw() {
             Draw.rect(this.block.region, this.x, this.y, this.block.size * 8, this.block.size * 8, 0.0F);
+            Draw.rect(editorIcon(),x,y+size*8,size*8,size*8,0f);
             Building front = this.front();
 //            if (true)return;
             if (front != null && front.block != null) {

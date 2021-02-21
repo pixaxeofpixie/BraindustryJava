@@ -60,9 +60,9 @@ public class ModNetServer implements ApplicationListener {
     }
     @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
     public static void setNewUnit(Player player,UnitType type){
-        Log.info("try to create unit: @ for--- @",type,player);
+//        Log.info("try to create unit: @ for--- @",type,player);
         if (!cheating(player))return;
-        Log.info("try to create unit: @ for @",type,player.name());
+//        Log.info("try to create unit: @ for @",type,player.name());
         Unit unit=type.spawn(player.team(),player.x,player.y);
         unit.spawnedByCore=true;
         player.unit().spawnedByCore=true;

@@ -83,7 +83,7 @@ public class CheatUI {
         }
         BaseDialog dialog = new BaseDialog("@cheat-menu.rules-edit.title");
         ScrollPane mainPain = dialog.cont.pane(pane -> {
-            Log.info("pane size(@,@)", pane.getWidth(), pane.getHeight());
+//            Log.info("pane size(@,@)", pane.getWidth(), pane.getHeight());
             ScrollPane scrollPane = pane.pane(p -> {
                 p.defaults().size(40).left();
                 for (Team team : Team.all) {

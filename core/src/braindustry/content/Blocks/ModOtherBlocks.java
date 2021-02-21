@@ -1,6 +1,8 @@
 package braindustry.content.Blocks;
 
 import arc.Core;
+import arc.graphics.g2d.TextureRegion;
+import arc.util.Log;
 import braindustry.content.ModItems;
 import braindustry.content.ModLiquids;
 import braindustry.world.blocks.power.BlackHoleReactor;
@@ -13,6 +15,7 @@ import mindustry.graphics.CacheLayer;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
+import mindustry.world.Tile;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
@@ -119,6 +122,24 @@ public class ModOtherBlocks implements ContentList {
                 this.alwaysReplace = false;
                 this.solid = true;
                 this.variants = 2;
+            }
+
+            @Override
+            public TextureRegion[] editorVariantRegions() {
+                Log.info("editorVariantRegions() @",name);
+                return super.editorVariantRegions();
+            }
+
+            @Override
+            public TextureRegion editorIcon() {
+                Log.info("editorIcon() @",name);
+                return super.editorIcon();
+            }
+
+            @Override
+            public void drawBase(Tile tile) {
+                Log.info("drawBase(@) @",tile.toString(),name);
+                super.drawBase(tile);
             }
         };
         obsidianFloor = new Floor("obsidian-floor") {

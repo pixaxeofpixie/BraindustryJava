@@ -208,6 +208,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     public void update() {
         if (!Groups.unit.contains(u -> u == this)) {
             updateLastPosition();
+            Groups.unit.tree().insert(this);
         }
         super.update();
         cooldownStealth = Math.max(0, cooldownStealth - Time.delta);

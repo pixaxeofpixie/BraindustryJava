@@ -42,7 +42,7 @@ public class OrbitalPlatformAbility extends ModAbility {
 
     @Override
     public void load() {
-        Log.info("loadCC: @==@==", getClass().getName());
+//        Log.info("loadCC: @==@==", getClass().getName());
         if (region == null) region = Core.atlas.find(fullName("orbital-platform"));
         weapons.select(Objects::nonNull).each(Weapon::load);
     }
