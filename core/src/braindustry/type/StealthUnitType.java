@@ -24,7 +24,7 @@ import mindustry.graphics.Trail;
 import mindustry.type.UnitType;
 import mindustry.world.blocks.environment.Floor;
 
-public class StealthUnitType extends UnitType {
+public class StealthUnitType extends ModUnitType {
     public float stealthCooldown=60.f;
     public float stealthDuration=60.f;
     public float minHealth=-1,maxHealth=-1;

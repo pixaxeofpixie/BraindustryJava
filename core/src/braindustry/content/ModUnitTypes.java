@@ -29,7 +29,7 @@ import mindustry.entities.abilities.ForceFieldAbility;
 
 
 public class ModUnitTypes implements ContentList {
-    public static UnitType
+    public static ModUnitType
             aquila, aries, armor, broadsword, capra,
             cenda, chainmail, chestplate, ibis, lacerta,
             lyra, shield, tropsy, venti, vyvna, tyzen, kryox, intelix,
@@ -1137,7 +1137,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 2f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int spawnTime = 1550;
-                abilities.addAll(new PowerUnitAbility(this, 8f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
+                abilities.addAll(new PowerUnitAbility(this, 18f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
                 int brange = 1;
 
 
@@ -1257,10 +1257,6 @@ public class ModUnitTypes implements ContentList {
                             }
                         }
                 );
-            }
-
-            public void init() {
-                super.init();
             }
         };
         ///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH
@@ -1749,7 +1745,7 @@ public class ModUnitTypes implements ContentList {
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 int spawnTime = 1680;
 
-                abilities.addAll(new PowerUnitAbility(this, 25.0f*8f, 10, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -36.25f, -48.75f));
+                abilities.addAll(new PowerUnitAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -36.25f, -48.75f));
                 int brange = 1;
 
 

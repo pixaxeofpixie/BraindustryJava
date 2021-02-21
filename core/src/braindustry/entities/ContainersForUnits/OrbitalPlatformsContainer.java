@@ -28,8 +28,8 @@ import static mindustry.Vars.*;
 public class OrbitalPlatformsContainer extends UnitContainer {
     public static final float shadowTX = -5, shadowTY = -6, outlineSpace = 0.01f;
     protected final float z = 85f;
-    OrbitalPlatformAbility ability;
-    Seq<OrbitalPlatform> orbitalPlatforms = new Seq<>();
+    final OrbitalPlatformAbility ability;
+    final Seq<OrbitalPlatform> orbitalPlatforms = new Seq<>();
     private float rotation;
 
     public OrbitalPlatformsContainer(Unit unit, OrbitalPlatformAbility ability) {
@@ -46,6 +46,12 @@ public class OrbitalPlatformsContainer extends UnitContainer {
         float e = ability.visualElevation;
         Draw.rect(ability.region(), platform.x + shadowTX * e, platform.y + shadowTY * e, platform.rotation - 90);
         Draw.color();
+    }
+    public static class NullAbilityException extends RuntimeException{
+
+        public NullAbilityException(String message) {
+            super(message);
+        }
     }
 
     @Override
@@ -137,7 +143,6 @@ public class OrbitalPlatformsContainer extends UnitContainer {
         WeaponMount mount = platform.mount;
         if (mount == null) return;
         Weapon weapon = mount.weapon;
-        if (weapon.region == null) weapon.load();
         float rotation = platform.rotation - 90f;
         float weaponRotation = rotation + (weapon.rotate ? mount.rotation : 0);
         float recoil = -((mount.reload) / weapon.reload * weapon.recoil);

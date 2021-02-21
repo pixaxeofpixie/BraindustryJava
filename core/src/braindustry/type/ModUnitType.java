@@ -48,12 +48,12 @@ private ModAbility getModAbil(Ability ability){
     @Override
     public void init() {
         super.init();
-        abilities.map(this::getInitable).select(Objects::nonNull).each(InitableAbility::init);
+        abilities.map(this::getModAbil).select(Objects::nonNull).each(ModAbility::init);
     }
 
     @Override
     public void load() {
         super.load();
-        abilities.map(this::getLoadable).select(Objects::nonNull).each(LoadableAbility::load);
+        abilities.map(this::getModAbil).select(Objects::nonNull).each(ModAbility::load);
     }
 }

@@ -1,16 +1,16 @@
 package braindustry.entities.abilities;
 
-import ModVars.Classes.ModEventType;
 import arc.Core;
-import arc.Events;
 import arc.graphics.g2d.TextureRegion;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import arc.util.Log;
 import braindustry.ModListener;
 import braindustry.entities.ContainersForUnits.OrbitalPlatformsContainer;
-import mindustry.entities.abilities.Ability;
 import mindustry.gen.Unit;
 import mindustry.type.Weapon;
+
+import java.util.Objects;
 
 import static ModVars.modFunc.fullName;
 
@@ -27,23 +27,24 @@ public class OrbitalPlatformAbility extends ModAbility {
         });
     }
 
-    @Override
-    public void load() {
-        region = Core.atlas.find(fullName("orbital-platform"));
-    }
-
+    public final Seq<Weapon> weapons;
     private final int platformsCount;
     private final float rotateSpeed;
-    public float visualElevation=1;
-    public final Seq<Weapon> weapons;
-
+    public float visualElevation = 1;
     public OrbitalPlatformAbility(int platformsCount, float rotateSpeed, Weapon... weapons) {
         this.platformsCount = platformsCount;
         this.rotateSpeed = rotateSpeed;
-        this.weapons=Seq.with(weapons);
+        this.weapons = Seq.with(weapons);
         for (int i = 0; i < (platformsCount - weapons.length); i++) {
             this.weapons.add(null);
         }
+    }
+
+    @Override
+    public void load() {
+        Log.info("loadCC: @==@==", getClass().getName());
+        if (region == null) region = Core.atlas.find(fullName("orbital-platform"));
+        weapons.select(Objects::nonNull).each(Weapon::load);
     }
 
     public TextureRegion region() {

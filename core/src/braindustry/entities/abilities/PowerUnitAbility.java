@@ -69,7 +69,9 @@ public class PowerUnitAbility extends ModAbility {
     }
 
     public void drawReactor(Unit unit) {
+        unitType.applyColor(unit);
         Draw.rect(this.bottomRegion, unit.x, unit.y);
+        Draw.color();
 
         for (int i = 0; i < this.plasmaRegions.length; ++i) {
             float r = (float) (unit.hitSize() / 2f) - 3.0F + Mathf.absin(Time.time, 2.0F + (float) i * 1.0F, 5.0F - (float) i * 0.5F);
@@ -82,7 +84,7 @@ public class PowerUnitAbility extends ModAbility {
 
         unitType.applyColor(unit);
         Draw.rect(unitType.region, unit.x, unit.y, unit.rotation - 90.0F);
-        Draw.color();
+        Draw.reset();
     }
 
     public void drawLaser(Team team, float x1, float y1, float x2, float y2, int size1, int size2) {
