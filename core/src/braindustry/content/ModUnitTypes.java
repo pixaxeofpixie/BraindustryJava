@@ -666,7 +666,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("moureno-laser-weapon") {
+                        new ModWeapon("chainmail-weapon") {
                             {
                                 this.top = true;
                                 this.y = -3f;
@@ -1632,11 +1632,11 @@ public class ModUnitTypes implements ContentList {
                                         this.lifetime = 210;
                                         this.hitEffect = Fx.hitMeltHeal;
                                         this.largeHit = true;
-                                        this.hitColor = Color.valueOf("f1fc58");
+                                        //this.hitColor = Color.valueOf("f1fc58");
                                         this.incendAmount = 4;
                                         this.incendSpread = 10;
                                         this.incendChance = 0.7f;
-                                        this.lightColor = Color.valueOf("fbffcc");
+                                        //this.lightColor = Color.valueOf("fbffcc");
                                         this.keepVelocity = true;
                                         this.collides = true;
                                         this.pierce = true;
@@ -1655,7 +1655,7 @@ public class ModUnitTypes implements ContentList {
                                         this.lightningAngle = 15;
                                         this.lightningCone = 50;
                                         this.lightningColor = Color.valueOf("f1fc58");
-                                        colors = new Color[]{Pal.bulletYellow.cpy().a(.2f), Pal.bulletYellow.cpy().a(.5f), Pal.bulletYellow.cpy().mul(1.2f), Color.white};
+                                        colors = new Color[]{ModPal.dendriteYellow.cpy().a(2.5f), ModPal.dendriteYellow.cpy().a(.4f), ModPal.dendriteYellow.cpy().mul(2f), Color.white};
                                     }
                                 };
                             }
@@ -1741,19 +1741,20 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 0.9f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 int spawnTime = 1680;
-                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 28.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -28.25f, -48.75f));
+                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 32.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -32.25f, -48.75f));
                 int brange = 1;
 
 
                 this.weapons.add(
-                        new ModWeapon("vela-weapon"){{
+                        new ModWeapon("moureno-laser-weapon"){{
                             mirror = false;
                             top = false;
                             shake = 6f;
                             shootY = 13f;
                             x = y = 0f;
+                            rotate = true;
 
-                            firstShotDelay = ModFx.yellowLaserCharge.lifetime - 1f;
+                            firstShotDelay = ModFx.blackHoleLaserCharge.lifetime - 1f;
 
                             reload = 150f;
                             recoil = 0f;
