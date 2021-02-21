@@ -1,5 +1,6 @@
 package braindustry.type;
 
+import ModVars.modVars;
 import arc.Core;
 import arc.func.Boolf2;
 import arc.graphics.Blending;
@@ -11,19 +12,16 @@ import arc.math.Mathf;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Time;
-import ModVars.modVars;
-import braindustry.ModListener;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
-import mindustry.type.UnitType;
 import mindustry.world.Block;
 
-public abstract class PowerUnitType extends UnitType {
-    private static ObjectMap<Unit,PowerUnitContainer> unitMap=new ObjectMap<>();
+public abstract class PowerUnitType extends ModUnitType {
+    private static ObjectMap<Unit, PowerUnitContainer> unitMap=new ObjectMap<>();
     public abstract Block getGeneratorBlock();
     public TextureRegion bottomRegion;
     public TextureRegion light;
@@ -81,7 +79,7 @@ public abstract class PowerUnitType extends UnitType {
 
     public void draw(Unit unit) {
         super.draw(unit);
-        unitMap.get(unit).draw();
+        powerUnitContainer(unit).draw();
 //        drawReactor(unit);
     }
     public boolean goodBuilding(BlockSwitcher.BlockSwitcherBuild forB, Building other) {
@@ -89,24 +87,31 @@ public abstract class PowerUnitType extends UnitType {
     }
     public void update(Unit unit) {
         super.update(unit);
-        unitMap.get(unit,()->new PowerUnitContainer(unit)).update();
+        powerUnitContainer(unit).update();
+    }
+
+    private PowerUnitContainer powerUnitContainer(Unit unit) {
+        return unitMap.get(unit, () -> new PowerUnitContainer(unit));
     }
 
     public PowerUnitType(String name) {
         super(name);
         this.plasma1 = Color.valueOf("ffd06b");
         this.plasma2 = Color.valueOf("ff361b");
-        ModListener.updaters.add(()->{
-            Runners runners=new Runners();
-            unitMap.each((u,container)->{
-                if (u.isValid())return;
-                container.remove();
-                runners.add(()->{
-                    unitMap.remove(u);
-                });
+    }
+
+    @Override
+    protected void triggerUpdate() {
+        super.triggerUpdate();
+        Runners runners=new Runners();
+        unitMap.each((u,container)->{
+            if (u.isValid())return;
+            container.remove();
+            runners.add(()->{
+                unitMap.remove(u);
             });
-            runners.crun();
         });
+        runners.crun();
     }
 
     @Override

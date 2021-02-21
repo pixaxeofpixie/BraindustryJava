@@ -21,6 +21,9 @@ public class ModListener extends ApplicationCore {
 
         }
     }
+    public static void addRun(Runnable runnable){
+        updaters.add(runnable);
+    }
     public static void load(){
 //        Log.info("\n @",ui);
         listener=new ModListener();

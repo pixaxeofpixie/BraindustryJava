@@ -10,6 +10,7 @@ import braindustry.entities.Advanced.AdvancedUnitType;
 import braindustry.entities.Advanced.UnitExtensions;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.entities.ModUnits;
+import braindustry.entities.abilities.OrbitalPlatformAbility;
 import braindustry.graphics.ModPal;
 import mindustry.game.EventType.UnitDestroyEvent;
 import braindustry.entities.bullets.AdamBulletType;
@@ -1494,6 +1495,32 @@ public class ModUnitTypes implements ContentList {
                 this.mineTier = 4;
                 stealthDuration=7f*60f;
                 stealthCooldown=3f*60f;
+                abilities.add(new OrbitalPlatformAbility(3,1.4f,new ModWeapon("maverix-weapon") {
+                    {
+                        this.x = 0;
+                        this.y = 0;
+                        this.shootY = -1f;
+                        this.reload = 50;
+                        this.ejectEffect = Fx.fireballsmoke;
+                        this.recoil = 3f;
+                        this.shots = 7;
+                        this.inaccuracy = 16.0f;
+                        this.rotate = true;
+                        this.rotateSpeed = 1.4f;
+                        this.shootSound = Sounds.flame;
+                        this.alternate = true;
+                        this.bullet = new LiquidBulletType(ModLiquids.magma){
+                            {
+                                damage = 98;
+                                speed = 1.9f;
+                                drag = -0.01f;
+                                shootEffect = Fx.lightningShoot;
+                                lifetime = 95f;
+                                collidesAir = true;
+                            }
+                        };
+                    }
+                }));
                 this.constructor = Types.stealthMech;
                 this.defaultController= StealthGroundAI::new;
                 this.speed = 0.62f;

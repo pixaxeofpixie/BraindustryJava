@@ -3,6 +3,7 @@ package braindustry.type;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.struct.Seq;
+import braindustry.entities.abilities.OrbitalPlatformAbility;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import mindustry.Vars;
@@ -12,20 +13,19 @@ import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.power.PowerGraph;
 
-public class PowerUnitContainer {
-    public final Unit unit;
+public class PowerUnitContainer extends UnitContainer {
     public Seq<Building> links = new Seq<>();
     private transient boolean initStats = false;
     public UnitPowerGenerator.UnitPowerGeneratorBuild generatorBuilding;
     public UnitPowerNode.UnitPowerNodeBuild nodeBuild;
     Seq<Building> oldLinks=new Seq<>();
 
-    private <T extends Building,E extends Block> T createBuild(E block){
+    private <T extends Building> T createBuild(Block block){
         Building building=block.buildType.get().create(block,unit.team);
         return (T)building;
     }
     public PowerUnitContainer( Unit unit) {
-       this. unit = unit;
+        super(unit);
     }
 
     public void resetLinks() {

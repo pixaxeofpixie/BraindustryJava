@@ -1,227 +1,101 @@
 package braindustry.type;
 
-import arc.func.Cons;
+import arc.math.Angles;
+import arc.math.Mathf;
 import arc.math.geom.Position;
 import arc.math.geom.Vec2;
-import arc.util.io.Reads;
-import arc.util.io.Writes;
-import braindustry.gen.Drawer;
-import mindustry.content.Blocks;
-import mindustry.core.World;
+import arc.util.Time;
+import arc.util.Tmp;
+import braindustry.entities.abilities.OrbitalPlatformAbility;
+import mindustry.entities.Effect;
 import mindustry.entities.EntityGroup;
-import mindustry.gen.*;
-import mindustry.world.Block;
-import mindustry.world.Tile;
-import mindustry.world.blocks.environment.Floor;
-
-import static mindustry.Vars.player;
-import static mindustry.Vars.world;
-
-public class OrbitalPlatform implements Drawc, Entityc, Posc {
-    public static int classId=0;
-    public float x;
-
-    public float y;
-    public transient boolean added;
-    public transient int id = EntityGroup.nextId();
-    public Runnable runnable;
-    protected OrbitalPlatform() {
-    }
-    public boolean serialize() {
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return "ForceDraw#" + id;
-    }
-
-    public float getX() {
-
-        return x;
-    }
-
-    public float getY() {
-
-        return y;
-    }
-
-    public void draw() {
-        draw: {
-
-        }
-    }
-
-    public void update() {
-
-    }
-
-    public boolean isNull() {
-
-        return false;
-    }
-
-    public Floor floorOn() {
-
-        Tile tile = tileOn();
-        return tile == null || tile.block() != Blocks.air ? (Floor)Blocks.air : tile.floor();
-    }
-
-    public Block blockOn() {
-
-        Tile tile = tileOn();
-        return tile == null ? Blocks.air : tile.block();
-    }
-
-    public boolean isRemote() {
-
-        return ((Object)this) instanceof Unitc && ((Unitc)((Object)this)).isPlayer() && !isLocal();
-    }
-
-    public void set(Position pos) {
-
-        set(pos.getX(), pos.getY());
-    }
-
-    public void afterRead() {
-
-    }
-
-    public void write(Writes write) {
-
-    }
-
-    public <T extends Entityc> T self() {
-
-        return (T)this;
-    }
-
-    public void read(Reads read) {
-
-        afterRead();
-    }
-
-    public <T> T as() {
-
-        return (T)this;
-    }
-
-    public void trns(float x, float y) {
-    }
-
-    public void set(float x, float y) {
-
-        this.x = x;
-        this.y = y;
-    }
-
-    public void add() {
-        if(added) return;
-//        Groups.all.add(this);
-        Groups.draw.add(this);
-
-        added = true;
-    }
-
-    public <T> T with(Cons<T> cons) {
-
-        cons.get((T)this);
-        return (T)this;
-    }
-
-    public int tileX() {
-
-        return World.toTile(x);
-    }
-
-    public int tileY() {
-
-        return World.toTile(y);
-    }
-
-    public Tile tileOn() {
-
-        return world.tileWorld(x, y);
-    }
-
-    public void remove() {
-        if(!added) return;
-//        Groups.all.remove(this);
-        Groups.draw.remove(this);
-
-        added = false;
-    }
-
-    public float clipSize() {
-return 8f;
-//        return build.block().size * 8.0F;
-    }
-
-    public void trns(Position pos) {
-
-        trns(pos.getX(), pos.getY());
-    }
-
-    public boolean isAdded() {
-
-        return added;
-    }
-
-    public boolean onSolid() {
-
-        Tile tile = tileOn();
-        return tile == null || tile.solid();
-    }
-
-    public boolean isLocal() {
-
-        return ((Object)this) == player || ((Object)this) instanceof Unitc && ((Unitc)((Object)this)).controller() == player;
-    }
-
-    public static OrbitalPlatform create( ) {
-        return new OrbitalPlatform();
-    }
-
-    @Override
-    public int classId() {
-        return classId;
-    }
-
-    public Runnable getRunnable() {
-        return runnable;
-    }
-
-    public void setRunnable(Runnable runnable) {
-        this.runnable = runnable;
-    }
-
-    @Override
-    public float x() {
-        return x;
-    }
-
-    @Override
-    public void x(float x) {
-        this.x = x;
-    }
-
-    @Override
-    public float y() {
-        return y;
-    }
-
-    @Override
-    public void y(float y) {
-        this.y = y;
-    }
-
-    @Override
-    public int id() {
-        return id;
-    }
-
-    @Override
-    public void id(int id) {
-        this.id = id;
-    }
+import mindustry.entities.bullet.BulletType;
+import mindustry.entities.units.WeaponMount;
+import mindustry.gen.Bullet;
+import mindustry.gen.Sounds;
+import mindustry.gen.Unit;
+import mindustry.type.Weapon;
+
+public class OrbitalPlatform implements Position {
+   public float rotation=0f;
+   public final long id;
+   public final OrbitalPlatformAbility ability;
+   public WeaponMount mount=null;
+   public static int sequenceNum = 0;
+   public final Unit unit;
+public float x,y;
+
+   public OrbitalPlatform(OrbitalPlatformAbility ability, Unit unit, Weapon weapon) {
+      this.ability = ability;
+      this.unit = unit;
+      id=EntityGroup.nextId();
+//      setupWeapon(ability);
+
+      if (weapon!=null) {
+         mount = new WeaponMount(weapon);
+      }
+   }
+
+   public void set(Vec2 pos){
+      x=pos.x;
+      y=pos.y;
+   }
+   public void shoot(WeaponMount mount, float x, float y, float aimX, float aimY, float mountX,
+                      float mountY, float rotation, int side) {
+
+      Weapon weapon = mount.weapon;
+      float baseX = this.x;
+      float baseY = this.y;
+      boolean delay = weapon.firstShotDelay + weapon.shotDelay > 0.0F;
+      (delay ? weapon.chargeSound : weapon.continuous ? Sounds.none : weapon.shootSound).at(x, y, Mathf.random(weapon.soundPitchMin, weapon.soundPitchMax));
+      BulletType ammo = weapon.bullet;
+      float lifeScl = ammo.scaleVelocity ? Mathf.clamp(Mathf.dst(x, y, aimX, aimY) / ammo.range()) : 1.0F;
+      sequenceNum = 0;
+      if (delay) {
+         Angles.shotgun(weapon.shots, weapon.spacing, rotation, (f)->{
+            Time.run(sequenceNum * weapon.shotDelay + weapon.firstShotDelay, ()->{
+               if (!unit.isAdded()) return;
+               mount.bullet = bullet(weapon, x + this.x - baseX, y + this.y - baseY, f + Mathf.range(weapon.inaccuracy), lifeScl);
+            });
+            sequenceNum++;
+         });
+      } else {
+         Angles.shotgun(weapon.shots, weapon.spacing, rotation, (f)->mount.bullet = bullet(weapon, x, y, f + Mathf.range(weapon.inaccuracy), lifeScl));
+      }
+      boolean parentize = ammo.keepVelocity;
+      if (delay) {
+         Time.run(weapon.firstShotDelay, ()->{
+            if (!unit.isAdded()) return;
+            unit.vel.add(Tmp.v1.trns(rotation + 180.0F, ammo.recoil));
+            Effect.shake(weapon.shake, weapon.shake, x, y);
+            mount.heat = 1.0F;
+            if (!weapon.continuous) {
+               weapon.shootSound.at(x, y, Mathf.random(weapon.soundPitchMin, weapon.soundPitchMax));
+            }
+         });
+      } else {
+         unit.vel.add(Tmp.v1.trns(rotation + 180.0F, ammo.recoil));
+         Effect.shake(weapon.shake, weapon.shake, x, y);
+         mount.heat = 1.0F;
+      }
+      weapon.ejectEffect.at(mountX, mountY, rotation * side);
+      ammo.shootEffect.at(x, y, rotation, parentize ? this : null);
+      ammo.smokeEffect.at(x, y, rotation, parentize ? this : null);
+      unit.apply(weapon.shootStatus, weapon.shootStatusDuration);
+   }
+   private Bullet bullet(Weapon weapon, float x, float y, float angle, float lifescl) {
+
+      float xr = Mathf.range(weapon.xRand);
+      return weapon.bullet.create(unit, unit.team(), x + Angles.trnsx(angle, 0, xr), y + Angles.trnsy(angle, 0, xr), angle, (1.0F - weapon.velocityRnd) + Mathf.random(weapon.velocityRnd), lifescl);
+   }
+
+   @Override
+   public float getX() {
+      return x;
+   }
+
+   @Override
+   public float getY() {
+      return y;
+   }
 }
