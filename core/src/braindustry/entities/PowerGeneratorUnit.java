@@ -6,7 +6,6 @@ import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import braindustry.type.PowerUnitType;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import mindustry.Vars;
@@ -27,9 +26,6 @@ public class PowerGeneratorUnit extends UnitWaterMove implements ModEntityc {
         return powerGeneratorUnit;
     }
 
-    public int classId() {
-        return modVars.MOD_CONTENT_ID;
-    }
 
     @Override
     public int modClassId() {
@@ -66,9 +62,9 @@ public class PowerGeneratorUnit extends UnitWaterMove implements ModEntityc {
     @Override
     public void update() {
         super.update();
-        if (this.type instanceof PowerUnitType) {
-            ((PowerUnitType) type).update(this);
-        }
+//        if (this.type instanceof PowerUnitType) {
+//            ((PowerUnitType) type).update(this);
+//        }
     }
 
     @Override

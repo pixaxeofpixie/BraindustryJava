@@ -1,17 +1,11 @@
 package braindustry.world.blocks.Unit.power;
 
 import arc.math.geom.Point2;
-import arc.struct.Seq;
-import braindustry.entities.PowerGeneratorUnit;
-import mindustry.Vars;
-import mindustry.gen.Building;
-import mindustry.gen.Call;
+import braindustry.entities.abilities.PowerUnitAbility;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
 import mindustry.world.blocks.power.PowerGenerator;
 import mindustry.world.meta.BuildVisibility;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UnitPowerGenerator extends PowerGenerator {
     public UnitPowerGenerator(String name) {
@@ -23,15 +17,21 @@ public class UnitPowerGenerator extends PowerGenerator {
     public class UnitPowerGeneratorBuild extends PowerGenerator.GeneratorBuild {
         public Unit parent;
 
+
+        private PowerUnitAbility ability;
+
         public UnitPowerGeneratorBuild() {
 
         }
 
-        public int pos(){
-            return Point2.pack((int)this.x/8, (int) this.y/8);
+
+        public int pos() {
+            return Point2.pack((int) this.x / 8, (int) this.y / 8);
         }
-        public void setParent(Unit parent) {
+
+        public void setParent(Unit parent,PowerUnitAbility ability) {
             this.parent = parent;
+            this.ability = ability;
         }
 
         @Override
@@ -61,6 +61,7 @@ public class UnitPowerGenerator extends PowerGenerator {
 //            Call.
 //            Call.tileDestroyed(this);
         }
+
         @Override
         public void add() {
             if (!this.added) {
@@ -70,16 +71,16 @@ public class UnitPowerGenerator extends PowerGenerator {
         }
 
         public float getPowerProduction() {
-            
+
             if (!this.isValid()) {
                 this.power.graph.remove(this);
             }
-            return UnitPowerGenerator.this.powerProduction;
+            return ability.powerProduction;
         }
 
         @Override
         public boolean isValid() {
-            boolean near=true;
+            boolean near = true;
             /*for (int i = 0; i < this.power.links.size; i++) {
                 Building building= Vars.world.build(this.power.links.get(i));
                 near=near || (building!=null && parent.validLink(building));

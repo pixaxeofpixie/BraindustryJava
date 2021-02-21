@@ -3,7 +3,7 @@ package braindustry.world.blocks.Unit.power;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.math.geom.Point2;
-import braindustry.entities.PowerGeneratorUnit;
+import braindustry.entities.abilities.PowerUnitAbility;
 import mindustry.Vars;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
@@ -27,9 +27,12 @@ public class UnitPowerNode extends PowerNode {
 
     public class UnitPowerNodeBuild extends PowerNodeBuild {
         public Unit parent;
+        private PowerUnitAbility ability;
 
-        public void setParent(Unit parent) {
+
+        public void setParent(Unit parent,PowerUnitAbility ability) {
             this.parent = parent;
+            this.ability = ability;
         }
 
         @Override
@@ -47,10 +50,12 @@ public class UnitPowerNode extends PowerNode {
         @Override
         public void drawTeamTop() {
         }
+
         public void setupColor(float satisfaction) {
             Draw.color(UnitPowerNode.this.laserColor1, UnitPowerNode.this.laserColor2, (1.0F - satisfaction) * 0.86F + Mathf.absin(3.0F, 0.1F));
             Draw.alpha(Vars.renderer == null ? 0.5F : Vars.renderer.laserOpacity);
         }
+
         public void drawLasers(float z) {
             if (!Mathf.zero(Vars.renderer.laserOpacity)) {
                 Draw.z(z);
@@ -85,7 +90,7 @@ public class UnitPowerNode extends PowerNode {
                     PowerGraph og = new PowerGraph();
                     og.reflow(other);
                 }
-            } else if (valid && power.links.size < UnitPowerNode.this.maxNodes && !contains && add) {
+            } else if (valid && power.links.size < ability.maxNodes && !contains && add) {
                 if (!power.links.contains(other.pos())) {
                     power.links.add(other.pos());
                 }

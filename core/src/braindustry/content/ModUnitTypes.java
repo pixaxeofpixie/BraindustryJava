@@ -1,45 +1,31 @@
 package braindustry.content;
 
-import arc.Events;
 import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.ObjectSet;
 import braindustry.ai.types.StealthGroundAI;
-import braindustry.entities.Advanced.AdvancedLegsUnit;
-import braindustry.entities.Advanced.AdvancedUnitType;
-import braindustry.entities.Advanced.UnitExtensions;
-import braindustry.entities.PowerGeneratorUnit;
-import braindustry.entities.ModUnits;
 import braindustry.entities.abilities.OrbitalPlatformAbility;
+import braindustry.entities.abilities.PowerUnitAbility;
 import braindustry.graphics.ModPal;
-import mindustry.game.EventType.UnitDestroyEvent;
+import braindustry.type.ModUnitType;
 import braindustry.entities.bullets.AdamBulletType;
-import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.EveBulletType;
 import braindustry.gen.StealthMechUnit;
 import braindustry.type.ModWeapon;
-import braindustry.type.PowerUnitType;
-import mindustry.game.EventType;
 import braindustry.type.StealthUnitType;
 import mindustry.content.Bullets;
 import mindustry.content.Fx;
-import static ModVars.modFunc.EventOn;
 import mindustry.content.StatusEffects;
 import mindustry.content.UnitTypes;
 import mindustry.ctype.ContentList;
 import mindustry.entities.abilities.UnitSpawnAbility;
 import mindustry.entities.bullet.*;
-import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.type.AmmoTypes;
 import mindustry.type.UnitType;
-import mindustry.world.Block;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ForceFieldAbility;
-import mindustry.content.Liquids;
-
-import static ModVars.modFunc.EventOn;
 
 
 public class ModUnitTypes implements ContentList {
@@ -56,7 +42,7 @@ public class ModUnitTypes implements ContentList {
     @Override
     public void load() {
         //====spiders
-        ibis = new UnitType("ibis") {
+        ibis = new ModUnitType("ibis") {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 60.0F;
@@ -114,7 +100,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        aries = new UnitType("aries") {
+        aries = new ModUnitType("aries") {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 60.0F;
@@ -175,7 +161,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        capra = new UnitType("capra") {
+        capra = new ModUnitType("capra") {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 68.0F;
@@ -230,7 +216,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        lacerta = new UnitType("lacerta") {
+        lacerta = new ModUnitType("lacerta") {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 75.0F;
@@ -328,7 +314,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        aquila = new UnitType("aquila") {
+        aquila = new ModUnitType("aquila") {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 75.0F;
@@ -456,7 +442,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
         //fly
-        armor = new UnitType("armor") {
+        armor = new ModUnitType("armor") {
             {
                 this.constructor = Types.payload;
                 this.localizedName = "Myphros";
@@ -502,7 +488,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        shield = new UnitType("shield") {
+        shield = new ModUnitType("shield") {
             {
                 this.constructor = Types.payload;
                 this.localizedName = "Nocta";
@@ -549,7 +535,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        chestplate = new UnitType("chestplate") {
+        chestplate = new ModUnitType("chestplate") {
             {
                 this.localizedName = "Zenum";
                 this.description = "A big defense unit with sap laser guns.";
@@ -616,7 +602,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        chainmail = new UnitType("chainmail") {
+        chainmail = new ModUnitType("chainmail") {
             {
                 this.localizedName = "Dent";
                 this.constructor = Types.payload;
@@ -703,7 +689,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        broadsword = new UnitType("broadsword") {
+        broadsword = new ModUnitType("broadsword") {
             {
                 this.constructor = Types.payload;
                 this.localizedName = "Quix";
@@ -826,7 +812,7 @@ public class ModUnitTypes implements ContentList {
         };
 
         //====water
-        venti = new UnitType("venti") {
+        venti = new ModUnitType("venti") {
             {
                 this.localizedName = "Vixy";
                 this.description = "First naval unit, has powerful shrapnel gun but needs support.";
@@ -877,7 +863,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        lyra = new UnitType("lyra") {
+        lyra = new ModUnitType("lyra") {
             {
                 this.localizedName = "Lyra";
                 this.description = "A T2 sea unit with shrapnel lasers and rocketguns, good at attacking opponent's base, but needs support.";
@@ -957,7 +943,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        tropsy = new UnitType("tropsy") {
+        tropsy = new ModUnitType("tropsy") {
             {
                 this.localizedName = "Tropsy";
                 this.description = "An enlarged and improved unit created on the basis of Lyra unit.";
@@ -1042,7 +1028,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        cenda = new UnitType("cenda") {
+        cenda = new ModUnitType("cenda") {
             {
                 this.localizedName = "Cenda";
                 this.description = "A large and heavy attacking naval unit built on the proven \"Tropsy\" design, but with improvements in everything.";
@@ -1130,11 +1116,11 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        vyvna = new PowerUnitType("vyvna") {
+        vyvna = new ModUnitType("vyvna") {
 
             {
                 this.range = 18;
-                this.constructor = Types.powerNaval;
+                this.constructor = Types.naval;
                 this.localizedName = "Vyvna";
                 this.description = "Giant atomic cruiser, produce energy and fires from railguns and rocket launchers.";
                 this.health = 21900;
@@ -1151,7 +1137,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 2f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int spawnTime = 1550;
-                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
+                abilities.addAll(new PowerUnitAbility(this, 8f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
                 int brange = 1;
 
 
@@ -1273,17 +1259,8 @@ public class ModUnitTypes implements ContentList {
                 );
             }
 
-            public Block getGeneratorBlock() {
-                return ModBlocks.unitGenerator;
-            }
-
             public void init() {
                 super.init();
-            }
-
-            @Override
-            public Block getNodeBlock() {
-                return ModBlocks.unitNode;
             }
         };
         ///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH
@@ -1600,7 +1577,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
         //TX UNITS
-        griffon = new UnitType("griffon") {
+        griffon = new ModUnitType("griffon") {
             {
 
                 this.constructor = Types.legs;
@@ -1751,10 +1728,10 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        moureno = new PowerUnitType("mouriena") {
+        moureno = new ModUnitType("mouriena") {
             {
                 this.range = 200;
-                this.constructor = Types.powerNaval;
+                this.constructor = Types.naval;
                 this.localizedName = "Mouriena";
                 this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers.";
                 this.health = 62000;
@@ -1771,7 +1748,8 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 0.9f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 int spawnTime = 1680;
-                abilities.add(new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -36.25f, -48.75f));
+
+                abilities.addAll(new PowerUnitAbility(this, 25.0f*8f, 10, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -36.25f, -48.75f));
                 int brange = 1;
 
 
@@ -1853,19 +1831,6 @@ public class ModUnitTypes implements ContentList {
                     }
                 );
             }
-
-            public Block getGeneratorBlock() {
-                return ModBlocks.unitGenerator;
-            }
-
-            public void init() {
-                super.init();
-            }
-
-            @Override
-            public Block getNodeBlock() {
-                return ModBlocks.unitNode;
-            }
         };
     }
 
@@ -1875,6 +1840,6 @@ public class ModUnitTypes implements ContentList {
         static Prov<? extends Unit> legs =LegsUnit::create;
         static Prov<? extends Unit> mech =MechUnit::create;
         static Prov<? extends Unit> stealthMech = StealthMechUnit::new;
-        static Prov<? extends Unit> powerNaval=PowerGeneratorUnit::new;
+//        static Prov<? extends Unit> powerNaval=PowerGeneratorUnit::new;
     }
 }

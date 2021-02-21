@@ -3,7 +3,7 @@ package braindustry.type;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.struct.Seq;
-import braindustry.entities.abilities.OrbitalPlatformAbility;
+import braindustry.entities.abilities.PowerUnitAbility;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import mindustry.Vars;
@@ -16,6 +16,7 @@ import mindustry.world.blocks.power.PowerGraph;
 public class PowerUnitContainer extends UnitContainer {
     public Seq<Building> links = new Seq<>();
     private transient boolean initStats = false;
+    public final PowerUnitAbility ability;
     public UnitPowerGenerator.UnitPowerGeneratorBuild generatorBuilding;
     public UnitPowerNode.UnitPowerNodeBuild nodeBuild;
     Seq<Building> oldLinks=new Seq<>();
@@ -24,8 +25,10 @@ public class PowerUnitContainer extends UnitContainer {
         Building building=block.buildType.get().create(block,unit.team);
         return (T)building;
     }
-    public PowerUnitContainer( Unit unit) {
+    public PowerUnitContainer(Unit unit, PowerUnitAbility ability) {
         super(unit);
+
+        this.ability=ability;
     }
 
     public void resetLinks() {
@@ -51,7 +54,6 @@ public class PowerUnitContainer extends UnitContainer {
         });
     }
     public void draw(){
-
         float z = unit.elevation > 0.5F ? (unit.type.lowAltitude ? 90.0F : 115.0F) : unit.type.groundLayer + Mathf.clamp(unit.type.hitSize / 4000.0F, 0.0F, 0.01F);
         drawLasers(z+0.1f);
     }
@@ -60,7 +62,7 @@ public class PowerUnitContainer extends UnitContainer {
             Draw.z(z);
             nodeBuild.setupColor(nodeBuild.power.graph.getSatisfaction());
             links.each(link -> {
-                ((PowerUnitType) unit.type).drawLaser(unit.team, unit.x, unit.y, link.x, link.y, 1, link.block.size);
+                ability.drawLaser(unit.team, unit.x, unit.y, link.x, link.y, 1, link.block.size);
             });
 
             Draw.reset();
@@ -76,13 +78,13 @@ public class PowerUnitContainer extends UnitContainer {
     }
 
     public void loadStats() {
-        if (initStats || unit.type == null) return;
+        if (initStats || unit ==null) return;
         initStats = true;
 
-        generatorBuilding = createBuild(((PowerUnitType) unit.type).getGeneratorBlock());
-        nodeBuild = createBuild(((PowerUnitType) unit.type).getNodeBlock());
-        generatorBuilding.setParent(unit);
-        nodeBuild.setParent(unit);
+        generatorBuilding = createBuild(ability.generatorBlock());
+        nodeBuild = createBuild(ability.nodeBlock());
+        generatorBuilding.setParent(unit,ability);
+        nodeBuild.setParent(unit,ability);
         nodeBuild.setConnect(generatorBuilding,true);
     }
 
@@ -91,8 +93,8 @@ public class PowerUnitContainer extends UnitContainer {
         oldLinks=links.copy();
         links.clear();
         Tile tile = unit.tileOn();
-        for (int x = (int) ((float) tile.x - unit.type.range); (float) x <= (float) tile.x + unit.type.range; ++x) {
-            for (int y = (int) ((float) tile.y - unit.type.range); (float) y <= (float) tile.y + unit.type.range; ++y) {
+        for (int x = (int) ((float) tile.x - ability.range); (float) x <= (float) tile.x + ability.range; ++x) {
+            for (int y = (int) ((float) tile.y - ability.range); (float) y <= (float) tile.y + ability.range; ++y) {
                 Building link = Vars.world.build(x, y);
                 boolean linked = goodLink(link);
                 if (linked && !links.contains(link)) {
@@ -104,7 +106,7 @@ public class PowerUnitContainer extends UnitContainer {
         sortLinks();
     }
     public boolean goodLink(Building link) {
-        return link != null && link.isValid() && ((PowerUnitType) unit.type).good.get(link, unit);
+        return link != null && link.isValid() && ability.good.get(link, unit);
     }
 
     public void remove() {

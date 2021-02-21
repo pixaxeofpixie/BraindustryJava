@@ -14,23 +14,22 @@ import mindustry.type.Weapon;
 
 import static ModVars.modFunc.fullName;
 
-public class OrbitalPlatformAbility extends Ability {
+public class OrbitalPlatformAbility extends ModAbility {
     private static final ObjectMap<Unit, OrbitalPlatformsContainer> unitMap = new ObjectMap<>();
     public static TextureRegion region;
 
     static {
-        Events.on(ModEventType.ModInit.class, e -> {
-            try {
-                region = Core.atlas.find(fullName("orbital-platform"));
-            } catch (NullPointerException ignored) {
-            }
-        });
         ModListener.updaters.add(() -> {
             Seq<Unit> deletedUnits = unitMap.keys().toSeq().select(u -> !u.isValid());
             deletedUnits.each(unit -> {
                 unitMap.remove(unit).remove();
             });
         });
+    }
+
+    @Override
+    public void load() {
+        region = Core.atlas.find(fullName("orbital-platform"));
     }
 
     private final int platformsCount;
