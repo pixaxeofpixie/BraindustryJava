@@ -1,5 +1,6 @@
 package braindustry.content;
 
+import Gas.world.GasRouter;
 import arc.Core;
 import arc.graphics.Color;
 import arc.math.Mathf;
@@ -60,6 +61,8 @@ public class ModBlocks implements ContentList {
     //walls
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge,
             plasticWall, chloroWall, largeChloroWall,
+    //gas
+    gasTank,
 
     //logic
     advancedSwitcher,
@@ -228,6 +231,17 @@ public class ModBlocks implements ContentList {
                 health = Integer.MAX_VALUE;
                 size = 3;
 //                requirements();
+            }
+        };
+
+        gasTank = new GasRouter("gas-tank") {
+            {
+                localizedName = "gas tank";
+                description = "storage gas";
+                size = 3;
+                liquidCapacity = 1500f;
+                health = 500;
+                requirements(Category.liquid, ItemStack.with(Items.titanium, 25, Items.metaglass, 25));
             }
         };
     }
