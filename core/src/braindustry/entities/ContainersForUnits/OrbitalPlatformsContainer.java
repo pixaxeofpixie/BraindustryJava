@@ -197,10 +197,12 @@ public class OrbitalPlatformsContainer extends UnitContainer {
 //        rotation = Mathf.lerpDelta(rotation, unit.rotation, v);
 //        rotation = Mathf.lerpDelta(rotation, unit.rotation, (ability.rotateSpeed()%360f)/360f);
     }
-
+    public static boolean notNullPlatform(OrbitalPlatform platform){
+        return platform!=null && platform.mount!=null;
+    }
     @Override
     public void remove() {
-        orbitalPlatforms.select(Objects::nonNull).each(platform -> {
+        orbitalPlatforms.select(OrbitalPlatformsContainer::notNullPlatform).each(platform -> {
             WeaponMount mount = platform.mount;
             if(mount.bullet != null){
                 mount.bullet.time = mount.bullet.lifetime - 10f;

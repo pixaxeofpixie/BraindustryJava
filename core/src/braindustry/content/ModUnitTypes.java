@@ -1498,7 +1498,8 @@ public class ModUnitTypes implements ContentList {
                 this.mineTier = 4;
                 stealthDuration=7f*60f;
                 stealthCooldown=3f*60f;
-                abilities.add(new OrbitalPlatformAbility(3,1.4f,new ModWeapon("maverix-weapon") {
+                abilities.add(new OrbitalPlatformAbility(3,1.4f,
+                        new ModWeapon("maverix-weapon") {
                     {
                         this.x = 0;
                         this.y = 0;
