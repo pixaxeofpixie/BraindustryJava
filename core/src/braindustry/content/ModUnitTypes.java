@@ -670,16 +670,18 @@ public class ModUnitTypes implements ContentList {
                             {
                                 this.top = true;
                                 this.y = -3f;
-                                this.x = 22;
+                                this.x = 14;
                                 this.reload = 150;
                                 this.recoil = 4;
                                 this.shotDelay = 4;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 12;
+                                this.shots = 8;
                                 this.inaccuracy = 6.5f;
                                 this.velocityRnd = 0.2f;
                                 this.alternate = true;
                                 this.mirror = true;
+                                this.rotate = true;
+                                this.rotateSpeed = 1f;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.6f;
@@ -1303,7 +1305,7 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("tyzen-weapon") {
                             {
-                                this.x = 6;
+                                this.x = 8;
                                 this.y = 0;
                                 this.shootY = -1f;
                                 this.reload = 20f;
@@ -1798,7 +1800,7 @@ public class ModUnitTypes implements ContentList {
                             reload = 30f;
                             recoil = 7f;
                             shots = 2;
-                            shots = 2;
+                            inaccuracy = 16.0f;
                             shake = 3f;
                             rotate = true;
                             rotateSpeed = 1.3f;
