@@ -1,3 +1,5 @@
+braindustry.annotations.ModAssetsFolders.AssetsFoldersProcessor
 braindustry.annotations.RemoteProc.CustomRemoteProcessor
 braindustry.annotations.RulesEditDialog.RulesProcessor
 braindustry.annotations.ModTypeIO.ObjectReadProcessor
+braindustry.annotations.ModEntities.ModEntitiesProc

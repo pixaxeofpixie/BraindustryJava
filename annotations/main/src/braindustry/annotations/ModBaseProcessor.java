@@ -1,20 +1,36 @@
 package braindustry.annotations;
 
 import arc.struct.Seq;
+import arc.util.Log;
+import arc.util.Strings;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import mindustry.annotations.BaseProcessor;
 
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.tools.JavaFileObject;
-import java.io.OutputStream;
+import javax.lang.model.element.TypeElement;
+import javax.tools.*;
+import java.io.*;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public abstract class ModBaseProcessor extends BaseProcessor {
-
+public static void print(String obj,Object... args){
+    String message = Strings.format(obj.toString(), args);
+    System.out.println(message);
+//    messager.printMessage(Diagnostic.Kind.OTHER,message);
+}
     public static final String packageName = "braindustry.gen";
     public static final String parentName = "mindustry.gen";
+//    public TypeElement typeElement(String name){
+//        return elementu.getTypeElement(name);
+//    }
     public static TypeName tname(String pack, String simple){
         return ClassName.get(pack, simple );
     }
@@ -37,7 +53,22 @@ public abstract class ModBaseProcessor extends BaseProcessor {
     public static void write(TypeSpec.Builder builder, Seq<ClassName> imports,int ZERO) throws Exception{
         write(builder,imports.<String>map(className -> "import "+className.reflectionName()+";"));
     }
+    public void delete(String name) throws IOException{
+//        print("delete name: @",name);
+        FileObject resource;
+            resource = filer.getResource(StandardLocation.SOURCE_OUTPUT, packageName, name);
+//        boolean delete = resource.delete();
+//        print("delete: @ ,named: @, filer: @",delete,resource.getName(),resource.getClass().getName());
+            Files.delete(Paths.get(resource.getName()+".java"));
+
+    }
     public static void write(TypeSpec.Builder builder, Seq<String> imports) throws Exception{
+//        Log.logger=new Log.DefaultLogHandler();
+//        Log.err());
+        String message = Strings.format("builder.build().name=@", builder.build().name);
+
+//      if (message.contains("Stealthc"))  new RuntimeException(message).printStackTrace();
+//        System.out.println(message);
         JavaFile file = JavaFile.builder(packageName, builder.build()).skipJavaLangImports(true).build();
 
         if(imports != null){
@@ -55,6 +86,7 @@ public abstract class ModBaseProcessor extends BaseProcessor {
 
             String out = result.toString("\n");
             JavaFileObject object = filer.createSourceFile(file.packageName + "." + file.typeSpec.name, file.typeSpec.originatingElements.toArray(new Element[0]));
+//            processingEnv
             OutputStream stream = object.openOutputStream();
             stream.write(out.getBytes());
             stream.close();

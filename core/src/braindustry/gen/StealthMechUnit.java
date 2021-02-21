@@ -24,7 +24,6 @@ import braindustry.input.ModBinding;
 import braindustry.type.StealthUnitType;
 import mindustry.Vars;
 import mindustry.entities.EntityCollisions;
-import mindustry.entities.units.AIController;
 import mindustry.entities.units.BuildPlan;
 import mindustry.entities.units.StatusEntry;
 import mindustry.gen.Call;

@@ -9,7 +9,6 @@ import braindustry.gen.StealthUnitc;
 import braindustry.input.ModBinding;
 import braindustry.type.StealthUnitType;
 import mindustry.Vars;
-import mindustry.annotations.Annotations;
 import mindustry.entities.abilities.Ability;
 import mindustry.entities.units.UnitController;
 import mindustry.gen.Groups;
@@ -17,7 +16,7 @@ import mindustry.gen.Unit;
 import mindustry.type.UnitType;
 import mindustryAddition.versions.ModEntityc;
 
-@Annotations.Component
+@ModAnnotations.Component
 public abstract class StealthComp implements StealthUnitc, ModEntityc {
     public boolean inStealth = false;
     public float cooldownStealth = 0;
@@ -170,7 +169,7 @@ public abstract class StealthComp implements StealthUnitc, ModEntityc {
     }
 
     @Override
-    @Annotations.OverrideCallSuper
+    @ModAnnotations.OverrideCallSuper
     public void draw() {
         stealthType.alpha = getAlpha();
     }

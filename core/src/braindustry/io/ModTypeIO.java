@@ -29,7 +29,7 @@ import mindustry.logic.LAccess;
 import mindustry.type.UnitType;
 import mindustry.world.blocks.ControlBlock;
 
-@Annotations.TypeIOHandler
+@ModAnnotations.TypeIOHandler
 public class ModTypeIO extends TypeIO {
     public static void writeTeam(Writes write, Team team) {
         if (team == null) {

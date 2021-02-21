@@ -7,6 +7,7 @@ import mindustry.Vars;
 import mindustry.gen.Building;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
+import mindustry.gen.Unit;
 import mindustry.world.blocks.power.PowerGenerator;
 import mindustry.world.meta.BuildVisibility;
 
@@ -20,7 +21,7 @@ public class UnitPowerGenerator extends PowerGenerator {
     }
 
     public class UnitPowerGeneratorBuild extends PowerGenerator.GeneratorBuild {
-        public PowerGeneratorUnit parent;
+        public Unit parent;
 
         public UnitPowerGeneratorBuild() {
 
@@ -29,7 +30,7 @@ public class UnitPowerGenerator extends PowerGenerator {
         public int pos(){
             return Point2.pack((int)this.x/8, (int) this.y/8);
         }
-        public void setParent(PowerGeneratorUnit parent) {
+        public void setParent(Unit parent) {
             this.parent = parent;
         }
 

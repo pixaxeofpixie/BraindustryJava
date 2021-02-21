@@ -7,6 +7,7 @@ import braindustry.entities.PowerGeneratorUnit;
 import mindustry.Vars;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
+import mindustry.gen.Unit;
 import mindustry.world.blocks.power.PowerGraph;
 import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.meta.BuildVisibility;
@@ -25,9 +26,9 @@ public class UnitPowerNode extends PowerNode {
     }
 
     public class UnitPowerNodeBuild extends PowerNodeBuild {
-        public PowerGeneratorUnit parent;
+        public Unit parent;
 
-        public void setParent(PowerGeneratorUnit parent) {
+        public void setParent(Unit parent) {
             this.parent = parent;
         }
 

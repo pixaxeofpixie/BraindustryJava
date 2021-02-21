@@ -35,22 +35,17 @@ public class ModCheatMenu {
     private void loadEvent() {
         Events.on(EventType.Trigger.class, (e) -> {
             if (!add && isPlay()) {
-//                print("add");
                 Table table = new Table(Styles.black3);
                 table.touchable = Touchable.enabled;
                 table.update(() -> {
                     table.visible=isPlay();
-//                    if (!canAdd()) table.remove();
                 });
                 cons.get(table);
-//                    table.table(cons::get);
-
                 table.pack();
                 table.act(0.0F);
                 Core.scene.root.addChildAt(0, table);
-                ((Element) table.getChildren().first()).act(0.0F);
+                (table.getChildren().first()).act(0.0F);
                 add=true;
-//                    print("add:");
             } else if (add && !isPlay()) {
                 add = false;
             }

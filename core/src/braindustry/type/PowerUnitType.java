@@ -8,9 +8,11 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Angles;
 import arc.math.Mathf;
+import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Time;
 import ModVars.modVars;
+import braindustry.ModListener;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import mindustry.game.Team;
@@ -19,10 +21,9 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
-import mindustry.world.blocks.power.PowerGraph;
 
 public abstract class PowerUnitType extends UnitType {
-
+    private static ObjectMap<Unit,PowerUnitContainer> unitMap=new ObjectMap<>();
     public abstract Block getGeneratorBlock();
     public TextureRegion bottomRegion;
     public TextureRegion light;
@@ -75,33 +76,37 @@ public abstract class PowerUnitType extends UnitType {
 
     @Override
     public void drawBody(Unit unit) {
-//        super.drawBody(unit);
         drawReactor(unit);
     }
 
     public void draw(Unit unit) {
         super.draw(unit);
+        unitMap.get(unit).draw();
 //        drawReactor(unit);
     }
     public boolean goodBuilding(BlockSwitcher.BlockSwitcherBuild forB, Building other) {
         return other.dst(forB) <= (range + other.block.size+Mathf.ceil(forB.block.size/2f)) * 8f && forB != other && forB.isValid() && other.isValid();
     }
-    public void update(PowerGeneratorUnit unit) {
-//        print(unit.toString()+" update.type");
+    public void update(Unit unit) {
         super.update(unit);
-        unit.reloadLinks();
-        unit.links.each(building -> {
-            PowerGraph graph=building.power.graph;
-            graph.reflow(unit.generatorBuilding);
-//            building.power.graph.add(unit.generatorBuilding);
-//            graph.distributePower(graph.getPowerNeeded(),graph.getPowerProduced());
-        });
+        unitMap.get(unit,()->new PowerUnitContainer(unit)).update();
     }
 
     public PowerUnitType(String name) {
         super(name);
         this.plasma1 = Color.valueOf("ffd06b");
         this.plasma2 = Color.valueOf("ff361b");
+        ModListener.updaters.add(()->{
+            Runners runners=new Runners();
+            unitMap.each((u,container)->{
+                if (u.isValid())return;
+                container.remove();
+                runners.add(()->{
+                    unitMap.remove(u);
+                });
+            });
+            runners.crun();
+        });
     }
 
     @Override

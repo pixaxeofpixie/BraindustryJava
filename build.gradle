@@ -83,6 +83,12 @@ allprojects {
         maven { url 'https://jitpack.io' }
         jcenter()
     }
+    tasks.withType(JavaCompile){
+        targetCompatibility = 8
+        sourceCompatibility = 14
+        options.encoding = "UTF-8"
+        options.compilerArgs += ["-Xlint:deprecation"]
+    }
 }
 
 configure(project(":annotations")) {
@@ -96,7 +102,7 @@ configure(project(":annotations")) {
 configure(subprojects - project(":annotations")) {
     tasks.withType(JavaCompile) {
         if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
-            options.compilerArgs.addAll(['--release', '14', '--enable-preview'])
+            options.compilerArgs.addAll(['--release', '8', '--enable-preview'])
         }
 
         doFirst {
@@ -130,8 +136,8 @@ project(":annotations") {
     }
     apply plugin: "java-library"
     dependencies {
-        implementation 'com.squareup:javapoet:1.12.1'
-        compile "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+//        implementation "com.sun"
+        implementation "com.github.Anuken.Arc:arc-core:$mindustryVersion"
 //        compileOnly project(":core")
         implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
@@ -140,6 +146,7 @@ project(":annotations") {
 //        implementation  project(":core")
 
         apply plugin: "java"
+        compile 'com.squareup:javapoet:1.12.1'
 //        implementation "com.github.Anuken.Mindustry:entities:$mindustryVersion"
     }
 }
