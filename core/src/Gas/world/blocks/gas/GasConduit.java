@@ -1,5 +1,6 @@
 package Gas.world.blocks.gas;
 
+import Gas.annotations.GasAnnotations;
 import Gas.gen.GasBuilding;
 import Gas.type.Gas;
 import Gas.world.GasBlock;
@@ -13,22 +14,27 @@ import arc.math.geom.Geometry;
 import arc.math.geom.Point2;
 import arc.struct.Seq;
 import arc.util.Eachable;
+import arc.util.Nullable;
+import mindustry.annotations.Annotations;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.ContentRegions;
 import mindustry.graphics.Drawf;
+import mindustry.type.Item;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.Autotiler;
+import mindustry.world.blocks.distribution.ChainedBuilding;
+import mindustry.world.blocks.distribution.ItemBridge;
+import mindustry.world.blocks.liquid.Conduit;
 
-public class GasConduit extends GasBlock implements Autotiler {
+public class GasConduit extends GasGasBlock implements Autotiler {
     public final int timerFlow;
     public Color botColor;
     public boolean drawBottom = false;
-    public TextureRegion[] topRegions;
-    public TextureRegion[] botRegions;
-    private boolean isLoadRegions=false;
+    public @GasAnnotations.Load(value = "@-top-#", length = 5) TextureRegion[] topRegions;
+    public @GasAnnotations.Load(value = "@-bottom-#", length = 5, fallback = "conduit-bottom-#") TextureRegion[] botRegions;
     public boolean leaks;
 
     public GasConduit(String name) {
@@ -46,40 +52,12 @@ public class GasConduit extends GasBlock implements Autotiler {
         this.conveyorPlacement = true;
 //        this.noUpdateDisabled = true;
     }
-    public void loadRegions(){
-        if(!isLoadRegions) {
-            if (topRegions == null) topRegions = new TextureRegion[5];
-            if (botRegions == null) botRegions = new TextureRegion[5];
-            for (int i = 0; i < topRegions.length; i++) {
-                topRegions[i] = Core.atlas.find(this.name + "-top-" + i);
-            }
-            for (int i = 0; i < botRegions.length; i++) {
-                botRegions[i] = Core.atlas.find(this.name + "-bottom-" + i);
-            }
-            if (topRegions.length>0)this.region=topRegions[0];
-            isLoadRegions=true;
-        }
-    }
 
     @Override
     public void init() {
         super.init();
     }
 
-    @Override
-    public void load() {
-        loadRegions();
-//        this.region = Core.atlas.find(this.name);
-        ContentRegions.loadRegions(this);
-        this.teamRegions = new TextureRegion[Team.all.length];
-        Team[] var1 = Team.all;
-        int var2 = var1.length;
-
-        for(int var3 = 0; var3 < var2; ++var3) {
-            Team team = var1[var3];
-            this.teamRegions[team.id] = this.teamRegion.found() ? Core.atlas.find(this.name + "-team-" + team.name, this.teamRegion) : this.teamRegion;
-        }
-    }
 
     public void drawRequestRegion(BuildPlan req, Eachable<BuildPlan> list) {
         int[] bits = this.getTiling(req, list);
@@ -121,7 +99,7 @@ public class GasConduit extends GasBlock implements Autotiler {
                 this.lookingAtEither(tile, rotation, otherx, othery, otherrot, otherblock);
     }
 
-    public class GasConduitBuild extends GasBuilding {
+    public class GasConduitBuild extends GasBuild  implements ChainedBuilding {
         public float smoothGas;
         public int blendbits;
         public int xscl;
@@ -179,6 +157,16 @@ public class GasConduit extends GasBlock implements Autotiler {
                 this.sleep();
             }
 
+        }
+
+        @Nullable
+        @Override
+        public Building next(){
+            Tile next = tile.nearby(rotation);
+            if(next != null && next.build instanceof GasConduitBuild){
+                return next.build;
+            }
+            return null;
         }
     }
 }

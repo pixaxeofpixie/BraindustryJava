@@ -6,17 +6,20 @@ import Gas.world.GasBlock;
 import Gas.world.modules.GasConsumeModule;
 import Gas.world.modules.GasModule;
 import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.util.Time;
 import braindustry.content.ModFx;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.core.World;
+import mindustry.ctype.Content;
 import mindustry.entities.Damage;
 import mindustry.entities.Effect;
 import mindustry.entities.Puddles;
 import mindustry.game.Team;
 import mindustry.gen.Building;
+import mindustry.graphics.Drawf;
 import mindustry.logic.LAccess;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
@@ -117,6 +120,15 @@ public class GasBuilding extends Building {
     @Override
     public boolean acceptItem(Building source, Item item) {
         return block.consumes.itemFilters.get(item.id) && items.get(item) < getMaximumAccepted(item);
+    }
+    public double sense(Content content) {
+        if (content instanceof Item && items != null) {
+            return items.get((Item)content);
+        } else if (content instanceof Gas && gasses!=null) {
+            return gasses.get((Gas) content);
+        } else {
+            return content instanceof Liquid && liquids != null ? (double)liquids.get((Liquid)content) : 0.0D;
+        }
     }
     @Override
     public void onDestroyed() {

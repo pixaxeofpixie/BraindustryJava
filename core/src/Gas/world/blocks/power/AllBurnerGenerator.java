@@ -1,16 +1,18 @@
 package Gas.world.blocks.power;
 
+import Gas.annotations.GasAnnotations;
 import Gas.type.Gas;
 import arc.Core;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
+import mindustry.annotations.Annotations;
 import mindustry.graphics.Drawf;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
 
 public class AllBurnerGenerator extends AllGenerator {
-    public TextureRegion[] turbineRegions;
-    public TextureRegion capRegion;
+    public @GasAnnotations.Load(value = "@-turbine#", length = 2) TextureRegion[] turbineRegions;
+    public @GasAnnotations.Load("@-cap") TextureRegion capRegion;
     public float turbineSpeed = 2.0F;
 
 
@@ -20,19 +22,6 @@ public class AllBurnerGenerator extends AllGenerator {
 
     public AllBurnerGenerator(String name) {
         super(name);
-    }
-
-
-    @Override
-    public void load() {
-        super.load();
-        this.turbineRegions = new TextureRegion[2];
-
-        for(int i = 0; i < 2; ++i) {
-            this.turbineRegions[i] = Core.atlas.find(this.name + "-turbine" + i + "");
-        }
-
-        this.capRegion = Core.atlas.find(this.name + "-cap");
     }
 
     protected float getLiquidEfficiency(Liquid liquid) {
@@ -53,10 +42,6 @@ public class AllBurnerGenerator extends AllGenerator {
     }
 
     public class AllBurnerGeneratorBuild extends AllGenerator.AllGeneratorBuild {
-        public AllBurnerGeneratorBuild() {
-            super();
-        }
-
         public void draw() {
             super.draw();
             if (AllBurnerGenerator.this.turbineRegions[0].found()) {

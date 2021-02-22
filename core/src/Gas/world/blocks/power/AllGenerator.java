@@ -1,5 +1,6 @@
 package Gas.world.blocks.power;
 
+import Gas.annotations.GasAnnotations;
 import Gas.gen.GasBuilding;
 import Gas.type.Gas;
 import Gas.world.consumers.ConsumeGasFilter;
@@ -11,6 +12,7 @@ import arc.math.Mathf;
 import arc.util.Time;
 import braindustry.world.blocks.BuildingLabel;
 import mindustry.Vars;
+import mindustry.annotations.Annotations;
 import mindustry.content.Fx;
 import mindustry.ctype.ContentType;
 import mindustry.entities.Effect;
@@ -36,9 +38,9 @@ public class AllGenerator extends GasPowerGenerator {
     public Effect generateEffect;
     public Effect explodeEffect;
     public Color heatColor;
-    public TextureRegion topRegion;
-    public TextureRegion liquidRegion;
-    public TextureRegion gasRegion;
+    public @GasAnnotations.Load("@-top") TextureRegion topRegion;
+    public @GasAnnotations.Load("@-liquid") TextureRegion liquidRegion;
+    public @GasAnnotations.Load("@-gas") TextureRegion gasRegion;
     public boolean randomlyExplode;
     public boolean defaults;
 
@@ -67,11 +69,6 @@ public class AllGenerator extends GasPowerGenerator {
         this.update=true;
     }
 
-    @Override
-    public void load() {
-        super.load();
-        this.gasRegion = Core.atlas.find(this.name+"-gas");
-    }
 
     protected void setDefaults() {
         if (defaults) return;

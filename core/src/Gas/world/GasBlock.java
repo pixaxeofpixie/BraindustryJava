@@ -1,7 +1,9 @@
 package Gas.world;
 
+import Gas.annotations.GasAnnotations;
 import Gas.content.Gasses;
 import Gas.gen.GasBuilding;
+import Gas.gen.GasContentRegions;
 import Gas.type.Gas;
 import Gas.world.consumers.ConsumeGasses;
 import Gas.world.consumers.GasConsumers;
@@ -10,6 +12,7 @@ import arc.Core;
 import arc.func.Cons;
 import arc.func.Func;
 import arc.graphics.Color;
+import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import mindustry.content.Liquids;
 import mindustry.ctype.UnlockableContent;
@@ -33,7 +36,6 @@ public class GasBlock extends Block {
     public boolean outputsGas = false;
     public final GasConsumers consumes = new GasConsumers();
     public GasStats stats = new GasStats();
-
 //    4a4b53
     public GasBlock(String name) {
         super(name);
@@ -97,6 +99,13 @@ public class GasBlock extends Block {
         }
 
     }
+
+    @Override
+    public void load() {
+        super.load();
+        GasContentRegions.loadRegions(this);
+    }
+
     @Override
     public void setBars() {
         this.bars.add("health", (entity) -> {

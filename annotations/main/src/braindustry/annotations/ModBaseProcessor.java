@@ -26,7 +26,7 @@ public static void print(String obj,Object... args){
     System.out.println(message);
 //    messager.printMessage(Diagnostic.Kind.OTHER,message);
 }
-    public static final String packageName = "braindustry.gen";
+    public static String packageName = "braindustry.gen";
     public static final String parentName = "mindustry.gen";
 //    public TypeElement typeElement(String name){
 //        return elementu.getTypeElement(name);
@@ -56,10 +56,10 @@ public static void print(String obj,Object... args){
     public void delete(String name) throws IOException{
 //        print("delete name: @",name);
         FileObject resource;
-            resource = filer.getResource(StandardLocation.SOURCE_OUTPUT, packageName, name);
+        resource = filer.getResource(StandardLocation.SOURCE_OUTPUT, packageName, name);
 //        boolean delete = resource.delete();
 //        print("delete: @ ,named: @, filer: @",delete,resource.getName(),resource.getClass().getName());
-            Files.delete(Paths.get(resource.getName()+".java"));
+        Files.delete(Paths.get(resource.getName()+".java"));
 
     }
     public static void write(TypeSpec.Builder builder, Seq<String> imports) throws Exception{
