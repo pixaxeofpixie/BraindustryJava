@@ -126,19 +126,16 @@ public class ModOtherBlocks implements ContentList {
 
             @Override
             public TextureRegion[] editorVariantRegions() {
-                Log.info("editorVariantRegions() @",name);
                 return super.editorVariantRegions();
             }
 
             @Override
             public TextureRegion editorIcon() {
-                Log.info("editorIcon() @",name);
                 return super.editorIcon();
             }
 
             @Override
             public void drawBase(Tile tile) {
-                Log.info("drawBase(@) @",tile.toString(),name);
                 super.drawBase(tile);
             }
         };

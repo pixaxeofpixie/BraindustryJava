@@ -4,7 +4,6 @@ import ModVars.modVars;
 import arc.Core;
 import arc.files.Fi;
 import arc.graphics.Color;
-import arc.graphics.Pixmap;
 import arc.graphics.Texture;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
@@ -15,20 +14,13 @@ import arc.math.geom.Vec2;
 import arc.math.geom.Vec3;
 import arc.scene.ui.layout.Scl;
 import arc.struct.ObjectMap;
-import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Time;
-import braindustry.entities.bullets.AngelContinuousBulletType;
-import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
-import braindustry.entities.bullets.RainbowLaserBulletType;
 import braindustry.type.LengthBulletType;
 import braindustry.world.blocks.TestBlock;
 import mindustry.Vars;
 import mindustry.gen.Bullet;
 import mindustry.gen.Entityc;
 import mindustry.graphics.Shaders;
-
-import static ModVars.modVars.modInfo;
 
 public class ModShaders {
     public static RainbowShader rainbow;
@@ -40,6 +32,7 @@ public class ModShaders {
     public static TestShader testShader;
     public static GradientLaserShader gradientLaserShader;
     public static IconBackgroundShader iconBackgroundShader;
+    public static WaveShader waveShader;
 
     static {
         Shaders.class.getName();
@@ -56,6 +49,7 @@ public class ModShaders {
 
         testShader = new TestShader();
         iconBackgroundShader = new IconBackgroundShader();
+        waveShader=new WaveShader();
 //        defaultShader=new Shaders.LoadShader("default","default");
     }
 
@@ -72,6 +66,76 @@ public class ModShaders {
         return vec2(x, x);
     }
 
+    public static Vec2 worldToScreen(Position position) {
+        Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
+        float displayScale = Vars.renderer.getDisplayScale();
+        return new Vec2().set(position).sub(cameraOffset).scl(vec2(displayScale));
+    }
+    public static class WaveShader extends ModLoadShader{
+        public WaveShader() {
+            super("wave", "default");
+        }
+        TextureRegion region=null;
+        public WaveShaderPacker packer =new WaveShaderPacker();
+        public static class WaveShaderPacker{
+            boolean xAxis=true;
+            float forcePercent=0.1f;
+            float otherAxisMul=10f;
+            private WaveShaderPacker(){
+
+            }
+            public WaveShaderPacker xAxis(boolean xAxis) {
+                this.xAxis = xAxis;
+                return this;
+            }
+
+            public WaveShaderPacker forcePercent(float forcePercent) {
+                this.forcePercent = forcePercent;
+                return this;
+            }
+
+            public WaveShaderPacker otherAxisMul(float otherAxisMul) {
+                this.otherAxisMul = otherAxisMul;
+                return this;
+            }
+        }
+        public WaveShaderPacker rect(TextureRegion region, float x, float y, float w, float h){
+            return rect(region, x, y, w, h,0f);
+        }
+        public WaveShaderPacker rect(TextureRegion region, float x, float y,float rotation){
+            return rect(region, x, y, (float)region.width * Draw.scl * Draw.xscl, (float)region.height * Draw.scl * Draw.yscl,rotation);
+        }
+        public WaveShaderPacker rect(TextureRegion region, float x, float y){
+            return rect(region, x, y, 0);
+        }
+        public WaveShaderPacker rect(TextureRegion region, float x, float y, float w, float h, float rotation){
+            set();
+            Draw.rect(region,x,y,w*2f,h*2f,rotation);
+            this.region=region;
+            packer.xAxis=true;
+            packer.forcePercent=0.1f;
+            packer.otherAxisMul=10f;
+
+            return packer;
+        }
+
+
+
+        @Override
+        public void apply() {
+            super.apply();
+            float u_time = Time.time;
+            setUniformf("u_time", u_time);
+            setUniformf("u_delta", Time.delta / 60.f);
+            setUniformi("u_xAxis",Mathf.num(packer.xAxis));
+            setUniformf("u_forcePercent",packer.forcePercent);
+            setUniformf("u_otherAxisMul",packer.otherAxisMul);
+            if (region != null) {
+                setUniformf("u_uv", region.u, region.v);
+                setUniformf("u_uv2", region.u2, region.v2);
+            }
+        }
+    }
     public static class IconBackgroundShader extends ModLoadShader {
 
         private float length;
@@ -149,12 +213,14 @@ public class ModShaders {
             setUniformf("u_delta", Time.delta / 60.f);
             Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
             float displayScale = Vars.renderer.getDisplayScale();
-            setUniformf("u_pos", pos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
+            setUniformf("u_pos", worldToScreen(pos));
             setUniformf("u_dscl", displayScale);
             setUniformf("u_scl", Vars.renderer.getScale());
-            if (selectedTexture != null) {
-                selectedTexture.bind(3);
-                setUniformi("region", 3);
+            if (region != null) {
+                setUniformf("u_uv", region.u, region.v);
+                setUniformf("u_uv2", region.u2, region.v2);
+//                selectedTexture.bind(3);
+//                setUniformi("region", 3);
             }
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));
 //            this.setUniformf("offset", );
@@ -168,7 +234,8 @@ public class ModShaders {
 
         private void setRegion(TextureRegion region) {
             this.region = region;
-            if (textureMap.containsKey(region)){
+            selectedTexture = region.texture;
+           /* if (textureMap.containsKey(region)){
                 selectedTexture=textureMap.get(region);
             } else {
                 Pixmap pixmap=new Pixmap(region.width,region.height);
@@ -177,7 +244,7 @@ public class ModShaders {
 
                 textureMap.put(region,new Texture(pixmap));
                 setRegion(region);
-            }
+            }*/
         }
     }
 
@@ -211,7 +278,7 @@ public class ModShaders {
         }
 
         private float getLength() {
-            return type!=null?type.length():0;
+            return type != null ? type.length() : 0;
         }
 
         @Override
@@ -233,56 +300,58 @@ public class ModShaders {
             setUniformf("u_toColor", to);
         }
     }
-        public static class RainbowLaserShader extends ModLoadShader {
-            public int offsetId = 0;
-            public Bullet bullet;
-            public LengthBulletType type;
-            private int applyCount = 0;
 
-            public RainbowLaserShader() {
-                super("rainbowLaser", "default");
-            }
+    public static class RainbowLaserShader extends ModLoadShader {
+        public int offsetId = 0;
+        public Bullet bullet;
+        public LengthBulletType type;
+        private int applyCount = 0;
 
-            public void set(Bullet bullet, LengthBulletType type) {
-                setBullet(bullet, type);
-                set();
-            }
+        public RainbowLaserShader() {
+            super("rainbowLaser", "default");
+        }
 
-            public Shader setBullet(Bullet bullet, LengthBulletType type) {
-                offsetId = bullet.id;
-                this.bullet = bullet;
-                this.type = type;
-                return this;
-            }
+        public void set(Bullet bullet, LengthBulletType type) {
+            setBullet(bullet, type);
+            set();
+        }
 
-            private float getLength() {
-                return type == null ? 0:type.length();
-            }
+        public Shader setBullet(Bullet bullet, LengthBulletType type) {
+            offsetId = bullet.id;
+            this.bullet = bullet;
+            this.type = type;
+            return this;
+        }
 
-            @Override
-            public void apply() {
-                float u_time = Time.time / Scl.scl(10);
-                setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
-                Vec2 screenSize = getScreenSize();
-                setUniformf("iResolution", screenSize);
-                Vec2 bulletPos = new Vec2(bullet.y, bullet.x);
-                Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
-                float displayScale = Vars.renderer.getDisplayScale();
-                setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
-                setUniformf("u_pos", bulletPos);
-                setUniformf("u_length", getLength() * displayScale);
-                setUniformf("u_scl", displayScale);
-                setUniformf("u_vecRot", new Vec2(Mathf.cosDeg(bullet.rotation()), Mathf.sinDeg(bullet.rotation())));
-                setUniformf("u_offset", new Vec3(
-                        -2, 2, -0));
+        private float getLength() {
+            return type == null ? 0 : type.length();
+        }
+
+        @Override
+        public void apply() {
+            float u_time = Time.time / Scl.scl(10);
+            setUniformf("u_time", u_time + Mathf.randomSeed(offsetId, -100f, 100f));
+            Vec2 screenSize = getScreenSize();
+            setUniformf("iResolution", screenSize);
+            Vec2 bulletPos = new Vec2(bullet.y, bullet.x);
+            Vec2 cameraOffset = Core.camera.position.cpy().sub(Core.camera.width / 2f, Core.camera.height / 2f);
+            float displayScale = Vars.renderer.getDisplayScale();
+            setUniformf("u_screenPos", bulletPos.cpy().sub(cameraOffset).scl(vec2(displayScale)));
+            setUniformf("u_pos", bulletPos);
+            setUniformf("u_length", getLength() * displayScale);
+            setUniformf("u_scl", displayScale);
+            setUniformf("u_vecRot", new Vec2(Mathf.cosDeg(bullet.rotation()), Mathf.sinDeg(bullet.rotation())));
+            setUniformf("u_offset", new Vec3(
+                    -2, 2, -0));
 //                Log.info("rot: @", bullet.rotation());
-                setUniformf("u_bulletRot", bullet.rotation());
+            setUniformf("u_bulletRot", bullet.rotation());
 
-                setUniformf("u_grow", new Vec2(900, 900));
+            setUniformf("u_grow", new Vec2(900, 900));
 //            this.setUniformf("iResolution", new Vec2().trns(bullet.rotation()-45f,Core.camera.height, Core.camera.width));
 //            this.setUniformf("offset", );
-            }
         }
+    }
+
     public static class HoloShader extends ModLoadShader {
         public int offsetId = 0;
         public TextureRegion logo;
@@ -416,7 +485,7 @@ public class ModShaders {
         private static Fi loadFile(String fileName) {
 //            Seq<Fi> modShaders = Seq.with(modInfo.root.child("shaders").list());
 //            Fi foundFile = modShaders.find(fi -> fi.name().equals(fileName));
-            Fi foundFile= modVars.modAssets.get("shaders",fileName);
+            Fi foundFile = modVars.modAssets.get("shaders", fileName);
             if (foundFile == null) {
                 return Core.files.internal("shaders/" + (fileName));
             }

@@ -8,7 +8,7 @@ import arc.scene.ui.layout.Scl;
 import mindustry.graphics.Layer;
 import mindustry.ui.Fonts;
 
-public class ModDraw {
+public class ModDraw extends Draw{
     public static void drawLabel(Vec2 pos, float textSize, Color color, String text){
         Font font = Fonts.outline;
         boolean ints = font.usesIntegerPositions();

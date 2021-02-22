@@ -60,7 +60,7 @@ dependencies {
     implementation project(":core")
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
-    implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
+    compileOnly "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
     implementation "com.github.Anuken.Mindustry:tools:$mindustryVersion"
     implementation 'com.squareup:javapoet:1.12.1'
 

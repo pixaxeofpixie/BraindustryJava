@@ -1,8 +1,10 @@
 package braindustry.content;
 
 import Gas.world.blocks.distribution.GasRouter;
+import arc.Core;
 import arc.graphics.Color;
 import arc.math.Mathf;
+import arc.struct.Seq;
 import arc.util.Time;
 import braindustry.content.Blocks.*;
 import braindustry.world.blocks.TestBlock;
@@ -12,6 +14,7 @@ import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
 import braindustry.world.blocks.sandbox.UnitSpawner;
+import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.ctype.ContentList;
 import mindustry.graphics.Pal;
@@ -21,7 +24,12 @@ import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.ControlBlock;
 import mindustry.world.blocks.defense.turrets.Turret;
+import mindustry.world.blocks.distribution.BufferedItemBridge;
+import mindustry.world.blocks.distribution.ItemBridge;
+import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.meta.BuildVisibility;
+import mindustryAddition.world.blocks.distribution.CrossBufferedItemBridge;
+import mindustryAddition.world.blocks.distribution.CrossItemBridge;
 
 public class ModBlocks implements ContentList {
     public static Block
@@ -80,7 +88,7 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.logic, ItemStack.with(), true);
             }
         };
-       /* exampleCrossPhaseBridge = new CrossItemBridge("phase-alloy-conveyor") {
+       exampleCrossPhaseBridge = new CrossItemBridge("example-cross-phase-bridge-conveyor") {
             {
                 this.localizedName = "Phase Alloy Conveyor";
                 this.requirements(Category.distribution, ItemStack.with(ModItems.phaseAlloy, 5, Items.silicon, 7, Items.lead, 10, Items.graphite, 10));
@@ -88,7 +96,7 @@ public class ModBlocks implements ContentList {
                 this.canOverdrive = false;
                 this.hasPower = true;
                 this.consumes.power(0.3F);
-                /** custom connect filter
+              //   custom connect filter
                 connectFilter = (build) -> {
                     Block block = build.block;
                     return block.acceptsItems || block instanceof StorageBlock;
@@ -109,18 +117,18 @@ public class ModBlocks implements ContentList {
                 this.region = bridge.region;
             }
         };
-        exampleCrossItemBridge = new CrossBufferedItemBridge("cross-item-bridge") {
+        exampleCrossItemBridge = new CrossBufferedItemBridge("example-cross-bridge-conveyor") {
             {
                 this.requirements(Category.distribution, ItemStack.with(Items.lead, 6, Items.copper, 6));
                 this.range = 4;
                 this.speed = 74.0F;
                 this.bufferCapacity = 14;
-                /** custom connect filter
+                //* custom connect filter
                 connectFilter = (build) -> {
                     Block block = build.block;
                     return block.acceptsItems || block instanceof StorageBlock;
                 };
-                /** default filter check blocks from connectBlocksGetter
+                // default filter check blocks from connectBlocksGetter
                 connectBlocksGetter = () -> {
                     return Seq.with(Blocks.titaniumConveyor);
                 };
@@ -139,7 +147,7 @@ public class ModBlocks implements ContentList {
                 this.endRegion = bridge.endRegion;
                 this.region = bridge.region;
             }
-        };*/
+        };
         unitSpawner = new UnitSpawner("unit-spawner") {
             {
                 localizedName = "Unit Spawner";
@@ -227,10 +235,10 @@ public class ModBlocks implements ContentList {
 
         gasTank = new GasRouter("gas-tank") {
             {
-                localizedName = "gas tank";
-                description = "storage gas";
+                localizedName = "Gas Tank";
+                description = "Storage gas";
                 size = 3;
-                liquidCapacity = 1500f;
+                gasCapacity = 1500f;
                 health = 500;
                 requirements(Category.liquid, ItemStack.with(Items.titanium, 25, Items.metaglass, 25));
             }
