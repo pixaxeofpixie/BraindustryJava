@@ -1,13 +1,10 @@
 package Gas.world.modules;
 
-import Gas.GasBuilding;
-import arc.util.Nullable;
+import Gas.gen.GasBuilding;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import mindustry.gen.Building;
 import mindustry.world.consumers.Consume;
 import mindustry.world.meta.BlockStatus;
-import mindustry.world.modules.BlockModule;
 import mindustry.world.modules.ConsumeModule;
 
 public class GasConsumeModule extends ConsumeModule {

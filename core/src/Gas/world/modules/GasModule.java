@@ -1,4 +1,4 @@
-package Gas;
+package Gas.world.modules;
 
 import Gas.type.Gas;
 import arc.math.Mathf;

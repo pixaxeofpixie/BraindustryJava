@@ -1,7 +1,7 @@
-package Gas;
+package Gas.world.blocks.power;
 
+import Gas.gen.GasBuilding;
 import Gas.type.Gas;
-import Gas.world.GasPowerGenerator;
 import Gas.world.consumers.ConsumeGasFilter;
 import arc.Core;
 import arc.graphics.Color;

@@ -1,7 +1,7 @@
 package Gas.world;
 
 import Gas.content.Gasses;
-import Gas.GasBuilding;
+import Gas.gen.GasBuilding;
 import Gas.type.Gas;
 import Gas.world.consumers.ConsumeGasses;
 import Gas.world.consumers.GasConsumers;
@@ -26,8 +26,6 @@ import mindustry.world.consumers.ConsumeType;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 import mindustry.world.meta.values.ItemListValue;
-
-import java.util.Objects;
 
 public class GasBlock extends Block {
     public boolean hasGas=false;

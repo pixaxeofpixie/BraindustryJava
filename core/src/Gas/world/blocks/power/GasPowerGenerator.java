@@ -1,21 +1,19 @@
-package Gas.world;
+package Gas.world.blocks.power;
 
-import Gas.GasBuilding;
+import Gas.gen.GasBuilding;
 import arc.Core;
 import arc.math.Mathf;
 import arc.struct.EnumSet;
 import arc.util.Strings;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import mindustry.gen.Building;
 import mindustry.graphics.Pal;
 import mindustry.ui.Bar;
-import mindustry.world.blocks.power.PowerGenerator;
 import mindustry.world.meta.BlockFlag;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 
-public class GasPowerGenerator extends GasDistributor {
+public class GasPowerGenerator extends GasPowerDistributor {
     public float powerProduction;
     public Stat generationType;
 
@@ -24,7 +22,7 @@ public class GasPowerGenerator extends GasDistributor {
         this.generationType = Stat.basePowerGeneration;
         this.sync = true;
         this.baseExplosiveness = 5.0F;
-        this.flags = EnumSet.of(new BlockFlag[]{BlockFlag.generator});
+        this.flags = EnumSet.of(BlockFlag.generator);
     }
 
     public void setStats() {
@@ -37,7 +35,7 @@ public class GasPowerGenerator extends GasDistributor {
         if (this.hasPower && this.outputsPower && !this.consumes.hasPower()) {
             this.bars.add("power", (entity) -> {
                 return new Bar(() -> {
-                    return Core.bundle.format("bar.poweroutput", new Object[]{Strings.fixed(entity.getPowerProduction() * 60.0F * entity.timeScale(), 1)});
+                    return Core.bundle.format("bar.poweroutput", Strings.fixed(entity.getPowerProduction() * 60.0F * entity.timeScale(), 1));
                 }, () -> {
                     return Pal.powerBar;
                 }, entity::getPowerProduction);

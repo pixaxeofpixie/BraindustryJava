@@ -1,8 +1,6 @@
 package Gas.world.consumers;
 
-import Gas.GasBuilding;
-import mindustry.gen.Building;
-import mindustry.world.consumers.Consume;
+import Gas.gen.GasBuilding;
 import mindustry.world.consumers.ConsumeType;
 
 public abstract class ConsumeGasBase extends GasConsume {

@@ -1,17 +1,20 @@
-package Gas.world;
+package Gas.world.blocks.distribution;
 
-import Gas.GasBuilding;
+import Gas.gen.GasBuilding;
 import Gas.type.Gas;
 import Gas.world.GasBlock;
-import arc.util.Log;
 import mindustry.gen.Building;
+import mindustry.world.meta.BlockGroup;
 
 public class GasRouter extends GasBlock {
     public GasRouter(String name){
         super(name);
-
+        update = true;
+        solid = true;
+        hasGas = true;
+        group = BlockGroup.liquids;
+        outputsGas = true;
         noUpdateDisabled = true;
-        System.out.println(newBuilding());
     }
 
     public class GasRouterBuild extends GasBuilding {

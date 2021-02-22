@@ -1,6 +1,6 @@
 package Gas.world.consumers;
 
-import Gas.GasBuilding;
+import Gas.gen.GasBuilding;
 import Gas.type.Gas;
 import Gas.world.meta.values.GasFilterValue;
 import arc.func.Boolf;
@@ -10,13 +10,11 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
 import mindustry.gen.Building;
-import mindustry.type.Liquid;
 import mindustry.ui.Cicon;
 import mindustry.ui.MultiReqImage;
 import mindustry.ui.ReqImage;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.Stats;
-import mindustry.world.meta.values.LiquidFilterValue;
 
 public class ConsumeGasFilter extends ConsumeGasBase {
     public final Boolf<Gas> filter;

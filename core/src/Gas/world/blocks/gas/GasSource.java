@@ -1,7 +1,7 @@
 package Gas.world.blocks.gas;
 
 
-import Gas.GasBuilding;
+import Gas.gen.GasBuilding;
 import Gas.type.Gas;
 import Gas.world.GasBlock;
 import arc.graphics.g2d.Draw;

@@ -1,6 +1,6 @@
 package Gas.world.blocks.production;
 
-import Gas.GasBuilding;
+import Gas.gen.GasBuilding;
 import Gas.GasStack;
 import Gas.world.GasBlock;
 import Gas.world.draw.GasDrawBlock;
@@ -11,13 +11,10 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.content.Fx;
 import mindustry.entities.Effect;
-import mindustry.gen.Building;
 import mindustry.gen.Sounds;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
-import mindustry.world.blocks.production.GenericCrafter;
-import mindustry.world.draw.DrawBlock;
 import mindustry.world.meta.BlockFlag;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;

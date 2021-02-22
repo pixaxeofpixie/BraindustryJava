@@ -2,6 +2,7 @@ package braindustry.gen;
 
 import ModVars.modVars;
 import arc.Core;
+import arc.func.Boolf;
 import arc.func.Cons;
 import arc.func.Floatc4;
 import arc.graphics.Color;
@@ -13,6 +14,7 @@ import arc.math.Mathf;
 import arc.math.geom.Geometry;
 import arc.math.geom.QuadTree;
 import arc.math.geom.Vec2;
+import arc.math.geom.Vec3;
 import arc.struct.Seq;
 import arc.util.Interval;
 import arc.util.Log;
@@ -20,10 +22,15 @@ import arc.util.Structs;
 import arc.util.Time;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import braindustry.entities.ModUnits;
 import braindustry.input.ModBinding;
 import braindustry.type.StealthUnitType;
 import mindustry.Vars;
+import mindustry.ai.formations.DistanceAssignmentStrategy;
+import mindustry.ai.formations.Formation;
+import mindustry.ai.formations.FormationPattern;
 import mindustry.entities.EntityCollisions;
+import mindustry.entities.Units;
 import mindustry.entities.units.BuildPlan;
 import mindustry.entities.units.StatusEntry;
 import mindustry.gen.Call;
@@ -178,7 +185,21 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
             cooldownStealth = Math.min(stealthType.stealthCooldown, time);
         }
     }
+    public void commandNearby(FormationPattern pattern, Boolf<Unit> include) {
 
+        Formation formation = new Formation(new Vec3(x, y, rotation), pattern);
+        formation.slotAssignmentStrategy = new DistanceAssignmentStrategy(pattern);
+        units.clear();
+        ModUnits.nearby(team, x, y, 150.0F, (u)->{
+            if (u.isAI() && include.get(u) && u != this && u.type.flying == type.flying && u.hitSize <= hitSize * 1.1F) {
+                units.add(u);
+            }
+        });
+        if (units.isEmpty()) return;
+        units.sort(Structs.comps(Structs.comparingFloat((u)->-u.hitSize), Structs.comparingFloat((u)->u.dst2(this))));
+        units.truncate(type.commandLimit);
+        command(formation, units);
+    }
     @Override
     public void updateStealthStatus() {
         if (inStealth) {

@@ -1,6 +1,5 @@
 package Gas.world.blocks.power;
 
-import Gas.AllGenerator;
 import Gas.type.Gas;
 import arc.Core;
 import arc.graphics.g2d.Draw;
@@ -8,7 +7,6 @@ import arc.graphics.g2d.TextureRegion;
 import mindustry.graphics.Drawf;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
-import mindustry.world.blocks.power.BurnerGenerator;
 
 public class AllBurnerGenerator extends AllGenerator {
     public TextureRegion[] turbineRegions;

@@ -1,9 +1,10 @@
-package Gas;
+package Gas.gen;
 
 import Gas.entities.Clouds;
 import Gas.type.Gas;
 import Gas.world.GasBlock;
 import Gas.world.modules.GasConsumeModule;
+import Gas.world.modules.GasModule;
 import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.util.Time;

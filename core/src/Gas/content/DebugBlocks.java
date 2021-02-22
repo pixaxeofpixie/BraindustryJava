@@ -1,17 +1,13 @@
 package Gas.content;
 
-import Gas.AllGenerator;
 import Gas.world.blocks.power.AllBurnerGenerator;
 import Gas.world.consumers.ConsumeGasses;
-import braindustry.content.ModGasses;
 import braindustry.content.ModItems;
 import mindustry.content.Blocks;
 import mindustry.content.Items;
-import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
-import mindustry.world.blocks.power.BurnerGenerator;
 
 public class DebugBlocks {
     static {

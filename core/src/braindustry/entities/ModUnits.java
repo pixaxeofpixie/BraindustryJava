@@ -265,7 +265,7 @@ public class ModUnits extends Units {
         QuadTree<Unit> tree=team.data().tree();
         Seq<Unit> stealthUnits=new Seq<>();
         Groups.all.each((entityc -> {
-            if (entityc instanceof Unit && entityc instanceof StealthUnitc && ((StealthUnitc)entityc).inStealth()){
+            if (entityc instanceof Unit && entityc instanceof StealthUnitc && ((StealthUnitc)entityc).inStealth() && ((Unit) entityc).team()==team){
                 stealthUnits.add((Unit)entityc);
             }
         }));

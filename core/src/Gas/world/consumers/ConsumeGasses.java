@@ -1,7 +1,7 @@
 package Gas.world.consumers;
 
 import Gas.type.Gas;
-import Gas.GasBuilding;
+import Gas.gen.GasBuilding;
 import Gas.GasStats;
 import arc.scene.ui.layout.Table;
 import arc.struct.Bits;
