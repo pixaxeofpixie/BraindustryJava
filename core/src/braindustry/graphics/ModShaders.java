@@ -77,7 +77,7 @@ public class ModShaders {
         }
         TextureRegion region=null;
         public WaveShaderPacker packer =new WaveShaderPacker();
-        public static class WaveShaderPacker{
+        public static    class WaveShaderPacker{
             boolean xAxis=true;
             float forcePercent=0.1f;
             float otherAxisMul=10f;

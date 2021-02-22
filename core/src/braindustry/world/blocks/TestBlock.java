@@ -122,7 +122,7 @@ public class TestBlock extends Block {
             });
             table.slider(0, 360, .001f, modVars.settings.getFloat("angle"), (f) -> {
                 modVars.settings.setFloat("angle", Mathf.round(f,0.001f));
-            }).marginRight(4f);
+            }).row();
             table.label(()->{
                 String angle = Mathf.round(modVars.settings.getFloat("angle"),1f) +"";
                 StringBuilder builder=new StringBuilder(angle);
@@ -130,32 +130,10 @@ public class TestBlock extends Block {
                     builder.insert(0,"0");
                 }
                 return builder.toString();
-            }).right().row();
+            }).row();
             table.label(()->{
                 Seq<TextureAtlas.AtlasRegion> regions = Core.atlas.getRegions();
-                return Strings.format("@/@:@",spriteIndex, regions.size,regions.get(spriteIndex).texture.glTarget);
-            }).row();
-            table.label(()->{
-                TextureAtlas.AtlasRegion atlasRegion = region.asAtlas();
-                String out=Strings.format("packedWidth: @,packedHeight: @\n" +
-                                "originalWidth: @,originalHeight: @\n" +
-                                "offsetX: @,offsetY: @\n" +
-                                "rotate: @",
-                        atlasRegion.packedWidth,atlasRegion.packedHeight,
-                        atlasRegion.originalWidth,atlasRegion.originalHeight,
-                        atlasRegion.offsetX, atlasRegion.offsetY,
-                        atlasRegion.rotate);
-                return out;
-            }).row();
-            table.label(()->{
-                TextureAtlas.AtlasRegion atlasRegion = region.asAtlas();
-                String out=Strings.format("u: @,v: @\n" +
-                                "u2: @,v2: @\n" +
-                                "width: @,height: @",
-                        region.u,region.v,
-                        region.u2,region.v2,
-                        region.width,region.height);
-                return out;
+                return Strings.format("@/@",spriteIndex, regions.size);
             }).row();
         }
 
@@ -163,12 +141,6 @@ public class TestBlock extends Block {
         public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
 
             Building building = super.init(tile, team, shouldAdd, rotation);
-            newLabel(() -> building, (build) -> {
-                float angle = modVars.settings.getFloat("angle");
-                if (true)
-                    return Strings.format("@\n@x@\n@x@", angle, Core.graphics.getWidth(), Core.graphics.getHeight(), Core.camera.width, Core.camera.height);
-                return "time: " + (int) time;
-            });
             return building;
         }
 

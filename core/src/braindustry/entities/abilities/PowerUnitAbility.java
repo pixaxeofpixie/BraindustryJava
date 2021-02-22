@@ -16,6 +16,7 @@ import braindustry.ModListener;
 import braindustry.content.ModBlocks;
 import braindustry.type.ModUnitType;
 import braindustry.type.PowerUnitContainer;
+import braindustry.world.blocks.power.ReceivingPowerNode;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import mindustry.game.Team;
 import mindustry.gen.Building;
@@ -43,7 +44,7 @@ public class PowerUnitAbility extends ModAbility {
     public Color plasma1, plasma2;
     public Boolf2<Building, Unit> good = ((building, unit) -> {
         if (building == null) return false;
-        return building.block.hasPower && building.team == unit.team;
+        return building.block.hasPower && building.team == unit.team && building.block instanceof ReceivingPowerNode;
     });
     public final float powerProduction;
     public final int maxNodes;

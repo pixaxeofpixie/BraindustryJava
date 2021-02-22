@@ -24,8 +24,8 @@ public class UnitChooseDialog extends BaseDialog {
         int[] index={0};
         for (UnitType unitType : Vars.content.units()) {
             if (unitType == UnitTypes.block)continue;
-            index[0]++;
             if (index[0]%5==0)table.row();
+            index[0]++;
             Button button = new Button();
             button.clearChildren();
             Image image = new Image(unitType.region);
