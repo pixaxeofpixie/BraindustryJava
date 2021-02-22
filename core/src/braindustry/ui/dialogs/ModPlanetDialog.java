@@ -21,13 +21,13 @@ public class ModPlanetDialog extends PlanetDialog {
 
     @Override
     public void act(float delta){
-        super.act(delta);
+//        super.act(delta);
         float outlineRad;
         if(hovered != null && !mobile){
             addChild(hoverLabel);
             hoverLabel.toFront();
             hoverLabel.touchable = Touchable.disabled;
-            outlineRad=ModPlanetRenderer.radiusProvider();
+            outlineRad=ModPlanetRenderer.radiusProvider(hovered);
             Vec3 pos = planets.cam.project(Tmp.v31.set(hovered.tile.v).setLength(outlineRad).rotate(Vec3.Y, -planets.planet.getRotation()).add(planets.planet.position));
             hoverLabel.setPosition(pos.x - Core.scene.marginLeft, pos.y - Core.scene.marginBottom, Align.center);
 
@@ -42,7 +42,6 @@ public class ModPlanetDialog extends PlanetDialog {
             }
             hoverLabel.invalidateHierarchy();
         }else{
-            outlineRad=ModPlanetRenderer.radiusProvider(planets.planet);
             hoverLabel.remove();
         }
 
@@ -71,7 +70,7 @@ public class ModPlanetDialog extends PlanetDialog {
         }
 
         if(planets.planet.isLandable()){
-            hovered = planets.planet.getSector(planets.cam.getMouseRay(), outlineRad);
+            hovered = planets.planet.getSector(planets.cam.getMouseRay(), ModPlanetRenderer.radiusProvider(planets.planet));
         }else{
             hovered = selected = null;
         }

@@ -1,6 +1,5 @@
 package braindustry.graphics.g3d;
 
-import arc.func.Func;
 import arc.graphics.Color;
 import arc.graphics.Gl;
 import arc.graphics.Mesh;
@@ -21,23 +20,46 @@ import mindustry.type.Planet;
 import mindustry.type.Sector;
 
 public class ModPlanetRenderer extends PlanetRenderer {
-    protected static final float radiusOffset = .17f;
-    public static float radiusProvider(){
+    protected static final float radiusOffset = 1.17f;
+    protected static final Seq<Vec3> points = new Seq<>();
+    protected ObjectMap<String, Mesh> meshMap = new ObjectMap<>();
+
+    public static float radiusProvider() {
         return radiusProvider(Vars.renderer.planets.planet);
     }
-    public static float radiusProvider(Sector sector){
+
+    public static float radiusProvider(Sector sector) {
         return radiusProvider(sector.planet);
     }
-    public static float radiusProvider(Planet planet){
-        return planet.radius+planet.radius*radiusOffset;
+
+    public static float radiusProvider(Planet planet) {
+        return planet.radius * radiusOffset;
     }
-    protected static final Seq<Vec3> points = new Seq<>();
-    protected Mesh[] outlines = new Mesh[10];
-    protected ObjectMap<String, Mesh> meshMap = new ObjectMap<>();
+
     @Override
     public void dispose() {
         super.dispose();
         meshMap.values().forEach(Mesh::dispose);
+    }
+
+    @Override
+    public void renderSectors(Planet planet) {
+        //apply transformed position
+        batch.proj().mul(planet.getTransform(mat));
+
+        irenderer.renderSectors(planet);
+        float outlineRad = radiusProvider(planet);
+        //render sector grid
+        Mesh mesh = outline(planet.grid.size, outlineRad);
+        Shader shader = Shaders.planetGrid;
+        Vec3 tile = planet.intersect(cam.getMouseRay(), outlineRad);
+        Shaders.planetGrid.mouse.lerp(tile == null ? Vec3.Zero : tile.sub(planet.position).rotate(Vec3.Y, planet.getRotation()), 0.2f);
+
+        shader.bind();
+        shader.setUniformMatrix4("u_proj", cam.combined.val);
+        shader.setUniformMatrix4("u_trans", planet.getTransform(mat).val);
+        shader.apply();
+        mesh.render(shader, Gl.lines);
     }
 
     @Override
@@ -60,7 +82,6 @@ public class ModPlanetRenderer extends PlanetRenderer {
     }
 
     @Override
-
     public void drawBorders(Sector sector, Color base) {
         float outlineRad = radiusProvider(sector);
         Color color = Tmp.c1.set(base).a(base.a + 0.3f + Mathf.absin(Time.globalTime, 5f, 0.3f));
@@ -141,28 +162,8 @@ public class ModPlanetRenderer extends PlanetRenderer {
         }
     }
 
-    @Override
-    public void renderSectors(Planet planet) {
-        //apply transformed position
-        batch.proj().mul(planet.getTransform(mat));
-
-        irenderer.renderSectors(planet);
-        float outlineRad = radiusProvider(planet);
-        //render sector grid
-        Mesh mesh = outline(planet.grid.size, outlineRad);
-        Shader shader = Shaders.planetGrid;
-        Vec3 tile = planet.intersect(cam.getMouseRay(), outlineRad);
-        Shaders.planetGrid.mouse.lerp(tile == null ? Vec3.Zero : tile.sub(planet.position).rotate(Vec3.Y, planet.getRotation()), 0.2f);
-
-        shader.bind();
-        shader.setUniformMatrix4("u_proj", cam.combined.val);
-        shader.setUniformMatrix4("u_trans", planet.getTransform(mat).val);
-        shader.apply();
-        mesh.render(shader, Gl.lines);
-    }
-
-    public Mesh outline(int size, float radius) {
-        return meshMap.get(size + "_" + radius, () -> {
+    public Mesh outline(int size, float outlineRad) {
+        return meshMap.get(size + "_" + outlineRad, () -> {
             return MeshBuilder.buildHex(new HexMesher() {
                 @Override
                 public float getHeight(Vec3 position) {
@@ -173,7 +174,7 @@ public class ModPlanetRenderer extends PlanetRenderer {
                 public Color getColor(Vec3 position) {
                     return outlineColor;
                 }
-            }, size, true, radius, 0.2f);
+            }, size, true, outlineRad, 0.2f);
         });
     }
 }
