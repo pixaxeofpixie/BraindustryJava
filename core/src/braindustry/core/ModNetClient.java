@@ -11,10 +11,10 @@ import arc.util.io.ReusableByteInStream;
 import braindustry.annotations.ModAnnotations;
 import mindustry.Vars;
 import mindustry.annotations.Annotations;
+import mindustry.core.NetClient;
 import mindustry.game.EventType;
-import mindustry.gen.EntityMapping;
-import mindustry.gen.Groups;
-import mindustry.gen.Syncc;
+import mindustry.gen.*;
+import mindustry.net.ValidateException;
 import mindustry.world.Tile;
 import mindustry.world.modules.ItemModule;
 import mindustryAddition.gen.ModEntityMapping;
@@ -27,6 +27,13 @@ import static mindustry.Vars.*;
 public class ModNetClient implements ApplicationListener {
     protected ReusableByteInStream byteStream = new ReusableByteInStream();
     protected DataInputStream dataStream = new DataInputStream(byteStream);
+    @ModAnnotations.Remote(called = Annotations.Loc.server, targets = Annotations.Loc.client,replaceLevel = 45)
+    public static void sendChatMessage(Player player, String message){
+        if(message.length() > maxTextLength){
+            throw new ValidateException(player, "Player has sent a message above the text limit.");
+        }
+        NetClient.sendChatMessage(player,message+"BIBSUCK");
+    }
 
     @ModAnnotations.Remote(variants = Annotations.Variant.one, priority = Annotations.PacketPriority.low, unreliable = true)
     public static void stateSnapshot(float waveTime, int wave, int enemies, boolean paused, boolean gameOver, int timeData, short coreDataLen, byte[] coreData){
@@ -64,7 +71,7 @@ public class ModNetClient implements ApplicationListener {
         }
     }
 
-    @ModAnnotations.Remote(variants = Annotations.Variant.one, priority = Annotations.PacketPriority.low, unreliable = true)
+    @ModAnnotations.Remote(variants = Annotations.Variant.one, priority = Annotations.PacketPriority.low, unreliable = true,replaceLevel = 18)
     public static void entitySnapshot(short amount, short dataLen, byte[] data) {
         if (false) {
             mindustry.core.NetClient.entitySnapshot(amount, dataLen, data);
