@@ -132,7 +132,7 @@ public class ModNetServer implements ApplicationListener {
 //            stealthUnit.inStealth(inStealth);
         }
     }
-    @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.both)
+    @ModAnnotations.Remote(targets = Annotations.Loc.both,called = Annotations.Loc.both,forward = true)
     public static void checkStealthStatus(Player player,Unit unit,boolean inStealth){
         if (unit instanceof StealthUnitc){
             if (inStealth){
@@ -142,6 +142,7 @@ public class ModNetServer implements ApplicationListener {
             } else if (!Groups.unit.contains(u -> u == unit)) {
                 Groups.unit.add(unit);
             }
+            if (((StealthUnitc) unit).inStealth()!=inStealth)((StealthUnitc) unit).inStealth(inStealth);
 //            stealthUnit.inStealth(inStealth);
         }
     }

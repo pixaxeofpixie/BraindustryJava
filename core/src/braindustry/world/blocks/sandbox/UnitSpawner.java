@@ -611,7 +611,7 @@ public class UnitSpawner extends Block {
             spawnPos = TypeIO.readVec2(read);
             defaultUnitTeam = TypeIO.readTeam(read);
             float amount = read.i();
-            Log.info("unitEntries.size(A): @",unitEntries==null?null:unitEntries.size);
+//            Log.info("unitEntries.size(A): @",unitEntries==null?null:unitEntries.size);
             if (unitEntries != null) {
                 unitEntries.each(UnitEntry::remove);
                 unitEntries.clear();
@@ -623,7 +623,7 @@ public class UnitSpawner extends Block {
                 addEntry(UnitEntry.readEntry(read, revision));
 //                add();
             }
-            Log.info("unitEntries.size(B): @",unitEntries.size);
+//            Log.info("unitEntries.size(B): @",unitEntries.size);
         }
 
         @Override

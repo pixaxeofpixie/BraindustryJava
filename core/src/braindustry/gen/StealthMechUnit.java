@@ -160,7 +160,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     public void setStealth(float time) {
         if (!inStealth && cooldownStealth==0) {
             inStealth = true;
-            ModCall.checkStealthStatus(this,inStealth);
+            ModCall.checkStealthStatus(Vars.player,this,inStealth);
             durationStealth = 0;
         }
     }
@@ -181,7 +181,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     public void removeStealth(float time) {
         if (inStealth) {
             inStealth = false;
-            ModCall.checkStealthStatus(this,inStealth);
+            ModCall.checkStealthStatus(Vars.player,this,inStealth);
             cooldownStealth = Math.min(stealthType.stealthCooldown, time);
         }
     }
@@ -203,7 +203,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     @Override
     public void updateStealthStatus() {
         if (inStealth) {
-            if(timer.get(0,stealthCheckDuration))ModCall.checkStealthStatus(this,true);
+            if(timer.get(0,stealthCheckDuration))ModCall.checkStealthStatus(Vars.player,this,true);
             if (durationStealth >= stealthType.stealthDuration || selectStealth()) {
 //                removeStealth((durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
                 ModCall.setStealthStatus(this,false,(durationStealth / stealthType.stealthDuration) * stealthType.stealthCooldown);
