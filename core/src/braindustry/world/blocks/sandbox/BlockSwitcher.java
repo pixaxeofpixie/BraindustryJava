@@ -178,7 +178,7 @@ public class BlockSwitcher extends Block {
             return posses;
         }
         public String config() {
-            return JsonIO.json().toJson(getPosses());
+            return JsonIO.json.toJson(getPosses());
         }
 
         @Override
@@ -187,7 +187,7 @@ public class BlockSwitcher extends Block {
             write.str(config());
         }
         public void handleString(String value) {
-            Seq<Integer> posses = JsonIO.json().fromJson(Seq.class, value);
+            Seq<Integer> posses = JsonIO.json.fromJson(Seq.class, value);
 
             addTast(()->{
                 links.clear();

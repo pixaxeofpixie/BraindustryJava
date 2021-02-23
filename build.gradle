@@ -18,7 +18,7 @@ buildscript {
 //        gameModFolder = prop["gameModFolder"]
         serverModFolder=null;
         gameModFolder=null;
-        mindustryVersion = 'v123.1'
+        mindustryVersion = 'v125.1'
     }
     repositories {
         mavenLocal()

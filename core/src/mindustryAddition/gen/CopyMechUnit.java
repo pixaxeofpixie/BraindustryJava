@@ -124,6 +124,9 @@ public class CopyMechUnit extends Unit implements Itemsc, Minerc, ElevationMovec
         return true;
     }
 
+    public void clearStatuses() {
+        statuses.clear();
+    }
     @Override
     public String toString() {
         return "MechUnit#" + id;

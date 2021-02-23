@@ -280,13 +280,13 @@ protected void configure(){
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            container = JsonIO.json().fromJson(MeterContainer.class, read.str());
+            container = JsonIO.json.fromJson(MeterContainer.class, read.str());
         }
 
         @Override
         public void write(Writes write) {
             super.write(write);
-            write.str(JsonIO.json().toJson(container));
+            write.str(JsonIO.json.toJson(container));
         }
     }
 }

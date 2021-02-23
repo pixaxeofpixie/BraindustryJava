@@ -89,7 +89,7 @@ public class ModPlanetRenderer extends PlanetRenderer {
         Vec3 lastPos = Tmp.v31.set(cam.position);
 //        cam.position.set(renderer.planets.planet.getWorldPosition(new Vec3()).cpy().scl(2f));
 //        cam.position.set(lastPos.cpy().scl(4f));
-//        cam.lookAt(planet.position);
+//        cam.lookA.grat(planet.position);
 //        cam.lookAt(Vec3.Zero);
         cam.position.   setZero();
         cam.update();

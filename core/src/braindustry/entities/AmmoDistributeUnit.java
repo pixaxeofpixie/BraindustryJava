@@ -99,6 +99,9 @@ public class AmmoDistributeUnit extends Unit implements ModEntityc,  Itemsc, Bui
     private transient float y_TARGET_;
     private transient float y_LAST_;
 
+    public void clearStatuses() {
+        statuses.clear();
+    }
     public AmmoDistributeUnit() {
         this.applied = new Bits(Vars.content.getBy(ContentType.status).size);
         this.speedMultiplier = 1.0F;
