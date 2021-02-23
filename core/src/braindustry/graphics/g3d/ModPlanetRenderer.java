@@ -91,7 +91,7 @@ public class ModPlanetRenderer extends PlanetRenderer {
 //        cam.position.set(lastPos.cpy().scl(4f));
 //        cam.lookAt(planet.position);
 //        cam.lookAt(Vec3.Zero);
-        cam.position.setZero();
+        cam.position.   setZero();
         cam.update();
 
 

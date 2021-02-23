@@ -4,7 +4,7 @@ const F = require("functions");
 const zetsubo = new JavaAdapter(Planet, {}, "zetsubo", Planets.sun, 3, 2.4);
 zetsubo.hasAtmosphere = false;
 zetsubo.meshLoader = () => new SunMesh(zetsubo, 4, 5, 0.3, 1.7, 1.2, 1, 1.5, Color.valueOf("9FFCFFFF"), Color.valueOf("50DDE2FF"), Color.valueOf("4749C9FF"));
-zetsubo.orbitRadius = 55.7;
+zetsubo.orbitRadius = 55.7*3.;
 zetsubo.accessible = false;
 zetsubo.bloom = true;
 
