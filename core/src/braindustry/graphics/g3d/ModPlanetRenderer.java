@@ -1,8 +1,12 @@
 package braindustry.graphics.g3d;
 
+import arc.Core;
+import arc.Events;
 import arc.graphics.Color;
+import arc.graphics.Cubemap;
 import arc.graphics.Gl;
 import arc.graphics.Mesh;
+import arc.graphics.g2d.Draw;
 import arc.graphics.gl.Shader;
 import arc.math.Mathf;
 import arc.math.geom.Vec3;
@@ -10,7 +14,10 @@ import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Time;
 import arc.util.Tmp;
+import braindustry.graphics.ModCubemapMesh;
 import mindustry.Vars;
+import mindustry.game.EventType;
+import mindustry.graphics.CubemapMesh;
 import mindustry.graphics.Shaders;
 import mindustry.graphics.g3d.HexMesher;
 import mindustry.graphics.g3d.MeshBuilder;
@@ -19,10 +26,18 @@ import mindustry.graphics.g3d.PlanetRenderer;
 import mindustry.type.Planet;
 import mindustry.type.Sector;
 
+import static mindustry.Vars.renderer;
+
 public class ModPlanetRenderer extends PlanetRenderer {
     protected static final float radiusOffset = 1.17f;
     protected static final Seq<Vec3> points = new Seq<>();
+    public ModCubemapMesh skybox;
     protected ObjectMap<String, Mesh> meshMap = new ObjectMap<>();
+
+    public ModPlanetRenderer() {
+        super();
+        skybox = new ModCubemapMesh(new Cubemap("cubemaps/stars/"));
+    }
 
     public static float radiusProvider() {
         return radiusProvider(Vars.renderer.planets.planet);
@@ -40,6 +55,70 @@ public class ModPlanetRenderer extends PlanetRenderer {
     public void dispose() {
         super.dispose();
         meshMap.values().forEach(Mesh::dispose);
+    }
+
+    @Override
+    public void render(PlanetInterfaceRenderer irenderer) {
+        this.irenderer = irenderer;
+//        Log.info("PlanetRenderer: render");
+        Draw.flush();
+        Gl.clear(Gl.depthBufferBit);
+        Gl.enable(Gl.depthTest);
+        Gl.depthMask(true);
+
+        Gl.enable(Gl.cullFace);
+        Gl.cullFace(Gl.back);
+
+        //lock to up vector so it doesn't get confusing
+        cam.up.set(Vec3.Y);
+
+        cam.resize(Core.graphics.getWidth(), Core.graphics.getHeight());
+        camPos.setLength(planet.radius * camLength + (zoom - 1f) * planet.radius * 2);
+        cam.position.set(planet.position).add(camPos);
+        cam.lookAt(planet.position);
+        cam.update();
+
+        projector.proj(cam.combined);
+        batch.proj(cam.combined);
+
+        Events.fire(EventType.Trigger.universeDrawBegin);
+
+        beginBloom();
+
+        //render skybox at 0,0,0
+        Vec3 lastPos = Tmp.v31.set(cam.position);
+//        cam.position.set(renderer.planets.planet.getWorldPosition(new Vec3()).cpy().scl(2f));
+//        cam.position.set(lastPos.cpy().scl(4f));
+//        cam.lookAt(planet.position);
+//        cam.lookAt(Vec3.Zero);
+        cam.position.setZero();
+        cam.update();
+
+
+        skybox.render(cam.combined,100f);
+
+        cam.position.set(lastPos);
+//        cam.lookAt(planet.position);
+        cam.update();
+
+        Events.fire(EventType.Trigger.universeDraw);
+
+        renderPlanet(solarSystem);
+
+        renderTransparent(solarSystem);
+
+        endBloom();
+
+        Events.fire(EventType.Trigger.universeDrawEnd);
+
+        Gl.enable(Gl.blend);
+
+        irenderer.renderProjections(planet);
+
+        Gl.disable(Gl.cullFace);
+        Gl.disable(Gl.depthTest);
+
+        cam.update();
     }
 
     @Override

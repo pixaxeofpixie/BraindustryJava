@@ -3,7 +3,10 @@ package braindustry.ui.dialogs;
 import arc.Core;
 import arc.math.Mathf;
 import arc.math.geom.Vec3;
+import arc.scene.Action;
+import arc.scene.Element;
 import arc.scene.event.Touchable;
+import arc.struct.Seq;
 import arc.util.Align;
 import arc.util.Time;
 import arc.util.Tmp;
@@ -18,10 +21,84 @@ import static mindustry.Vars.mobile;
 import static mindustry.Vars.ui;
 
 public class ModPlanetDialog extends PlanetDialog {
+    private Runnable update;
+
+    boolean keepWithinStage=true;
+    void keepWithinStage() {
+        if (this.keepWithinStage) {
+            this.keepInStage();
+        }
+    }
 
     @Override
+    public void setKeepWithinStage(boolean keepWithinStage) {
+        super.setKeepWithinStage(keepWithinStage);
+        this.keepWithinStage=keepWithinStage;
+    }
+
+    public void superAct(float delta){
+       element: {
+            Seq<Action> actions = getActions();
+            if (actions.size > 0) {
+                if (getScene() != null && getScene().getActionsRequestRendering()) {
+                    Core.graphics.requestRendering();
+                }
+
+                for(int i = 0; i < actions.size; ++i) {
+                    Action action = (Action)actions.get(i);
+                    if (action.act(delta) && i < actions.size) {
+                        Action current = (Action)actions.get(i);
+                        int actionIndex = current == action ? i : actions.indexOf(action, true);
+                        if (actionIndex != -1) {
+                            actions.remove(actionIndex);
+                            action.setActor((Element)null);
+                            --i;
+                        }
+                    }
+                }
+            }
+
+            if (this.touchablility != null) {
+                this.touchable = (Touchable)this.touchablility.get();
+            }
+
+            if (update != null) {
+                update.run();
+            }
+
+        }
+        group:{
+            Element[] actors = this.children.begin();
+            int i = 0;
+
+            for(int n = this.children.size; i < n; ++i) {
+                if (actors[i].visible) {
+                    actors[i].act(delta);
+                }
+
+                actors[i].updateVisibility();
+            }
+
+            this.children.end();
+        }
+        dialog:{
+            if (this.getScene() != null) {
+                this.keepWithinStage();
+                if (this.isCentered() && !this.isMovable() && this.getActions().size == 0) {
+                    this.centerWindow();
+                }
+            }
+
+        }
+    }
+    @Override
+    public Element update(Runnable r) {
+        update = r;
+        return this;
+    }
+    @Override
     public void act(float delta){
-//        super.act(delta);
+        superAct(delta);
         float outlineRad;
         if(hovered != null && !mobile){
             addChild(hoverLabel);

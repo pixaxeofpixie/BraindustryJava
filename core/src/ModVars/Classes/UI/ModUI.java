@@ -73,6 +73,8 @@ public class ModUI {
 //        Vars.ui.menufrag.
         Vars.ui.menufrag.build(Vars.ui.menuGroup);
         AdvancedContentInfoDialog.init();
+        Vars.ui.planet.remove();
+        Vars.renderer.planets.dispose();
         Vars.renderer.planets=new ModPlanetRenderer();
         Vars.ui.planet=new ModPlanetDialog();
         new ModCheatMenu((table) -> {

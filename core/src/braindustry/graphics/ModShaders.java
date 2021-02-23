@@ -71,6 +71,11 @@ public class ModShaders {
         float displayScale = Vars.renderer.getDisplayScale();
         return new Vec2().set(position).sub(cameraOffset).scl(vec2(displayScale));
     }
+    public static class ModCupemapShader extends ModLoadShader{
+        public ModCupemapShader(){
+            super("modCubemap","modCubemap");
+        }
+    }
     public static class WaveShader extends ModLoadShader{
         public WaveShader() {
             super("wave", "default");
