@@ -6,6 +6,7 @@ import arc.func.Prov;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
+import arc.graphics.g2d.TextureRegion;
 import arc.math.Angles;
 import arc.math.Mathf;
 import arc.math.geom.Point2;
@@ -142,6 +143,11 @@ public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
         }
 
         Draw.reset();
+    }
+
+    @Override
+    public TextureRegion[] getGeneratedIcons() {
+        return super.getGeneratedIcons();
     }
 
     @Override

@@ -44,8 +44,8 @@ void main(){
     coords.x+=sin(coords.y*10.+u_time)*0.25*muls.x;
 
     color = texture2D(u_texture, u_uv+coords*size);
-    if (coords.x>1 || coords.y>1 || coords.x<0 || coords.y<0){
-        color.a=0;
+    if (coords.x>1. || coords.y>1. || coords.x<0. || coords.y<0.){
+        color.a=0.;
     }
     //    color = texture2D(u_texture, v_texCoords);
     //    gray=vec3(v_texCoords.x*v_texCoords.y);
