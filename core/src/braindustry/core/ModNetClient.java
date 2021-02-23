@@ -72,6 +72,11 @@ public class ModNetClient implements ApplicationListener {
     }
 
     @ModAnnotations.Remote(variants = Annotations.Variant.one, priority = Annotations.PacketPriority.low, unreliable = true,replaceLevel = 18)
+    public static void entityZEROSnapshot(short amount, short dataLen, byte[] data) {
+        Log.info("entityZEROSnapshot");
+    }
+
+    @ModAnnotations.Remote(variants = Annotations.Variant.one, priority = Annotations.PacketPriority.low, unreliable = true)
     public static void entitySnapshot(short amount, short dataLen, byte[] data) {
         if (false) {
             mindustry.core.NetClient.entitySnapshot(amount, dataLen, data);
