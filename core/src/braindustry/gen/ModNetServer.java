@@ -4,6 +4,7 @@ import ModVars.ModEnums;
 import ModVars.modVars;
 import arc.ApplicationListener;
 import arc.Events;
+import arc.func.Cons;
 import arc.math.geom.Rect;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
@@ -53,21 +54,40 @@ public class ModNetServer implements ApplicationListener {
         if (!cheating(player))return;
         player.team(team);
     }
+    private static void stealthAction(Cons<Unit> cons,boolean inStealth){
+        Groups.all.each(entityc -> {
+            if (entityc instanceof StealthUnitc && (!inStealth || ((StealthUnitc) entityc).inStealth())){
+                cons.get((Unit)entityc);
+            }
+        });
+    }
     @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
     public static void damageAllUnits(Player player){
         Groups.unit.each(unit -> unit.damage(unit.health - 1));
+        stealthAction((unit)->{
+            unit.damage(unit.health - 1);
+        },true);
     }
     @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
     public static void killAllUnits(Player player){
         Groups.unit.each(unit -> unit.kill());
+        stealthAction((unit)->{
+            unit.kill();
+        },true);
     }
     @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
     public static void healAllUnits(Player player){
         Groups.unit.each(unit -> unit.heal());
+        stealthAction((unit)->{
+            unit.heal();
+        },true);
     }
     @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
     public static void tpAllUnits(Player player,Vec2 pos){
         Groups.unit.each(unit -> unit.set(pos));
+        stealthAction((unit)->{
+            unit.set(pos);
+        },true);
     }
     @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
     public static void setUnit(Player player,Unit unit){

@@ -16,6 +16,7 @@ import arc.scene.ui.TextField;
 import arc.scene.ui.layout.Table;
 import arc.struct.Bits;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Strings;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
@@ -610,6 +611,7 @@ public class UnitSpawner extends Block {
             spawnPos = TypeIO.readVec2(read);
             defaultUnitTeam = TypeIO.readTeam(read);
             float amount = read.i();
+            Log.info("unitEntries.size(A): @",unitEntries==null?null:unitEntries.size);
             if (unitEntries != null) {
                 unitEntries.each(UnitEntry::remove);
                 unitEntries.clear();
@@ -618,8 +620,10 @@ public class UnitSpawner extends Block {
             for (int i = 0; i < amount; i++) {
 //                UnitEntry entry = new UnitEntry();
 //                entry.read(read, revision);
-                add(UnitEntry.readEntry(read, revision));
+                addEntry(UnitEntry.readEntry(read, revision));
+//                add();
             }
+            Log.info("unitEntries.size(B): @",unitEntries.size);
         }
 
         @Override
