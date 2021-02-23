@@ -449,7 +449,7 @@ public class UnitSpawner extends Block {
 
         public boolean collision(Bullet other) {
             this.damage(other.damage() * other.type().buildingDamageMultiplier);
-            return false;
+            return true;
         }
 
         @Override

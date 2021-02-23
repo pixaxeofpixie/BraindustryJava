@@ -208,7 +208,7 @@ public class ModNetServer implements ApplicationListener {
         byte[] stateBytes = syncStream.toByteArray();
 
         //write basic state data.
-        Call.stateSnapshot(player.con, state.wavetime, state.wave, state.enemies, state.serverPaused, state.gameOver, universe.seconds(), (short)stateBytes.length, net.compressSnapshot(stateBytes));
+        ModCall.stateSnapshot(player.con, state.wavetime, state.wave, state.enemies, state.serverPaused, state.gameOver, universe.seconds(), (short)stateBytes.length, net.compressSnapshot(stateBytes));
 
         viewport.setSize(player.con.viewWidth, player.con.viewHeight).setCenter(player.con.viewX, player.con.viewY);
 
@@ -230,7 +230,7 @@ public class ModNetServer implements ApplicationListener {
             if(syncStream.size() > maxSnapshotSize){
                 dataStream.close();
                 byte[] syncBytes = syncStream.toByteArray();
-                Call.entitySnapshot(player.con, (short)sent, (short)syncBytes.length, net.compressSnapshot(syncBytes));
+                ModCall.entitySnapshot(player.con, (short)sent, (short)syncBytes.length, net.compressSnapshot(syncBytes));
                 sent = 0;
                 syncStream.reset();
             }
@@ -240,7 +240,7 @@ public class ModNetServer implements ApplicationListener {
             dataStream.close();
 
             byte[] syncBytes = syncStream.toByteArray();
-            Call.entitySnapshot(player.con, (short)sent, (short)syncBytes.length, net.compressSnapshot(syncBytes));
+            ModCall.entitySnapshot(player.con, (short)sent, (short)syncBytes.length, net.compressSnapshot(syncBytes));
         }
 
     }
