@@ -22,6 +22,7 @@ import arc.util.io.Writes;
 import braindustry.content.ModFx;
 import braindustry.gen.Drawer;
 import braindustry.gen.ModBuilding;
+import braindustry.gen.ModCall;
 import braindustry.graphics.ModShaders;
 import braindustry.gen.UnitEntry;
 import mindustry.Vars;
@@ -168,19 +169,19 @@ public class UnitSpawner extends Block {
 
             cont.table(t -> {
                 t.button("@button.kill-all-units", () -> {
-                    Groups.unit.each(unit -> unit.kill());
+                    ModCall.killAllUnits();
                 }).growX().height(54).pad(4);
 
                 t.button("@button.heal-all-units", () -> {
-                    Groups.unit.each(unit -> unit.heal());
+                    ModCall.healAllUnits();
                 }).growX().height(54).pad(4).row();
 
                 t.button("@button.tp-all-units", () -> {
-                    Groups.unit.each(unit -> unit.set(spawnPos));
+                    ModCall.tpAllUnits(spawnPos);
                 }).growX().height(54).pad(4);
 
                 t.button("@button.damage-all-units", () -> {
-                    Groups.unit.each(unit -> unit.damage(unit.health - 1));
+                    ModCall.damageAllUnits();
                 }).growX().height(54).pad(4).row();
             }).width(300 * 2f).row();
 

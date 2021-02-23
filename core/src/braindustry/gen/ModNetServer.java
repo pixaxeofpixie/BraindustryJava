@@ -54,6 +54,22 @@ public class ModNetServer implements ApplicationListener {
         player.team(team);
     }
     @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
+    public static void damageAllUnits(Player player){
+        Groups.unit.each(unit -> unit.damage(unit.health - 1));
+    }
+    @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
+    public static void killAllUnits(Player player){
+        Groups.unit.each(unit -> unit.kill());
+    }
+    @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
+    public static void healAllUnits(Player player){
+        Groups.unit.each(unit -> unit.heal());
+    }
+    @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
+    public static void tpAllUnits(Player player,Vec2 pos){
+        Groups.unit.each(unit -> unit.set(pos));
+    }
+    @ModAnnotations.Remote(targets = Annotations.Loc.client,called = Annotations.Loc.server)
     public static void setUnit(Player player,Unit unit){
         if (!cheating(player))return;
         player.unit(unit);

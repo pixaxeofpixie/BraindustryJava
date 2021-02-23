@@ -31,6 +31,10 @@ import mindustry.world.blocks.ControlBlock;
 
 @ModAnnotations.TypeIOHandler
 public class ModTypeIO extends TypeIO {
+
+    public static Vec2 readVec2(Reads read){
+        return new Vec2(read.f(), read.f());
+    }
     public static void writeTeam(Writes write, Team team) {
         if (team == null) {
             write.b(-1);
