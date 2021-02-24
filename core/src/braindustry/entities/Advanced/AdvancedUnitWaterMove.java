@@ -1,8 +1,8 @@
 package braindustry.entities.Advanced;
 
 import ModVars.modVars;
+import braindustry.versions.ModEntityc;
 import mindustry.gen.UnitWaterMove;
-import mindustryAddition.versions.ModEntityc;
 
 public class AdvancedUnitWaterMove extends UnitWaterMove implements ModEntityc {
     public static int classId = 44;

@@ -4,11 +4,9 @@ import ModVars.Classes.UI.Cheat.ModCheatMenu;
 import ModVars.Classes.UI.settings.AdvancedSettingsMenuDialog;
 import ModVars.Classes.UI.settings.ModOtherSettingsDialog;
 import ModVars.Classes.UI.settings.ModSettingsDialog;
-import ModVars.modVars;
 import arc.Core;
 import arc.scene.event.Touchable;
 import arc.scene.ui.layout.WidgetGroup;
-import braindustry.MainModClass;
 import braindustry.ModListener;
 import braindustry.gen.StealthUnitc;
 import braindustry.graphics.g3d.ModPlanetRenderer;
@@ -18,14 +16,11 @@ import braindustry.ui.dialogs.ModPlanetDialog;
 import braindustry.ui.fragments.ModHudFragment;
 import braindustry.ui.fragments.ModMenuFragment;
 import mindustry.Vars;
-import mindustry.graphics.g3d.PlanetRenderer;
 import mindustry.ui.dialogs.BaseDialog;
-import mindustry.ui.dialogs.PlanetDialog;
-import mindustryAddition.iu.AdvancedContentInfoDialog;
+import braindustry.ui.AdvancedContentInfoDialog;
 
 import static ModVars.Classes.UI.CheatUI.*;
 import static ModVars.modVars.*;
-import static braindustry.MainModClass.*;
 import static braindustry.input.ModBinding.*;
 
 public class ModUI {

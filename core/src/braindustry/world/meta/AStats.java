@@ -1,4 +1,4 @@
-package mindustryAddition.world.meta;
+package braindustry.world.meta;
 
 import arc.struct.ObjectMap;
 import arc.struct.OrderedMap;

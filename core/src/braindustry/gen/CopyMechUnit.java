@@ -1,4 +1,4 @@
-package mindustryAddition.gen;
+package braindustry.gen;
 
 
 import arc.Core;

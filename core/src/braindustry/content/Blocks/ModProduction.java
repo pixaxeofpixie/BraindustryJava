@@ -16,7 +16,7 @@ import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.GenericSmelter;
-import mindustryAddition.type.ModLiquidStack;
+import braindustry.type.ModLiquidStack;
 
 import static braindustry.content.ModBlocks.*;
 

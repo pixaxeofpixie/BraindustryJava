@@ -1,4 +1,4 @@
-package mindustryAddition.gen;
+package braindustry.gen;
 
 import Gas.gen.Cloud;
 import ModVars.modFunc;
@@ -10,8 +10,7 @@ import braindustry.entities.Advanced.AdvancedPayloadUnit;
 import braindustry.entities.Advanced.AdvancedUnitWaterMove;
 import braindustry.entities.AmmoDistributeUnit;
 import braindustry.entities.PowerGeneratorUnit;
-import braindustry.gen.StealthMechUnit;
-import mindustryAddition.versions.ModEntityc;
+import braindustry.versions.ModEntityc;
 
 import java.lang.reflect.Constructor;
 

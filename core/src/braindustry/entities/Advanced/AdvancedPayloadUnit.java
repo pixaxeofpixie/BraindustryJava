@@ -1,8 +1,8 @@
 package braindustry.entities.Advanced;
 
 import ModVars.modVars;
+import braindustry.versions.ModEntityc;
 import mindustry.gen.PayloadUnit;
-import mindustryAddition.versions.ModEntityc;
 
 public class AdvancedPayloadUnit extends PayloadUnit implements ModEntityc {
     public static int classId = 43;

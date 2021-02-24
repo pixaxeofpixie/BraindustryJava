@@ -17,7 +17,7 @@ import mindustry.gen.*;
 import mindustry.net.ValidateException;
 import mindustry.world.Tile;
 import mindustry.world.modules.ItemModule;
-import mindustryAddition.gen.ModEntityMapping;
+import braindustry.gen.ModEntityMapping;
 
 import java.io.DataInputStream;
 import java.io.IOException;

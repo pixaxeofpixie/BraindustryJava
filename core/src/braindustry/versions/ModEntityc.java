@@ -1,8 +1,8 @@
-package mindustryAddition.versions;
+package braindustry.versions;
 
 import braindustry.annotations.ModAnnotations;
 import mindustry.gen.Entityc;
-import mindustryAddition.gen.ModEntityMapping;
+import braindustry.gen.ModEntityMapping;
 
 @ModAnnotations.EntityInterface
 public interface ModEntityc extends Entityc {

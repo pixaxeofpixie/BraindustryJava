@@ -25,12 +25,12 @@ import arc.util.io.Writes;
 import braindustry.entities.ModUnits;
 import braindustry.input.ModBinding;
 import braindustry.type.StealthUnitType;
+import braindustry.versions.ModEntityc;
 import mindustry.Vars;
 import mindustry.ai.formations.DistanceAssignmentStrategy;
 import mindustry.ai.formations.Formation;
 import mindustry.ai.formations.FormationPattern;
 import mindustry.entities.EntityCollisions;
-import mindustry.entities.Units;
 import mindustry.entities.units.BuildPlan;
 import mindustry.entities.units.StatusEntry;
 import mindustry.gen.Call;
@@ -43,9 +43,6 @@ import mindustry.type.UnitType;
 import mindustry.world.Tile;
 import mindustry.world.blocks.ConstructBlock;
 import mindustry.world.blocks.storage.CoreBlock;
-import mindustryAddition.gen.CopyMechUnit;
-import mindustryAddition.gen.ModEntityMapping;
-import mindustryAddition.versions.ModEntityc;
 
 import java.util.Arrays;
 

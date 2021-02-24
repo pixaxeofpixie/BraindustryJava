@@ -1,4 +1,4 @@
-package mindustryAddition.world.blocks.distribution;
+package braindustry.world.blocks.distribution;
 
 import mindustry.world.blocks.distribution.ItemBridge;
 

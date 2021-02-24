@@ -13,7 +13,6 @@ import arc.util.io.ReusableByteOutStream;
 import arc.util.io.Writes;
 import braindustry.annotations.ModAnnotations;
 import mindustry.annotations.Annotations;
-import mindustry.entities.units.UnitController;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.game.Teams;
@@ -21,14 +20,11 @@ import mindustry.gen.*;
 import mindustry.net.NetConnection;
 import mindustry.type.UnitType;
 import mindustry.world.blocks.storage.CoreBlock;
-import mindustryAddition.gen.ModEntityMapping;
 import mindustryAddition.versions.ModEntityc;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.nio.FloatBuffer;
 
-import static ModVars.modFunc.*;
 import static mindustry.Vars.*;
 
 public class ModNetServer implements ApplicationListener {

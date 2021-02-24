@@ -3,7 +3,6 @@ package braindustry.type;
 import arc.struct.Seq;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
-import mindustryAddition.type.ModLiquidStack;
 
 public class Recipe {
     public static Recipe empty = with(null, -1);

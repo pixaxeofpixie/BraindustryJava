@@ -1,10 +1,7 @@
-package mindustryAddition.world.meta.values;
+package braindustry.world.meta.values;
 
 import arc.scene.ui.layout.Table;
-import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
-import mindustry.ui.ItemDisplay;
-import mindustry.ui.LiquidDisplay;
 import mindustry.world.meta.StatValue;
 
 public class LiquidListValue implements StatValue {

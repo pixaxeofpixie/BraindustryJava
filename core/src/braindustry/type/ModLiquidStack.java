@@ -1,4 +1,4 @@
-package mindustryAddition.type;
+package braindustry.type;
 
 import mindustry.type.Item;
 import mindustry.type.ItemStack;

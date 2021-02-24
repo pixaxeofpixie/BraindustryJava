@@ -39,9 +39,8 @@ import mindustry.world.meta.values.ItemListValue;
 import mindustryAddition.iu.MultiBar;
 import mindustryAddition.world.blocks.BlockAdvancedStats;
 import mindustryAddition.world.consumers.ConsumeLiquidDynamic;
-import mindustryAddition.world.meta.AStat;
-import mindustryAddition.world.meta.AStats;
-import mindustryAddition.world.meta.DynamicBlockBars;
+import braindustry.world.meta.AStat;
+import braindustry.world.meta.AStats;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;

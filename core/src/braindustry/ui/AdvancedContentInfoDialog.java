@@ -1,26 +1,21 @@
-package mindustryAddition.iu;
+package braindustry.ui;
 
 import arc.scene.ui.ScrollPane;
 import arc.scene.ui.layout.Table;
 import arc.struct.ObjectMap;
 import arc.struct.OrderedMap;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Scaling;
 import mindustry.Vars;
 import mindustry.ctype.UnlockableContent;
 import mindustry.graphics.Pal;
 import mindustry.ui.Cicon;
 import mindustry.ui.dialogs.ContentInfoDialog;
-import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatCat;
 import mindustry.world.meta.StatValue;
-import mindustry.world.meta.Stats;
 import mindustryAddition.world.blocks.BlockAdvancedStats;
-import mindustryAddition.world.meta.AStat;
-import mindustryAddition.world.meta.AStats;
-
-import java.util.Iterator;
+import braindustry.world.meta.AStat;
+import braindustry.world.meta.AStats;
 
 public class AdvancedContentInfoDialog extends ContentInfoDialog {
     public static void init(){

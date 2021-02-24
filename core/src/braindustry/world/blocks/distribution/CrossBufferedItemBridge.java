@@ -1,4 +1,4 @@
-package mindustryAddition.world.blocks.distribution;
+package braindustry.world.blocks.distribution;
 
 import arc.Core;
 import arc.graphics.Color;

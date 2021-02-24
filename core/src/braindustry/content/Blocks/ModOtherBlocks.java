@@ -1,11 +1,8 @@
 package braindustry.content.Blocks;
 
-import arc.Core;
 import arc.graphics.g2d.TextureRegion;
-import arc.util.Log;
 import braindustry.content.ModItems;
 import braindustry.content.ModLiquids;
-import braindustry.world.blocks.power.BlackHoleReactor;
 import braindustry.world.blocks.production.MultiRotorDrill;
 import arc.math.geom.Vec2;
 import mindustry.content.*;
@@ -21,14 +18,12 @@ import mindustry.world.blocks.environment.Floor;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.environment.ShallowLiquid;
-import mindustry.world.blocks.legacy.*;
 import mindustry.world.blocks.environment.*;
 import mindustry.world.blocks.environment.StaticTree;
 import mindustry.world.blocks.liquid.Conduit;
-import mindustry.world.blocks.power.*;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.storage.StorageBlock;
-import mindustryAddition.world.blocks.distribution.CrossItemBridge;
+import braindustry.world.blocks.distribution.CrossItemBridge;
 
 import static braindustry.content.ModBlocks.*;
 public class ModOtherBlocks implements ContentList {

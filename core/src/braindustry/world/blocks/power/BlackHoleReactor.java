@@ -1,11 +1,8 @@
 package braindustry.world.blocks.power;
 
-import arc.graphics.Blending;
 import arc.graphics.g2d.Draw;
-import arc.math.Mathf;
-import arc.util.Time;
 import mindustry.world.blocks.power.ImpactReactor;
-import mindustryAddition.graphics.BlackHoleDrawer;
+import braindustry.graphics.BlackHoleDrawer;
 
 public class BlackHoleReactor extends ImpactReactor {
     public float blackHoleHitSize = 16f;

@@ -1,4 +1,4 @@
-package mindustryAddition.world.blocks.distribution;
+package braindustry.world.blocks.distribution;
 
 import arc.Core;
 import arc.func.Boolf;
@@ -33,8 +33,8 @@ import mindustryAddition.graphics.ModLines;
 import mindustryAddition.world.blocks.BlockAdvancedStats;
 import mindustryAddition.world.blocks.BuildingLabel;
 import mindustryAddition.world.blocks.BuildingTaskQueue;
-import mindustryAddition.world.meta.AStat;
-import mindustryAddition.world.meta.AStats;
+import braindustry.world.meta.AStat;
+import braindustry.world.meta.AStats;
 
 public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
     public Prov<Seq<Block>> connectBlocksGetter = () -> new Seq<>();

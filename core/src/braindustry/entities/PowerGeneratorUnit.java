@@ -6,6 +6,7 @@ import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import braindustry.versions.ModEntityc;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import mindustry.Vars;
@@ -13,7 +14,6 @@ import mindustry.gen.Building;
 import mindustry.gen.UnitWaterMove;
 import mindustry.world.Block;
 import mindustry.world.Tile;
-import mindustryAddition.versions.ModEntityc;
 
 public class PowerGeneratorUnit extends UnitWaterMove implements ModEntityc {
     public static int classId = 41;

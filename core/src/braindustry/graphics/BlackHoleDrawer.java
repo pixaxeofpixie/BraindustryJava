@@ -1,4 +1,4 @@
-package mindustryAddition.graphics;
+package braindustry.graphics;
 
 import arc.Core;
 import arc.func.Func;
