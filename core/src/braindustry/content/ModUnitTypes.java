@@ -519,7 +519,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.8f;
                                         this.length = 90;
-                                        this.damage = 90;
+                                        this.damage = 60;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("D6FF33");
                                         this.color = Color.valueOf("FFE70F");
@@ -842,7 +842,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.flame;
                                 this.bullet = new ShrapnelBulletType() {
                                     {
-                                        this.length = 60;
+                                        this.length = 90;
                                         this.damage = 50;
                                         this.width = 28;
                                         this.lifetime = 10;
@@ -915,7 +915,7 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 5;
                                 this.y = -1f;
                                 this.shootY = -1f;
-                                this.reload = 60;
+                                this.reload = 30;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
                                 this.shots = 1;
@@ -926,7 +926,7 @@ public class ModUnitTypes implements ContentList {
                                         this.width = 10;
                                         this.height = 20;
                                         this.shrinkY = 0.1f;
-                                        this.drag = 0.1f;
+                                        this.drag = -0.1f;
                                         this.splashDamageRadius = 20;
                                         this.splashDamage = 45;
                                         this.lifetime = 45;
@@ -966,7 +966,7 @@ public class ModUnitTypes implements ContentList {
                             {
                                 this.reload = 60;
                                 this.x = 0;
-                                this.y = -4f;
+                                this.y = -6f;
                                 this.shadow = 7;
                                 this.rotateSpeed = 0.7f;
                                 this.rotate = true;
@@ -997,7 +997,7 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("lyra-weapon") {
                             {
-                                this.x = 6;
+                                this.x = 7;
                                 this.y = 4;
                                 this.shootY = -1f;
                                 this.reload = 30;
@@ -1008,7 +1008,7 @@ public class ModUnitTypes implements ContentList {
                                 this.alternate = true;
                                 this.bullet = new ShrapnelBulletType() {
                                     {
-                                        this.length = 60;
+                                        this.length = 80;
                                         this.damage = 142;
                                         this.width = 32;
                                         this.lifetime = 35;
@@ -1163,8 +1163,8 @@ public class ModUnitTypes implements ContentList {
                                         this.shrinkY = 0.1f;
                                         this.speed = 2.5f;
                                         this.drag = 0f;
-                                        this.splashDamageRadius = 50;
-                                        this.splashDamage = 70;
+                                        this.splashDamageRadius = 20;
+                                        this.splashDamage = 110;
                                         this.homingPower = 0.5f;
                                         this.lightningDamage = 10;
                                         this.lightning = 4;
@@ -1182,7 +1182,7 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 14;
                                 this.y = -4f;
                                 this.shadow = 12;
-                                this.rotateSpeed = 0.6f;
+                                this.rotateSpeed = 1.3f;
                                 this.rotate = true;
                                 this.shots = 4;
                                 this.shotDelay = 5;
@@ -1196,8 +1196,8 @@ public class ModUnitTypes implements ContentList {
                                         this.shrinkY = 0.1f;
                                         this.speed = 3.0f;
                                         this.drag = 0.01f;
-                                        this.splashDamageRadius = 30f;
-                                        this.splashDamage = 79f;
+                                        this.splashDamageRadius = 10f;
+                                        this.splashDamage = 60f;
                                         this.homingPower = 0.2f;
                                         this.lightningDamage = 6f;
                                         this.lightning = 8;
@@ -1214,13 +1214,13 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 0f;
                                 this.y = -30f;
                                 this.shootY = -3f;
-                                this.reload = 105f;
+                                this.reload = 125f;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 5f;
                                 this.rotate = true;
                                 this.shadow = 50;
                                 this.mirror = false;
-                                this.rotateSpeed = 0.6f;
+                                this.rotateSpeed = 0.5f;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 /*this.bullet = new PointBulletType() {
@@ -1580,7 +1580,7 @@ public class ModUnitTypes implements ContentList {
                 this.groundLayer = 60.0F;
                 this.localizedName = "Griffon";
                 this.description = "Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
-                this.health = 26000;
+                this.health = 46000;
                 this.speed = 0.4f;
                 this.mechSideSway = 0.25f;
                 this.hitSize = 108;
@@ -1630,7 +1630,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.hitSize = 14;
                                         this.drawSize = 480;
-                                        this.width = 34;
+                                        this.width = 24;
                                         this.length = 320;
                                         this.lifetime = 210;
                                         this.hitEffect = Fx.hitMeltHeal;
@@ -1651,7 +1651,7 @@ public class ModUnitTypes implements ContentList {
                                         this.knockback = 1;
                                         this.healPercent = 48f;
                                         this.collidesTeam = true;
-                                        this.lightning = 20;
+                                        this.lightning = 5;
                                         this.lightningLength = 20;
                                         this.lightningLengthRand = 20;
                                         this.lightningDamage = 62;
@@ -1770,8 +1770,8 @@ public class ModUnitTypes implements ContentList {
                             cooldownTime = 210f;
 
                             bullet = new ContinuousLaserBulletType(){{
-                                damage = 376f;
-                                length = 270f;
+                                damage = 176f;
+                                length = 4200f;
                                 hitEffect = Fx.hitMeltHeal;
                                 drawSize = 450f;
                                 lifetime = 160f;
@@ -1799,10 +1799,10 @@ public class ModUnitTypes implements ContentList {
                             top = false;
                             y = -3f;
                             x = 32f;
-                            reload = 30f;
+                            reload = 25f;
                             recoil = 7f;
                             shots = 2;
-                            inaccuracy = 16.0f;
+                            inaccuracy = 11.0f;
                             shake = 3f;
                             rotate = true;
                             rotateSpeed = 1.3f;
@@ -1818,7 +1818,7 @@ public class ModUnitTypes implements ContentList {
                                 collides = true;
                                 collidesTiles = true;
                                 splashDamageRadius = 28f;
-                                splashDamage = 220f;
+                                splashDamage = 160f;
                                 backColor = ModPal.unitOrange;
                                 frontColor = ModPal.unitOrangeLight;
                                 }
