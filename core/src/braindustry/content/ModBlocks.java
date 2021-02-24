@@ -1,8 +1,10 @@
 package braindustry.content;
 
 import Gas.world.blocks.distribution.GasRouter;
+import arc.Core;
 import arc.graphics.Color;
 import arc.math.Mathf;
+import arc.struct.Seq;
 import arc.util.Time;
 import braindustry.content.Blocks.*;
 import braindustry.world.blocks.TestBlock;
@@ -12,6 +14,7 @@ import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
 import braindustry.world.blocks.sandbox.UnitSpawner;
+import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.ctype.ContentList;
 import mindustry.graphics.Pal;
@@ -21,7 +24,11 @@ import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.ControlBlock;
 import mindustry.world.blocks.defense.turrets.Turret;
+import mindustry.world.blocks.distribution.BufferedItemBridge;
+import mindustry.world.blocks.distribution.ItemBridge;
+import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.meta.BuildVisibility;
+
 
 public class ModBlocks implements ContentList {
     public static Block
@@ -31,7 +38,7 @@ public class ModBlocks implements ContentList {
 
     //environment
     magmaFloor, obsidianBlock, obsidianFloor, oreChromium, oreOdinum,
-            crimzesWall, crimzesFloor, jungleWall, jungleFloor, graysand, dirtRocksWall, liquidMethaneFloor, blackIce, blackIceWall,blackSnow,blackSnowWall,blackTree,darkPine,darkShrubs,greenTree,metallicPine,swampWater,swampSandWater,
+            crimzesWall, crimzesFloor, jungleWall, jungleFloor, graysand, dirtRocksWall, liquidMethaneFloor, blackIce, blackIceWall,blackSnow,blackSnowWall,blackTree,darkPine,darkShrubs,greenTree,metallicPine,swampWater,swampSandWater, purpleGranite,
 
     //power
     differentialMagmaGenerator, grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, blackHoleReactor, phaseAlloySolarPanel,

@@ -25,7 +25,7 @@ public class BasicBlocks {
         gasConduit = new GasConduit("gas-conduit") {
             {
                 this.description = "Basic gas conduit from Chromium.";
-                this.localizedName = "Chromium Gas Conduit";
+                this.localizedName = "Gas Conduit";
                 this.size = 1;
                 this.requirements(Category.liquid, ItemStack.with(ModItems.chromium, 4, Items.silicon, 6));
             }

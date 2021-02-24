@@ -1629,9 +1629,9 @@ public class ModUnitTypes implements ContentList {
                                     }
                                     {
                                         this.hitSize = 14;
-                                        this.drawSize = 520;
+                                        this.drawSize = 480;
                                         this.width = 34;
-                                        this.length = 370;
+                                        this.length = 320;
                                         this.lifetime = 210;
                                         this.hitEffect = Fx.hitMeltHeal;
                                         this.largeHit = true;
@@ -1770,10 +1770,10 @@ public class ModUnitTypes implements ContentList {
                             cooldownTime = 210f;
 
                             bullet = new ContinuousLaserBulletType(){{
-                                damage = 267f;
-                                length = 220f;
+                                damage = 376f;
+                                length = 270f;
                                 hitEffect = Fx.hitMeltHeal;
-                                drawSize = 420f;
+                                drawSize = 450f;
                                 lifetime = 160f;
                                 shake = 1f;
                                 despawnEffect = Fx.smokeCloud;
