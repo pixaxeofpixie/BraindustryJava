@@ -13,6 +13,7 @@ import arc.util.Time;
 import arc.util.Tmp;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import braindustry.annotations.ModAnnotations;
 import braindustry.content.ModFx;
 import mindustry.Vars;
 import mindustry.entities.Effect;
@@ -31,7 +32,7 @@ public class MaterialReactor extends ItemLiquidGenerator {
     public Effect effect1, effect2, effect3;
     public Color lightningColor = Color.valueOf("#00FFF9");
     public Color destroyLightingColor = Color.valueOf("#00FFF9");
-    public TextureRegion lightsRegion;
+    public @ModAnnotations.Load("@-lights") TextureRegion lightsRegion;
 
     public MaterialReactor(boolean hasItems, boolean hasLiquids, String name) {
         super(hasItems, hasLiquids, name);
@@ -45,13 +46,6 @@ public class MaterialReactor extends ItemLiquidGenerator {
     public MaterialReactor(String name) {
         this(false, false, name);
     }
-
-    @Override
-    public void load() {
-        super.load();
-        lightsRegion = Core.atlas.find(name + "-lights");
-    }
-
     @Override
     public void setBars() {
         super.setBars();
@@ -98,7 +92,7 @@ public class MaterialReactor extends ItemLiquidGenerator {
             Draw.blend(Blending.additive);
             Draw.color(Color.valueOf("#1F74F3"));
             Draw.alpha(0.5f + Mathf.sin(Time.time * this.getEfficiency() * 0.15f) * 0.5f);
-            Draw.rect(Core.atlas.find("braindustry-java-materia-reactor-lights"), this.x, this.y);
+            Draw.rect(lightsRegion, this.x, this.y);
             Draw.alpha(1.0f);
             Draw.color();
             Draw.blend();

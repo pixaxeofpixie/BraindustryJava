@@ -11,10 +11,10 @@ import mindustry.type.ItemStack;
 import mindustry.world.blocks.power.*;
 import mindustry.world.meta.BuildVisibility;
 
-import static braindustry.content.ModBlocks.*;
-import static braindustry.content.ModBlocks.refrigerantReactor;
+import static braindustry.content.Blocks.ModBlocks.*;
+import static braindustry.content.Blocks.ModBlocks.refrigerantReactor;
 
-public class ModPowerBlocks implements ContentList {
+class ModPowerBlocks implements ContentList {
     @Override
     public void load() {
         phaseTower = new PowerNode("phase-tower") {

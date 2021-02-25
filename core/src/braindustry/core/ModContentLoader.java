@@ -10,6 +10,7 @@ import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Nullable;
 import braindustry.content.*;
+import braindustry.content.Blocks.ModBlocks;
 import mindustry.content.*;
 import mindustry.core.ContentLoader;
 import mindustry.ctype.Content;

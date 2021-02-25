@@ -22,14 +22,17 @@ import braindustry.core.ModContentLoader;
 import braindustry.entities.ZeroEntity;
 import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.ModLightningBulletType;
+import braindustry.gen.ModContentRegions;
 import braindustry.gen.ModPlayer;
 import braindustry.gen.StealthUnitc;
 import braindustry.graphics.ModShaders;
 import braindustry.type.StealthUnitType;
 import braindustry.ui.fragments.ModMenuFragment;
+import braindustry.world.ModBlock;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.ctype.ContentList;
+import mindustry.ctype.MappableContent;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.bullet.LightningBulletType;
@@ -101,7 +104,9 @@ public class MainModClass extends Mod {
 
     public void init() {
         if (!loaded) return;
-
+        getModContent().each(c->{
+            if (c instanceof MappableContent) ModContentRegions.loadRegions((MappableContent) c);
+        });
         createPlayer();
         modVars.init();
         EntityMapping.idMap[12] = ModPlayer::new;
@@ -168,9 +173,24 @@ public class MainModClass extends Mod {
         });
         GasInit.init(true);
         Vars.content.each((c) -> {
-            if (c instanceof UnlockableContent) checkTranslate((UnlockableContent) c);
+            if (inPackage("braindustry",c)) {
+                modVars.addContent(c);
+                if (c instanceof UnlockableContent) checkTranslate((UnlockableContent) c);
+            }
         });
         loaded = true;
     }
-
+    static Seq<String> names=new Seq<>();
+    public static boolean inPackage(String packageName,Object obj){
+        String name = obj.getClass().getPackage().getName();
+        if (!names.contains(name)) {
+            names.add(name);
+//            Log.info("package: @",name);
+        }
+        boolean b = name.startsWith(packageName + ".");
+        if (b){
+//            Log.info("obj: @,class: @",obj,obj.getClass());
+        }
+        return b;
+    }
 }

@@ -12,8 +12,8 @@ import mindustry.type.UnitType;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 
-import static braindustry.content.ModBlocks.*;
-public class ModUnitsBlocks implements ContentList {
+import static braindustry.content.Blocks.ModBlocks.*;
+class ModUnitsBlocks implements ContentList {
 
     @Override
     public void load() {

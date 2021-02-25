@@ -16,6 +16,7 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import braindustry.content.ModFx;
 import braindustry.type.Recipe;
+import braindustry.world.ModBlock;
 import braindustry.world.meta.RecipeListValue;
 import mindustry.content.Fx;
 import mindustry.content.Liquids;
@@ -49,7 +50,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static ModVars.modFunc.fullName;
 import static ModVars.modFunc.getInfoDialog;
 
-public class MultiCrafter extends Block implements BlockAdvancedStats {
+public class MultiCrafter extends ModBlock implements BlockAdvancedStats {
     public final int timerDump;
     public final int timerReBuildBars;
     public Seq<Recipe> recipes = new Seq<>();

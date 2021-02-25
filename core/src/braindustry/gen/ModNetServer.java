@@ -12,6 +12,7 @@ import arc.util.*;
 import arc.util.io.ReusableByteOutStream;
 import arc.util.io.Writes;
 import braindustry.annotations.ModAnnotations;
+import braindustry.versions.ModEntityc;
 import mindustry.annotations.Annotations;
 import mindustry.game.EventType;
 import mindustry.game.Team;
@@ -20,7 +21,6 @@ import mindustry.gen.*;
 import mindustry.net.NetConnection;
 import mindustry.type.UnitType;
 import mindustry.world.blocks.storage.CoreBlock;
-import mindustryAddition.versions.ModEntityc;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

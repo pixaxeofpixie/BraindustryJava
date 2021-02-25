@@ -3,21 +3,14 @@ import braindustry.content.*;
 import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
 import braindustry.world.blocks.Wall.ReflectionWall;
 import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Lines;
-import arc.math.Mathf;
-import arc.util.Tmp;
-import braindustry.entities.bullets.ReflectionBullet;
 import braindustry.entities.bullets.SpikeCircleOrbonBullet;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
-import mindustry.content.StatusEffects;
 import mindustry.ctype.ContentList;
 import mindustry.entities.bullet.*;
 import mindustry.gen.Bullet;
 import mindustry.gen.Sounds;
-import mindustry.graphics.Pal;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.blocks.defense.Wall;
@@ -27,10 +20,10 @@ import mindustry.world.blocks.defense.turrets.PointDefenseTurret;
 import mindustry.world.blocks.defense.turrets.TractorBeamTurret;
 import mindustry.world.consumers.ConsumeLiquidFilter;
 
-import static braindustry.content.ModBlocks.*;
+import static braindustry.content.Blocks.ModBlocks.*;
 import static mindustry.content.Bullets.*;
 
-public class ModDefense implements ContentList {
+class ModDefense implements ContentList {
 
     @Override
     public void load() {

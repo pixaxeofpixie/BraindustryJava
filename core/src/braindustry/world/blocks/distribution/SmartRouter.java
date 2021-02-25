@@ -10,7 +10,10 @@ import arc.scene.ui.layout.Table;
 import arc.util.Strings;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import braindustry.annotations.ModAnnotations;
+import mindustry.annotations.Annotations;
 import mindustry.content.Blocks;
+import mindustry.ctype.MappableContent;
 import mindustry.gen.*;
 import mindustry.type.Item;
 import mindustry.world.Tile;
@@ -18,8 +21,9 @@ import mindustry.world.blocks.distribution.Router;
 import mindustry.world.meta.BlockGroup;
 
 public class SmartRouter extends Router {
-    TextureRegion cross, arrow;
 
+    public @ModAnnotations.Load("@-cross") TextureRegion cross;
+    public @ModAnnotations.Load("@-arrow") TextureRegion arrow;
     public SmartRouter(String name) {
         super(name);
         this.solid = true;
@@ -31,13 +35,6 @@ public class SmartRouter extends Router {
         this.unloadable = false;
         this.noUpdateDisabled = true;
 //        Core.assets.get
-    }
-
-    @Override
-    public void load() {
-        super.load();
-        this.cross = Core.atlas.find(this.name + "-cross");
-        this.arrow = Core.atlas.find(this.name + "-arrow");
     }
 
     public class CustomRouterBuild extends Building {

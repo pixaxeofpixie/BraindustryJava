@@ -2,12 +2,11 @@ package braindustry.content.Blocks;
 
 import braindustry.world.blocks.sandbox.PayloadSource;
 import braindustry.world.blocks.sandbox.PayloadVoid;
-import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.meta.BuildVisibility;
 
-import static braindustry.content.ModBlocks.*;
-public class ModSandBox {
+import static braindustry.content.Blocks.ModBlocks.*;
+class ModSandBox {
     public void load(){
         payloadSource=new PayloadSource("payload-source"){
             {

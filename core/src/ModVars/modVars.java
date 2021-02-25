@@ -21,6 +21,8 @@ import braindustry.gen.ModRemoteReadClient;
 import braindustry.gen.ModRemoteReadServer;
 import braindustry.input.ModKeyBinds;
 import mindustry.ClientLauncher;
+import mindustry.ctype.Content;
+import mindustry.ctype.UnlockableContent;
 import mindustry.gen.Building;
 import mindustry.gen.EntityMapping;
 import mindustry.gen.Player;
@@ -57,7 +59,15 @@ public class modVars {
     public static boolean loaded = false;
     public static boolean packSprites;
     private static int lastClass = 0;
-
+    static Seq<Content> modContent=new Seq<>();
+    public static Seq<Content> getModContent(){
+        return modContent.copy();
+    }
+    public static void addContent(Content content){
+        if (!modContent.contains(content)) {
+            modContent.add(content);
+        }
+    }
     public static void init() {
         ModSave4 save4 = new ModSave4();
         Events.on(Object[].class, (array) -> {
@@ -74,14 +84,15 @@ public class modVars {
             }
         });
         net.handleClient(Packets.InvokePacket.class, packet -> {
-            Events.fire(new Object[]{"net.handleClient", packet.reader(), packet.type});
+            ModRemoteReadClient.readPacket(packet.reader(), packet.type);
+//            Events.fire(new Object[]{"net.handleClient", packet.reader(), packet.type});
 
         });
         net.handleServer(Packets.InvokePacket.class, (con, packet) -> {
             if (con.player == null) return;
             try {
-//                ModRemoteReadServer.readPacket(packet.reader(), packet.type, con.player);
-                Events.fire(new Object[]{"net.handleServer", packet.reader(), packet.type,con.player});
+                ModRemoteReadServer.readPacket(packet.reader(), packet.type, con.player);
+//                Events.fire(new Object[]{"net.handleServer", packet.reader(), packet.type,con.player});
             } catch (ValidateException e) {
                 debug("Validation failed for '@': @", e.player, e.getMessage());
             } catch (RuntimeException e) {

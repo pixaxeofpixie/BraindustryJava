@@ -18,9 +18,9 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.GenericSmelter;
 import braindustry.type.ModLiquidStack;
 
-import static braindustry.content.ModBlocks.*;
+import static braindustry.content.Blocks.ModBlocks.*;
 
-public class ModProduction implements ContentList {
+class ModProduction implements ContentList {
     @Override
     public void load() {
         multiCrafter = new MultiCrafter("multi-crafter") {

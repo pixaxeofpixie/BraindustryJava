@@ -6,12 +6,13 @@ import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
 import arc.scene.ui.layout.Table;
+import braindustry.world.ModBlock;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 
-public class CrafterSelector extends Block {
+public class CrafterSelector extends ModBlock {
     public Color[] statusColors = {
             Color.valueOf("f25555"),
             Color.lime,

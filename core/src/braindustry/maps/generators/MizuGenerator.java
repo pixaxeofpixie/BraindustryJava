@@ -1,7 +1,6 @@
 package braindustry.maps.generators;
 
 import arc.struct.ObjectMap;
-import braindustry.content.ModBlocks;
 import mindustry.content.Blocks;
 import mindustry.world.Block;
 

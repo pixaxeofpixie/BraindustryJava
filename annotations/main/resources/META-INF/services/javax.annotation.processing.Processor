@@ -4,3 +4,4 @@ braindustry.annotations.RulesEditDialog.RulesProcessor
 braindustry.annotations.ModTypeIO.ObjectReadProcessor
 braindustry.annotations.ModEntities.ModEntitiesProc
 Gas.annotations.misc.GasLoadRegionProcessor
+braindustry.annotations.misc.ModLoadRegionProcessor

@@ -13,7 +13,7 @@ import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.Time;
 import braindustry.ModListener;
-import braindustry.content.ModBlocks;
+import braindustry.content.Blocks.ModBlocks;
 import braindustry.type.ModUnitType;
 import braindustry.type.PowerUnitContainer;
 import braindustry.world.blocks.power.ReceivingPowerNode;

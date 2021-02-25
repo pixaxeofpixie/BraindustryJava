@@ -20,12 +20,14 @@ import arc.util.Log;
 import arc.util.Strings;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import braindustry.annotations.ModAnnotations;
 import braindustry.content.ModFx;
 import braindustry.gen.Drawer;
 import braindustry.gen.ModBuilding;
 import braindustry.gen.ModCall;
 import braindustry.graphics.ModShaders;
 import braindustry.gen.UnitEntry;
+import braindustry.world.ModBlock;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Team;
@@ -46,8 +48,8 @@ import mindustry.world.meta.StatUnit;
 
 import static mindustry.Vars.world;
 
-public class UnitSpawner extends Block {
-    public TextureRegion colorRegion;
+public class UnitSpawner extends ModBlock {
+    public @ModAnnotations.Load(value="@-color",fallback="air") TextureRegion colorRegion;
     public UnitSpawnerBuild currentBuilding;
     public Color targetColor = Color.gray;
     public boolean choose = false;
@@ -78,12 +80,6 @@ public class UnitSpawner extends Block {
     @Override
     public void init() {
         super.init();
-    }
-
-    @Override
-    public void load() {
-        super.load();
-        colorRegion = Core.atlas.find(this.name + "-color", "air");
     }
 
     public class UnitSpawnerBuild extends ModBuilding implements Drawer.BuilderDrawer {

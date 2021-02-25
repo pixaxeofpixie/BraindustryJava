@@ -8,9 +8,9 @@ import mindustry.content.Items;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 
-import static braindustry.content.ModBlocks.*;
+import static braindustry.content.Blocks.ModBlocks.*;
 
-public class ModLogicBlocks {
+class ModLogicBlocks {
     public void load(){
         advancedSwitcher=new AdvancedSwitcher("advanced-switcher"){
             {

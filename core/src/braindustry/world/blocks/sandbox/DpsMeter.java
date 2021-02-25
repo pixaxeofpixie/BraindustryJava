@@ -23,6 +23,7 @@ import braindustry.gen.ModBuilding;
 import braindustry.gen.WritableInterface;
 import braindustry.tools.ModReads;
 import braindustry.tools.ModWrites;
+import braindustry.world.ModBlock;
 import braindustry.world.blocks.BuildingLabel;
 import mindustry.Vars;
 import mindustry.entities.TargetPriority;
@@ -40,8 +41,8 @@ import mindustryAddition.graphics.ModDraw;
 import java.io.DataOutputStream;
 import java.util.Arrays;
 
-public class DpsMeter extends Block {
-    public TextureRegion teamRegionButton;
+public class DpsMeter extends ModBlock {
+    public @ModAnnotations.Load("@-team-region") TextureRegion teamRegionButton;
 
     public DpsMeter(String name) {
         super(name);
@@ -74,12 +75,6 @@ public class DpsMeter extends Block {
             tile.container.unit= unit != null && unit;
             Vars.indexer.updateIndices(tile.tile);
         });
-    }
-
-    @Override
-    public void load() {
-        super.load();
-        teamRegionButton = Core.atlas.find(name + "-team-region");
     }
 
     @Override
