@@ -30,11 +30,12 @@ class ModDefense implements ContentList {
         rapier =new ItemTurret("rapier"){
             {
                 this.localizedName="Rapier";
+                this.description = "Shots hedgehod-like frag bullets.";
                 this.range = 200;
 //                this.recoilAmount = 28;
-                this.reloadTime = 70;
-                this.size = 3;
-                this.shots = 1;
+                this.reloadTime = 60;
+                this.size = 4;
+                this.shots = 4;
                 this.health = 2800;
                 this.inaccuracy = 0;
                 this.shootSound = Sounds.missile;
@@ -42,41 +43,28 @@ class ModDefense implements ContentList {
                 this.targetAir = true;
                 this.targetGround = true;
                 this.ammo(
-                       /* ModItems.odinum, new BasicBulletType(){public void draw(Bullet b) {
-                            float height = this.height * (1.0F - this.shrinkY + this.shrinkY * b.fout());
-                            float width = this.width * (1.0F - this.shrinkX + this.shrinkX * b.fout());
-                            float offset = -90.0F + (this.spin != 0.0F ? Mathf.randomSeed((long)b.id, 360.0F) + b.time * this.spin : 0.0F);
-                            Color mix = Tmp.c1.set(this.mixColorFrom).lerp(this.mixColorTo, b.fin());
-                            Draw.mixcol(mix, mix.a);
-                            Draw.color(this.backColor);
-//                                Draw.rect(this.backRegion, b.x, b.y, width, height, b.rotation() + offset);
-                            Draw.color(this.frontColor);
-//                            Draw.rect(this.frontRegion, b.x, b.y, width, height, b.rotation() + offset);
-                            Draw.color(this.backColor,this.frontColor,b.fin());
-                            Lines.swirl(b.x,b.y,width/height,90f/360f,b.rotation()-45f);
-                            Draw.reset();
-                        }
+                        ModItems.phaseAlloy, new SpikeCircleOrbonBullet(){
                             {
-                                this.damage = 55;
-                                this.speed = 4;
-                                this.hitSize = 50;
-                                this.lifetime = 180;
-                                this.status = StatusEffects.unmoving;
-                                this.statusDuration = 38;
-//                                this.bulletSprite = wave;
-                                this.pierce = true;
-                                this.width = 120;
-                                this.buildingDamageMultiplier = 0.3f;
-//                                this.length = 4;
-                                this.hittable = true;
-                                this.ammoMultiplier = 1;
-                                this.backColor= Pal.lancerLaser;
-                                this.frontColor=Color.white;
-                                this.hitColor=this.trailColor=this.lightColor=this.lightningColor=Color.gray;
+                                this.hitEffect = ModFx.circleSpikeHit;
+                                this.ammoMultiplier = 4.0f;
+                                this.despawnEffect = ModFx.circleSpikeHit;
+
+                                this.smokeEffect = ModFx.spikeSmoke;
+                                this.damage = 1300;
+                                this.despawnShake = 2.3f;
+                                this.hitShake = 4.8f;
+                                this.speed = 2.8f;
+
+                                this.absorbable = false;
+                                this.reflectable = false;
+                                this.hittable = false;
+                                this.hitSize = 6.0f;
+
+                                this.status = ModStatusEffects.speedMul.get(5);
+                                this.statusDuration = 70.0f * 3.0f;
                             }
-                        },*/
-                        Items.phaseFabric, new SpikeCircleOrbonBullet()
-                );
+                        }
+                    );
                 this.consumes.liquid(Liquids.cryofluid,0.2f).optional(false,true);
                 this.requirements(Category.turret, ItemStack.with(ModItems.odinum,400, Items.plastanium,350, Items.silicon,800, Items.titanium,420, Items.metaglass,280));
             }

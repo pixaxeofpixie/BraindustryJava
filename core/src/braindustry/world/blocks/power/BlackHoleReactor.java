@@ -5,7 +5,7 @@ import mindustry.world.blocks.power.ImpactReactor;
 import braindustry.graphics.BlackHoleDrawer;
 
 public class BlackHoleReactor extends ImpactReactor {
-    public float blackHoleHitSize = 16f;
+    public float blackHoleHitSize = 14f;
 
     public BlackHoleReactor(String name) {
         super(name);

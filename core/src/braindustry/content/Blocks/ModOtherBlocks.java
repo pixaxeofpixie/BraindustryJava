@@ -17,7 +17,7 @@ import mindustry.world.blocks.storage.StorageBlock;
 import braindustry.world.blocks.distribution.CrossItemBridge;
 
 import static braindustry.content.Blocks.ModBlocks.*;
- class ModOtherBlocks implements ContentList {
+class ModOtherBlocks implements ContentList {
     @Override
     public void load() {
         armoredPlastaniumConveyor = new ArmoredConveyor("armored-plastanium-conveyor") {
@@ -47,7 +47,7 @@ import static braindustry.content.Blocks.ModBlocks.*;
         plasticConveyor = new Conveyor("plastic-conveyor") {
             {
                 this.localizedName = "Hermetic Plastic Conveyor";
-                this.description = "The most fast and durable conveyor!";
+                this.description = "The most fast and durable conveyor.";
                 this.health = 168;
                 this.requirements(Category.distribution, ItemStack.with(Items.silicon, 1, ModItems.graphenite, 1, ModItems.plastic, 1));
                 this.speed = 0.45f;
@@ -64,7 +64,7 @@ import static braindustry.content.Blocks.ModBlocks.*;
         };
         phaseAlloyConveyor = new CrossItemBridge("phase-alloy-conveyor") {
             {
-                this.localizedName = "Phase Alloy Conveyor";
+                this.localizedName = "Dense Composite Conveyor";
                 this.requirements(Category.distribution, ItemStack.with(ModItems.phaseAlloy, 5, Items.silicon, 7, Items.lead, 10, Items.graphite, 10));
                 this.range = 12;
                 this.canOverdrive = false;
@@ -77,14 +77,14 @@ import static braindustry.content.Blocks.ModBlocks.*;
                 };
             }
         };
-        surgePayloadConveyor = new PayloadConveyor("surge-payload-conveyor"){
+        /*surgePayloadConveyor = new PayloadConveyor("surge-payload-conveyor"){
             {
-            this.health = 310;
-            this.requirements(Category.distribution, ItemStack.with(ModItems.graphenite, 10, Items.surgeAlloy, 5));
-            this.canOverdrive = true;
-            this.size = 6;
+                this.health = 310;
+                this.requirements(Category.distribution, ItemStack.with(ModItems.graphenite, 10, Items.surgeAlloy, 5));
+                this.canOverdrive = true;
+                this.size = 6;
             }
-        };
+        };*/
 
 
 
