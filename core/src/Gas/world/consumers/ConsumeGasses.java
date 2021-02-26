@@ -5,6 +5,7 @@ import Gas.gen.GasBuilding;
 import Gas.GasStats;
 import arc.scene.ui.layout.Table;
 import arc.struct.Bits;
+import braindustry.world.meta.AStats;
 import mindustry.gen.Building;
 import mindustry.ui.Cicon;
 import mindustry.ui.ReqImage;
@@ -60,7 +61,8 @@ public class ConsumeGasses extends GasConsume {
     }
 
     public void display(Stats stat) {
-        GasStats stats=(GasStats)stat;
+        if (!(stat instanceof AStats))return;
+        AStats stats=(AStats)stat;
         stats.add(this.booster ? Stat.booster : Stat.input, this.gas, this.amount * 60.0F, true);
     }
 }

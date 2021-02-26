@@ -27,7 +27,7 @@ public class GasPowerGenerator extends GasPowerDistributor {
 
     public void setStats() {
         super.setStats();
-        this.stats.add(this.generationType, this.powerProduction * 60.0F, StatUnit.powerSecond);
+        this.aStats.add(this.generationType, this.powerProduction * 60.0F, StatUnit.powerSecond);
     }
 
     public void setBars() {

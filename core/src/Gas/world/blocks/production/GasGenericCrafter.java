@@ -45,18 +45,18 @@ public class GasGenericCrafter extends GasBlock {
     @Override
     public void setStats(){
         super.setStats();
-        stats.add(Stat.productionTime, craftTime / 60f, StatUnit.seconds);
+        aStats.add(Stat.productionTime, craftTime / 60f, StatUnit.seconds);
 
         if (outputItem != null) {
-            stats.add(Stat.output, outputItem);
+            aStats.add(Stat.output, outputItem);
         }
 
         if (outputLiquid != null) {
-            stats.add(Stat.output, outputLiquid.liquid, outputLiquid.amount * (60f / craftTime), true);
+            aStats.add(Stat.output, outputLiquid.liquid, outputLiquid.amount * (60f / craftTime), true);
         }
 
         if (outputGas != null) {
-            stats.add(Stat.output, outputGas.gas, outputLiquid.amount * (60f / craftTime), true);
+            aStats.add(Stat.output, outputGas.gas, outputLiquid.amount * (60f / craftTime), true);
         }
     }
 

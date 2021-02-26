@@ -38,7 +38,6 @@ import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 import mindustry.world.meta.values.ItemListValue;
 import mindustryAddition.iu.MultiBar;
-import mindustryAddition.world.blocks.BlockAdvancedStats;
 import mindustryAddition.world.consumers.ConsumeLiquidDynamic;
 import braindustry.world.meta.AStat;
 import braindustry.world.meta.AStats;
@@ -50,7 +49,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static ModVars.modFunc.fullName;
 import static ModVars.modFunc.getInfoDialog;
 
-public class MultiCrafter extends ModBlock implements BlockAdvancedStats {
+public class MultiCrafter extends ModBlock {
     public final int timerDump;
     public final int timerReBuildBars;
     public Seq<Recipe> recipes = new Seq<>();

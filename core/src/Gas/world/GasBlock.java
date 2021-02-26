@@ -12,6 +12,8 @@ import arc.func.Cons;
 import arc.func.Func;
 import arc.graphics.Color;
 import arc.math.Mathf;
+import braindustry.world.meta.AStat;
+import braindustry.world.meta.AStats;
 import mindustry.content.Liquids;
 import mindustry.ctype.UnlockableContent;
 import mindustry.gen.Building;
@@ -33,11 +35,12 @@ public class GasBlock extends Block {
     public boolean hasGas = false;
     public float gasCapacity;
     public boolean outputsGas = false;
-    public GasStats stats = new GasStats();
+    public AStats aStats = new AStats();
 
     //    4a4b53
     public GasBlock(String name) {
         super(name);
+        super.stats=aStats.copy(stats);
         this.gasCapacity = 10;
     }
 
@@ -79,24 +82,27 @@ public class GasBlock extends Block {
 
     public void setStats() {
 //        super.setStats();
-        this.stats.add(Stat.size, "@x@", this.size, this.size);
-        this.stats.add(Stat.health, (float) this.health, StatUnit.none);
-        if (this.canBeBuilt()) {
-            this.stats.add(Stat.buildTime, this.buildCost / 60.0F, StatUnit.seconds);
-            this.stats.add(Stat.buildCost, new ItemListValue(false, this.requirements));
+        aStats.add(Stat.size, "@x@", size, size);
+        aStats.add(Stat.health, (float) health, StatUnit.none);
+        if (canBeBuilt()) {
+            aStats.add(Stat.buildTime, buildCost / 60.0F, StatUnit.seconds);
+            aStats.add(Stat.buildCost, new ItemListValue(false, requirements));
         }
 
-        if (this.instantTransfer) {
-            this.stats.add(Stat.maxConsecutive, 2.0F, StatUnit.none);
+        if (instantTransfer) {
+            aStats.add(Stat.maxConsecutive, 2.0F, StatUnit.none);
         }
 
-        this.consumes.display(this.stats);
-        if (this.hasLiquids) {
-            this.stats.add(Stat.liquidCapacity, this.liquidCapacity, StatUnit.liquidUnits);
+        consumes.display(aStats);
+        if (hasLiquids) {
+            aStats.add(Stat.liquidCapacity, liquidCapacity, StatUnit.liquidUnits);
         }
 
-        if (this.hasItems && this.itemCapacity > 0) {
-            this.stats.add(Stat.itemCapacity, (float) this.itemCapacity, StatUnit.items);
+        if (hasItems && itemCapacity > 0) {
+            aStats.add(Stat.itemCapacity, (float) itemCapacity, StatUnit.items);
+        }
+        if (hasGas && gasCapacity > 0) {
+            aStats.add(AStat.gasCapacity, gasCapacity, StatUnit.liquidUnits);
         }
 
     }

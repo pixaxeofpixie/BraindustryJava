@@ -1,5 +1,7 @@
 package braindustry.world.meta;
 
+import Gas.type.Gas;
+import Gas.world.meta.GasValue;
 import arc.struct.ObjectMap;
 import arc.struct.OrderedMap;
 import arc.struct.Seq;
@@ -61,7 +63,9 @@ public class AStats extends Stats{
     public void add(Stat stat, Attribute attr) {
         this.add(stat, attr, false, 1.0F, false);
     }
-
+    public void add(Stat stat, Gas gas, float amount, boolean perSecond) {
+        this.add(stat, (new GasValue(gas, amount, perSecond)));
+    }
     @Override
     public void add(Stat stat, Attribute attr, float scale) {
         this.add(stat, attr, false, scale, false);

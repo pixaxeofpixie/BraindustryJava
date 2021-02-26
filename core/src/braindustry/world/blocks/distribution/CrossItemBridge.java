@@ -30,13 +30,12 @@ import mindustry.world.blocks.distribution.ItemBridge;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 import mindustryAddition.graphics.ModLines;
-import mindustryAddition.world.blocks.BlockAdvancedStats;
 import mindustryAddition.world.blocks.BuildingLabel;
 import mindustryAddition.world.blocks.BuildingTaskQueue;
 import braindustry.world.meta.AStat;
 import braindustry.world.meta.AStats;
 
-public class CrossItemBridge extends ItemBridge implements BlockAdvancedStats {
+public class CrossItemBridge extends ItemBridge {
     public Prov<Seq<Block>> connectBlocksGetter = () -> new Seq<>();
     AStats aStats = new AStats();
     Seq<Block> connectibleBlocks = new Seq<>();

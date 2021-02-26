@@ -13,7 +13,6 @@ import mindustry.ui.Cicon;
 import mindustry.ui.dialogs.ContentInfoDialog;
 import mindustry.world.meta.StatCat;
 import mindustry.world.meta.StatValue;
-import mindustryAddition.world.blocks.BlockAdvancedStats;
 import braindustry.world.meta.AStat;
 import braindustry.world.meta.AStats;
 
@@ -29,7 +28,7 @@ public class AdvancedContentInfoDialog extends ContentInfoDialog {
 
     @Override
     public void show(UnlockableContent content) {
-        if (!(content instanceof BlockAdvancedStats) || !(content.stats instanceof AStats)) {
+        if (!(content.stats instanceof AStats)) {
             super.show(content);
             return;
         }

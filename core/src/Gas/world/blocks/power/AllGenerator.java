@@ -12,7 +12,6 @@ import arc.math.Mathf;
 import arc.util.Time;
 import braindustry.world.blocks.BuildingLabel;
 import mindustry.Vars;
-import mindustry.annotations.Annotations;
 import mindustry.content.Fx;
 import mindustry.ctype.ContentType;
 import mindustry.entities.Effect;
@@ -102,7 +101,7 @@ public class AllGenerator extends GasPowerGenerator {
     public void setStats() {
         super.setStats();
         if (this.hasItems) {
-            this.stats.add(Stat.productionTime, this.itemDuration / 60.0F, StatUnit.seconds);
+            this.aStats.add(Stat.productionTime, this.itemDuration / 60.0F, StatUnit.seconds);
         }
 
     }
