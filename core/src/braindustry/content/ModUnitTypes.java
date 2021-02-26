@@ -1802,7 +1802,7 @@ public class ModUnitTypes implements ContentList {
                             x = 32f;
                             reload = 20f;
                             recoil = 7f;
-                            shots = 3f;
+                            shots = 3;
                             inaccuracy = 10.0f;
                             shake = 3;
                             rotate = true;
