@@ -1630,9 +1630,9 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.hitSize = 14;
                                         this.drawSize = 480;
-                                        this.width = 24;
-                                        this.length = 320;
-                                        this.lifetime = 210;
+                                        this.width = 17;
+                                        this.length = 380;
+                                        this.lifetime = 220;
                                         this.hitEffect = Fx.hitMeltHeal;
                                         this.largeHit = true;
                                         //this.hitColor = Color.valueOf("f1fc58");
@@ -1645,18 +1645,18 @@ public class ModUnitTypes implements ContentList {
                                         this.pierce = true;
                                         this.hittable = true;
                                         this.absorbable = false;
-                                        this.damage = 92;
+                                        this.damage = 112;
                                         this.shootEffect = ModFx.yellowLaserCharge;
                                         this.despawnEffect = ModFx.energyShrapnelSmoke;
                                         this.knockback = 1;
                                         this.healPercent = 48f;
                                         this.collidesTeam = true;
-                                        this.lightning = 5;
+                                        this.lightning = 4;
                                         this.lightningLength = 20;
                                         this.lightningLengthRand = 20;
-                                        this.lightningDamage = 62;
-                                        this.lightningAngle = 15;
-                                        this.lightningCone = 50;
+                                        this.lightningDamage = 42;
+                                        this.lightningAngle = 25;
+                                        this.lightningCone = 30;
                                         this.lightningColor = Color.valueOf("f1fc58");
                                         colors = new Color[]{ModPal.dendriteYellow.cpy().a(2.5f), ModPal.dendriteYellow.cpy().a(.4f), ModPal.dendriteYellow.cpy().mul(2f), Color.white};
                                     }
@@ -1726,7 +1726,7 @@ public class ModUnitTypes implements ContentList {
 
         moureno = new ModUnitType("mouriena") {
             {
-                this.range = 200;
+                this.range = 520;
                 this.constructor = Types.naval;
                 this.localizedName = "Mouriena";
                 this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers.";
@@ -1736,16 +1736,16 @@ public class ModUnitTypes implements ContentList {
                 this.rotateSpeed = 0.9f;
                 this.drag = 0.35f;
                 this.hitSize = 124.0F;
-                this.armor = 2;
+                this.armor = 12;
                 this.rotateShooting = false;
                 this.trailLength = 240;
                 this.trailX = 36;
                 this.trailY = 28;
                 this.trailScl = 0.9f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
-                int spawnTime = 1680;
+                int spawnTime = 2000;
 
-                abilities.addAll(new PowerUnitAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -36.25f, -48.75f));
+                abilities.addAll(new PowerUnitAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, -36.25f, -48.75f));
                 int brange = 1;
 
 
@@ -1754,7 +1754,7 @@ public class ModUnitTypes implements ContentList {
                             mirror = false;
                             top = false;
                             shake = 6f;
-                            shootY = 13f;
+                            shootY = 23f;
                             x = 0f;
                             y = -4f;
                             rotate = true;
@@ -1762,7 +1762,7 @@ public class ModUnitTypes implements ContentList {
 
                             firstShotDelay = ModFx.blackHoleLaserCharge.lifetime - 1f;
 
-                            reload = 220f;
+                            reload = 440f;
                             recoil = 0f;
                             chargeSound = ModSounds.electronCharge;
                             shootSound = ModSounds.electronShoot;
@@ -1770,11 +1770,11 @@ public class ModUnitTypes implements ContentList {
                             cooldownTime = 210f;
 
                             bullet = new ContinuousLaserBulletType(){{
-                                damage = 176f;
-                                length = 4200f;
+                                damage = 96f;
+                                length = 880f;
                                 hitEffect = Fx.hitMeltHeal;
                                 drawSize = 450f;
-                                lifetime = 160f;
+                                lifetime = 660f;
                                 shake = 1f;
                                 despawnEffect = Fx.smokeCloud;
                                 smokeEffect = Fx.none;
@@ -1786,7 +1786,7 @@ public class ModUnitTypes implements ContentList {
                                 incendAmount = 1;
 
                                 //constant healing
-                                healPercent = 15f;
+                                healPercent = 5f;
                                 collidesTeam = true;
 
                                 colors = new Color[]{ModPal.blackHoleLaserColor.cpy().a(2.4f), ModPal.blackHoleLaserColor.cpy().a(.4f), ModPal.blackHoleLaserColor.cpy().mul(1.9f), Color.white};
@@ -1799,10 +1799,10 @@ public class ModUnitTypes implements ContentList {
                             top = false;
                             y = -3f;
                             x = 32f;
-                            reload = 25f;
+                            reload = 20f;
                             recoil = 7f;
-                            shots = 2;
-                            inaccuracy = 11.0f;
+                            shots = 3
+                            inaccuracy = 100f;
                             shake = 3f;
                             rotate = true;
                             rotateSpeed = 1.3f;
@@ -1813,12 +1813,12 @@ public class ModUnitTypes implements ContentList {
                                 hitEffect = ModFx.adamExplosion;
                                 knockback = 1.2f;
                                 lifetime = 110f;
-                                width = 21f;
-                                height = 23f;
+                                width = 19f;
+                                height = 21f;
                                 collides = true;
                                 collidesTiles = true;
                                 splashDamageRadius = 28f;
-                                splashDamage = 160f;
+                                splashDamage = 120f;
                                 backColor = ModPal.unitOrange;
                                 frontColor = ModPal.unitOrangeLight;
                                 }
