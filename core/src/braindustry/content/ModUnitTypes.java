@@ -46,8 +46,8 @@ public class ModUnitTypes implements ContentList {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 60.0F;
-                this.localizedName = "Ibis";
-                this.description = "Smallest unit with 4 legs and high speed.";
+                this.localizedName = "Blast";
+                this.description = "Small firework unit with high speed.";
                 this.health = 210;
                 this.speed = 0.56f;
                 this.mechSideSway = 0.25f;
@@ -86,8 +86,8 @@ public class ModUnitTypes implements ContentList {
                                         this.length = 30;
                                         this.damage = 50;
                                         this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("e88ec9");
-                                        this.color = Color.valueOf("e88ec9");
+                                        this.hitColor = Color.valueOf("cedae0");
+                                        this.color = Color.valueOf("b2b2b2");
                                         this.despawnEffect = Fx.none;
                                         this.width = 0.54f;
                                         this.lifetime = 15;
@@ -104,8 +104,8 @@ public class ModUnitTypes implements ContentList {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 60.0F;
-                this.localizedName = "Aries";
-                this.description = "A small 4-leg unit with strong laser guns.";
+                this.localizedName = "Firecracker";
+                this.description = "A small 4-leg unit with strong firework sap guns.";
                 this.speed = 0.6f;
                 this.drag = 0.3f;
                 this.hitSize = 8;
@@ -134,7 +134,7 @@ public class ModUnitTypes implements ContentList {
                                 this.y = -1.5f;
                                 this.shootY = 3;
                                 this.reload = 20;
-                                this.shots = 4;
+                                this.shots = 7;
                                 this.shotDelay = 3;
                                 this.inaccuracy = 9;
                                 this.ejectEffect = Fx.none;
@@ -144,11 +144,11 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.95f;
-                                        this.length = 48;
+                                        this.length = 40;
                                         this.damage = 40;
                                         this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("e88ec9");
-                                        this.color = Color.valueOf("e88ec9");
+                                        this.hitColor = Color.valueOf("cedae0");
+                                        this.color = Color.valueOf("b2b2b2");
                                         this.despawnEffect = Fx.none;
                                         this.width = 0.7f;
                                         this.lifetime = 45;
@@ -165,7 +165,7 @@ public class ModUnitTypes implements ContentList {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 68.0F;
-                this.localizedName = "Capra";
+                this.localizedName = "Irascibility";
                 this.itemCapacity = 200;
                 this.speed = 0.4f;
                 this.drag = 0.4f;
@@ -202,8 +202,8 @@ public class ModUnitTypes implements ContentList {
                                         this.length = 150;
                                         this.damage = 60;
                                         this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("e88ec9");
-                                        this.color = Color.valueOf("e88ec9");
+                                        this.hitColor = Color.valueOf("cedae0");
+                                        this.color = Color.valueOf("b2b2b2");
                                         this.despawnEffect = Fx.none;
                                         this.width = 1;
                                         this.lifetime = 30;
@@ -220,7 +220,7 @@ public class ModUnitTypes implements ContentList {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 75.0F;
-                this.localizedName = "Lacerta";
+                this.localizedName = "Salute";
                 this.description = "A giant unit with 6 legs and super-powerful laser with lightnings!";
                 this.boostMultiplier = 2.1f;
                 this.speed = 0.35f;
@@ -277,8 +277,8 @@ public class ModUnitTypes implements ContentList {
                                         this.sideAngle = 15;
                                         this.sideWidth = 0;
                                         this.sideLength = 0;
-                                        this.lightningColor = Color.valueOf("d5b2ed");
-                                        this.colors = new Color[]{Color.valueOf("d5b2ed"), Color.valueOf("9671b1"), Color.valueOf("a17dcd")};
+                                        this.lightningColor = Color.valueOf("cedae0");
+                                        this.colors = new Color[]{Color.valueOf("999999"), Color.valueOf("c4c4c4"), Color.valueOf("e8e8e8")};
                                     }
                                 };
                             }
@@ -300,8 +300,8 @@ public class ModUnitTypes implements ContentList {
                                         this.length = 200;
                                         this.damage = 200;
                                         this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("e88ec9");
-                                        this.color = Color.valueOf("e88ec9");
+                                        this.hitColor = Color.valueOf("cedae0");
+                                        this.color = Color.valueOf("b2b2b2");
                                         this.despawnEffect = Fx.none;
                                         this.width = 1.5f;
                                         this.lifetime = 25;
@@ -326,7 +326,7 @@ public class ModUnitTypes implements ContentList {
                 this.hovering = true;
                 this.health = 17000;
                 this.rotateSpeed = 2;
-                this.legCount = 8;
+                this.legCount = 4;
                 this.legMoveSpace = 1.4f;
                 this.legPairOffset = 4;
                 this.legLength = 61;
@@ -432,8 +432,8 @@ public class ModUnitTypes implements ContentList {
                                         this.sideAngle = 18;
                                         this.sideWidth = 0;
                                         this.sideLength = 0;
-                                        this.lightningColor = Color.valueOf("d5b2ed");
-                                        this.colors = new Color[]{Color.valueOf("d5b2ed"), Color.valueOf("9671b1"), Color.valueOf("a17dcd")};
+                                        this.lightningColor = Color.valueOf("cedae0");
+                                        this.colors = new Color[]{Color.valueOf("999999"), Color.valueOf("c4c4c4"), Color.valueOf("e8e8e8")};
                                     }
                                 };
                             }
