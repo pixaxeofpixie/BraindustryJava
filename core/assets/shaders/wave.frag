@@ -23,7 +23,7 @@ void main(){
 
     color = texture2D(u_texture, u_uv+coords*size);
     if (coords.x>1. || coords.y>1. || coords.x<0. || coords.y<0.){
-        color.a=0;
+        color.a=0.;
     }
     gl_FragColor = vec4(color.rgb, color.a*v_color.a);
 }

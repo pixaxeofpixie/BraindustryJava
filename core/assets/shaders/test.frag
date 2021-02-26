@@ -23,9 +23,9 @@ void main(){
     vec2 uv =gl_FragCoord.xy/ (u_resolution.xy);
     vec3 gray=vec3(uv.x*uv.y);
     if (isIn(gl_FragCoord.xy, u_pos, 8.*u_dscl)){
-        gray=vec3(0);
+        gray=vec3(0.);
     } else {
-        gray=vec3(1);
+        gray=vec3(1.);
     }
     if (dst(u_pos, gl_FragCoord.xy)<8.*u_dscl){
         gray.r=0.;
@@ -45,7 +45,7 @@ void main(){
 
     color = texture2D(u_texture, u_uv+coords*size);
     if (coords.x>1. || coords.y>1. || coords.x<0. || coords.y<0.){
-        color.a=0;
+        color.a=0.;
     }
     //    color = texture2D(u_texture, v_texCoords);
     //    gray=vec3(v_texCoords.x*v_texCoords.y);
