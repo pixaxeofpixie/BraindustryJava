@@ -144,14 +144,14 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.95f;
-                                        this.length = 40;
+                                        this.length = 50;
                                         this.damage = 40;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("cedae0");
                                         this.color = Color.valueOf("b2b2b2");
                                         this.despawnEffect = Fx.none;
                                         this.width = 0.7f;
-                                        this.lifetime = 45;
+                                        this.lifetime = 35;
                                         this.knockback = 1.34f;
                                     }
                                 };
@@ -191,7 +191,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotateSpeed = 1.2f;
                                 this.x = 10;
                                 this.y = -7f;
-                                this.shots = 24;
+                                this.shots = 32;
                                 this.shotDelay = 1;
                                 this.inaccuracy = 14;
                                 this.mirror = true;
@@ -200,13 +200,13 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.8f;
                                         this.length = 150;
-                                        this.damage = 60;
+                                        this.damage = 40;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("cedae0");
                                         this.color = Color.valueOf("b2b2b2");
                                         this.despawnEffect = Fx.none;
-                                        this.width = 1;
-                                        this.lifetime = 30;
+                                        this.width = 0.7f;
+                                        this.lifetime = 20;
                                         this.knockback = -0.65f;
                                     }
                                 };
@@ -290,7 +290,8 @@ public class ModUnitTypes implements ContentList {
                                 this.rotateSpeed = 1.6f;
                                 this.x = 10;
                                 this.y = -7f;
-                                this.shots = 2;
+                                this.shots = 3;
+                                this.inaccuracy = 8;
                                 this.shotDelay = 15;
                                 this.mirror = true;
                                 this.shootSound = Sounds.laserblast;
@@ -298,7 +299,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.7f;
                                         this.length = 200;
-                                        this.damage = 200;
+                                        this.damage = 160;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("cedae0");
                                         this.color = Color.valueOf("b2b2b2");
@@ -349,8 +350,8 @@ public class ModUnitTypes implements ContentList {
                                 this.y = 5;
                                 this.rotateSpeed = 1.5f;
                                 this.shots = 6;
-                                this.shotDelay = 10;
-                                this.inaccuracy = 7;
+                                this.shotDelay = 7;
+                                this.inaccuracy = 12;
                                 this.mirror = true;
                                 this.shootSound = Sounds.beam;
                                 this.bullet = new SapBulletType() {
@@ -783,7 +784,7 @@ public class ModUnitTypes implements ContentList {
                                 this.y = -1f;
                                 this.x = 25;
                                 this.reload = 165;
-                                this.shotDelay = 10;
+                                this.shotDelay = 5;
                                 this.recoil = 3;
                                 this.shootSound = Sounds.sap;
                                 this.shots = 32;
@@ -1655,7 +1656,7 @@ public class ModUnitTypes implements ContentList {
                                         this.lightningLength = 20;
                                         this.lightningLengthRand = 20;
                                         this.lightningDamage = 42;
-                                        this.lightningAngle = 25;
+                                        this.lightningAngle = 15;
                                         this.lightningCone = 30;
                                         this.lightningColor = Color.valueOf("f1fc58");
                                         colors = new Color[]{ModPal.dendriteYellow.cpy().a(2.5f), ModPal.dendriteYellow.cpy().a(.4f), ModPal.dendriteYellow.cpy().mul(2f), Color.white};
@@ -1774,7 +1775,7 @@ public class ModUnitTypes implements ContentList {
                                 length = 880f;
                                 hitEffect = Fx.hitMeltHeal;
                                 drawSize = 450f;
-                                lifetime = 660f;
+                                lifetime = 440f;
                                 shake = 1f;
                                 despawnEffect = Fx.smokeCloud;
                                 smokeEffect = Fx.none;
@@ -1786,7 +1787,7 @@ public class ModUnitTypes implements ContentList {
                                 incendAmount = 1;
 
                                 //constant healing
-                                healPercent = 5f;
+                                healPercent = 15f;
                                 collidesTeam = true;
 
                                 colors = new Color[]{ModPal.blackHoleLaserColor.cpy().a(2.4f), ModPal.blackHoleLaserColor.cpy().a(.4f), ModPal.blackHoleLaserColor.cpy().mul(1.9f), Color.white};
@@ -1801,8 +1802,8 @@ public class ModUnitTypes implements ContentList {
                             x = 32f;
                             reload = 20f;
                             recoil = 7f;
-                            shots = 3
-                            inaccuracy = 100f;
+                            shots = 3f;
+                            inaccuracy = 10.0f;
                             shake = 3f;
                             rotate = true;
                             rotateSpeed = 1.3f;
