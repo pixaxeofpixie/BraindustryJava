@@ -15,7 +15,7 @@ import static ModVars.modFunc.print;
 public class ModLogic  implements ApplicationListener {
     public ModLogic(){
         Events.on(EventType.UnitDestroyEvent.class, (e) -> {
-            Seq<UnitType> types = Seq.with(ModUnitTypes.griffon);
+            Seq<UnitType> types = Seq.with(ModUnitTypes.griffon, ModUnitTypes.moureno);
             Unit unit = e.unit;
             if (types.contains(unit.type)) {
                 float anglePart=360f/5f;
