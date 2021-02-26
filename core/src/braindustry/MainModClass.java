@@ -182,6 +182,7 @@ public class MainModClass extends Mod {
     }
     static Seq<String> names=new Seq<>();
     public static boolean inPackage(String packageName,Object obj){
+        if (packageName==null || obj==null)return false;
         String name = obj.getClass().getPackage().getName();
         if (!names.contains(name)) {
             names.add(name);
