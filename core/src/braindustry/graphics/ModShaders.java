@@ -86,9 +86,16 @@ public class ModShaders {
             boolean xAxis=true;
             float forcePercent=0.1f;
             float otherAxisMul=10f;
+            float timeScl=1f;
             private WaveShaderPacker(){
 
             }
+
+            public WaveShaderPacker timeScl(float timeScl) {
+                this.timeScl = timeScl;
+                return this;
+            }
+
             public WaveShaderPacker xAxis(boolean xAxis) {
                 this.xAxis = xAxis;
                 return this;
@@ -130,7 +137,7 @@ public class ModShaders {
         public void apply() {
             super.apply();
             float u_time = Time.time;
-            setUniformf("u_time", u_time);
+            setUniformf("u_time", u_time*packer.timeScl);
             setUniformf("u_delta", Time.delta / 60.f);
             setUniformi("u_xAxis",Mathf.num(packer.xAxis));
             setUniformf("u_forcePercent",packer.forcePercent);

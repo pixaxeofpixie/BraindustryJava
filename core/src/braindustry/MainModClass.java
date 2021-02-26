@@ -27,7 +27,6 @@ import braindustry.gen.ModPlayer;
 import braindustry.gen.StealthUnitc;
 import braindustry.graphics.ModShaders;
 import braindustry.type.StealthUnitType;
-import braindustry.ui.fragments.ModMenuFragment;
 import braindustry.world.ModBlock;
 import mindustry.Vars;
 import mindustry.content.Blocks;
@@ -65,7 +64,7 @@ public class MainModClass extends Mod {
 
     public MainModClass() {
         EventOn(DisposeEvent.class, (d) -> {
-            if (Vars.ui.menufrag instanceof ModMenuFragment) ((ModMenuFragment) Vars.ui.menufrag).dispose();
+            modUI.dispose();
             Vars.ui.dispose();
         });
         modInfo = Vars.mods.getMod(this.getClass());
@@ -189,14 +188,6 @@ public class MainModClass extends Mod {
         } catch (Exception e){
             return false;
         }
-//        if (!names.contains(name)) {
-//            names.add(name);
-//            Log.info("package: @",name);
-//        }
-        boolean b = name.startsWith(packageName + ".");
-        if (b){
-//            Log.info("obj: @,class: @",obj,obj.getClass());
-        }
-        return b;
+        return name.startsWith(packageName + ".");
     }
 }
