@@ -47,7 +47,7 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.legs;
                 this.groundLayer = 60.0F;
                 this.localizedName = "Blast";
-                this.description = "Small firework unit with high speed.";
+                this.description = "Small spider unit with high speed and firework guns.";
                 this.health = 210;
                 this.speed = 0.56f;
                 this.mechSideSway = 0.25f;
@@ -78,6 +78,8 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 13;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 1;
+                                this.shots = 8;
+                                this.shotDelay = 2;
                                 this.rotate = true;
                                 this.shootSound = Sounds.laser;
                                 this.bullet = new SapBulletType() {
@@ -134,8 +136,8 @@ public class ModUnitTypes implements ContentList {
                                 this.y = -1.5f;
                                 this.shootY = 3;
                                 this.reload = 20;
-                                this.shots = 7;
-                                this.shotDelay = 3;
+                                this.shots = 15;
+                                this.shotDelay = 2;
                                 this.inaccuracy = 9;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 1;
@@ -191,8 +193,8 @@ public class ModUnitTypes implements ContentList {
                                 this.rotateSpeed = 1.2f;
                                 this.x = 10;
                                 this.y = -7f;
-                                this.shots = 32;
-                                this.shotDelay = 1;
+                                this.shots = 22;
+                                this.shotDelay = 2;
                                 this.inaccuracy = 14;
                                 this.mirror = true;
                                 this.shootSound = Sounds.laser;
@@ -290,9 +292,9 @@ public class ModUnitTypes implements ContentList {
                                 this.rotateSpeed = 1.6f;
                                 this.x = 10;
                                 this.y = -7f;
-                                this.shots = 3;
+                                this.shots = 10;
                                 this.inaccuracy = 8;
-                                this.shotDelay = 15;
+                                this.shotDelay = 2;
                                 this.mirror = true;
                                 this.shootSound = Sounds.laserblast;
                                 this.bullet = new SapBulletType() {
@@ -319,7 +321,7 @@ public class ModUnitTypes implements ContentList {
             {
                 this.constructor = Types.legs;
                 this.groundLayer = 75.0F;
-                this.localizedName = "Aquila";
+                this.localizedName = "Firework";
                 this.description = "Fires a Sap bullets and big large laser.";
                 this.drag = 0.1f;
                 this.speed = 0.5f;
