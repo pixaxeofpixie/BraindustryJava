@@ -1,20 +1,22 @@
-package ModVars.Classes.UI;
+package braindustry.core;
 
 import ModVars.Classes.UI.Cheat.ModCheatMenu;
+import ModVars.Classes.UI.CheatUI;
+import ModVars.Classes.UI.ModControlsDialog;
 import ModVars.Classes.UI.settings.AdvancedSettingsMenuDialog;
 import ModVars.Classes.UI.settings.ModOtherSettingsDialog;
 import ModVars.Classes.UI.settings.ModSettingsDialog;
 import arc.Core;
 import arc.scene.event.Touchable;
 import arc.scene.ui.layout.WidgetGroup;
+import arc.util.Disposable;
 import braindustry.ModListener;
 import braindustry.gen.StealthUnitc;
 import braindustry.graphics.g3d.ModPlanetRenderer;
 import braindustry.input.ModBinding;
 import braindustry.input.ModKeyBinds;
 import braindustry.ui.dialogs.ModPlanetDialog;
-import braindustry.ui.fragments.ModHudFragment;
-import braindustry.ui.fragments.ModMenuFragment;
+import braindustry.ui.fragments.*;
 import mindustry.Vars;
 import mindustry.ui.dialogs.BaseDialog;
 import braindustry.ui.AdvancedContentInfoDialog;
@@ -23,8 +25,16 @@ import static ModVars.Classes.UI.CheatUI.*;
 import static ModVars.modVars.*;
 import static braindustry.input.ModBinding.*;
 
-public class ModUI {
+public class ModUI implements Disposable {
+    static {
+        //x axis or not
+        ModMenuFragment.xAxis(true);
+        //wave size in pixels
+        ModMenuFragment.pixels(10);
+        //wave force
+        ModMenuFragment.otherAxisMul(50);
 
+    }
     public void init() {
         
         if (Vars.headless) return;
@@ -65,6 +75,7 @@ public class ModUI {
         });
         Core.scene.add(Vars.ui.menuGroup);
         Vars.ui.menufrag = new ModMenuFragment();
+
 //        Vars.ui.menufrag.
         Vars.ui.menufrag.build(Vars.ui.menuGroup);
         AdvancedContentInfoDialog.init();
@@ -96,5 +107,10 @@ public class ModUI {
         controls = new ModControlsDialog();
         otherSettingsDialog = new ModOtherSettingsDialog();
         settingsDialog = new ModSettingsDialog();
+    }
+
+    @Override
+    public void dispose() {
+        if (Vars.ui.menufrag instanceof ModMenuFragment) ((ModMenuFragment) Vars.ui.menufrag).dispose();
     }
 }

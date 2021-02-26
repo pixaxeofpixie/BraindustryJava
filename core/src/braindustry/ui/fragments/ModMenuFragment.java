@@ -8,7 +8,6 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Interp;
 import arc.math.Mathf;
-import arc.scene.Action;
 import arc.scene.Group;
 import arc.scene.actions.Actions;
 import arc.scene.event.Touchable;
@@ -27,7 +26,6 @@ import mindustry.core.Platform;
 import mindustry.core.Version;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
-import mindustry.graphics.MenuRenderer;
 import mindustry.graphics.Pal;
 import mindustry.ui.Fonts;
 import mindustry.ui.MobileButton;
@@ -40,18 +38,35 @@ import java.util.Objects;
 import static ModVars.modFunc.fullName;
 
 public class ModMenuFragment extends MenuFragment {
+    protected static boolean xAxis = false;
+    protected static float pixels = 1f;
+    protected static int otherAxisMul = 50;
     private Table container;
     private Table submenu;
     private Button currentMenu;
     private ModMenuShaderRender renderer;
-public void dispose(){
 
-    this.renderer.dispose();
-}
     public ModMenuFragment() {
         Events.on(EventType.DisposeEvent.class, (event) -> {
             dispose();
         });
+    }
+
+    public static void xAxis(boolean xAxis) {
+        ModMenuFragment.xAxis = xAxis;
+    }
+
+    public static void pixels(float pixels) {
+        ModMenuFragment.pixels = pixels;
+    }
+
+    public static void otherAxisMul(int otherAxisMul) {
+        ModMenuFragment.otherAxisMul = otherAxisMul;
+    }
+
+    public void dispose() {
+
+        this.renderer.dispose();
     }
 
     public void build(Group parent) {
@@ -115,17 +130,16 @@ public void dispose(){
 
         String versionText = (Version.build == -1 ? "[#fc8140aa]" : "[#ffffffba]") + Version.combined();
         group.fill((x, y, w, h) -> {
-            TextureRegion logo = Core.atlas.find(fullName("logo"),"logo");
-            float width = (float)Core.graphics.getWidth();
-            float height = (float)Core.graphics.getHeight() - Core.scene.marginTop;
+            TextureRegion logo = Core.atlas.find(fullName("logo"), "logo");
+            float width = (float) Core.graphics.getWidth();
+            float height = (float) Core.graphics.getHeight() - Core.scene.marginTop;
             float logoscl = Scl.scl(1.0F);
-            float logow = Math.min((float)logo.width * logoscl, (float)Core.graphics.getWidth() - Scl.scl(20.0F));
-            float logoh = logow * (float)logo.height / (float)logo.width;
-            float fx = (float)((int)(width / 2.0F));
-            float fy = (float)((int)(height - 6.0F - logoh)) + logoh / 2.0F - (Core.graphics.isPortrait() ? Scl.scl(30.0F) : 0.0F);
+            float logow = Math.min((float) logo.width * logoscl, (float) Core.graphics.getWidth() - Scl.scl(20.0F));
+            float logoh = logow * (float) logo.height / (float) logo.width;
+            float fx = (float) ((int) (width / 2.0F));
+            float fy = (float) ((int) (height - 6.0F - logoh)) + logoh / 2.0F - (Core.graphics.isPortrait() ? Scl.scl(30.0F) : 0.0F);
             Draw.color();
-            ModShaders.logoRender.set();
-            Draw.rect(logo, fx, fy, logow, logoh);
+            ModShaders.waveShader.rect(logo, fx, fy, logow, logoh).forcePercent(pixels / (float) (xAxis ? logo.height : logo.width)).xAxis(xAxis).otherAxisMul(otherAxisMul);
             Draw.shader();
             Fonts.def.setColor(Color.white);
             Fonts.def.draw(versionText, fx, fy - logoh / 2.0F, 1);
@@ -135,7 +149,7 @@ public void dispose(){
     private void buildMobile() {
         this.container.clear();
         this.container.name = "buttons";
-        this.container.setSize((float)Core.graphics.getWidth(), (float)Core.graphics.getHeight());
+        this.container.setSize((float) Core.graphics.getWidth(), (float) Core.graphics.getHeight());
         float size = 120.0F;
         this.container.defaults().size(size).pad(5.0F).padTop(4.0F);
         MobileButton play = new MobileButton(Icon.play, "@campaign", () -> {
@@ -210,11 +224,11 @@ public void dispose(){
 
     private void buildDesktop() {
         this.container.clear();
-        this.container.setSize((float)Core.graphics.getWidth(), (float)Core.graphics.getHeight());
+        this.container.setSize((float) Core.graphics.getWidth(), (float) Core.graphics.getHeight());
         float width = 230.0F;
         Drawable background = Styles.black6;
         this.container.left();
-        this.container.add().width((float)Core.graphics.getWidth() / 10.0F);
+        this.container.add().width((float) Core.graphics.getWidth() / 10.0F);
         this.container.table(background, (t) -> {
             t.defaults().width(width).height(70.0F);
             t.name = "buttons";
@@ -306,11 +320,11 @@ public void dispose(){
         Buttoni[] var3 = buttons;
         int var4 = buttons.length;
 
-        for(int var5 = 0; var5 < var4; ++var5) {
+        for (int var5 = 0; var5 < var4; ++var5) {
             Buttoni b = var3[var5];
             if (b != null) {
                 Button[] out = new Button[]{null};
-                out[0] = (Button)t.button(b.text, b.icon, Styles.clearToggleMenut, () -> {
+                out[0] = (Button) t.button(b.text, b.icon, Styles.clearToggleMenut, () -> {
                     if (this.currentMenu == out[0]) {
                         this.currentMenu = null;
                         this.fadeOutMenu();
@@ -318,7 +332,7 @@ public void dispose(){
                         this.currentMenu = out[0];
                         this.submenu.clearChildren();
                         this.fadeInMenu();
-                        this.submenu.add().height(((float)Core.graphics.getHeight() - Core.scene.marginTop - Core.scene.marginBottom - out[0].getY(10)) / Scl.scl(1.0F));
+                        this.submenu.add().height(((float) Core.graphics.getHeight() - Core.scene.marginTop - Core.scene.marginBottom - out[0].getY(10)) / Scl.scl(1.0F));
                         this.submenu.row();
                         this.buttons(this.submenu, b.submenu);
                     } else {
