@@ -35,25 +35,20 @@ public class AStatCatProcessor extends ModBaseProcessor {
     private void addFields(Stype type,ObjectMap<String,String> map){
         for (Svar f : type.fields()) {
             VariableTree tree = f.tree();
-            print("f: @, enc: @",f,f.tname());
             //add initializer if it exists
             if (tree.getInitializer() != null) {
                 String init = tree.getInitializer().toString();
                 map.put(f.name(), init);
-                print("elem: @, value: @", f.descString(), init);
             }
         }
     }
     @Override
     public void process(RoundEnvironment env) throws Exception {
         Stype type = types(ModAnnotations.CustomStatCat.class).first();
-        print("=-=-=-=-");
         TypeElement typeElement = this.processingEnv.getElementUtils().getTypeElement(ClassName.get(StatCat.class).reflectionName());
         Stype parent = new Stype(typeElement);
         addFields(type, enumVars);
         addFieldsReflect(parentEnumVars,StatCat.class);
-
-        print("@", parent.fields().size);
 
         for (Smethod method : type.methods()) {
             if (method.is(Modifier.ABSTRACT) || method.is(Modifier.NATIVE)) continue;
