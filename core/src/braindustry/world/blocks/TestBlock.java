@@ -14,6 +14,9 @@ import arc.struct.Seq;
 import arc.util.Eachable;
 import arc.util.Strings;
 import arc.util.Tmp;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
+import braindustry.annotations.ModAnnotations;
 import braindustry.content.ModFx;
 import braindustry.graphics.ModShaders;
 import mindustry.Vars;
@@ -21,6 +24,7 @@ import mindustry.entities.units.BuildPlan;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
+import mindustry.gen.Tex;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.ui.dialogs.BaseDialog;
@@ -33,6 +37,13 @@ import static ModVars.modFunc.fullName;
 
 public class TestBlock extends Block {
     public final int timerAny;
+    private final static int doubleLength=4,triableLength=1;
+    public @ModAnnotations.Load(value = "@-2-#", length = doubleLength,fallback = "@")
+    TextureRegion[] doubleSize;
+    public @ModAnnotations.Load(value = "@-3-#", length = triableLength,fallback = "@")
+    TextureRegion[] triableSize;
+    public @ModAnnotations.Load(value = "@-2-top")
+    TextureRegion doubleTop;
 
     public TestBlock(String name) {
         super(name);
@@ -41,6 +52,13 @@ public class TestBlock extends Block {
         this.destructible = true;
         this.update = true;
         configurable = true;
+        saveConfig=true;
+        this.<Integer,TestBlockBuild>config(Integer.class,(build,value)->{
+            build.selectedSprite=value%build.getSizeSprites().length;
+        });
+        this.<TestBlockBuild>configClear(build->{
+            build.selectedSprite=1;
+        });
     }
 
     @Override
@@ -50,6 +68,12 @@ public class TestBlock extends Block {
             return;
         }
         Core.atlas.addRegion(this.name, Core.atlas.find(fullName("testBlock")));
+        for (int i = 0; i < doubleLength; i++) {
+            Core.atlas.addRegion(Strings.format("@-2-@",name,i), Core.atlas.find(fullName(Strings.format("testBlock-2-@",i+1))));
+        }
+        for (int i = 0; i < triableLength; i++) {
+            Core.atlas.addRegion(Strings.format("@-3-@",name,i), Core.atlas.find(fullName(Strings.format("testBlock-3-@",i+1))));
+        }
         super.load();
 //        this.region=Core.atlas.find(getFullName("testBlock"));
     }
@@ -57,10 +81,6 @@ public class TestBlock extends Block {
     public TextureRegion editorIcon() {
         if (this.editorIcon == null) {
             this.editorIcon = Core.atlas.find(this.name + "-icon-editor");
-            float v = editorIcon.v;
-            float v2 = editorIcon.v2;
-            editorIcon.v = v2;
-            editorIcon.v2 = v;
         }
         return editorIcon;
     }
@@ -76,15 +96,17 @@ public class TestBlock extends Block {
 
     public class TestBlockBuild extends Building implements BuildingLabel {
         private float time = 0;
-        private boolean spriteListing =false,move=true;
-        private int spriteIndex =0;
+        private boolean spriteListing = false, move = true;
+        private int spriteIndex = 1;
+        private int selectedSprite;
+
         @Override
         public void buildConfiguration(Table table) {
             super.buildConfiguration(table);
             TestBlockBuild me = this;
             table.table((t) -> {
                 t.button(Icon.up, () -> {
-                    spriteListing=!spriteListing;
+                    spriteListing = !spriteListing;
                 });
                 t.button(Icon.terminal, () -> {
                     ModFx.Spirals.at(x, y, size, Pal.lancerLaser);
@@ -94,22 +116,22 @@ public class TestBlock extends Block {
                         @Override
                         public void draw() {
                             Draw.draw(Draw.z(), () -> {
-                                move=true;
-                                Tmp.v1.set(Core.graphics.getWidth() / 2f, Core.graphics.getHeight()  / 2f);
-                                if (spriteListing){
+                                move = true;
+                                Tmp.v1.set(Core.graphics.getWidth() / 2f, Core.graphics.getHeight() / 2f);
+                                if (spriteListing) {
                                     Seq<TextureAtlas.AtlasRegion> regions = Core.atlas.getRegions();
-                                    spriteIndex =Mathf.mod(spriteIndex,regions.size);
+                                    spriteIndex = Mathf.mod(spriteIndex, regions.size);
                                     TextureAtlas.AtlasRegion drawRegion = regions.get(spriteIndex);
                                     ModShaders.testShader.set(me, drawRegion);
 //                                super.draw();
-                                    Draw.rect(drawRegion,Tmp.v1.x,Tmp.v1.y,Core.graphics.getWidth(), Core.graphics.getHeight());
+                                    Draw.rect(drawRegion, Tmp.v1.x, Tmp.v1.y, Core.graphics.getWidth(), Core.graphics.getHeight());
                                     Draw.shader();
-                                } else{
+                                } else {
                                     ModShaders.testShader.set(me, region);
-                                    Vec2 pos=ModShaders.worldToScreen(TestBlockBuild.this);
-                                    float scl=Vars.renderer.getDisplayScale();
+                                    Vec2 pos = ModShaders.worldToScreen(TestBlockBuild.this);
+                                    float scl = Vars.renderer.getDisplayScale();
                                     float size = TestBlock.this.size * 8 * scl;
-                                    ModShaders.waveShader.rect(region,pos.x,pos.y, size,size).forcePercent(5f/region.width).otherAxisMul(50);
+                                    ModShaders.waveShader.rect(getRegion(), pos.x, pos.y, size, size).forcePercent(5f / region.width).otherAxisMul(50);
                                     Draw.shader();
                                 }
 
@@ -119,24 +141,34 @@ public class TestBlock extends Block {
                     dialog.addCloseListener();
                     dialog.show();
                 });
-            });
-            table.slider(0, 360, .001f, modVars.settings.getFloat("angle"), (f) -> {
-                modVars.settings.setFloat("angle", Mathf.round(f,0.001f));
             }).row();
-            table.label(()->{
-                String angle = Mathf.round(modVars.settings.getFloat("angle"),1f) +"";
-                StringBuilder builder=new StringBuilder(angle);
-                while (builder.length()<3){
-                    builder.insert(0,"0");
-                }
-                return builder.toString();
+            table.table(Tex.button, t->{
+                t.slider(0, 360, .001f, modVars.settings.getFloat("angle"), (f) -> {
+                    modVars.settings.setFloat("angle", Mathf.round(f, 0.001f));
+                }).row();
+                t.label(() -> {
+                    String angle = Mathf.round(modVars.settings.getFloat("angle"), 1f) + "";
+                    StringBuilder builder = new StringBuilder(angle);
+                    while (builder.length() < 3) {
+                        builder.insert(0, "0");
+                    }
+                    return builder.toString();
+                });
             }).row();
-            table.label(()->{
-                Seq<TextureAtlas.AtlasRegion> regions = Core.atlas.getRegions();
-                return Strings.format("@/@",spriteIndex, regions.size);
+            table.table(Tex.button,t->{
+                TextureRegion[] sizeSprites = getSizeSprites();
+                int max = sizeSprites.length;
+                t.slider(1, max, 1, selectedSprite, (f) -> {
+                    configure(Mathf.mod(Mathf.round(f, 1)-1,max));
+                }).row();
+                t.label(() -> {
+                    return Strings.format("@/@",selectedSprite+1,max);
+                });
             }).row();
         }
-
+        public TextureRegion[] getSizeSprites(){
+            return  size == 2 ? doubleSize : size == 3 ? triableSize : new TextureRegion[0];
+        }
         @Override
         public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
 
@@ -161,6 +193,11 @@ public class TestBlock extends Block {
             }
         }
 
+        @Override
+        public byte version() {
+            return 1;
+        }
+
         public Building front() {
             return this.nearby(this.rotation);
         }
@@ -171,19 +208,20 @@ public class TestBlock extends Block {
             time += this.delta() / 60f;
 
             if (move && spriteListing && timer.get(timerAny, 1)) {
-                spriteIndex+= spriteListing ?1:-1;
+                spriteIndex += spriteListing ? 1 : -1;
                 Seq<TextureAtlas.AtlasRegion> regions = Core.atlas.getRegions();
-                spriteIndex =Mathf.mod(spriteIndex,regions.size);
-                move=false;
+                spriteIndex = Mathf.mod(spriteIndex, regions.size);
+                move = false;
 //                Fx.upgradeCore.at(this.x,this.y,this.block.size, Color.white);
             }
         }
 
         public void draw() {
-            Draw.rect(this.block.region, this.x, this.y, this.block.size * 8, this.block.size * 8, 0.0F);
+            TextureRegion region = getRegion();
+            Draw.rect(region, this.x, this.y, this.block.size * 8, this.block.size * 8, 0.0F);
 //            Draw.rect(editorIcon(), x, y + size * 8, size * 8, size * 8, 0f);
             Draw.alpha(0.5f);
-            ModFill.swirl(x,y,(size+1)*8, modVars.settings.getFloat("angle")/360f,rotdeg());
+            ModFill.doubleSwirl(x, y,(size) * 8, (size + 1) * 8, modVars.settings.getFloat("angle") / 360f, rotdeg());
 //            Lines.stroke(40f);
 //            Lines.swirl(x+(size+2)*8,y,(size+1)*8, modVars.settings.getFloat("angle")/360f,rotdeg());
             Draw.reset();
@@ -196,6 +234,28 @@ public class TestBlock extends Block {
                 Draw.alpha(0.25f);
                 float offset = Mathf.ceil(size / 2f);
                 Lines.rect(front.x - offset, front.y - offset, size, size);
+            }
+        }
+
+        protected TextureRegion getRegion() {
+            TextureRegion[] sizeSprites = getSizeSprites();
+            TextureRegion region = this.block.region;
+            if (sizeSprites.length!=0) {
+                region=sizeSprites[selectedSprite];
+            }
+            return region;
+        }
+
+        @Override
+        public void write(Writes write) {
+            super.write(write);
+            write.i(selectedSprite);
+        }
+
+        @Override
+        public void read(Reads read, byte revision) {
+            if (revision>0){
+                selectedSprite=read.i()%getSizeSprites().length;
             }
         }
     }

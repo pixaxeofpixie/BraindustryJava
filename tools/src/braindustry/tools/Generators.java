@@ -21,6 +21,7 @@ import arc.util.Scaling;
 import arc.util.noise.Noise;
 import arc.util.noise.RidgedPerlin;
 import arc.util.noise.VoronoiNoise;
+import braindustry.gen.ModContentRegions;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.Team;
 import mindustry.gen.Legsc;
@@ -113,7 +114,7 @@ public class Generators {
                     continue;
 
                 block.load();
-
+                ModContentRegions.loadRegions(block);
                 TextureRegion[] regions = block.getGeneratedIcons();
 
                 if (block instanceof Floor) {
@@ -306,6 +307,7 @@ public class Generators {
 
             try {
                 type.load();
+                ModContentRegions.loadRegions(type);
                 type.init();
 
                 Color outc = Pal.darkerMetal;

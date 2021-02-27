@@ -134,18 +134,14 @@ public class AStatProcessor extends ModBaseProcessor {
     private void addUnInitedFields(Stype type, ObjectMap<String, Svar> map) {
         for (Svar f : type.fields()) {
             VariableTree tree = f.tree();
-//            print("f: @, enc: @",f,f.tname());
-            //add initializer if it exists
             if (tree.getInitializer() == null) {
                 String init = f.cname().simpleName();
                 map.put(f.name(), f);
-                print("f: @, value: @", f.descString(), init);
             }
         }
     }
 
-    private void addFieldsReflect(ObjectMap<String, String> map, Class<? extends Stat> aClass) {
-//        Seq<Svar> fields = type.fields();
+    private void addFieldsReflect(ObjectMap<String, String> map, Class<Stat> aClass) {
         for (Stat field : aClass.getEnumConstants()) {
             StatCat category = field.category;
             map.put(Strings.format("@", field.name()), category == StatCat.general ? "" : Strings.format("AStatCat.@", category.name()));

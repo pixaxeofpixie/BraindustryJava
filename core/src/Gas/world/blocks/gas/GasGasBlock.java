@@ -11,10 +11,9 @@ import mindustry.world.meta.BlockGroup;
 
 public class GasGasBlock extends GasBlock {
 
-    public @GasAnnotations.Load("@-gas")
-    TextureRegion gasRegion;
+    public @GasAnnotations.Load("@-gas") TextureRegion gasRegion;
     public @GasAnnotations.Load("@-top") TextureRegion topRegion;
-    public @GasAnnotations.Load("@-bottom") TextureRegion bottomRegion;
+    public @GasAnnotations.Load(value = "@-bottom",fallback = "@") TextureRegion bottomRegion;
     public GasGasBlock(String name) {
         super(name);
         update = true;

@@ -30,7 +30,6 @@ public class ModFill extends Fill {
             floats.add(vector.x + x, vector.y + y);
         };
         int startI=0;
-        int maxOffset=0;
         if (max%2!=0){
             startI=1;
             cons.get(0f);
@@ -38,11 +37,97 @@ public class ModFill extends Fill {
             cons.get(1f);
 //            cons.get(2f);
         }
-        for(float i = startI; i < (max-maxOffset); i+=2f) {
+        for(float i = startI; i < (max); i+=2f) {
             cons.get(i);
             cons.get(i+1f);
             cons.get(i+2f);
         }
        poly(floats);
+    }
+
+    public static void spikesSwirl(float x, float y, float radius1,float radius2, float finion, float angle) {
+        final float sides = 50;
+        int max = (int)(sides * (finion + 0.001F));
+        vector.set(0.0F, 0.0F);
+        floats.clear();
+//        floats.add(x,y);
+        Cons<Float> cons=(i)->{
+            vector.set(radius1, 0.0F).setAngle(360.0F /sides * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+            vector.set(radius2, 0.0F).setAngle(360.0F /sides * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+        };
+        Runnable flush=()->{
+            poly(floats);
+            floats.clear();
+        };
+        int startI=0;
+        int maxOffset=0;
+        if (max%2!=0){
+            startI=1;
+            cons.get(0f);
+            cons.get(1f);
+            flush.run();
+            cons.get(1f);
+            cons.get(1f);
+            flush.run();
+//            cons.get(1f);
+//            cons.get(2f);
+        }
+
+        for(float i = startI; i < (max-maxOffset); i+=2f) {
+            cons.get(i);
+            cons.get(i+1f);
+            flush.run();
+            cons.get(i+1f);
+            cons.get(i+2f);
+            flush.run();
+        }
+//        poly(floats);
+    }
+    public static void doubleSwirl(float x, float y, float radius1,float radius2, float finion, float angle) {
+        final float sides = 50;
+        int max = (int)(sides * (finion + 0.001F));
+        vector.set(0.0F, 0.0F);
+        floats.clear();
+//        floats.add(x,y);
+        Cons<Float> cons=(i)->{
+            vector.set(radius1, 0.0F).setAngle(360.0F /sides * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+            vector.set(radius2, 0.0F).setAngle(360.0F /sides * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+        };
+        Cons<Float> undoCons=(i)->{
+            vector.set(radius2, 0.0F).setAngle(360.0F /sides * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+            vector.set(radius1, 0.0F).setAngle(360.0F /sides * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+        };
+        Runnable flush=()->{
+            poly(floats);
+            floats.clear();
+        };
+        int startI=0;
+        if (max%2!=0){
+            startI=1;
+            cons.get(0f);
+            undoCons.get(1f);
+            flush.run();
+            cons.get(1f);
+            undoCons.get(1f);
+            flush.run();
+//            cons.get(1f);
+//            cons.get(2f);
+        }
+
+        for(float i = startI; i < (max); i+=2f) {
+            cons.get(i);
+            undoCons.get(i+1f);
+            flush.run();
+            cons.get(i+1f);
+            undoCons.get(i+2f);
+            flush.run();
+        }
+//        poly(floats);
     }
 }
