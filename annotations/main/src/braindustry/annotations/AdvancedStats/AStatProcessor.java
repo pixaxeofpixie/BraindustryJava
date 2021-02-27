@@ -36,7 +36,7 @@ public class AStatProcessor extends ModBaseProcessor {
         rounds = 1;
     }
 
-    private void addFields(Stype type, ObjectMap<String, String> map) {
+    private void addEnums(Stype type, TypeSpec.Builder map) {
         for (Svar f : type.fields()) {
             VariableTree tree = f.tree();
             //add initializer if it exists
@@ -44,7 +44,8 @@ public class AStatProcessor extends ModBaseProcessor {
                 String replace = tree.getInitializer().toString().replace(Strings.format("new @(", type.name()), "");
                 replace = replace.replace("AStatCat", "StatCat").replace("StatCat", "AStatCat");
                 String init = replace.substring(0, replace.length() - 1);
-                map.put(f.name(), init);
+                TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder(init);
+                map.addEnumConstant(f.name(), builder.build());
             }
         }
     }
@@ -54,8 +55,6 @@ public class AStatProcessor extends ModBaseProcessor {
         Stype type = types(ModAnnotations.CustomStat.class).first();
         TypeElement typeElement = this.processingEnv.getElementUtils().getTypeElement(ClassName.get(Stat.class).reflectionName());
         Stype parent = new Stype(typeElement);
-        addFields(type, enumVars);
-        addFieldsReflect(parentEnumVars, Stat.class);
         addUnInitedFields(type, fieldsVars);
 
         for (Smethod method : type.methods()) {
@@ -75,17 +74,10 @@ public class AStatProcessor extends ModBaseProcessor {
             methodBlocks.put(method, value.substring(1, value.length() - 1) //fix vars
             );
         }
-        TypeSpec.Builder aStatCat = TypeSpec.enumBuilder("AStat").addModifiers(Modifier.PUBLIC);
+        TypeSpec.Builder aStat = TypeSpec.enumBuilder("AStat").addModifiers(Modifier.PUBLIC);
 
-//        Seq<String> vars=new Seq<String>().addAll(parentEnumVars.keys().toSeq()).addAll(enumVars.keys().toSeq());
-        ObjectMap<String, String> vars = new ObjectMap<>();
-        vars.putAll(parentEnumVars);
-        vars.putAll(enumVars);
-
-        vars.each((var, init) -> {
-            TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder(init);
-            aStatCat.addEnumConstant(var, builder.build());
-        });
+        addEnums(type, aStat);
+        addEnumsReflect(aStat);
         fieldsVars.each((var, field) -> {
             Set<Modifier> flags = field.tree().getModifiers().getFlags();
             Seq<Modifier> flagsS = Seq.with().addAll(flags).map(o -> (Modifier) o);
@@ -93,7 +85,7 @@ public class AStatProcessor extends ModBaseProcessor {
             if (field.cname().simpleName().equals("StatCat")) {
                 tname = ClassName.get(metaPackage, "AStatCat");
             }
-            aStatCat.addField(tname, var, flagsS.toArray(Modifier.class));
+            aStat.addField(tname, var, flagsS.toArray(Modifier.class));
         });
         type.constructors().each(constructor -> {
             MethodSpec.Builder builder = MethodSpec.constructorBuilder();
@@ -108,7 +100,7 @@ public class AStatProcessor extends ModBaseProcessor {
             String body = constructor.tree().getBody().toString();
             body = body.substring(1, body.length() - 1).replace("AStatCat", "StatCat").replace("StatCat", "AStatCat");
             builder.addCode(body);
-            aStatCat.addMethod(builder.build());
+            aStat.addMethod(builder.build());
         });
 //        MethodSpec.methodBuilder()
         methodBlocks.each((method, block) -> {
@@ -123,12 +115,12 @@ public class AStatProcessor extends ModBaseProcessor {
                 returnType = ClassName.get(metaPackage, "AStat");
             }
             builder.returns(returnType);
-            aStatCat.addMethod(builder.build());
+            aStat.addMethod(builder.build());
         });
         Seq<ClassName> imports = new Seq<>();
         imports.add(ClassName.get(Core.class), ClassName.get(Seq.class), ClassName.get(Locale.class));
         imports.add(ClassName.get(metaPackage, "AStatCat"));
-        write(aStatCat, metaPackage, imports, 0);
+        write(aStat, metaPackage, imports, 0);
     }
 
     private void addUnInitedFields(Stype type, ObjectMap<String, Svar> map) {
@@ -141,10 +133,12 @@ public class AStatProcessor extends ModBaseProcessor {
         }
     }
 
-    private void addFieldsReflect(ObjectMap<String, String> map, Class<Stat> aClass) {
-        for (Stat field : aClass.getEnumConstants()) {
+    private void addEnumsReflect(TypeSpec.Builder map) {
+        for (Stat field : Seq.<Stat>with().addAll(Stat.values()).sort(Enum::ordinal)) {
             StatCat category = field.category;
-            map.put(Strings.format("@", field.name()), category == StatCat.general ? "" : Strings.format("AStatCat.@", category.name()));
+            String init = category == StatCat.general ? "" : Strings.format("AStatCat.@", category.name());
+            TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder(init);
+            map.addEnumConstant(Strings.format("@", field.name()), builder.build());
         }
     }
 }

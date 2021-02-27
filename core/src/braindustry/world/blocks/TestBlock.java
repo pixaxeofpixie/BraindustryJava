@@ -99,6 +99,7 @@ public class TestBlock extends Block {
         private boolean spriteListing = false, move = true;
         private int spriteIndex = 1;
         private int selectedSprite;
+        private float spikeOffset=0.5f;
 
         @Override
         public void buildConfiguration(Table table) {
@@ -158,12 +159,22 @@ public class TestBlock extends Block {
             table.table(Tex.button,t->{
                 TextureRegion[] sizeSprites = getSizeSprites();
                 int max = sizeSprites.length;
-                t.slider(1, max, 1, selectedSprite+1, (f) -> {
-                    configure(Mathf.mod(Mathf.round(f, 1)-1,max));
+                t.slider(-1, 1, 0.000001f, spikeOffset, (f) -> {
+                    spikeOffset=f;
                 }).row();
                 t.label(() -> {
+                    return Strings.format("@",spikeOffset);
+                }).right();
+            }).row();
+            table.table(Tex.button,t->{
+                TextureRegion[] sizeSprites = getSizeSprites();
+                int max = sizeSprites.length;
+                t.slider(1, max, 1, selectedSprite+1, (f) -> {
+                    configure(Mathf.mod(Mathf.round(f, 1)-1,max));
+                }).row();/*
+                t.label(() -> {
                     return Strings.format("@/@",selectedSprite+1,max);
-                });
+                });*/
             }).row();
         }
         public TextureRegion[] getSizeSprites(){
@@ -178,7 +189,7 @@ public class TestBlock extends Block {
 
         @Override
         public void playerPlaced(Object config) {
-            super.playerPlaced(config);
+            configure(config);
         }
 
         public Building nearby(int rotation) {
@@ -221,7 +232,7 @@ public class TestBlock extends Block {
             Draw.rect(region, this.x, this.y, this.block.size * 8, this.block.size * 8, 0.0F);
 //            Draw.rect(editorIcon(), x, y + size * 8, size * 8, size * 8, 0f);
             Draw.alpha(0.5f);
-            ModFill.doubleSwirl(x, y,(size) * 8, (size + 1) * 8, modVars.settings.getFloat("angle") / 360f, rotdeg());
+            ModFill.spikesSwirl(x, y,(size) * 8, 8, modVars.settings.getFloat("angle") / 360f, rotdeg(),spikeOffset);
 //            Lines.stroke(40f);
 //            Lines.swirl(x+(size+2)*8,y,(size+1)*8, modVars.settings.getFloat("angle")/360f,rotdeg());
             Draw.reset();

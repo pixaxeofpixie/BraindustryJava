@@ -4,7 +4,6 @@ package braindustry.annotations.AdvancedStats;
 import arc.Core;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
-import arc.util.Strings;
 import braindustry.annotations.ModAnnotations;
 import braindustry.annotations.ModBaseProcessor;
 import com.squareup.javapoet.*;
@@ -25,20 +24,18 @@ import javax.lang.model.element.TypeElement;
 })
 public class AStatCatProcessor extends ModBaseProcessor {
     public String metaPackage = "braindustry.world.meta";
-    ObjectMap<String, String> enumVars = new ObjectMap<>();
-    ObjectMap<String, String> parentEnumVars = new ObjectMap<>();
     ObjectMap<Smethod, String> methodBlocks = new ObjectMap<>();
 
     {
         rounds = 1;
     }
-    private void addFields(Stype type,ObjectMap<String,String> map){
+    private void addEnums(Stype type, TypeSpec.Builder map){
         for (Svar f : type.fields()) {
             VariableTree tree = f.tree();
             //add initializer if it exists
             if (tree.getInitializer() != null) {
                 String init = tree.getInitializer().toString();
-                map.put(f.name(), init);
+                map.addEnumConstant(f.name());
             }
         }
     }
@@ -47,8 +44,6 @@ public class AStatCatProcessor extends ModBaseProcessor {
         Stype type = types(ModAnnotations.CustomStatCat.class).first();
         TypeElement typeElement = this.processingEnv.getElementUtils().getTypeElement(ClassName.get(StatCat.class).reflectionName());
         Stype parent = new Stype(typeElement);
-        addFields(type, enumVars);
-        addFieldsReflect(parentEnumVars,StatCat.class);
 
         for (Smethod method : type.methods()) {
             if (method.is(Modifier.ABSTRACT) || method.is(Modifier.NATIVE)) continue;
@@ -68,8 +63,8 @@ public class AStatCatProcessor extends ModBaseProcessor {
             );
         }
         TypeSpec.Builder aStatCat = TypeSpec.enumBuilder("AStatCat").addModifiers(Modifier.PUBLIC);
-        parentEnumVars.keys().toSeq().each(aStatCat::addEnumConstant);
-        enumVars.keys().toSeq().each(aStatCat::addEnumConstant);
+        addEnumsReflect(aStatCat);
+        addEnums(type, aStatCat);
 //        MethodSpec.methodBuilder()
         methodBlocks.each((method,block)->{
             MethodTree tree = method.tree();
@@ -90,10 +85,13 @@ public class AStatCatProcessor extends ModBaseProcessor {
         write(aStatCat, metaPackage, imports,0);
     }
 
-    private void addFieldsReflect( ObjectMap<String, String> map,Class<? extends StatCat> aClass) {
+    private void addEnumsReflect(TypeSpec.Builder map) {
 //        Seq<Svar> fields = type.fields();
-        for (StatCat field : aClass.getEnumConstants()) {
-            map.put(Strings.format("@",field.name()),"new StatCat()");
-        }
+        Seq<StatCat> statCats=new Seq<>();
+        statCats.addAll(StatCat.values());
+        statCats.sort(Enum::ordinal);
+        statCats.each(field->{
+            map.addEnumConstant(field.name());
+        });
     }
 }

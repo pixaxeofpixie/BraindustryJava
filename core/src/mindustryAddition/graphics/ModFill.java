@@ -1,6 +1,7 @@
 package mindustryAddition.graphics;
 
 import arc.func.Cons;
+import arc.func.Cons2;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
 import arc.math.geom.Vec2;
@@ -45,45 +46,39 @@ public class ModFill extends Fill {
        poly(floats);
     }
 
-    public static void spikesSwirl(float x, float y, float radius1,float radius2, float finion, float angle) {
+    public static void spikesSwirl(float x, float y, float radius1,float length, float finion, float angle){
+        spikesSwirl(x,y,radius1,length,finion,angle,0.5f);
+    }
+    public static void spikesSwirl(float x, float y, float radius1,float length, float finion, float angle,float spikeOffset) {
         final float sides = 50;
+        final float radius2=radius1+length;
         int max = (int)(sides * (finion + 0.001F));
         vector.set(0.0F, 0.0F);
         floats.clear();
-//        floats.add(x,y);
-        Cons<Float> cons=(i)->{
-            vector.set(radius1, 0.0F).setAngle(360.0F /sides * i + angle);
+        Cons2<Float,Float> point=(i,radius)->{
+            vector.set(radius, 0.0F).setAngle(360.0F /sides * i + angle);
             floats.add(vector.x + x, vector.y + y);
-            vector.set(radius2, 0.0F).setAngle(360.0F /sides * i + angle);
-            floats.add(vector.x + x, vector.y + y);
-        };
+        } ;
         Runnable flush=()->{
             poly(floats);
             floats.clear();
         };
+        Cons<Float> spike=(i)->{
+            point.get(i,radius1);
+            point.get(i+1f,radius1);
+            point.get(i+spikeOffset,radius2);
+            point.get(i+spikeOffset,radius2);
+            flush.run();
+        };
         int startI=0;
-        int maxOffset=0;
         if (max%2!=0){
             startI=1;
-            cons.get(0f);
-            cons.get(1f);
-            flush.run();
-            cons.get(1f);
-            cons.get(1f);
-            flush.run();
-//            cons.get(1f);
-//            cons.get(2f);
+            spike.get(0f);
         }
 
-        for(float i = startI; i < (max-maxOffset); i+=2f) {
-            cons.get(i);
-            cons.get(i+1f);
-            flush.run();
-            cons.get(i+1f);
-            cons.get(i+2f);
-            flush.run();
+        for(float i = startI; i < max; i++) {
+            spike.get(i);
         }
-//        poly(floats);
     }
     public static void doubleSwirl(float x, float y, float radius1,float radius2, float finion, float angle) {
         final float sides = 50;
