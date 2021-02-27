@@ -48,10 +48,15 @@ public static void print(String obj,Object... args){
     }
     public static void write(TypeSpec.Builder builder) throws Exception{
         write(builder, (Seq<String>)null);
+    }public static void write(TypeSpec.Builder builder,String packageName) throws Exception{
+        write(builder,packageName, (Seq<String>)null);
     }
 
+    public static void write(TypeSpec.Builder builder,String packageName, Seq<ClassName> imports,int ZERO) throws Exception{
+        write(builder,packageName,imports.<String>map(className -> "import "+className.reflectionName()+";"));
+    }
     public static void write(TypeSpec.Builder builder, Seq<ClassName> imports,int ZERO) throws Exception{
-        write(builder,imports.<String>map(className -> "import "+className.reflectionName()+";"));
+        write(builder,packageName,imports,ZERO);
     }
     public void delete(String name) throws IOException{
 //        print("delete name: @",name);
@@ -63,6 +68,9 @@ public static void print(String obj,Object... args){
 
     }
     public static void write(TypeSpec.Builder builder, Seq<String> imports) throws Exception{
+        write(builder,packageName,imports);
+    }
+    public static void write(TypeSpec.Builder builder,String packageName, Seq<String> imports) throws Exception{
 //        Log.logger=new Log.DefaultLogHandler();
 //        Log.err());
         String message = Strings.format("builder.build().name=@", builder.build().name);

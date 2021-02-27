@@ -66,26 +66,28 @@ public class MaterialReactor extends ItemLiquidGenerator {
     }
 
     public class MaterialReactorBuild extends ItemLiquidGenerator.ItemLiquidGeneratorBuild {
-        public boolean work;
+        //        public boolean work;
         public Item item;
         public Liquid liquid;
         public int efficiency;
         public float realEfficiency = -1;
+
         public float realEfficiencyf() {
-            return realEfficiency/(float)maxEfficiency;
+            return realEfficiency / (float) maxEfficiency;
         }
+
         public float efficiencyf() {
-            return (float)efficiency/(float)maxEfficiency;
+            return (float) efficiency / (float) maxEfficiency;
         }
 
         @Override
         public Building init(Tile tile, Team team, boolean shouldAdd, int rotation) {
             Building building = super.init(tile, team, shouldAdd, rotation);
 
-            item=null;
-            liquid=null;
-            work=false;
-            efficiency=1;
+            item = null;
+            liquid = null;
+//            work=false;
+            efficiency = 1;
 
             return building;
         }
@@ -93,7 +95,7 @@ public class MaterialReactor extends ItemLiquidGenerator {
         public void buildConfiguration(Table table) {
             table.table(Tex.button, t -> {
                 t.slider(0, (float) maxEfficiency, 1, efficiency, (value) -> {
-                    efficiency=(Mathf.round(value, 1));
+                    efficiency = (Mathf.round(value, 1));
                 }).width(240).color(Color.valueOf("FFFFFF"));
             });
         }
@@ -101,10 +103,14 @@ public class MaterialReactor extends ItemLiquidGenerator {
         public void draw() {
             super.draw();
 
-            if (realEfficiency > 0.1f) {
+            if (realEfficiency>0f) {
                 Draw.blend(Blending.additive);
                 Draw.color(lightsColor);
-                Draw.alpha(0.5f + Mathf.sin(Time.time * 0.5f) * 0.5f * (realEfficiencyf()));
+                if (realEfficiency > 1.0f) {
+                    Draw.alpha(0.5f + Mathf.sin(Time.time * 0.5f) * 0.5f * (realEfficiencyf()));
+                } else {
+                    Draw.alpha(realEfficiency);
+                }
                 Draw.rect(lightsRegion, x, y);
                 Draw.alpha(1.0f);
                 Draw.color();
@@ -113,13 +119,17 @@ public class MaterialReactor extends ItemLiquidGenerator {
         }
 
         public void updateTile() {
-            if (!items.any()) item=null;
-            if (this.liquids.total() == 0) liquid=null;
-            if (this.items.total() == 0 && liquids.total() == 0) work=false;
-            realEfficiency = Mathf.lerpDelta(realEfficiency, efficiency, 0.01f);
-            int efficiency=(int)realEfficiency;
-            if (realEfficiency>this.efficiency)efficiency++;
-            if (item != null && liquid != null && work) {
+            if (!items.any()) item = null;
+            if (this.liquids.total() == 0) liquid = null;
+//            if (this.items.total() == 0 && liquids.total() == 0) work=false;
+            if (realEfficiency >= 0.1f) {
+                realEfficiency = Mathf.lerpDelta(realEfficiency, efficiency, 0.01f);
+            } else {
+                realEfficiency = Mathf.approachDelta(realEfficiency, efficiency, 0.01f);
+            }
+            int efficiency = (int) realEfficiency;
+            if (realEfficiency > this.efficiency) efficiency++;
+            if (item != null && liquid != null) {
                 int num = efficiency != 0 ? efficiency : 1;
                 float time = 60f / num;
 
@@ -141,11 +151,11 @@ public class MaterialReactor extends ItemLiquidGenerator {
 
         @Override
         public byte version() {
-            return 1;
+            return 2;
         }
 
         public void onDestroyed() {
-            if (!work) {
+            if (item == null || liquid == null) {
                 super.onDestroyed();
                 return;
             }
@@ -173,13 +183,7 @@ public class MaterialReactor extends ItemLiquidGenerator {
         }
 
         public float getPowerProduction() {
-            if (item != null && liquid != null) {
-                work=true;
-                return item.hardness * item.cost * 10.0f * liquid.temperature * this.efficiency;
-            } else {
-                work=false;
-                return 0;
-            }
+            return (item != null && liquid != null) ? item.hardness * item.cost * 10.0f * liquid.temperature * this.efficiency : 0;
         }
 
         @Override
@@ -212,7 +216,7 @@ public class MaterialReactor extends ItemLiquidGenerator {
                     this.liquids.remove(this.liquid, this.liquids.total());
                 }
                 ;
-                this.liquid=liquid;
+                this.liquid = liquid;
                 return true;
             }
             return false;
@@ -224,7 +228,7 @@ public class MaterialReactor extends ItemLiquidGenerator {
             TypeIO.writeItem(write, item);
             TypeIO.writeLiquid(write, liquid);
             write.i(efficiency);
-            write.bool(work);
+//            write.bool(work);
             write.f(realEfficiency);
         }
 
@@ -234,7 +238,9 @@ public class MaterialReactor extends ItemLiquidGenerator {
             item = TypeIO.readItem(read);
             liquid = TypeIO.readLiquid(read);
             realEfficiency = efficiency = read.i();
-            work = read.bool();
+            if (revision<2) {
+                read.bool();
+            }
             if (revision > 0) {
                 realEfficiency = read.f();
             }

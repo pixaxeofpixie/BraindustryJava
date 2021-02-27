@@ -5,3 +5,5 @@ braindustry.annotations.ModTypeIO.ObjectReadProcessor
 braindustry.annotations.ModEntities.ModEntitiesProc
 Gas.annotations.misc.GasLoadRegionProcessor
 braindustry.annotations.misc.ModLoadRegionProcessor
+braindustry.annotations.AdvancedStats.AStatCatProcessor
+braindustry.annotations.AdvancedStats.AStatProcessor

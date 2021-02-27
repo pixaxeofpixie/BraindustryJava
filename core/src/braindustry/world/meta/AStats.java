@@ -19,7 +19,7 @@ import java.util.Iterator;
 
 public class AStats extends Stats{
     @Nullable
-    private OrderedMap<StatCat, OrderedMap<AStat, Seq<StatValue>>> aMap;
+    private OrderedMap<AStatCat, OrderedMap<AStat, Seq<StatValue>>> aMap;
     private boolean dirty;
 
     public AStats() {
@@ -170,15 +170,16 @@ public class AStats extends Stats{
             this.aMap = new OrderedMap<>();
         }
 
-        if (this.aMap.containsKey(stat.category) && ((OrderedMap)this.aMap.get(stat.category)).containsKey(stat)) {
-            ((OrderedMap)this.aMap.get(stat.category)).remove(stat);
+        AStatCat category = AStatCat.fromExist(stat.category);
+        if (this.aMap.containsKey(category) && ((OrderedMap)this.aMap.get(category)).containsKey(stat)) {
+            ((OrderedMap)this.aMap.get(category)).remove(stat);
             this.dirty = true;
         } else {
             throw new RuntimeException("No stat entry found: \"" + stat + "\" in block.");
         }
     }
 
-    public OrderedMap<StatCat, OrderedMap<AStat, Seq<StatValue>>> toAMap() {
+    public OrderedMap<AStatCat, OrderedMap<AStat, Seq<StatValue>>> toAMap() {
         if (this.aMap == null) {
             this.aMap = new OrderedMap<>();
         }

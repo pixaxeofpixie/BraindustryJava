@@ -13,6 +13,13 @@ public class ModAnnotations {
     public @interface Replace{
     }
 
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface CustomStatCat{
+    }
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface CustomStat{
+    }
+
     /** Indicates that a method should be final in all implementing classes. */
     @Target({ElementType.METHOD})
     @Retention(RetentionPolicy.SOURCE)

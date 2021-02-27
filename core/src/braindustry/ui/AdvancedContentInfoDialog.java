@@ -6,6 +6,7 @@ import arc.struct.ObjectMap;
 import arc.struct.OrderedMap;
 import arc.struct.Seq;
 import arc.util.Scaling;
+import braindustry.world.meta.AStatCat;
 import mindustry.Vars;
 import mindustry.ctype.UnlockableContent;
 import mindustry.graphics.Pal;
@@ -58,10 +59,10 @@ public class AdvancedContentInfoDialog extends ContentInfoDialog {
         }
 
         AStats stats = (AStats)content.stats;
-        ObjectMap.Keys<StatCat> var4 = stats.toAMap().keys().iterator();
+        ObjectMap.Keys<AStatCat> var4 = stats.toAMap().keys().iterator();
 
         while(true) {
-            StatCat cat;
+            AStatCat cat;
             OrderedMap<AStat, Seq<StatValue>> map;
             do {
                 if (!var4.hasNext()) {
