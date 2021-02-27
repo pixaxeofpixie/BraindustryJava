@@ -485,31 +485,33 @@ public class Generators {
             });
         });
 
-        ModImagePacker.generate("scorches", () -> {
-            for (int size = 0; size < 10; size++) {
-                for (int i = 0; i < 3; i++) {
-                    ScorchGenerator gen = new ScorchGenerator();
-                    double multiplier = 30;
-                    double ss = size * multiplier / 20.0;
+        if (false) {
+            ModImagePacker.generate("scorches", () -> {
+                for (int size = 0; size < 10; size++) {
+                    for (int i = 0; i < 3; i++) {
+                        ScorchGenerator gen = new ScorchGenerator();
+                        double multiplier = 30;
+                        double ss = size * multiplier / 20.0;
 
-                    gen.seed = Mathf.random(100000);
-                    gen.size += size * multiplier;
-                    gen.scale = gen.size / 80f * 18f;
-                    //gen.nscl -= size * 0.2f;
-                    gen.octaves += ss / 3.0;
-                    gen.pers += ss / 10.0 / 5.0;
+                        gen.seed = Mathf.random(100000);
+                        gen.size += size * multiplier;
+                        gen.scale = gen.size / 80f * 18f;
+                        //gen.nscl -= size * 0.2f;
+                        gen.octaves += ss / 3.0;
+                        gen.pers += ss / 10.0 / 5.0;
 
-                    gen.scale += Mathf.range(3f);
-                    gen.scale -= ss * 2f;
-                    gen.nscl -= Mathf.random(1f);
+                        gen.scale += Mathf.range(3f);
+                        gen.scale -= ss * 2f;
+                        gen.nscl -= Mathf.random(1f);
 
-                    Pixmap out = gen.generate();
-                    Pixmap median = Pixmaps.median(out, 2, 0.75);
-                    Fi.get("../rubble/scorch-" + size + "-" + i + ".png").writePNG(median);
-                    out.dispose();
-                    median.dispose();
+                        Pixmap out = gen.generate();
+                        Pixmap median = Pixmaps.median(out, 2, 0.75);
+                        Fi.get("../rubble/scorch-" + size + "-" + i + ".png").writePNG(median);
+                        out.dispose();
+                        median.dispose();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

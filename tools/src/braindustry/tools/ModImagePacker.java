@@ -67,7 +67,7 @@ public class ModImagePacker extends ImagePacker {
                                 this.u = this.v = 0.0F;
                             }
                         };
-                        Log.info("added: @ from: @",saveName,path2Fi.absolutePath());
+//                        Log.info("added: @ from: @",saveName,path2Fi.absolutePath());
                         regionCache.put(fname, region);
                         imageCache.put(fname, image);
 
