@@ -1,8 +1,6 @@
 #author: https://github.com/marketplace/actions/purge-artifacts
 name: 'Delete old artifacts'
-on:
-  schedule:
-    - cron: '0 18 * * 0'
+on: [push]
 
 jobs:
   delete-artifacts:
@@ -11,4 +9,4 @@ jobs:
       - uses: kolpav/purge-artifacts-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          expire-in: 15days # Setting this to 0 will delete all artifacts
+          expire-in: 10 minutes # Setting this to 0 will delete all artifacts
