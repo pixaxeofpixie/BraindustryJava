@@ -10,19 +10,19 @@ import java.util.Locale;
 
 @ModAnnotations.CustomStat
 public enum  CustomStat {
-    maxConnections(StatCat.function),
-    recipes(StatCat.function),
-    gasCapacity(StatCat.function);
-    public final StatCat category;
+    maxConnections(AStatCat.function),
+    recipes(AStatCat.function),
+    gasCapacity(AStatCat.gasses);
+    public final AStatCat category;
     public static CustomStat fromExist(Stat stat){
         return Seq.with(values()).find((v)-> v.name().equals(stat.name()));
     }
-    private CustomStat(StatCat category) {
+    private CustomStat(AStatCat category) {
         this.category = category;
     }
 
     private CustomStat() {
-        this.category = StatCat.general;
+        this.category = AStatCat.general;
     }
 
     public String localized() {
