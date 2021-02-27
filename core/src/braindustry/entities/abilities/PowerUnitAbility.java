@@ -3,15 +3,13 @@ package braindustry.entities.abilities;
 import ModVars.modVars;
 import arc.Core;
 import arc.func.Boolf2;
-import arc.graphics.Blending;
-import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Angles;
 import arc.math.Mathf;
+import arc.math.geom.Vec2;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
-import arc.util.Time;
 import braindustry.ModListener;
 import braindustry.content.Blocks.ModBlocks;
 import braindustry.type.ModUnitType;
@@ -24,10 +22,12 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.world.Block;
 
-public class PowerUnitAbility extends ModAbility {
-    private static ObjectMap<Unit, PowerUnitContainer> unitMap = new ObjectMap<>();
+public abstract class PowerUnitAbility extends ModAbility {
+    public TextureRegion bottomRegion;
 
-    static {
+    protected  ObjectMap<Unit, PowerUnitContainer> unitMap = new ObjectMap<>();
+//    ObjectMap<Unit, PowerUnitContainer> unitMap
+     {
         ModListener.updaters.add(() -> {
             Seq<Unit> deletedUnits = unitMap.keys().toSeq().select(u -> !u.isValid());
             deletedUnits.each(unit -> {
@@ -38,27 +38,23 @@ public class PowerUnitAbility extends ModAbility {
 
     public final ModUnitType unitType;
     public final float range;
-    public TextureRegion bottomRegion;
-    public TextureRegion light;
-    public TextureRegion[] plasmaRegions;
-    public Color plasma1, plasma2;
     public Boolf2<Building, Unit> good = ((building, unit) -> {
         if (building == null) return false;
         return building.block.hasPower && building.team == unit.team && building.block instanceof ReceivingPowerNode;
     });
+
     public final float powerProduction;
     public final int maxNodes;
     private Block generatorBlock;
     private Block nodeBlock;
+    public final Vec2 reactorOffset;
 
-    public PowerUnitAbility(ModUnitType unitType, float range, float powerProduction, int maxNodes) {
+    public PowerUnitAbility(ModUnitType unitType, float range, float powerProduction, int maxNodes, Vec2 reactorOffset) {
         this.unitType = unitType;
         this.range = range;
         this.powerProduction = powerProduction;
         this.maxNodes = maxNodes;
-        this.plasma1 = Color.valueOf("ffd06b");
-        this.plasma2 = Color.valueOf("ff361b");
-        drawBody=true;
+        this.reactorOffset = reactorOffset;
     }
 
     public Block generatorBlock() {
@@ -69,24 +65,7 @@ public class PowerUnitAbility extends ModAbility {
         return nodeBlock;
     }
 
-    public void drawReactor(Unit unit) {
-        unitType.applyColor(unit);
-        Draw.rect(this.bottomRegion, unit.x, unit.y);
-        Draw.color();
-
-        for (int i = 0; i < this.plasmaRegions.length; ++i) {
-            float r = (float) (unit.hitSize() / 2f) - 3.0F + Mathf.absin(Time.time, 2.0F + (float) i * 1.0F, 5.0F - (float) i * 0.5F);
-            Draw.color(this.plasma1, this.plasma2, (float) i / (float) this.plasmaRegions.length);
-            Draw.alpha((0.3F + Mathf.absin(Time.time, 2.0F + (float) i * 2.0F, 0.3F + (float) i * 0.05F)) * 1);
-            Draw.blend(Blending.additive);
-            Draw.rect(this.plasmaRegions[i], unit.x, unit.y, r, r, Time.time * (12.0F + (float) i * 6.0F) * 1);
-            Draw.blend();
-        }
-
-        unitType.applyColor(unit);
-        Draw.rect(unitType.region, unit.x, unit.y, unit.rotation - 90.0F);
-        Draw.reset();
-    }
+    public abstract void drawReactor(Unit unit);
 
     public void drawLaser(Team team, float x1, float y1, float x2, float y2, int size1, int size2) {
         float angle1 = Angles.angle(x1, y1, x2, y2);
@@ -98,7 +77,13 @@ public class PowerUnitAbility extends ModAbility {
     }
 
     public void drawBody(Unit unit) {
+        unitType.applyColor(unit);
+        Draw.rect(this.bottomRegion, unit.x, unit.y);
+        Draw.color();
         drawReactor(unit);
+        unitType.applyColor(unit);
+        Draw.rect(unitType.region, unit.x, unit.y, unit.rotation - 90.0F);
+        Draw.reset();
     }
 
     public void draw(Unit unit) {
@@ -115,8 +100,7 @@ public class PowerUnitAbility extends ModAbility {
         super.update(unit);
         powerUnitContainer(unit).update();
     }
-
-    private PowerUnitContainer powerUnitContainer(Unit unit) {
+    protected PowerUnitContainer powerUnitContainer(Unit unit) {
         return unitMap.get(unit, () -> new PowerUnitContainer(unit, this));
     }
 
@@ -124,21 +108,13 @@ public class PowerUnitAbility extends ModAbility {
     public void init() {
         generatorBlock = ModBlocks.unitGenerator;
         nodeBlock = ModBlocks.unitNode;
+
     }
 
     @Override
     public void load() {
 //        Log.info("load: @==@",unitType.name,getClass().getName());
         bottomRegion = Core.atlas.find(unitType.name + "-bottom");
-        light = Core.atlas.find(unitType.name + "-light");
-        Seq<TextureRegion> plasmas = new Seq<>();
-        int i = 0;
-        for (TextureRegion plasma = Core.atlas.find(unitType.name + "-plasma-" + i); Core.atlas.isFound(plasma); plasma = Core.atlas.find(unitType.name + "-plasma-" + (++i))) {
-            if (!modVars.packSprites) plasmas.add(plasma);
-        }
-        plasmaRegions = new TextureRegion[plasmas.size];
-        for (int j = 0; j < plasmaRegions.length; j++) {
-            plasmaRegions[j] = plasmas.get(j);
-        }
+
     }
 }

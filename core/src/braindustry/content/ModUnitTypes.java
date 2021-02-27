@@ -4,6 +4,7 @@ import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.ObjectSet;
 import braindustry.ai.types.StealthGroundAI;
+import braindustry.entities.abilities.ImpactReactorUnitAbility;
 import braindustry.entities.abilities.OrbitalPlatformAbility;
 import braindustry.entities.abilities.PowerUnitAbility;
 import braindustry.graphics.ModPal;
@@ -1140,7 +1141,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 2f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int spawnTime = 1550;
-                abilities.addAll(new PowerUnitAbility(this, 18f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
+                abilities.addAll(new ImpactReactorUnitAbility(this, 18f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
                 int brange = 1;
 
 
@@ -1748,7 +1749,7 @@ public class ModUnitTypes implements ContentList {
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 int spawnTime = 2000;
 
-                abilities.addAll(new PowerUnitAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, -36.25f, -48.75f));
+                abilities.addAll(new ImpactReactorUnitAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, -36.25f, -48.75f));
                 int brange = 1;
 
 

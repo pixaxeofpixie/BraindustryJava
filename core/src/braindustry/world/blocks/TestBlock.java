@@ -158,7 +158,7 @@ public class TestBlock extends Block {
             table.table(Tex.button,t->{
                 TextureRegion[] sizeSprites = getSizeSprites();
                 int max = sizeSprites.length;
-                t.slider(1, max, 1, selectedSprite, (f) -> {
+                t.slider(1, max, 1, selectedSprite+1, (f) -> {
                     configure(Mathf.mod(Mathf.round(f, 1)-1,max));
                 }).row();
                 t.label(() -> {

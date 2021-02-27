@@ -10,6 +10,7 @@ import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.gen.Building;
+import mindustry.gen.Unit;
 
 import java.util.Arrays;
 
@@ -27,6 +28,10 @@ public class BlackHoleDrawer {
     }
     public BlackHoleDrawer(Building building) {
         healthfProvider = () -> building.health();
+        load();
+    }
+    public BlackHoleDrawer(Unit unit) {
+        healthfProvider = () -> unit.health();
         load();
     }
 
@@ -105,6 +110,12 @@ public class BlackHoleDrawer {
     }
     public void drawBlackHole(Building build,float size) {
         drawBlackHole(build.x, build.y, build.rotation, 1f, size);
+    }
+    public void drawBlackHole(Unit unit) {
+        drawBlackHole(unit.x, unit.y, unit.rotation, 1f, unit.hitSize);
+    }
+    public void drawBlackHole(Unit unit,float size) {
+        drawBlackHole(unit.x, unit.y, unit.rotation, 1f, size);
     }
     public void drawBlackHole(Building build,float size,float timeMul) {
         drawBlackHole(build.x, build.y, build.rotation, timeMul, size);

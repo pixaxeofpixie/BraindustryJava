@@ -13,10 +13,10 @@ import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.power.PowerGraph;
 
-public class PowerUnitContainer extends UnitContainer {
+public class PowerUnitContainer <T extends PowerUnitAbility> extends UnitContainer {
     public Seq<Building> links = new Seq<>();
     private transient boolean initStats = false;
-    public final PowerUnitAbility ability;
+    public final T ability;
     public UnitPowerGenerator.UnitPowerGeneratorBuild generatorBuilding;
     public UnitPowerNode.UnitPowerNodeBuild nodeBuild;
     Seq<Building> oldLinks=new Seq<>();
@@ -25,7 +25,7 @@ public class PowerUnitContainer extends UnitContainer {
         Building building=block.buildType.get().create(block,unit.team);
         return (T)building;
     }
-    public PowerUnitContainer(Unit unit, PowerUnitAbility ability) {
+    public PowerUnitContainer(Unit unit, T ability) {
         super(unit);
 
         this.ability=ability;
