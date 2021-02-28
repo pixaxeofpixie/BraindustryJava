@@ -1,17 +1,24 @@
 package braindustry.world.blocks.Unit.power;
 
+import arc.func.Boolf;
+import arc.func.Cons;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
+import arc.math.geom.Geometry;
 import arc.math.geom.Point2;
-import braindustry.entities.abilities.PowerUnitAbility;
+import arc.util.Log;
+import braindustry.entities.abilities.PowerGeneratorAbility;
 import mindustry.Vars;
 import mindustry.gen.Building;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
+import mindustry.world.Tile;
 import mindustry.world.blocks.power.PowerGraph;
 import mindustry.world.blocks.power.PowerNode;
 import mindustry.world.meta.BuildVisibility;
 import mindustry.world.modules.PowerModule;
+
+import static mindustry.Vars.*;
 
 public class UnitPowerNode extends PowerNode {
     public UnitPowerNode(String name) {
@@ -25,12 +32,43 @@ public class UnitPowerNode extends PowerNode {
         });
     }
 
+    public void getPotentialLinks(Tile tile, PowerGeneratorAbility ability, Cons<Building> others) {
+        float laserRange = ability.laserRange;
+        Boolf<Building> valid = other -> other != null  && other.power != null &&
+                (other.block.outputsPower || other.block.consumesPower || other.block instanceof PowerNode) &&
+                overlaps(tile.x * tilesize + offset, tile.y * tilesize + offset, other.tile(), laserRange * tilesize) && other.team == player.team()
+                /*&& !other.proximity.contains(e -> e.tile == tile)*/ && !graphs.contains(other.power.graph);
+
+        tempTileEnts.clear();
+        graphs.clear();
+        if(tile.build != null && tile.build.power != null){
+            graphs.add(tile.build.power.graph);
+        }
+
+        Geometry.circle(tile.x, tile.y, (int)(laserRange + 2), (x, y) -> {
+            Building other = world.build(x, y);
+            if(valid.get(other) && !tempTileEnts.contains(other)){
+                tempTileEnts.add(other);
+            }
+        });
+
+        tempTileEnts.sort((a, b) -> {
+            int type = -Boolean.compare(a.block instanceof PowerNode, b.block instanceof PowerNode);
+            if(type != 0) return type;
+            return Float.compare(a.dst2(tile), b.dst2(tile));
+        });
+
+        tempTileEnts.each(valid, t -> {
+            graphs.add(t.power.graph);
+            others.get(t);
+        });
+    }
     public class UnitPowerNodeBuild extends PowerNodeBuild {
         public Unit parent;
-        private PowerUnitAbility ability;
+        private PowerGeneratorAbility ability;
 
 
-        public void setParent(Unit parent,PowerUnitAbility ability) {
+        public void setParent(Unit parent, PowerGeneratorAbility ability) {
             this.parent = parent;
             this.ability = ability;
         }
@@ -71,7 +109,6 @@ public class UnitPowerNode extends PowerNode {
             }
         }
 
-
         public void setConnect(Building other, boolean add) {
             if (other == null) return;
             PowerModule power = this.power;
@@ -81,7 +118,7 @@ public class UnitPowerNode extends PowerNode {
             if (contains && !add) {
                 power.links.removeValue(value);
                 if (valid) {
-//                    other.power.links.removeValue(this.pos());
+                    other.power.links.removeValue(getPos());
                 }
 
                 PowerGraph newgraph = new PowerGraph();
@@ -91,16 +128,21 @@ public class UnitPowerNode extends PowerNode {
                     og.reflow(other);
                 }
             } else if (valid && power.links.size < ability.maxNodes && !contains && add) {
+                if (other.block instanceof PowerNode && ((PowerNode) other.block).maxNodes<=other.power.links.size)return;
                 if (!power.links.contains(other.pos())) {
                     power.links.add(other.pos());
                 }
 
-                if (other.team == this.team && !other.power.links.contains(this.pos())) {
-//                    other.power.links.add(this.pos());
+                if (other.team == this.team && !other.power.links.contains(getPos())) {
+                    other.power.links.add(getPos());
                 }
 
                 power.graph.addGraph(other.power.graph);
             }
+        }
+
+        protected int getPos() {
+            return -parent.id;
         }
 
         public int pos() {
@@ -112,6 +154,7 @@ public class UnitPowerNode extends PowerNode {
             super.update();
             this.x = parent.x;
             this.y = parent.y;
+            Log.info("Update");
         }
 
         public void kill() {
@@ -130,6 +173,11 @@ public class UnitPowerNode extends PowerNode {
         public float getPowerProduction() {
 
             if (!this.isValid()) {
+                for (int pos : power.links.toArray()) {
+                    Building build = Vars.world.build(pos);
+                    if (build == null || !build.power.links.contains(getPos())) continue;
+                    build.power.links.removeValue(getPos());
+                }
                 this.power.graph.remove(this);
             }
             return 0;

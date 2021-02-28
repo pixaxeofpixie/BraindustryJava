@@ -9,6 +9,7 @@ import braindustry.world.blocks.TestBlock;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import braindustry.world.blocks.distribution.SmartRouter;
+import braindustry.world.blocks.power.ReceivingPowerNode;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
 import braindustry.world.blocks.sandbox.DpsMeter;
 import braindustry.world.blocks.sandbox.UnitSpawner;
@@ -64,7 +65,7 @@ public class ModBlocks implements ContentList {
 
     //experimental
     smartRouter, turretSwitcher, blockHealer, dpsMeter, unitGenerator, unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
-            exampleCrossItemBridge, exampleCrossPhaseBridge, testBlock;
+            exampleCrossItemBridge, exampleCrossPhaseBridge, testBlock,node1,node2;
 
 
     public void load() {
@@ -79,6 +80,18 @@ public class ModBlocks implements ContentList {
         testBlock = new TestBlock("test-block") {
             {
                 this.size = 2;
+                this.requirements(Category.logic, ItemStack.with(), true);
+            }
+        };
+        node1=new ReceivingPowerNode("unit-power-node"){
+            {
+                size=3;
+                this.requirements(Category.logic, ItemStack.with(), true);
+            }
+        };
+        node2=new ReceivingPowerNode("unit-power-node2"){
+            {
+                size=3;
                 this.requirements(Category.logic, ItemStack.with(), true);
             }
         };

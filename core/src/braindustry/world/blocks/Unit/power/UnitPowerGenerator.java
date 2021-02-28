@@ -1,7 +1,7 @@
 package braindustry.world.blocks.Unit.power;
 
 import arc.math.geom.Point2;
-import braindustry.entities.abilities.PowerUnitAbility;
+import braindustry.entities.abilities.PowerGeneratorAbility;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
 import mindustry.world.blocks.power.PowerGenerator;
@@ -18,7 +18,7 @@ public class UnitPowerGenerator extends PowerGenerator {
         public Unit parent;
 
 
-        private PowerUnitAbility ability;
+        private PowerGeneratorAbility ability;
 
         public UnitPowerGeneratorBuild() {
 
@@ -29,7 +29,7 @@ public class UnitPowerGenerator extends PowerGenerator {
             return Point2.pack((int) this.x / 8, (int) this.y / 8);
         }
 
-        public void setParent(Unit parent,PowerUnitAbility ability) {
+        public void setParent(Unit parent, PowerGeneratorAbility ability) {
             this.parent = parent;
             this.ability = ability;
         }

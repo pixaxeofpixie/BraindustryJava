@@ -3,7 +3,7 @@ package braindustry.type;
 import arc.graphics.g2d.Draw;
 import arc.math.Mathf;
 import arc.struct.Seq;
-import braindustry.entities.abilities.PowerUnitAbility;
+import braindustry.entities.abilities.PowerGeneratorAbility;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
 import mindustry.Vars;
@@ -12,8 +12,9 @@ import mindustry.gen.Unit;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.power.PowerGraph;
+import mindustry.world.blocks.power.PowerNode;
 
-public class PowerUnitContainer <T extends PowerUnitAbility> extends UnitContainer {
+public class PowerUnitContainer <T extends PowerGeneratorAbility> extends UnitContainer {
     public Seq<Building> links = new Seq<>();
     private transient boolean initStats = false;
     public final T ability;
@@ -93,16 +94,12 @@ public class PowerUnitContainer <T extends PowerUnitAbility> extends UnitContain
         oldLinks=links.copy();
         links.clear();
         Tile tile = unit.tileOn();
-        for (int x = (int) ((float) tile.x - ability.range); (float) x <= (float) tile.x + ability.range; ++x) {
-            for (int y = (int) ((float) tile.y - ability.range); (float) y <= (float) tile.y + ability.range; ++y) {
-                Building link = Vars.world.build(x, y);
-                boolean linked = goodLink(link);
-                if (linked && !links.contains(link)) {
-                    links.add(link);
-                }
-
+        ability.nodeBlock().getPotentialLinks(tile,ability,(link)->{
+            boolean canConnect =link.power!=null && !( link.block instanceof PowerNode && ((PowerNode) link.block).maxNodes <= link.power.links.size);
+            if(goodLink(link) && !links.contains(link) &&  links.size < ability.maxNodes && (canConnect || oldLinks.contains(link))) {
+                links.add(link);
             }
-        }
+        });
         sortLinks();
     }
     public boolean goodLink(Building link) {

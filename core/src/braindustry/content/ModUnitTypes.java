@@ -4,9 +4,8 @@ import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.ObjectSet;
 import braindustry.ai.types.StealthGroundAI;
-import braindustry.entities.abilities.ImpactReactorUnitAbility;
+import braindustry.entities.abilities.ImpactReactorAbility;
 import braindustry.entities.abilities.OrbitalPlatformAbility;
-import braindustry.entities.abilities.PowerUnitAbility;
 import braindustry.graphics.ModPal;
 import braindustry.type.ModUnitType;
 import braindustry.entities.bullets.AdamBulletType;
@@ -24,7 +23,6 @@ import mindustry.entities.bullet.*;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.type.AmmoTypes;
-import mindustry.type.UnitType;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ForceFieldAbility;
 
@@ -1141,7 +1139,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 2f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int spawnTime = 1550;
-                abilities.addAll(new ImpactReactorUnitAbility(this, 18f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
+                abilities.addAll(new ImpactReactorAbility(this, 18f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
                 int brange = 1;
 
 
@@ -1749,14 +1747,14 @@ public class ModUnitTypes implements ContentList {
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 int spawnTime = 2000;
 
-                abilities.addAll(new ImpactReactorUnitAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, -36.25f, -48.75f));
+                abilities.addAll(new ImpactReactorAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, -36.25f, -48.75f));
                 int brange = 1;
 
 
                 this.weapons.add(
                         new ModWeapon("moureno-laser-weapon"){{
                             mirror = false;
-                            top = false;
+                            top = true;
                             shake = 6f;
                             shootY = 23f;
                             x = 0f;
@@ -1772,7 +1770,7 @@ public class ModUnitTypes implements ContentList {
                             shootSound = ModSounds.electronShoot;
                             continuous = true;
                             cooldownTime = 210f;
-
+                            top=true;
                             bullet = new ContinuousLaserBulletType(){{
                                 damage = 96f;
                                 length = 880f;
@@ -1800,7 +1798,7 @@ public class ModUnitTypes implements ContentList {
                         },
 
                         new ModWeapon("mouriena-weapon"){{
-                            top = false;
+                            top = true;
                             y = -3f;
                             x = 32f;
                             reload = 20f;
