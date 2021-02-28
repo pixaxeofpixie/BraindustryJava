@@ -281,7 +281,7 @@ public class ModUnitTypes implements ContentList {
                                         this.sideWidth = 0;
                                         this.sideLength = 0;
                                         this.lightningColor = Color.valueOf("cedae0");
-                                        this.colors = new Color[]{Color.valueOf("999999"), Color.valueOf("c4c4c4"), Color.valueOf("e8e8e8")};
+                                        this.colors = new Color[]{Color.valueOf("cedae0"), Color.valueOf("c4c4c4"), Color.valueOf("979aaa")};
                                     }
                                 };
                             }
