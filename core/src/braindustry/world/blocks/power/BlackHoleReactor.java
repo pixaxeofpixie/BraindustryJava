@@ -1,10 +1,11 @@
 package braindustry.world.blocks.power;
 
+import Gas.world.blocks.power.GasImpactReactor;
 import arc.graphics.g2d.Draw;
 import mindustry.world.blocks.power.ImpactReactor;
 import braindustry.graphics.BlackHoleDrawer;
 
-public class BlackHoleReactor extends ImpactReactor {
+public class BlackHoleReactor extends GasImpactReactor {
     public float blackHoleHitSize = 14f;
 
     public BlackHoleReactor(String name) {
@@ -16,7 +17,7 @@ public class BlackHoleReactor extends ImpactReactor {
         super.init();
     }
 
-    public class BlackHoleReactorBuild extends ImpactReactorBuild {
+    public class BlackHoleReactorBuild extends GasImpactReactor.GasImpactReactorBuild {
         BlackHoleDrawer drawer;
         @Override
         public void created() {
