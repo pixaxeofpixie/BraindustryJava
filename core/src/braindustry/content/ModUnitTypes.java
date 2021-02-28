@@ -445,7 +445,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        //fly
+        //TODO: fly
         armor = new ModUnitType("armor") {
             {
                 this.constructor = Types.payload;
@@ -462,7 +462,6 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("armor-weapon") {
                             {
-                                this.top = true;
                                 this.x = 0;
                                 this.y = -3f;
                                 this.shootY = 6;
@@ -491,7 +490,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-
         shield = new ModUnitType("shield") {
             {
                 this.constructor = Types.payload;
@@ -538,7 +536,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-
         chestplate = new ModUnitType("chestplate") {
             {
                 this.localizedName = "Zenum";
@@ -605,7 +602,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-
         chainmail = new ModUnitType("chainmail") {
             {
                 this.localizedName = "Dent";
@@ -692,7 +688,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-
         broadsword = new ModUnitType("broadsword") {
             {
                 this.constructor = Types.payload;
@@ -753,7 +748,6 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("broadsword-weapon") {
                             {
-                                this.top = false;
                                 this.y = -4f;
                                 this.x = 29;
                                 this.reload = 165;
@@ -783,7 +777,6 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("broadsword-weapon") {
                             {
-                                this.top = false;
                                 this.y = -1f;
                                 this.x = 25;
                                 this.reload = 165;
@@ -815,7 +808,7 @@ public class ModUnitTypes implements ContentList {
             }
         };
 
-        //====water
+        //TODO: water
         venti = new ModUnitType("venti") {
             {
                 this.localizedName = "Vixy";
