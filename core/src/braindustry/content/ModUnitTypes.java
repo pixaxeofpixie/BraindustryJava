@@ -2,11 +2,12 @@ package braindustry.content;
 
 import arc.func.Prov;
 import arc.graphics.Color;
+import arc.math.geom.Vec2;
 import arc.struct.ObjectSet;
 import braindustry.ai.types.StealthGroundAI;
-import braindustry.entities.abilities.ImpactReactorUnitAbility;
+import braindustry.entities.abilities.BlackHoleReactorAbility;
+import braindustry.entities.abilities.ImpactReactorAbility;
 import braindustry.entities.abilities.OrbitalPlatformAbility;
-import braindustry.entities.abilities.PowerUnitAbility;
 import braindustry.graphics.ModPal;
 import braindustry.type.ModUnitType;
 import braindustry.entities.bullets.AdamBulletType;
@@ -24,7 +25,6 @@ import mindustry.entities.bullet.*;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.type.AmmoTypes;
-import mindustry.type.UnitType;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ForceFieldAbility;
 
@@ -1141,7 +1141,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 2f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int spawnTime = 1550;
-                abilities.addAll(new ImpactReactorUnitAbility(this, 18f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
+                abilities.addAll(new ImpactReactorAbility(this, 18f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
                 int brange = 1;
 
 
@@ -1747,16 +1747,51 @@ public class ModUnitTypes implements ContentList {
                 this.trailY = 28;
                 this.trailScl = 0.9f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
-                int spawnTime = 2000;
+                float spawnTime = 2000;
 
-                abilities.addAll(new ImpactReactorUnitAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, -36.25f, -48.75f));
+                abilities.addAll(
+                        new BlackHoleReactorAbility(this, 30f, 35, Integer.MAX_VALUE,10,new Vec2(-32.75f,0)),
+                        new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f),
+                        new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f),
+                        new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, 36.25f, -48.75f),
+                        new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, -36.25f, -48.75f)
+                );
                 int brange = 1;
 
 
                 this.weapons.add(
+                        new ModWeapon("mouriena-weapon"){{
+                            top = true;
+                            y = -3f;
+                            x = 32f;
+                            reload = 20f;
+                            recoil = 7f;
+                            shots = 3;
+                            inaccuracy = 10.0f;
+                            shake = 3;
+                            rotate = true;
+                            rotateSpeed = 1.3f;
+                            mirror = true;
+                            ejectEffect = ModFx.foxShoot;
+                            shootSound = Sounds.artillery;
+                            bullet = new ArtilleryBulletType(3f, 8, "shell"){{
+                                hitEffect = ModFx.adamExplosion;
+                                knockback = 1.2f;
+                                lifetime = 110f;
+                                width = 19f;
+                                height = 21f;
+                                collides = true;
+                                collidesTiles = true;
+                                splashDamageRadius = 28f;
+                                splashDamage = 120f;
+                                backColor = ModPal.unitOrange;
+                                frontColor = ModPal.unitOrangeLight;
+                                }
+                            };
+                        }},
                         new ModWeapon("moureno-laser-weapon"){{
                             mirror = false;
-                            top = false;
+                            top = true;
                             shake = 6f;
                             shootY = 28f;
                             x = 0f;
@@ -1794,41 +1829,9 @@ public class ModUnitTypes implements ContentList {
                                 collidesTeam = true;
 
                                 colors = new Color[]{ModPal.blackHoleLaserColor.cpy().a(2.4f), ModPal.blackHoleLaserColor.cpy().a(.4f), ModPal.blackHoleLaserColor.cpy().mul(1.9f), Color.white};
-                                    }
-                                };
                             }
-                        },
-
-                        new ModWeapon("mouriena-weapon"){{
-                            top = false;
-                            y = -3f;
-                            x = 32f;
-                            reload = 20f;
-                            recoil = 7f;
-                            shots = 3;
-                            inaccuracy = 10.0f;
-                            shake = 3;
-                            rotate = true;
-                            rotateSpeed = 1.3f;
-                            mirror = true;
-                            ejectEffect = ModFx.foxShoot;
-                            shootSound = Sounds.artillery;
-                            bullet = new ArtilleryBulletType(3f, 8, "shell"){{
-                                hitEffect = ModFx.adamExplosion;
-                                knockback = 1.2f;
-                                lifetime = 110f;
-                                width = 19f;
-                                height = 21f;
-                                collides = true;
-                                collidesTiles = true;
-                                splashDamageRadius = 28f;
-                                splashDamage = 120f;
-                                backColor = ModPal.unitOrange;
-                                frontColor = ModPal.unitOrangeLight;
-                                }
                             };
-                        }
-                    }
+                        }}
                 );
             }
         };

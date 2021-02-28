@@ -20,9 +20,12 @@ public class BlackHoleReactorAbility extends PowerGeneratorAbility {
     protected PowerUnitContainer powerUnitContainer(Unit unit) {
         return unitMap.get(unit, () -> new BlackHoleReactorUnitContainer(unit, this));
     }
+    protected BlackHoleReactorUnitContainer powerBlackHoleContainer(Unit unit) {
+        return (BlackHoleReactorUnitContainer) unitMap.get(unit, () -> new BlackHoleReactorUnitContainer(unit, this));
+    }
 
     @Override
     public void drawReactor(Unit unit) {
-
+        powerBlackHoleContainer(unit).drawReactor();
     }
 }

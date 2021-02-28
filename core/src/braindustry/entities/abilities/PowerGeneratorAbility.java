@@ -104,7 +104,7 @@ public abstract class PowerGeneratorAbility extends ModAbility {
         powerUnitContainer(unit).update();
     }
     protected PowerUnitContainer powerUnitContainer(Unit unit) {
-        return unitMap.get(unit, () -> new PowerUnitContainer(unit, this));
+        return unitMap.get(unit, () ->  new PowerUnitContainer(unit, this));
     }
 
     @Override

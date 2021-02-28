@@ -59,7 +59,7 @@ public class PowerUnitContainer <T extends PowerGeneratorAbility> extends UnitCo
         drawLasers(z+0.1f);
     }
     public void drawLasers(float z) {
-        if (!Mathf.zero(Vars.renderer.laserOpacity)) {
+        if (!Mathf.zero(Vars.renderer.laserOpacity) && nodeBuild!=null) {
             Draw.z(z);
             nodeBuild.setupColor(nodeBuild.power.graph.getSatisfaction());
             links.each(link -> {

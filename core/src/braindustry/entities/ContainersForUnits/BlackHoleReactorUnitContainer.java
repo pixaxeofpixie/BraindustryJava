@@ -15,14 +15,17 @@ public class BlackHoleReactorUnitContainer extends PowerUnitContainer<BlackHoleR
 
     @Override
     public void update() {
+        super.update();
         drawer.update();
     }
 
     @Override
     public void draw() {
         super.draw();
-        float rotation = unit.rotation - 90;
+    }
+    public void drawReactor(){
+        float rotation = unit.rotation;
         Vec2 reactorPos=new Vec2().set(ability.reactorOffset).rotate(rotation).add(unit);
-        drawer.drawBlackHole(reactorPos.x,reactorPos.y,rotation,ability.blackHoleHitSize,1);
+        drawer.drawBlackHole(reactorPos.x,reactorPos.y,0,1,ability.blackHoleHitSize);
     }
 }
