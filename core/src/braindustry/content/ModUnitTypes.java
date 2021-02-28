@@ -73,21 +73,21 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("ibis-weapon") {
                             {
-                                this.x = 3;
+                                this.x = 5;
                                 this.y = -1.5f;
                                 this.shootY = 3;
                                 this.reload = 13;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 1;
-                                this.shots = 8;
+                                this.shots = 2;
                                 this.shotDelay = 2;
-                                this.rotate = true;
+                                this.rotate = false;
                                 this.shootSound = Sounds.laser;
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.8f;
                                         this.length = 30;
-                                        this.damage = 50;
+                                        this.damage = 30;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("8efff0");
                                         this.color = Color.valueOf("8efff0");
@@ -133,10 +133,10 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("ibis-weapon") {
                             {
-                                this.x = 3;
+                                this.x = 4;
                                 this.y = -1.5f;
                                 this.shootY = 3;
-                                this.reload = 20;
+                                this.reload = 30;
                                 this.shots = 15;
                                 this.shotDelay = 2;
                                 this.inaccuracy = 9;
@@ -192,7 +192,7 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 90;
                                 this.rotate = true;
                                 this.rotateSpeed = 1.2f;
-                                this.x = 10;
+                                this.x = 13;
                                 this.y = -7f;
                                 this.shots = 22;
                                 this.shotDelay = 2;
@@ -288,7 +288,7 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("capra-weapon") {
                             {
-                                this.reload = 120;
+                                this.reload = 160;
                                 this.rotate = true;
                                 this.rotateSpeed = 1.6f;
                                 this.x = 10;
@@ -302,7 +302,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.7f;
                                         this.length = 200;
-                                        this.damage = 160;
+                                        this.damage = 50;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("8efff0");
                                         this.color = Color.valueOf("8efff0");
