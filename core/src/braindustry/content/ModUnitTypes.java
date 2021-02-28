@@ -859,7 +859,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-
         lyra = new ModUnitType("lyra") {
             {
                 this.localizedName = "Lyra";
@@ -939,7 +938,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-
         tropsy = new ModUnitType("tropsy") {
             {
                 this.localizedName = "Tropsy";
@@ -1112,7 +1110,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-
         vyvna = new ModUnitType("vyvna") {
 
             {
@@ -1256,7 +1253,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        ///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH///////////////////STEALTH
+        //TODO: stealthMech
         tyzen = new StealthUnitType("tyzen") {
             {
                 this.mineSpeed = 8.0F;
@@ -1569,7 +1566,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        //TX UNITS
+        //TODO: TX
         griffon = new ModUnitType("griffon") {
             {
 
