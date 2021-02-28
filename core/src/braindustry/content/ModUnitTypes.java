@@ -4,8 +4,9 @@ import arc.func.Prov;
 import arc.graphics.Color;
 import arc.struct.ObjectSet;
 import braindustry.ai.types.StealthGroundAI;
-import braindustry.entities.abilities.ImpactReactorAbility;
+import braindustry.entities.abilities.ImpactReactorUnitAbility;
 import braindustry.entities.abilities.OrbitalPlatformAbility;
+import braindustry.entities.abilities.PowerUnitAbility;
 import braindustry.graphics.ModPal;
 import braindustry.type.ModUnitType;
 import braindustry.entities.bullets.AdamBulletType;
@@ -23,6 +24,7 @@ import mindustry.entities.bullet.*;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.type.AmmoTypes;
+import mindustry.type.UnitType;
 import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.ForceFieldAbility;
 
@@ -146,7 +148,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.95f;
                                         this.length = 50;
-                                        this.damage = 40;
+                                        this.damage = 30;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("8efff0");
                                         this.color = Color.valueOf("8efff0");
@@ -187,7 +189,7 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("capra-weapon") {
                             {
-                                this.reload = 120;
+                                this.reload = 90;
                                 this.rotate = true;
                                 this.rotateSpeed = 1.2f;
                                 this.x = 10;
@@ -286,7 +288,7 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("capra-weapon") {
                             {
-                                this.reload = 20;
+                                this.reload = 120;
                                 this.rotate = true;
                                 this.rotateSpeed = 1.6f;
                                 this.x = 10;
@@ -1139,7 +1141,7 @@ public class ModUnitTypes implements ContentList {
                 this.trailScl = 2f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int spawnTime = 1550;
-                abilities.addAll(new ImpactReactorAbility(this, 18f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
+                abilities.addAll(new ImpactReactorUnitAbility(this, 18f, 20, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 19.25f, -31.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -19.25f, -31.75f));
                 int brange = 1;
 
 
@@ -1728,7 +1730,7 @@ public class ModUnitTypes implements ContentList {
 
         moureno = new ModUnitType("mouriena") {
             {
-                this.range = 520;
+                this.range = 620;
                 this.constructor = Types.naval;
                 this.localizedName = "Mouriena";
                 this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers.";
@@ -1747,16 +1749,16 @@ public class ModUnitTypes implements ContentList {
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 int spawnTime = 2000;
 
-                abilities.addAll(new ImpactReactorAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, -36.25f, -48.75f));
+                abilities.addAll(new ImpactReactorUnitAbility(this, 30f, 35, Integer.MAX_VALUE),new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, 22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.shield, spawnTime, -22.25f, -45.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, 36.25f, -48.75f), new UnitSpawnAbility(ModUnitTypes.tropsy, spawnTime, -36.25f, -48.75f));
                 int brange = 1;
 
 
                 this.weapons.add(
                         new ModWeapon("moureno-laser-weapon"){{
                             mirror = false;
-                            top = true;
+                            top = false;
                             shake = 6f;
-                            shootY = 23f;
+                            shootY = 28f;
                             x = 0f;
                             y = -4f;
                             rotate = true;
@@ -1770,13 +1772,13 @@ public class ModUnitTypes implements ContentList {
                             shootSound = ModSounds.electronShoot;
                             continuous = true;
                             cooldownTime = 210f;
-                            top=true;
+
                             bullet = new ContinuousLaserBulletType(){{
-                                damage = 96f;
+                                damage = 106f;
                                 length = 880f;
                                 hitEffect = Fx.hitMeltHeal;
                                 drawSize = 450f;
-                                lifetime = 440f;
+                                lifetime = 880f;
                                 shake = 1f;
                                 despawnEffect = Fx.smokeCloud;
                                 smokeEffect = Fx.none;
@@ -1798,7 +1800,7 @@ public class ModUnitTypes implements ContentList {
                         },
 
                         new ModWeapon("mouriena-weapon"){{
-                            top = true;
+                            top = false;
                             y = -3f;
                             x = 32f;
                             reload = 20f;
