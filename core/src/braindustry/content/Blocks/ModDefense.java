@@ -352,14 +352,14 @@ class ModDefense implements ContentList {
                         this.lightningColor = Color.valueOf("f1fc58");
                     }
                 };
-                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 550, ModItems.exoticAlloy, 600, Items.surgeAlloy, 450, ModItems.chromium, 220, ModItems.odinum, 300, ModItems.graphenite, 720, Items.metaglass, 220));
+                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 550, ModItems.exoticAlloy, 600, Items.surgeAlloy, 450, ModItems.chromium, 220, ModItems.chloroAlloy, 300, ModItems.graphenite, 720, Items.metaglass, 220));
                 this.reloadTime = 4;
             }
         };
         fragment = new PointDefenseTurret("fragment") {
             {
                 this.localizedName = "Fragment";
-                this.description = "Upgraded \"Segment\", consumes more power aswell Refrigerant for cooling.";
+                this.description = "Upgraded \"Segment\", consumes more power as well Refrigerant for cooling.";
                 this.size = 3;
                 this.health = 410;
                 this.range = 250;
@@ -406,12 +406,12 @@ class ModDefense implements ContentList {
                                 this.despawnEffect = Fx.hitLancer;
                                 this.lifetime = 60;
                                 this.knockback = 1;
-                                this.lightning = 3;//?????????? ??????
-                                this.lightningLength = 3;//????? ??????
-                                this.lightningLengthRand = 7;//????????? ?????
-                                this.lightningDamage = 9;//???? ??????
-                                this.lightningAngle = 3;//???? ??????????? ?????? ???????????? ???? ????
-                                this.lightningCone = 20;//???????????? ???? ??????????? ??????
+                                this.lightning = 3;
+                                this.lightningLength = 3;
+                                this.lightningLengthRand = 7;
+                                this.lightningDamage = 9;
+                                this.lightningAngle = 3;
+                                this.lightningCone = 20;
                                 this.lightningColor = Color.valueOf("f1fc58");
                             }
                         }
@@ -607,7 +607,7 @@ class ModDefense implements ContentList {
         gem = new LaserTurret("gem") {
             {
                 localizedName = "Gem";
-                requirements(Category.turret, ItemStack.with(ModItems.chloroAlloy, 480));
+                requirements(Category.turret, ItemStack.with(ModItems.chloroAlloy, 480, ModItems.phaseAlloy, 560, ModItems.graphenite, 1250, Items.silicon, 1230, Items.phaseFabric, 430));
                 size = 14;
                 health = 240 * size * size;
                 range = 240f;
@@ -765,7 +765,7 @@ class ModDefense implements ContentList {
                 localizedName = "Large Chloro Wall";
                 description = "Big organic wall with ability to reflect enemy lasers.";
                 size = 2;
-                health = 4650;
+                health = 5450;
                 requirements(Category.defense, ItemStack.with(ModItems.chloroAlloy, 60));
             }
         };
@@ -777,7 +777,7 @@ class ModDefense implements ContentList {
                 size = 1;
                 laserReflect=true;
                 lightningReflect=true;
-                health = 1550;
+                health = 2010;
                 requirements(Category.defense, ItemStack.with(ModItems.chloroAlloy, 20));
             }
         };

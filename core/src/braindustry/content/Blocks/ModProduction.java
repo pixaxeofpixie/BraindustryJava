@@ -1,5 +1,9 @@
 package braindustry.content.Blocks;
 
+import Gas.GasStack;
+import Gas.content.Gasses;
+import Gas.world.blocks.production.GasGenericCrafter;
+import braindustry.content.ModGasses;
 import braindustry.content.ModItems;
 import braindustry.content.ModLiquids;
 import braindustry.type.Recipe;
@@ -304,6 +308,20 @@ class ModProduction implements ContentList {
                 this.consumes.items(ItemStack.with(Items.thorium, 2));
                 this.outputLiquid = new LiquidStack(ModLiquids.thoriumRefrigerant, 16f);
                 this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 200, Items.thorium, 200, Items.titanium, 100, Items.metaglass, 130, ModItems.graphenite, 190));
+                this.updateEffect = Fx.purify;
+                this.updateEffectChance = 0.02f;
+            }
+        };
+        methaneGasifier = new GasGenericCrafter("methane-gasifier"){
+            {
+                this.localizedName = "Liquid Methane Gasifier";
+                this.description = "Turns Liquid Methane into gas";
+                this.health = 140;
+                this.size = 2;
+                this.consumes.power(3f);
+                this.consumes.liquid(ModLiquids.liquidMethane, 0.3f);
+                this.outputGas = new GasStack(Gasses.methane, 1);
+                this.requirements(Category.crafting, ItemStack.with( ModItems.odinum, 100, Items.titanium, 100, Items.metaglass, 130, ModItems.chromium, 190));
                 this.updateEffect = Fx.purify;
                 this.updateEffectChance = 0.02f;
             }

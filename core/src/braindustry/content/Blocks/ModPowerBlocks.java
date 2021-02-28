@@ -1,5 +1,7 @@
 package braindustry.content.Blocks;
 
+import Gas.content.Gasses;
+import Gas.world.consumers.ConsumeGasses;
 import braindustry.content.ModItems;
 import braindustry.content.ModLiquids;
 import braindustry.world.blocks.power.BlackHoleReactor;
@@ -143,14 +145,16 @@ class ModPowerBlocks implements ContentList {
                 this.liquidCapacity = 100;
                 this.itemDuration = 240;
                 this.powerProduction = 192;
+                this.consumes.addGas(new ConsumeGasses(Gasses.methane, 1));
                 this.consumes.power(16f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.5f);
+                this.consumes.item(ModItems.odinum, 6);
                 this.requirements(Category.power, ItemStack.with(ModItems.chloroAlloy, 300, Items.surgeAlloy, 200, Items.graphite, 500, ModItems.odinum, 100));
             }
         };
         phaseAlloySolarPanel = new SolarGenerator("phase-alloy-solar-panel") {
             {
-                this.localizedName = "Phase Alloy Solar Panel";
+                this.localizedName = "Dense Composite Solar Panel";
                 this.description = "An improved version of the Large Solar Panel. Takes up a lot of space.";
                 this.health = 960;
                 this.size = 5;

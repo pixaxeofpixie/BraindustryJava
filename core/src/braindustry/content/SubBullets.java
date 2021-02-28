@@ -4,6 +4,7 @@ import arc.math.Mathf;
 import mindustry.entities.Lightning;
 import mindustry.entities.bullet.BulletType;
 import mindustry.gen.Bullet;
+import mindustry.entities.bullet.SapBulletType;
 
 public class SubBullets {
     public static void addLightning(Bullet b, BulletType bulletType){

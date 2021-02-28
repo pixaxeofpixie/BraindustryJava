@@ -124,9 +124,9 @@ class ModUnitsBlocks implements ContentList {
                 this.size = 11;
                 this.consumes.power(96f);
                 this.consumes.liquid(ModLiquids.liquidMethane, 1.2f).optional(false, false);
-                this.consumes.items(ItemStack.with(Items.silicon, 1700, ModItems.graphenite, 2200, Items.surgeAlloy, 1700, ModItems.odinum, 2000, ModItems.plastic, 1000, ModItems.chloroAlloy, 300));
+                this.consumes.items(ItemStack.with(Items.silicon, 1700, ModItems.graphenite, 2200, Items.surgeAlloy, 1700, ModItems.odinum, 2000, ModItems.plastic, 1000, ModItems.chloroAlloy, 200));
                 this.constructTime = 7200;
-                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, Items.surgeAlloy, 400, ModItems.odinum, 700, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
+                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, ModItems.chloroAlloy, 400, ModItems.odinum, 700, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.aquila, ModUnitTypes.griffon},
                         new UnitType[]{ModUnitTypes.vyvna, ModUnitTypes.moureno}
