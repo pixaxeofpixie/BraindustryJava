@@ -11,7 +11,7 @@ public class GasInit {
     public static void init(boolean debug){
         if (init)return;
         init=true;
-        new Gasses().load();
+//        new Gasses().load();
         if (debug){
             new DebugBlocks().load();
         }

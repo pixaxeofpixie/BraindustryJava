@@ -1,5 +1,6 @@
 package braindustry.core;
 
+import Gas.content.Gasses;
 import arc.Events;
 import arc.files.Fi;
 import arc.func.Cons;
@@ -55,6 +56,7 @@ public class ModContentLoader extends ContentLoader {
             new ModItems(),
             new ModStatusEffects(),
             new ModLiquids(),
+            new Gasses(),
             new ModBullets(),
 //            new ModAmmoTypes(),
             new ModUnitTypes(),

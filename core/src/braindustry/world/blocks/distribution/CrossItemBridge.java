@@ -76,22 +76,17 @@ public class CrossItemBridge extends ItemBridge {
     public void setStats() {
         super.setStats();
         aStats.add(Stat.range, this.range, StatUnit.blocks);
-        aStats.add(AStat.maxConnections, (float) this.maxConnections, StatUnit.none);
+        aStats.add(AStat.maxConnections,  this.maxConnections, StatUnit.none);
     }
 
     @Override
     public void setBars() {
         super.setBars();
-//        Vars.ui.content
-        this.bars.add("connections", (entity) -> {
+        this.bars.add("connections", (CrossItemBridgeBuild entity) -> {
             return new Bar(() -> {
                 //in bundle: Connections: {0}/{1}
                 return Core.bundle.format("bar.cross-item-bridge-lines", cast(entity).realConnections(), this.maxConnections);
-            }, () -> {
-                return Pal.items;
-            }, () -> {
-                return (float) cast(entity).realConnections() / (float) this.maxConnections;
-            });
+            }, () -> Pal.items, () -> (float) cast(entity).realConnections() / (float) this.maxConnections);
         });
     }
 
@@ -445,15 +440,15 @@ public class CrossItemBridge extends ItemBridge {
                     Lines.stroke(8.0F);
 
                     Lines.line(bridgeRegion, x+d360x , y+d360y, bx, by, false);
-                    int dist = Math.max((int) Math.abs(x2 - x) / Vars.tilesize, (int) Math.abs(y2 - y) / Vars.tilesize);
+                    int dist = (int) Mathf.dst(x,y,x2,y2);
                     float time = this.time2 / 1.7F;
-                    int arrows = dist * 8 / 4 - 2;
+                    int arrows = dist / 6 ;
 //                    arrows -= arrows == 1 || x == other.worldx() || y == other.worldy() ? 1 : 0;
 //                    arrows=dist;
                     Draw.color();
                     Vec2 arrowOffset = new Vec2(Tmp.v1).scl(1f).setLength(1f);
                     arrowOffset.trns(angle - 45f, 1f, 1f);
-                    for (float a = 0; a < arrows; ++a) {
+                    for (float a =  0; a < arrows; ++a) {
                         Draw.alpha(Mathf.absin(a / arrows - time / 100.0F, 0.1F, 1.0F) * uptime * opacity);
                         final float progress = uptime * ((1f / arrows) * (a) + 1f / arrows / 2f);
                         float arrowX = x + Mathf.lerp(arrowOffset.x * 4f, ex - x - arrowOffset.x * 4f + time % 4f, progress);

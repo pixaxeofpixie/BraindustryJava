@@ -104,7 +104,7 @@ public class MainModClass extends Mod {
     public void init() {
         if (!loaded) return;
         getModContent().each(c->{
-            if (c instanceof MappableContent) ModContentRegions.loadRegions((MappableContent) c);
+            if (c instanceof MappableContent && !headless) ModContentRegions.loadRegions((MappableContent) c);
         });
         createPlayer();
         modVars.init();
