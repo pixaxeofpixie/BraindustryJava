@@ -1717,7 +1717,6 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-
         moureno = new ModUnitType("mouriena") {
             {
                 this.range = 620;
