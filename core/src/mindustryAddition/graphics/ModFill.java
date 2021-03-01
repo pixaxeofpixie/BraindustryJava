@@ -3,10 +3,8 @@ package mindustryAddition.graphics;
 import arc.func.Cons;
 import arc.func.Cons2;
 import arc.graphics.g2d.Fill;
-import arc.graphics.g2d.Lines;
 import arc.math.geom.Vec2;
 import arc.struct.FloatSeq;
-import arc.struct.Seq;
 
 public class ModFill extends Fill {
     private static float stroke = 1.0F;
@@ -45,7 +43,9 @@ public class ModFill extends Fill {
         }
        poly(floats);
     }
-
+public static void circleRect(float x,float y,float radius){
+    swirl(x,y,radius,1f,0f);
+}
     public static void spikesSwirl(float x, float y, float radius1,float length, float finion, float angle){
         spikesSwirl(x,y,radius1,length,finion,angle,0.5f);
     }

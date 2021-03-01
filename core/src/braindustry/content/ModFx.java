@@ -13,6 +13,9 @@ import arc.math.Mathf;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import arc.util.Time;
+import arc.util.Tmp;
+import braindustry.cfunc.Couple3;
+import braindustry.cfunc.Couple4;
 import braindustry.entities.DebugEffect;
 import braindustry.graphics.ModPal;
 import mindustry.Vars;
@@ -20,24 +23,33 @@ import mindustry.content.Fx;
 import mindustry.entities.Effect;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
+import mindustryAddition.graphics.ModFill;
 
 import static ModVars.modFunc.fullName;
 
 public class ModFx {
     private static final float Distance1 = Vars.headless ? 0 : Core.camera.width + Core.camera.height + 50 * Vars.tilesize;
     public static final Effect
+            teleportSircle = new Effect(100f, 100f, (e) -> {
+                Draw.color(e.color);
+                if (e.fin() < 0.5f) {
+                    ModFill.circleRect(e.x,e.y,e.rotation);
+                } else {
+                    ModFill.circleRect(e.x,e.y,e.rotation*(1f-(e.fin()-0.5f)/0.5f));
+                }
+            }),
             fireworkLaserCharge = new Effect(85.0F, 90.0F, (e) -> {
-        Color color = Color.valueOf("add4d6");
-        Draw.color(color);
-        Lines.stroke(e.fin() * 2.0F);
-        Lines.circle(e.x, e.y, 4.2F + e.fout() * 100.0F);
-        Fill.circle(e.x, e.y, e.fin() * 20.0F);
-        Angles.randLenVectors((long) e.id, 20, 50.0F * e.fout(), (x, y) -> {
-            Fill.circle(e.x + x, e.y + y, e.fin() * 5.0F);
-        });
-        Draw.color();
-        Fill.circle(e.x, e.y, e.fin() * 10.0F);
-    }),
+                Color color = Color.valueOf("add4d6");
+                Draw.color(color);
+                Lines.stroke(e.fin() * 2.0F);
+                Lines.circle(e.x, e.y, 4.2F + e.fout() * 100.0F);
+                Fill.circle(e.x, e.y, e.fin() * 20.0F);
+                Angles.randLenVectors((long) e.id, 20, 50.0F * e.fout(), (x, y) -> {
+                    Fill.circle(e.x + x, e.y + y, e.fin() * 5.0F);
+                });
+                Draw.color();
+                Fill.circle(e.x, e.y, e.fin() * 10.0F);
+            }),
             blackHoleLaserCharge = new Effect(90.0F, 110.0F, (e) -> {
                 Color color = ModPal.blackHoleLaserColor;
                 Draw.color(color);
@@ -354,40 +366,60 @@ public class ModFx {
         });
     }),
             napalmShoot = new Effect(40, e -> {
-        Draw.color(Pal.lightFlame, Pal.darkFlame, Color.gray, e.fin());
-        Angles.randLenVectors(e.id, 2, 2.0f + e.fin() * 80.0f, e.rotation, 15f, (x, y) -> {
-            Fill.circle(e.x + x, e.y + y, 0.5f + e.fout() * 1.8f);
-        });
-    }),
+                Draw.color(Pal.lightFlame, Pal.darkFlame, Color.gray, e.fin());
+                Angles.randLenVectors(e.id, 2, 2.0f + e.fin() * 80.0f, e.rotation, 15f, (x, y) -> {
+                    Fill.circle(e.x + x, e.y + y, 0.5f + e.fout() * 1.8f);
+                });
+            }),
             burningIntensiveEffect = new Effect(55, e -> {
-        Draw.color(Pal.lightFlame, Pal.darkFlame, Color.gray, e.fin());
-        Angles.randLenVectors(e.id, 3, 2.0f + e.fin() * 6.0f, 90.0f, 15.0f, (x, y) -> {
-            Fill.circle(e.x + x, e.y + y, 0.4f + e.fout() * 1.6f);
-        });
-    }),
+                Draw.color(Pal.lightFlame, Pal.darkFlame, Color.gray, e.fin());
+                Angles.randLenVectors(e.id, 3, 2.0f + e.fin() * 6.0f, 90.0f, 15.0f, (x, y) -> {
+                    Fill.circle(e.x + x, e.y + y, 0.4f + e.fout() * 1.6f);
+                });
+            }),
             burningIntensiverEffect = new Effect(55, e -> {
-        Draw.color(Pal.lightFlame, Pal.darkFlame, Color.gray, e.fin());
-        Angles.randLenVectors(e.id, 3, 3.0f + e.fin() * 8.0f, 90.0f, 25.0f, (x, y) -> {
-            Fill.circle(e.x + x, e.y + y, 0.6f + e.fout() * 2.0f);
-        });
-    }),
+                Draw.color(Pal.lightFlame, Pal.darkFlame, Color.gray, e.fin());
+                Angles.randLenVectors(e.id, 3, 3.0f + e.fin() * 8.0f, 90.0f, 25.0f, (x, y) -> {
+                    Fill.circle(e.x + x, e.y + y, 0.6f + e.fout() * 2.0f);
+                });
+            }),
             shinigamiTrail = new Effect(48.0F, (e) -> {
-        for (int i = 0; i < 2; ++i) {
-            Draw.color(i == 0 ? ModPal.unitOrange : ModPal.unitOrangeLight);
-            float m = i == 0 ? 1.2F : 0.8F;
-            float rot = e.rotation + 180.0F;
-            float w = 15.0F * e.fout() * m;
-            Drawf.tri(e.x, e.y, w, (40.0F + Mathf.randomSeedRange((long) e.id, 20.0F)) * m, rot);
-            Drawf.tri(e.x, e.y, w, 10.0F * m, rot + 180.0F);
-        }
+                for (int i = 0; i < 2; ++i) {
+                    Draw.color(i == 0 ? ModPal.unitOrange : ModPal.unitOrangeLight);
+                    float m = i == 0 ? 1.2F : 0.8F;
+                    float rot = e.rotation + 180.0F;
+                    float w = 15.0F * e.fout() * m;
+                    Drawf.tri(e.x, e.y, w, (40.0F + Mathf.randomSeedRange((long) e.id, 20.0F)) * m, rot);
+                    Drawf.tri(e.x, e.y, w, 10.0F * m, rot + 180.0F);
+                }
 
-    });
+            });
     private static final float[] energyShootsAngle = {-50, -25, 25, 50},
             energyShootsWidth = {7.6f, 9.8f, 9.8f, 7.6f},
             energyShootsHeight = {15.4f, 22.8f, 22.8f, 15.4f},
             spikeTurretShootsAngle = {-55f, -30f, 30f, 55f},
             spikeTurretShootsWidth = {7.6f, 9.8f, 9.8f, 7.6f},
             spikeTurretShootsHeight = {16.2f, 26.0f, 26.0f, 16.2f};
+    public static final Effect energyShrapnelShoot = new Effect(8, e -> {
+        for (int i = 0; i < 4; i++) {
+            Draw.color(ModPal.unitOrangeLight, ModPal.unitOrangeDark, e.fout());
+            Drawf.tri(e.x, e.y,
+                    energyShootsWidth[i],
+                    energyShootsHeight[i],
+                    e.rotation + (energyShootsAngle[i])
+            );
+        }
+    });
+    public static final Effect rapierShoot = new Effect(7, e -> {
+        for (int i = 0; i < 4; i++) {
+            Draw.color(ModPal.diamond, ModPal.diamondDark, e.fout());
+            Drawf.tri(e.x, e.y,
+                    energyShootsWidth[i],
+                    energyShootsHeight[i],
+                    e.rotation + (energyShootsAngle[i])
+            );
+        }
+    });
     private static final float Distance = Vars.headless ? 0 : Core.camera.width + Core.camera.height + 30 * Vars.tilesize;
     public static final Effect magicBulletTrail = new Effect(30, Distance, e -> {
         Draw.color(ModPal.magicLight, ModPal.magic, e.fout());
@@ -429,28 +461,8 @@ public class ModFx {
         Lines.stroke(e.fout() * 8.0f);
         Lines.circle(e.x, e.y, 20.0f + e.fin() * 100.0f);
     });
-    private static final Color[] gemColors = {ModPal.rubyLight, ModPal.emeraldLight, ModPal.sapphireUnitDecalLight, ModPal.angel, ModPal.topazLight, ModPal.amethystLight};
-    public static final Effect energyShrapnelShoot = new Effect(8, e -> {
-        for (int i = 0; i < 4; i++) {
-            Draw.color(ModPal.unitOrangeLight, ModPal.unitOrangeDark, e.fout());
-            Drawf.tri(e.x, e.y,
-                    energyShootsWidth[i],
-                    energyShootsHeight[i],
-                    e.rotation + (energyShootsAngle[i])
-            );
-        }
-    });
     ;
-    public static final Effect rapierShoot = new Effect(7, e -> {
-        for (int i = 0; i < 4; i++) {
-            Draw.color(ModPal.diamond, ModPal.diamondDark, e.fout());
-            Drawf.tri(e.x, e.y,
-                    energyShootsWidth[i],
-                    energyShootsHeight[i],
-                    e.rotation + (energyShootsAngle[i])
-            );
-        }
-    });
+    private static final Color[] gemColors = {ModPal.rubyLight, ModPal.emeraldLight, ModPal.sapphireUnitDecalLight, ModPal.angel, ModPal.topazLight, ModPal.amethystLight};
     private static Color[] gemColorsBack = {ModPal.rubyDark, ModPal.emeraldDark, ModPal.sapphireUnitDecalDark, ModPal.angelDark, ModPal.topazDark, ModPal.amethystDark};
     public static final Effect photoniteCraft = new Effect(50, e -> {
         Angles.randLenVectors(e.id, 20, 8 + e.fin() * 16, (x, y) -> {
@@ -689,6 +701,7 @@ public class ModFx {
             Fill.circle(e.x + x, e.y + y, 0.55f + e.fout() * 2.0f);
         });
     });
+
     static {
         Fx.class.isArray();
     }
