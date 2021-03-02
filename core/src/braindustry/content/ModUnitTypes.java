@@ -1810,15 +1810,15 @@ public class ModUnitTypes implements ContentList {
                 abilities.add(new OrbitalPlatformAbility(6, 3f,
                         new ModWeapon("litix-magma") {
                             {
-                                this.x = 22;
+                                this.x = 0;
                                 this.y = 0;
                                 this.shootY = -1f;
                                 this.reload = 50;
                                 this.ejectEffect = Fx.fireballsmoke;
                                 this.recoil = 3f;
                                 this.shots = 7;
-                                this.inaccuracy = 16.0f;
-                                this.rotate = false;
+                                this.inaccuracy = 10.0f;
+                                this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.magma) {
@@ -1897,15 +1897,15 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("litix-magma") {
                             {
-                                this.x = 22;
+                                this.x = 0;
                                 this.y = 0;
                                 this.shootY = -1f;
                                 this.reload = 50;
                                 this.ejectEffect = Fx.fireballsmoke;
                                 this.recoil = 3f;
                                 this.shots = 7;
-                                this.inaccuracy = 16.0f;
-                                this.rotate = false;
+                                this.inaccuracy = 10.0f;
+                                this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.magma) {
