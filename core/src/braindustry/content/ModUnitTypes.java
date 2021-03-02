@@ -1833,16 +1833,16 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("chainmail-weapon") {
+                        new ModWeapon("broadsword-weapon") {
                             {
                                 this.top = true;
                                 this.x = 0;
                                 this.y = 0;
                                 this.shootY = -1f;
                                 this.reload = 120;
-                                this.shots = 5;
+                                this.shots = 7;
                                 this.shotDelay = 5;
-                                this.inaccuracy = 7;
+                                this.inaccuracy = 5;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
                                 this.shootSound = Sounds.laserblast;
@@ -1851,7 +1851,7 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.5f;
-                                        this.length = 110;
+                                        this.length = 190;
                                         this.damage = 40;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("D6FF33");
@@ -1869,7 +1869,7 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 0;
                                 this.y = 0;
                                 this.shootY = -1f;
-                                this.reload = 90;
+                                this.reload = 70;
                                 this.ejectEffect = ModFx.magicShootEffectBig;
                                 this.recoil = 6;
                                 this.shootSound = Sounds.laserblast;
@@ -1885,7 +1885,7 @@ public class ModUnitTypes implements ContentList {
                                         this.updateEffect = this.trailEffect = ModFx.instTrail;
                                         this.hitEffect = Fx.blastExplosion;
                                         this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 1790.0F;
+                                        this.damage = 1590.0F;
                                         this.pierceDamageFactor = 1.2F;
                                         this.despawnEffect = ModFx.instBomb;
                                         this.buildingDamageMultiplier = 1.6f;
@@ -1920,16 +1920,16 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("chainmail-weapon") {
+                        new ModWeapon("broadsword-weapon") {
                             {
                                 this.top = true;
                                 this.x = 0;
                                 this.y = -8f;
                                 this.shootY = -1f;
                                 this.reload = 120;
-                                this.shots = 5;
+                                this.shots = 7;
                                 this.shotDelay = 5;
-                                this.inaccuracy = 7;
+                                this.inaccuracy = 5;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
                                 this.shootSound = Sounds.laserblast;
@@ -1938,7 +1938,7 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new SapBulletType() {
                                     {
                                         this.sapStrength = 0.5f;
-                                        this.length = 110;
+                                        this.length = 190;
                                         this.damage = 40;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("D6FF33");
@@ -1955,7 +1955,7 @@ public class ModUnitTypes implements ContentList {
                         this.x = 0;
                         this.y = 0;
                         this.shootY = -1f;
-                        this.reload = 90;
+                        this.reload = 70;
                         this.ejectEffect = ModFx.magicShootEffectBig;
                         this.recoil = 6;
                         this.shootSound = Sounds.laserblast;
@@ -1971,7 +1971,7 @@ public class ModUnitTypes implements ContentList {
                                 this.updateEffect = this.trailEffect = ModFx.instTrail;
                                 this.hitEffect = Fx.blastExplosion;
                                 this.smokeEffect = Fx.shootBig2;
-                                this.damage = 1790.0F;
+                                this.damage = 1590.0F;
                                 this.pierceDamageFactor = 1.2F;
                                 this.despawnEffect = ModFx.instBomb;
                                 this.buildingDamageMultiplier = 1.6f;
@@ -1988,7 +1988,7 @@ public class ModUnitTypes implements ContentList {
                 this.hitSize = 38;
                 this.armor = 14;
                 this.buildSpeed = 2F;
-                this.health = 32200;
+                this.health = 44200;
                 this.canDrown = false;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int brange = 1;
@@ -2000,7 +2000,7 @@ public class ModUnitTypes implements ContentList {
                             {
                                 this.x = 22;
                                 this.y = 0;
-                                this.shootY = -1f;
+                                this.shootY = 5f;
                                 this.reload = 50;
                                 this.ejectEffect = Fx.fireballsmoke;
                                 this.recoil = 3f;
