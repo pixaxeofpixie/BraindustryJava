@@ -1808,7 +1808,7 @@ public class ModUnitTypes implements ContentList {
                 stealthDuration = 15f * 60f;
                 stealthCooldown = 10f * 60f;
                 abilities.add(new OrbitalPlatformAbility(6, 3f,
-                        new ModWeapon("maverix-weapon") {
+                        new ModWeapon("litix-magma") {
                             {
                                 this.x = 22;
                                 this.y = 0;
@@ -1864,7 +1864,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("troplex-grinder-3") {
+                        new ModWeapon("litix-grinder") {
                             {
                                 this.x = 0;
                                 this.y = 0;
@@ -1895,7 +1895,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("maverix-weapon") {
+                        new ModWeapon("litix-magma") {
                             {
                                 this.x = 22;
                                 this.y = 0;
@@ -1950,7 +1950,7 @@ public class ModUnitTypes implements ContentList {
                                     }
                                 };
                             }
-                        },new ModWeapon("troplex-grinder-3") {
+                        },new ModWeapon("litix-grinder") {
                     {
                         this.x = 0;
                         this.y = 0;
