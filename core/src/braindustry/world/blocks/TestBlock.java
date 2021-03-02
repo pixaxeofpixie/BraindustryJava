@@ -105,7 +105,8 @@ public class TestBlock extends Block {
             TestBlockBuild me = this;
             table.table((t) -> {
                 t.button(Icon.up, () -> {
-                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("6757d1"), Color.valueOf("9288cc"), Couple.of(2f,4f));
+                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("2c5777"), Color.valueOf("11222d"), Couple.of(2f,4f));
+//                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("6757d1"), Color.valueOf("9288cc"), Couple.of(2f,4f));
                 });
                 t.button(Icon.terminal, () -> {
                     ModFx.Spirals.at(x, y, size, Pal.lancerLaser);

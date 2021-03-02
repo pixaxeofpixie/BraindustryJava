@@ -1,5 +1,6 @@
 package mindustryAddition.graphics;
 
+import ModVars.math.ModMath;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Font;
@@ -41,10 +42,10 @@ public class ModDraw extends Draw{
             Color lerp = first.cpy().lerp(second, Mathf.random());
             Vec2 pos = Tmp.v1.trns(0, radius).cpy();
             if (i != 0) {
-                float angle = (float) Math.toDegrees(Math.atan((mradius + lastAngle) / radius));
+                float angle = ModMath.atan((mradius + lastAngle) / radius);
                 float fangle = angle + lastPos.angle();
                 if (fangle > maxAngle) break;
-                float pangle = Mathf.radiansToDegrees * (float) Math.atan((mradius) / radius);
+                float pangle =ModMath.atan((mradius) / radius);
                 if (pangle + angle > maxAngle) {
                     fangle = maxAngle - (maxAngle - lastAngle) / 2f;
                     pos = Tmp.v1.trns(fangle, radius).cpy();
@@ -52,7 +53,7 @@ public class ModDraw extends Draw{
                 }
                 pos = Tmp.v1.trns(fangle, radius).cpy();
             } else {
-                maxAngle = 360f - Mathf.radiansToDegrees * (float) Math.atan((mradius) / radius);
+                maxAngle = 360f - ModMath.atan((mradius) / radius);
                 firstO.trns(maxAngle, radius);
             }
             couple3s.add(Couple3.of(pos, mradius, lerp));
