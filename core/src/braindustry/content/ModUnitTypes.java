@@ -1465,33 +1465,6 @@ public class ModUnitTypes implements ContentList {
                 this.mineTier = 4;
                 stealthDuration = 7f * 60f;
                 stealthCooldown = 3f * 60f;
-                abilities.add(new OrbitalPlatformAbility(3, 1.4f,
-                        new ModWeapon("maverix-weapon") {
-                            {
-                                this.x = 0;
-                                this.y = 0;
-                                this.shootY = -1f;
-                                this.reload = 50;
-                                this.ejectEffect = Fx.fireballsmoke;
-                                this.recoil = 3f;
-                                this.shots = 7;
-                                this.inaccuracy = 16.0f;
-                                this.rotate = true;
-                                this.rotateSpeed = 1.4f;
-                                this.shootSound = Sounds.flame;
-                                this.alternate = true;
-                                this.bullet = new LiquidBulletType(ModLiquids.magma) {
-                                    {
-                                        damage = 98;
-                                        speed = 1.9f;
-                                        drag = -0.01f;
-                                        shootEffect = Fx.lightningShoot;
-                                        lifetime = 95f;
-                                        collidesAir = true;
-                                    }
-                                };
-                            }
-                        }));
                 this.constructor = Types.stealthMech;
                 this.defaultController = StealthGroundAI::new;
                 this.speed = 0.62f;
@@ -1834,11 +1807,67 @@ public class ModUnitTypes implements ContentList {
                 this.mineTier = 5;
                 stealthDuration = 15f * 60f;
                 stealthCooldown = 10f * 60f;
-                abilities.add(new OrbitalPlatformAbility(6, 2f,
+                abilities.add(new OrbitalPlatformAbility(6, 3f,
+                        new ModWeapon("maverix-weapon") {
+                            {
+                                this.x = 22;
+                                this.y = 0;
+                                this.shootY = -1f;
+                                this.reload = 50;
+                                this.ejectEffect = Fx.fireballsmoke;
+                                this.recoil = 3f;
+                                this.shots = 7;
+                                this.inaccuracy = 16.0f;
+                                this.rotate = false;
+                                this.shootSound = Sounds.flame;
+                                this.alternate = true;
+                                this.bullet = new LiquidBulletType(ModLiquids.magma) {
+                                    {
+                                        damage = 98;
+                                        speed = 1.9f;
+                                        drag = -0.01f;
+                                        shootEffect = Fx.lightningShoot;
+                                        lifetime = 95f;
+                                        collidesAir = true;
+                                    }
+                                };
+                            }
+                        },
+                        new ModWeapon("chainmail-weapon") {
+                            {
+                                this.top = true;
+                                this.x = 0;
+                                this.y = 0;
+                                this.shootY = -1f;
+                                this.reload = 120;
+                                this.shots = 5;
+                                this.shotDelay = 5;
+                                this.inaccuracy = 7;
+                                this.ejectEffect = Fx.none;
+                                this.recoil = 2;
+                                this.shootSound = Sounds.laserblast;
+                                this.rotate = true;
+                                this.mirror = false;
+                                this.bullet = new SapBulletType() {
+                                    {
+                                        this.sapStrength = 0.5f;
+                                        this.length = 110;
+                                        this.damage = 40;
+                                        this.shootEffect = Fx.shootSmall;
+                                        this.hitColor = Color.valueOf("D6FF33");
+                                        this.color = Color.valueOf("FFE70F");
+                                        this.despawnEffect = Fx.none;
+                                        this.width = 0.7f;
+                                        this.lifetime = 40;
+                                        this.knockback = 1.3f;
+                                    }
+                                };
+                            }
+                        },
                         new ModWeapon("troplex-grinder-3") {
                             {
                                 this.x = 0;
-                                this.y = -8;
+                                this.y = 0;
                                 this.shootY = -1f;
                                 this.reload = 90;
                                 this.ejectEffect = ModFx.magicShootEffectBig;
@@ -1866,133 +1895,65 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("troplex-grinder-3") {
+                        new ModWeapon("maverix-weapon") {
                             {
-                                this.x = 0;
-                                this.y = -8;
+                                this.x = 22;
+                                this.y = 0;
                                 this.shootY = -1f;
-                                this.reload = 90;
-                                this.ejectEffect = ModFx.magicShootEffectBig;
-                                this.recoil = 6;
-                                this.shootSound = Sounds.laserblast;
-                                this.rotate = true;
-                                this.rotateSpeed = 0.7f;
-                                this.mirror = false;
-                                this.bullet = new RailBulletType() {
+                                this.reload = 50;
+                                this.ejectEffect = Fx.fireballsmoke;
+                                this.recoil = 3f;
+                                this.shots = 7;
+                                this.inaccuracy = 16.0f;
+                                this.rotate = false;
+                                this.shootSound = Sounds.flame;
+                                this.alternate = true;
+                                this.bullet = new LiquidBulletType(ModLiquids.magma) {
                                     {
-                                        this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 370.0F;
-                                        this.updateEffectSeg = 70.0F;
-                                        this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
-                                        this.updateEffect = this.trailEffect = ModFx.instTrail;
-                                        this.hitEffect = Fx.blastExplosion;
-                                        this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 1790.0F;
-                                        this.pierceDamageFactor = 1.2F;
-                                        this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 1.6f;
-                                        this.speed = 1f;
-                                        this.hitShake = 5f;
+                                        damage = 98;
+                                        speed = 1.9f;
+                                        drag = -0.01f;
+                                        shootEffect = Fx.lightningShoot;
+                                        lifetime = 95f;
+                                        collidesAir = true;
                                     }
                                 };
                             }
                         },
-                        new ModWeapon("troplex-grinder-3") {
+                        new ModWeapon("chainmail-weapon") {
                             {
+                                this.top = true;
                                 this.x = 0;
-                                this.y = -8;
+                                this.y = -8f;
                                 this.shootY = -1f;
-                                this.reload = 90;
-                                this.ejectEffect = ModFx.magicShootEffectBig;
-                                this.recoil = 6;
+                                this.reload = 120;
+                                this.shots = 5;
+                                this.shotDelay = 5;
+                                this.inaccuracy = 7;
+                                this.ejectEffect = Fx.none;
+                                this.recoil = 2;
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
-                                this.rotateSpeed = 0.7f;
                                 this.mirror = false;
-                                this.bullet = new RailBulletType() {
+                                this.bullet = new SapBulletType() {
                                     {
-                                        this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 370.0F;
-                                        this.updateEffectSeg = 70.0F;
-                                        this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
-                                        this.updateEffect = this.trailEffect = ModFx.instTrail;
-                                        this.hitEffect = Fx.blastExplosion;
-                                        this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 1790.0F;
-                                        this.pierceDamageFactor = 1.2F;
-                                        this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 1.6f;
-                                        this.speed = 1f;
-                                        this.hitShake = 5f;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("troplex-grinder-3") {
-                            {
-                                this.x = 0;
-                                this.y = -8;
-                                this.shootY = -1f;
-                                this.reload = 90;
-                                this.ejectEffect = ModFx.magicShootEffectBig;
-                                this.recoil = 6;
-                                this.shootSound = Sounds.laserblast;
-                                this.rotate = true;
-                                this.rotateSpeed = 0.7f;
-                                this.mirror = false;
-                                this.bullet = new RailBulletType() {
-                                    {
-                                        this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 370.0F;
-                                        this.updateEffectSeg = 70.0F;
-                                        this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
-                                        this.updateEffect = this.trailEffect = ModFx.instTrail;
-                                        this.hitEffect = Fx.blastExplosion;
-                                        this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 1790.0F;
-                                        this.pierceDamageFactor = 1.2F;
-                                        this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 1.6f;
-                                        this.speed = 1f;
-                                        this.hitShake = 5f;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("troplex-grinder-3") {
-                            {
-                                this.x = 0;
-                                this.y = -8;
-                                this.shootY = -1f;
-                                this.reload = 90;
-                                this.ejectEffect = ModFx.magicShootEffectBig;
-                                this.recoil = 6;
-                                this.shootSound = Sounds.laserblast;
-                                this.rotate = true;
-                                this.rotateSpeed = 0.7f;
-                                this.mirror = false;
-                                this.bullet = new RailBulletType() {
-                                    {
-                                        this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 370.0F;
-                                        this.updateEffectSeg = 70.0F;
-                                        this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
-                                        this.updateEffect = this.trailEffect = ModFx.instTrail;
-                                        this.hitEffect = Fx.blastExplosion;
-                                        this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 1790.0F;
-                                        this.pierceDamageFactor = 1.2F;
-                                        this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 1.6f;
-                                        this.speed = 1f;
-                                        this.hitShake = 5f;
+                                        this.sapStrength = 0.5f;
+                                        this.length = 110;
+                                        this.damage = 40;
+                                        this.shootEffect = Fx.shootSmall;
+                                        this.hitColor = Color.valueOf("D6FF33");
+                                        this.color = Color.valueOf("FFE70F");
+                                        this.despawnEffect = Fx.none;
+                                        this.width = 0.7f;
+                                        this.lifetime = 40;
+                                        this.knockback = 1.3f;
                                     }
                                 };
                             }
                         },new ModWeapon("troplex-grinder-3") {
                     {
                         this.x = 0;
-                        this.y = -8;
+                        this.y = 0;
                         this.shootY = -1f;
                         this.reload = 90;
                         this.ejectEffect = ModFx.magicShootEffectBig;
@@ -2027,12 +1988,12 @@ public class ModUnitTypes implements ContentList {
                 this.hitSize = 38;
                 this.armor = 14;
                 this.buildSpeed = 2F;
-                this.health = 18200;
+                this.health = 32200;
                 this.canDrown = false;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int brange = 1;
-                this.localizedName = "Maverix";
-                this.description = "Heavy attack unit with magma guns and rampage railgun that mostly effective to buildings.";
+                this.localizedName = "Litix";
+                this.description = "Heavy attack unit with orbital magma guns,railguns and sap guns.";
 
                 this.weapons.add(
                         new ModWeapon("maverix-weapon") {
