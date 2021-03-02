@@ -8,6 +8,6 @@ public class ModMath  {
         return ((float) Math.ceil(value* scale))/scale;
     }
     public static float atan(float tan){
-        return Mathf.radiansToDegrees*round(Math.atan(tan));
+        return round(Mathf.radiansToDegrees*Math.atan(tan));
     }
 }
