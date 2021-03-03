@@ -647,7 +647,7 @@ class ModDefense implements ContentList {
                         trailEffect = ModFx.shinigamiTrail;
                         despawnEffect = ModFx.instBomb;
                         trailSpacing = 25f;
-                        damage = 9180;
+                        damage = 14480;
                         buildingDamageMultiplier = 0.2f;
                         speed = brange;
                         hitShake = 9f;
@@ -655,9 +655,9 @@ class ModDefense implements ContentList {
                     }}
             );
             maxAmmo = 40;
-            ammoPerShot = 5;
+            ammoPerShot = 10;
             rotateSpeed = 1.5f;
-            reloadTime = 260f;
+            reloadTime = 12000f;
             ammoUseEffect = Fx.casing3Double;
             recoilAmount = 10f;
             restitution = 0.009f;
@@ -671,7 +671,7 @@ class ModDefense implements ContentList {
             coolantMultiplier = 0.6f;
             health = 260 * size * size;
             coolantUsage = 1.4f;
-            consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 0.5f)).update(false);
+            consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 10f)).update(false);
             consumes.powerCond(24f, TurretBuild::isActive);
         }};
         exoticAlloyWallLarge = new Wall("dense-composite-wall-large") {
@@ -717,7 +717,7 @@ class ModDefense implements ContentList {
             {
                 this.localizedName = "Odinum Wall Large";
                 this.description = "Bigger Odinum Wall, can deflect bullets.";
-                this.health = 3360;
+                this.health = 2860;
                 this.size = 2;
                 this.requirements(Category.defense, ItemStack.with(ModItems.odinum, 28));
                 this.chanceDeflect = 14;
@@ -729,7 +729,7 @@ class ModDefense implements ContentList {
                 this.localizedName = "Odinum Wall";
                 this.description = "Medium strength wall, a little radioactive.";
                 this.size = 1;
-                this.health = 1020;
+                this.health = 620;
                 this.requirements(Category.defense, ItemStack.with(ModItems.odinum,8));
                 this.chanceDeflect = 12;
                 this.flashHit = true;
