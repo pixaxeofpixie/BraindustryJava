@@ -145,29 +145,30 @@ public class ModNet extends Net {
             } else {
 //            Log.err("Unhandled packet type: '@'!", object);
             }
+        } catch (SuccessfulException e){
+            parent.handleClientReceived(object);
         } catch (Exception e){
             Log.err(e);
         }
-        parent.handleClientReceived(object);
     }
 
     /**
      * Call to handle a packet being received for the server.
      */
     public void handleServerReceived(NetConnection connection, Object object) {
-
-        try{
+        try {
             if (serverListeners.get(object.getClass()) != null) {
-                serverListeners.get(object.getClass()).get(connection, object);
+                    serverListeners.get(object.getClass()).get(connection, object);
 //                Pools.free(object);
             } else {
 //            Log.err("Unhandled packet type: '@'!", object.getClass());
             }
+        } catch (SuccessfulException e){
+            parent.handleServerReceived(connection,object);
         } catch (Exception e){
             Log.err(e);
         }
 
-        parent.handleServerReceived(connection,object);
     }
 
     /**
@@ -202,5 +203,7 @@ public class ModNet extends Net {
         parent.dispose();
     }
 
+public static class SuccessfulException extends RuntimeException{
 
+}
 }

@@ -84,7 +84,54 @@ public class ModNetClient implements ApplicationListener {
 
     @ModAnnotations.Remote(variants = Annotations.Variant.one, priority = Annotations.PacketPriority.low, unreliable = true,replaceLevel = 18)
     public static void entityZEROSnapshot(short amount, short dataLen, byte[] data) {
-        Log.info("entityZEROSnapshot");
+
+        try {
+            modVars.netClient.byteStream.setBytes(Vars.net.decompressSnapshot(data, dataLen));
+            DataInputStream input = modVars.netClient.dataStream;
+
+            for (int j = 0; j < amount; ++j) {
+                int id = input.readInt();
+                byte typeID = input.readByte();
+                Syncc entity = (Syncc) Groups.sync.getByID(id);
+                boolean add = false;
+                boolean created = false;
+                if (entity == null && id == Vars.player.id()) {
+                    entity = Vars.player;
+                    add = true;
+                }
+                int classId = 255;
+                if (typeID == modVars.MOD_CONTENT_ID) {
+                    classId = input.readShort();
+                }
+                if (entity == null) {
+                    if (typeID == modVars.MOD_CONTENT_ID) {
+                        return;
+                    } else {
+
+                        entity = (Syncc) EntityMapping.map(typeID).get();
+                    }
+                    ((Syncc) entity).id(id);
+                    if (!Vars.netClient.isEntityUsed(((Syncc) entity).id())) {
+                        add = true;
+                    }
+
+                    created = true;
+                }
+
+                (entity).readSync(Reads.get(input));
+                if (created) {
+                    ((Syncc) entity).snapSync();
+                }
+
+                if (add) {
+                    (entity).add();
+                    Vars.netClient.addRemovedEntity((entity).id());
+                }
+            }
+
+        } catch (IOException var10) {
+            throw new RuntimeException(var10);
+        }
     }
 
     @ModAnnotations.Remote(variants = Annotations.Variant.one, priority = Annotations.PacketPriority.low, unreliable = true)

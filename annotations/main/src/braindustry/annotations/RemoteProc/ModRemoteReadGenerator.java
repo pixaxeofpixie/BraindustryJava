@@ -120,6 +120,7 @@ public class ModRemoteReadGenerator {
 
         //end control flow if necessary
         Cons<CodeBlock.Builder> addEnd=(block)->{
+            readBlock.addStatement("throw new $1N.SuccessfulException()",ClassName.get("braindustry.net","ModNet").reflectionName());
 //            block.addStatement("$1N.readPacket(read,id"+(needsPlayer?",player":"")+");",className.replace("Mod","")); //handle parent ids
         };
         if(started){
