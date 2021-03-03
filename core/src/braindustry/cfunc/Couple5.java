@@ -17,6 +17,16 @@ public class Couple5<A,B,C,D,E> {
         this.o5 = o5;
     }
 
+    @Override
+    public String toString() {
+        return "Couple5{" +
+                "o1=" + o1 +
+                ", o2=" + o2 +
+                ", o3=" + o3 +
+                ", o4=" + o4 +
+                ", o5=" + o5 +
+                '}';
+    }
 
     public boolean equals(Object other) {
         return

@@ -8,6 +8,7 @@ import arc.math.Mathf;
 import arc.math.geom.Vec2;
 import arc.scene.ui.layout.Scl;
 import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Tmp;
 import braindustry.cfunc.Couple;
 import braindustry.cfunc.Couple3;
@@ -31,6 +32,7 @@ public class ModDraw extends Draw{
         font.setUseIntegerPositions(ints);
         font.getData().setScale(1);
     }
+
     public static void teleportCircles(float x, float y, float radius, Color first, Color second, Couple<Float,Float> range){
         Seq<Couple3<Vec2, Float, Color>> couple3s = new Seq<>();
         float lastAngle = 0;
@@ -49,11 +51,14 @@ public class ModDraw extends Draw{
                 if (pangle + angle > maxAngle) {
                     fangle = maxAngle - (maxAngle - lastAngle) / 2f;
                     pos = Tmp.v1.trns(fangle, radius).cpy();
-                    mradius = pos.dst(firstO);
+                    mradius = pos.dst(firstO)/2f;
+                    couple3s.add(Couple3.of(pos, mradius, lerp));
+                    break;
                 }
                 pos = Tmp.v1.trns(fangle, radius).cpy();
             } else {
                 maxAngle = 360f - ModMath.atan((mradius) / radius);
+                Log.info("maxAngle: @",maxAngle);
                 firstO.trns(maxAngle, radius);
             }
             couple3s.add(Couple3.of(pos, mradius, lerp));

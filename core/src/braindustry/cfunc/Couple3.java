@@ -13,6 +13,15 @@ public class Couple3<A,B,C> {
         this.o3 = o3;
     }
 
+    @Override
+    public String toString() {
+        return "Couple3{" +
+                "o1=" + o1 +
+                ", o2=" + o2 +
+                ", o3=" + o3 +
+                '}';
+    }
+
     public boolean equals(Object other) {
         return
                 other instanceof Couple3<?,?,?> &&

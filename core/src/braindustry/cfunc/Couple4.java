@@ -15,6 +15,16 @@ public class Couple4<A, B, C, D> {
         this.o4 = o4;
     }
 
+    @Override
+    public String toString() {
+        return "Couple4{" +
+                "o1=" + o1 +
+                ", o2=" + o2 +
+                ", o3=" + o3 +
+                ", o4=" + o4 +
+                '}';
+    }
+
     public static <A, B, C, D> Couple4<A, B, C, D> of(A a, B b, C c, D d) {
         return new Couple4<>(a, b, c, d);
     }
