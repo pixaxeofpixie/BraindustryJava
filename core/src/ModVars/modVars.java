@@ -4,38 +4,33 @@ import ModVars.Classes.ModAssets;
 import ModVars.Classes.ModAtlas;
 import ModVars.Classes.ModSettings;
 import ModVars.Classes.UI.ModControlsDialog;
-import braindustry.core.ModUI;
 import ModVars.Classes.UI.settings.ModOtherSettingsDialog;
 import ModVars.Classes.UI.settings.ModSettingsDialog;
-import arc.Events;
 import arc.func.Prov;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.io.Reads;
+import arc.util.io.ReusableByteInStream;
 import braindustry.ModListener;
 import braindustry.core.ModLogic;
 import braindustry.core.ModNetClient;
+import braindustry.core.ModUI;
 import braindustry.gen.ModBuilding;
 import braindustry.gen.ModNetServer;
-import braindustry.gen.ModRemoteReadClient;
-import braindustry.gen.ModRemoteReadServer;
 import braindustry.input.ModKeyBinds;
+import braindustry.net.ModNet;
+import braindustry.world.ModSave4;
 import mindustry.ClientLauncher;
 import mindustry.ctype.Content;
 import mindustry.gen.Building;
 import mindustry.gen.EntityMapping;
-import mindustry.gen.Player;
 import mindustry.io.SaveIO;
 import mindustry.mod.Mods;
-import mindustry.net.Packets;
-import mindustry.net.ValidateException;
-import braindustry.world.ModSave4;
 
+import java.io.DataInputStream;
 import java.lang.reflect.Constructor;
 
-import static arc.util.Log.debug;
-import static mindustry.Vars.net;
-import static mindustry.Vars.ui;
+import static mindustry.Vars.*;
 
 public class modVars {
     public static final byte MOD_CONTENT_ID = 66;
@@ -67,42 +62,11 @@ public class modVars {
             modContent.add(content);
         }
     }
+    private static ReusableByteInStream bin;
+    private static Reads read = new Reads(new DataInputStream(bin = new ReusableByteInStream()));
     public static void init() {
         ModSave4 save4 = new ModSave4();
-        Events.on(Object[].class, (array) -> {
-            try {
-                if (array[0].equals("net.handleClient")) {
-                    ModRemoteReadClient.readPacket((Reads) array[1], (byte) array[2]);
-                } else if (array[0].equals("net.handleServer")) {
-                    ModRemoteReadServer.readPacket((Reads) array[1], (byte) array[2], (Player) array[3]);
-                } else {
-                    return;
-                }
-                throw new RuntimeException(successfulMessage);
-            } catch (ClassCastException ignored) {
-            }
-        });
-        net.handleClient(Packets.InvokePacket.class, packet -> {
-            ModRemoteReadClient.readPacket(packet.reader(), packet.type);
-//            Events.fire(new Object[]{"net.handleClient", packet.reader(), packet.type});
-
-        });
-        net.handleServer(Packets.InvokePacket.class, (con, packet) -> {
-            if (con.player == null) return;
-            try {
-                ModRemoteReadServer.readPacket(packet.reader(), packet.type, con.player);
-//                Events.fire(new Object[]{"net.handleServer", packet.reader(), packet.type,con.player});
-            } catch (ValidateException e) {
-                debug("Validation failed for '@': @", e.player, e.getMessage());
-            } catch (RuntimeException e) {
-                if (e.getMessage().equals(successfulMessage)) return;
-                if (e.getCause() instanceof ValidateException) {
-                    debug("Validation failed for '@': @", ((ValidateException) e.getCause()).player, e.getCause().getMessage());
-                } else {
-                    throw e;
-                }
-            }
-        });
+        net=new ModNet(platform.getNet(),net);
             if (false) {
                 for (int i = 0; i < EntityMapping.idMap.length; i++) {
                     Prov prov = EntityMapping.idMap[i];
@@ -129,7 +93,8 @@ public class modVars {
             SaveIO.versions.remove(save4.version);
             SaveIO.versions.put(save4.version, save4);
             modUI.init();
-
+        netClient.loadNetHandler();
+        netServer.loadNetHandler();
         }
 
         public static void load () {

@@ -2,13 +2,14 @@ package braindustry.annotations.RemoteProc;
 
 import arc.func.Cons;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.io.Reads;
-import com.squareup.javapoet.*;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeSpec;
 import mindustry.annotations.BaseProcessor;
 import mindustry.annotations.remote.MethodEntry;
 import mindustry.annotations.remote.RemoteProcess;
-import mindustry.annotations.remote.RemoteReadGenerator;
 import mindustry.annotations.remote.SerializerResolver;
 import mindustry.annotations.util.TypeIOResolver;
 
@@ -119,7 +120,7 @@ public class ModRemoteReadGenerator {
 
         //end control flow if necessary
         Cons<CodeBlock.Builder> addEnd=(block)->{
-            block.addStatement("$1N.readPacket(read,id"+(needsPlayer?",player":"")+");",className.replace("Mod","")); //handle parent ids
+//            block.addStatement("$1N.readPacket(read,id"+(needsPlayer?",player":"")+");",className.replace("Mod","")); //handle parent ids
         };
         if(started){
             readBlock.nextControlFlow("else");

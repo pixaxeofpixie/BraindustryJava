@@ -11,11 +11,13 @@ import arc.util.io.Reads;
 import arc.util.io.ReusableByteInStream;
 import braindustry.annotations.ModAnnotations;
 import braindustry.cfunc.Couple;
+import braindustry.gen.ModRemoteReadClient;
 import mindustry.Vars;
 import mindustry.annotations.Annotations;
 import mindustry.core.NetClient;
 import mindustry.game.EventType;
 import mindustry.gen.*;
+import mindustry.net.Packets;
 import mindustry.net.ValidateException;
 import mindustry.world.Tile;
 import mindustry.world.modules.ItemModule;
@@ -182,5 +184,17 @@ public class ModNetClient implements ApplicationListener {
     @Override
     public void update() {
 
+    }
+
+    private static ReusableByteInStream bin;
+    private static Reads read = new Reads(new DataInputStream(bin = new ReusableByteInStream()));
+    public void loadNetHandler() {
+        net.handleClient(Packets.InvokePacket.class, packet -> {
+            byte[] clone = packet.bytes.clone();
+            bin.setBytes(clone);
+            ModRemoteReadClient.readPacket(read, packet.type);
+//            Events.fire(new Object[]{"net.handleClient", packet.reader(), packet.type});
+
+        });
     }
 }

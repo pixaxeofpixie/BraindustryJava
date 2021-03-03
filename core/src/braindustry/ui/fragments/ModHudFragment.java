@@ -23,10 +23,8 @@ import arc.util.Time;
 import arc.util.Tmp;
 import braindustry.gen.StealthUnitc;
 import braindustry.graphics.ModShaders;
-import mindustry.content.StatusEffects;
 import mindustry.core.GameState;
 import mindustry.game.EventType;
-import mindustry.game.SpawnGroup;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Drawf;
@@ -35,7 +33,6 @@ import mindustry.input.Binding;
 import mindustry.net.Packets;
 import mindustry.type.Item;
 import mindustry.ui.*;
-import mindustry.ui.fragments.Fragment;
 import mindustry.ui.fragments.HudFragment;
 
 import static mindustry.Vars.*;
@@ -68,8 +65,8 @@ public class ModHudFragment extends HudFragment {
         newHudGroup();
         WidgetGroup  newGroup=ui.hudGroup;
 
-        Group group=new Group() {};
-        ui.hudfrag.blockfrag.build(group);
+        Group nullGroup=new Group() {};
+        ui.hudfrag.blockfrag.build(nullGroup);
         ui.hudfrag=new ModHudFragment();
         ui.hudfrag.build(newGroup);
         ui.chatfrag.container().build(newGroup);

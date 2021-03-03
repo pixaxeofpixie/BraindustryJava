@@ -93,6 +93,9 @@ public class ModMenuShaderRender extends MenuRenderer {
         Simplex s2 = new Simplex((offset + 1));
         Simplex s3 = new Simplex((offset + 2));
         RidgedPerlin rid = new RidgedPerlin(1 + offset, 1);
+//        Rand last = Mathf.rand;
+//        Mathf.rand=new Rand(System.nanoTime());
+        Mathf.rand.setSeed(System.nanoTime());
         Block[] selected = Structs.select(new Block[][]{
                 {Blocks.sand, Blocks.sandWall},
                 {Blocks.shale, Blocks.shaleWall},

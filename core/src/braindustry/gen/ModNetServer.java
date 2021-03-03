@@ -9,6 +9,8 @@ import arc.math.geom.Rect;
 import arc.math.geom.Vec2;
 import arc.struct.Seq;
 import arc.util.*;
+import arc.util.io.Reads;
+import arc.util.io.ReusableByteInStream;
 import arc.util.io.ReusableByteOutStream;
 import arc.util.io.Writes;
 import braindustry.annotations.ModAnnotations;
@@ -19,12 +21,16 @@ import mindustry.game.Team;
 import mindustry.game.Teams;
 import mindustry.gen.*;
 import mindustry.net.NetConnection;
+import mindustry.net.Packets;
+import mindustry.net.ValidateException;
 import mindustry.type.UnitType;
 import mindustry.world.blocks.storage.CoreBlock;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import static arc.util.Log.debug;
 import static mindustry.Vars.*;
 
 public class ModNetServer implements ApplicationListener {
@@ -239,5 +245,27 @@ public class ModNetServer implements ApplicationListener {
             ModCall.entitySnapshot(player.con, (short)sent, (short)syncBytes.length, net.compressSnapshot(syncBytes));
         }
 
+    }
+
+    private static ReusableByteInStream bin;
+    private static Reads read = new Reads(new DataInputStream(bin = new ReusableByteInStream()));
+    public void loadNetHandler() {
+        net.handleServer(Packets.InvokePacket.class, (con, packet) -> {
+            if (con.player == null) return;
+            byte[] clone = packet.bytes.clone();
+            bin.setBytes(clone);
+            try {
+                ModRemoteReadServer.readPacket(read, packet.type, con.player);
+//                Events.fire(new Object[]{"net.handleServer", packet.reader(), packet.type,con.player});
+            } catch (ValidateException e) {
+                debug("Validation failed for '@': @", e.player, e.getMessage());
+            } catch (RuntimeException e) {
+                if (e.getCause() instanceof ValidateException) {
+                    debug("Validation failed for '@': @", ((ValidateException) e.getCause()).player, e.getCause().getMessage());
+                } else {
+                    throw e;
+                }
+            }
+        });
     }
 }

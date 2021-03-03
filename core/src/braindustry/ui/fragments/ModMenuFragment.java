@@ -41,10 +41,12 @@ public class ModMenuFragment extends MenuFragment {
     private Button currentMenu;
     private ModMenuShaderRender renderer;
 
-    public ModMenuFragment() {
+    public ModMenuFragment(Group nullGroup) {
+
         Events.on(EventType.DisposeEvent.class, (event) -> {
-            dispose();
+            this.renderer.dispose();
         });
+        super.build(nullGroup);
     }
 
     public static void timeScl(float timeScl) {
@@ -65,7 +67,6 @@ public class ModMenuFragment extends MenuFragment {
 
     public void dispose() {
 
-        this.renderer.dispose();
     }
 
     public void build(Group parent) {

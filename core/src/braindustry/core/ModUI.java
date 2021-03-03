@@ -7,6 +7,7 @@ import ModVars.Classes.UI.settings.AdvancedSettingsMenuDialog;
 import ModVars.Classes.UI.settings.ModOtherSettingsDialog;
 import ModVars.Classes.UI.settings.ModSettingsDialog;
 import arc.Core;
+import arc.scene.Group;
 import arc.scene.event.Touchable;
 import arc.scene.ui.layout.WidgetGroup;
 import arc.util.Disposable;
@@ -42,6 +43,7 @@ public class ModUI implements Disposable {
         if (Vars.headless) return;
         AdvancedSettingsMenuDialog.init();
         ModHudFragment.init();
+        Group nullGroup=new Group() {};
         Core.settings.put("uiscalechanged", false);
         ModListener.updaters.add(() -> {
             boolean noDialog = !Core.scene.hasDialog();
@@ -76,7 +78,7 @@ public class ModUI implements Disposable {
             return Vars.state.isMenu();
         });
         Core.scene.add(Vars.ui.menuGroup);
-        Vars.ui.menufrag = new ModMenuFragment();
+        Vars.ui.menufrag = new ModMenuFragment(nullGroup);
 
 //        Vars.ui.menufrag.
         Vars.ui.menufrag.build(Vars.ui.menuGroup);
