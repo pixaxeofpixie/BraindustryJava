@@ -1,6 +1,7 @@
 package braindustry.content.Blocks;
 import braindustry.content.*;
 import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
+import braindustry.graphics.ModPal;
 import braindustry.world.blocks.Wall.ReflectionWall;
 import arc.graphics.Color;
 import braindustry.entities.bullets.SpikeCircleOrbonBullet;
@@ -8,6 +9,11 @@ import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.ctype.ContentList;
+import arc.math.Mathf;
+import mindustry.content.StatusEffects;
+import arc.util.Tmp;
+import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Lines;
 import mindustry.entities.bullet.*;
 import mindustry.gen.Bullet;
 import mindustry.gen.Sounds;
@@ -674,6 +680,61 @@ class ModDefense implements ContentList {
             consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 10f)).update(false);
             consumes.powerCond(24f, TurretBuild::isActive);
         }};
+
+        voidwave =new ItemTurret("void-wave"){
+            {
+                this.localizedName="Void Wave";
+                this.description = "";
+                this.range = 200;
+//                this.recoilAmount = 28;
+                this.reloadTime = 120;
+                this.size = 8;
+                this.shots = 4;
+                this.health = 5800;
+                this.inaccuracy = 0.2f;
+                this.shootSound = Sounds.plasmaboom;
+                this.rotateSpeed = 0.6f;
+                this.targetAir = true;
+                this.targetGround = true;
+                this.ammo(
+                       ModItems.odinum, new BasicBulletType(){public void draw(Bullet b) {
+                            float height = this.height * (1.0F - this.shrinkY + this.shrinkY * b.fout());
+                            float width = this.width * (1.0F - this.shrinkX + this.shrinkX * b.fout());
+                            float offset = -90.0F + (this.spin != 0.0F ? Mathf.randomSeed((long)b.id, 360.0F) + b.time * this.spin : 0.0F);
+                            Color mix = Tmp.c1.set(this.mixColorFrom).lerp(this.mixColorTo, b.fin());
+                            Draw.mixcol(mix, mix.a);
+                            Draw.color(this.backColor);
+//                                Draw.rect(this.backRegion, b.x, b.y, width, height, b.rotation() + offset);
+                            Draw.color(this.frontColor);
+//                            Draw.rect(this.frontRegion, b.x, b.y, width, height, b.rotation() + offset);
+                            Draw.color(this.backColor,this.frontColor,b.fin());
+                            Lines.swirl(b.x,b.y,width/height,90f/360f,b.rotation()-45f);
+                            Draw.reset();
+                        }
+                            {
+                                this.damage = 120;
+                                this.speed = 4;
+                                this.hitSize = 50;
+                                this.lifetime = 180;
+                                this.status = StatusEffects.shocked;
+                                this.statusDuration = 38;
+//                                this.bulletSprite = wave;
+                                this.pierce = true;
+                                this.width = 120;
+                                this.buildingDamageMultiplier = 0.3f;
+//                                this.length = 4;
+                                this.hittable = true;
+                                this.ammoMultiplier = 1;
+                                this.backColor = ModPal.blackHoleLaserBackColor;
+                                this.frontColor = ModPal.blackHoleLaserColor;
+                                this.hitColor = this.trailColor=this.lightColor=this.lightningColor=Color.violet;
+                            }
+                        }
+                );
+                this.consumes.liquid(ModLiquids.thoriumRefrigerant,0.2f).optional(false,true);
+                this.requirements(Category.turret, ItemStack.with(ModItems.odinum,400, Items.plastanium,350, Items.silicon,800, Items.titanium,420, Items.metaglass,280));
+            }
+        };
         exoticAlloyWallLarge = new Wall("dense-composite-wall-large") {
             {
                 this.localizedName = "Dense Composite Wall Large";

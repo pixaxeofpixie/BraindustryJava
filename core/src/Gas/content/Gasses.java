@@ -9,14 +9,14 @@ public class Gasses implements ContentList {
     public static Gas oxygen;
     public static Gas methane;
     public void load() {
-        oxygen =new Gas("oxygen"){
+       /* oxygen =new Gas("oxygen"){
             {
                 this.explosiveness=0.1f;
                 this.flammability=1;
                 this.localizedName="Oxygen";
                 this.color=Color.valueOf("70FFF8");
             }
-        };
+        };*/
         methane =new Gas("methane"){
             {
                 this.localizedName="Methane";
