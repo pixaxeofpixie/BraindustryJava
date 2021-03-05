@@ -31,6 +31,7 @@ import mindustry.ui.Styles;
 import mindustry.ui.fragments.MenuFragment;
 
 import static ModVars.modFunc.fullName;
+import static ModVars.modVars.modUI;
 import static arc.Core.scene;
 import static mindustry.Vars.*;
 
@@ -224,8 +225,11 @@ public class ModMenuFragment extends MenuFragment {
                     //not enough space for this button
                     //new Buttoni("@schematics", Icon.paste, ui.schematics::show),
                     new Buttoni("@settings", Icon.settings, ui.settings::show),
-                    new Buttoni("@rebuild_menu",Icon.refresh,renderer::rebuild),
-                    new Buttoni("@background.screenshot",Icon.copy,renderer::takeBackgroundScreenshot),
+                    new Buttoni("@menu.title",Icon.menu,
+                            new ButtoniUnClose("@rebuild_menu",Icon.refresh,renderer::rebuild),
+                            new ButtoniUnClose("@background.stiles",Icon.effect,()->{}),
+                            new ButtoniUnClose("@background.screenshot",Icon.copy,renderer::takeBackgroundScreenshot)
+                            ),
                     new Buttoni("@about.button", Icon.info, ui.about::show),
                     new Buttoni("@quit", Icon.exit, Core.app::exit)
             );
@@ -285,8 +289,10 @@ public class ModMenuFragment extends MenuFragment {
                         submenu.row();
                         buttons(submenu, b.submenu);
                     }else{
-                        currentMenu = null;
-                        fadeOutMenu();
+                        if (b.closeAfterPress){
+                            currentMenu = null;
+                            fadeOutMenu();
+                        }
                         b.runnable.run();
                     }
                 }
@@ -295,18 +301,35 @@ public class ModMenuFragment extends MenuFragment {
             t.row();
         }
     }
+private static class ButtoniUnClose extends Buttoni{
 
+    public ButtoniUnClose(String text, Drawable icon, Runnable runnable) {
+        super(text, icon, runnable);
+        closeAfterPress=false;
+    }
+
+    public ButtoniUnClose(String text, Drawable icon, Buttoni... buttons) {
+        super(text, icon, buttons);
+        closeAfterPress=false;
+    }
+}
     private static class Buttoni{
         final Drawable icon;
         final String text;
         final Runnable runnable;
         final Buttoni[] submenu;
+        boolean closeAfterPress=true;
 
         public Buttoni(String text, Drawable icon, Runnable runnable){
             this.icon = icon;
             this.text = text;
             this.runnable = runnable;
             this.submenu = null;
+        }
+
+        public Buttoni closeAfterPress(boolean closeAfterPress) {
+            this.closeAfterPress = closeAfterPress;
+            return this;
         }
 
         public Buttoni(String text, Drawable icon, Buttoni... buttons){

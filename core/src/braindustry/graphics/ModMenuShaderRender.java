@@ -97,14 +97,14 @@ public class ModMenuShaderRender extends MenuRenderer {
     public ModMenuShaderRender() {
         this.width = !Vars.mobile ? 100 : 60;
         this.height = !Vars.mobile ? 50 : 40;
-        buildMain();
+        buildMain(true);
     }
     public void rebuild(){
         batch.dispose();
         batch=null;
-        buildMain();
+        buildMain(false);
     }
-    protected void buildMain() {
+    protected void buildMain(boolean timeMark) {
         this.camera = new Camera();
         this.mat = new Mat();
         Mathf.rand.setSeed(System.nanoTime());
@@ -118,10 +118,10 @@ public class ModMenuShaderRender extends MenuRenderer {
                 UnitTypes.zenith,
                 ModUnitTypes.armor, ModUnitTypes.armor,
                 ModUnitTypes.chainmail);
-        Time.mark();
+      if(timeMark)  Time.mark();
         this.generate();
         this.cache();
-        Log.info("Time to generate menu: @", Time.elapsed());
+        if(timeMark)   Log.info("Time to generate menu: @", Time.elapsed());
     }
 
     public static Shader createShader() {
