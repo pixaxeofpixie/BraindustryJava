@@ -1,6 +1,7 @@
 package braindustry.entities.ContainersForUnits;
 
 import ModVars.math.ModAngles;
+import ModVars.math.ModMath;
 import arc.graphics.Blending;
 import arc.graphics.g2d.Draw;
 import arc.math.Angles;
@@ -21,8 +22,6 @@ import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.Weapon;
 
-import java.util.Objects;
-
 import static mindustry.Vars.*;
 
 public class OrbitalPlatformsContainer extends UnitContainer {
@@ -30,7 +29,7 @@ public class OrbitalPlatformsContainer extends UnitContainer {
     protected final float z = 85f;
     final OrbitalPlatformAbility ability;
     final Seq<OrbitalPlatform> orbitalPlatforms = new Seq<>();
-    private float rotation;
+//    private float rotation;
 
     public OrbitalPlatformsContainer(Unit unit, OrbitalPlatformAbility ability) {
         super(unit);
@@ -64,7 +63,7 @@ public class OrbitalPlatformsContainer extends UnitContainer {
         for (int i = 0; i < platformsCount; i++) {
             OrbitalPlatform platform = orbitalPlatforms.get(i);
 
-            Vec2 platformPos = Tmp.v1.set(unit).add(Tmp.v2.trns(oneAngle * (i) + rotation, hitSize, hitSize));
+            Vec2 platformPos = Tmp.v1.set(unit).add(Tmp.v2.trns(platform.orbitRotation, hitSize, hitSize));
             float platformRot = Tmp.v2.set(unit).angleTo(platformPos);
             platformRot = 0f;
             platform.set(platformPos);
@@ -187,18 +186,34 @@ public class OrbitalPlatformsContainer extends UnitContainer {
 
         Draw.reset();
     }
-
+protected void rotateTo(OrbitalPlatform platform,float angel){
+    float v =  ((ability.rotateSpeed() % 360f) / 180f);
+    float speed =Math.abs(platform.orbitRotation %360f - angel %360f) * v;
+    speed=Math.min(ability.rotateSpeed(),speed);
+//            float perfectAngle=
+    platform.orbitRotation = Mathf.mod(ModAngles.moveLerpToward(platform.orbitRotation, angel, speed * Time.delta),360f);
+}
     public void update() {
+        float unitRotation = unit.rotation;
+        final float platformCount = orbitalPlatforms.size;
+        float oneAngle = 360f / platformCount;
+        float platformHitsize=16f;
+        Vec2 target=new Vec2(unit.aimX(),unit.aimY());
+        float onePlatformAngle= ModMath.atan(platformHitsize/unit.hitSize());
         for (int i = 0; i < orbitalPlatforms.size; i++) {
             OrbitalPlatform platform = orbitalPlatforms.get(i);
             updateWeapon(platform);
+            if (!unit.isShooting()){
+                rotateTo(platform,unitRotation+oneAngle * (i));
+            } else {
+                float v = unit.angleTo(target)-90f;
+                rotateTo(platform, v+((i+platformCount/2f)%platformCount)*onePlatformAngle);
+
+            }
         }
 //        Angles.moveToward()
 //        Mathf.slerpDelta()
-        float v =  ((ability.rotateSpeed() % 360f) / 180f);
-        float speed =Math.abs(rotation%360f - unit.rotation%360f) * v;
 
-        rotation = Mathf.mod(ModAngles.moveLerpToward(rotation, unit.rotation, speed * Time.delta),360f);
 //        rotation = Mathf.lerpDelta(rotation, unit.rotation, v);
 //        rotation = Mathf.lerpDelta(rotation, unit.rotation, (ability.rotateSpeed()%360f)/360f);
     }

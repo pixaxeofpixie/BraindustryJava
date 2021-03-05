@@ -22,7 +22,6 @@ import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
-import mindustry.world.Block;
 
 public abstract class PowerGeneratorAbility extends ModAbility {
     public TextureRegion bottomRegion;
@@ -78,13 +77,20 @@ public abstract class PowerGeneratorAbility extends ModAbility {
         float len2 = (float) (size2 * 8) / 2.0F - 1.5F;
         Drawf.laser(team, modVars.modAtlas.laser, modVars.modAtlas.laserEnd, x1 + vx * len1, y1 + vy * len1, x2 - vx * len2, y2 - vy * len2, 0.25F);
     }
+    public void drawOutline(Unit unit){
+        Draw.reset();
 
+        if(Core.atlas.isFound(unitType.outlineRegion)){
+            Draw.rect(unitType.outlineRegion, unit.x, unit.y, unit.rotation - 90);
+        }
+    }
     public void drawBody(Unit unit) {
         unitType.applyColor(unit);
         Draw.rect(this.bottomRegion, unit.x, unit.y);
         Draw.color();
         drawReactor(unit);
         unitType.applyColor(unit);
+        drawOutline(unit);
         Draw.rect(unitType.region, unit.x, unit.y, unit.rotation - 90.0F);
         Draw.reset();
     }

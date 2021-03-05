@@ -18,6 +18,7 @@ import mindustry.type.Weapon;
 
 public class OrbitalPlatform implements Position {
    public float rotation=0f;
+   public float orbitRotation=0f;
    public final long id;
    public final OrbitalPlatformAbility ability;
    public WeaponMount mount=null;

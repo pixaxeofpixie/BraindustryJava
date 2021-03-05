@@ -1714,7 +1714,7 @@ public class ModUnitTypes implements ContentList {
                 float spawnTime = 2000;
 
                 abilities.addAll(
-                        new BlackHoleReactorAbility(this, 30f, 35, Integer.MAX_VALUE, 10, new Vec2(-32.75f, 0)),
+                        new BlackHoleReactorAbility(this, 30f, 35, Integer.MAX_VALUE, 14.0f, new Vec2(-16.25f, 0)),
                         new UnitSpawnAbility(ModUnitTypes.armor, spawnTime, 22.25f, -45.75f),
                         new UnitSpawnAbility(ModUnitTypes.armor, spawnTime, -22.25f, -45.75f),
                         new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f),
