@@ -4,6 +4,7 @@ import ModVars.modVars;
 import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Lines;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
@@ -167,6 +168,14 @@ public class TestBlock extends Block {
                     return Strings.format("@/@",selectedSprite+1,max);
                 });*/
             }).row();
+            table.table(Tex.buttonTrans,t->{
+               t.slider(0.1f,20f,0.1f,modVars.settings.getFloat("stroke"),f->{
+                   modVars.settings.setFloat("stroke",f);
+               }).row(); ;
+                t.label(() -> {
+                    return Strings.format("@", modVars.settings.getFloat("stroke"));
+                }).right();
+            });
         }
 
         public TextureRegion[] getSizeSprites() {
@@ -210,25 +219,28 @@ public class TestBlock extends Block {
 
         public void draw() {
             float settingsRot=modVars.settings.getFloat("angle");
+            float settingsStroke=modVars.settings.getFloat("stroke",1f);
             TextureRegion region = getRegion();
-            Draw.rect(region, this.x, this.y, this.block.size * 8, this.block.size * 8, 0.0F);
+            Draw.rect(region, x, y, size * 8, size * 8, 0.0F);
 //            Draw.rect(editorIcon(), x, y + size * 8, size * 8, size * 8, 0f);
 //            Draw.alpha(0.5f);
             Draw.reset();
+            Lines.stroke(settingsStroke);
             Draw.color(selectedColor);
             ModLines.crystal(x, y,8f, (size) * 8f, rotdeg(),(int) someVariable);
 //            ModFill.spikesSwirl(x, y, (size) * 8, 8, modVars.settings.getFloat("angle") / 360f, rotdeg(), someVariable);
             Draw.reset();
-            Building front = this.front();
+            Building front = front();
 //            if (true)return;
             if (front != null && front.block != null) {
                 float size = front.block.size * 8f;
                 Draw.z(Layer.blockBuilding + 1f);
                 Draw.color(Color.green);
-                Draw.alpha(0.25f);
+                Draw.alpha(0.3f);
                 float offset = Mathf.ceil(size / 2f);
                 ModLines.rect(front.x - offset, front.y - offset, size, size,settingsRot);
             }
+            Draw.reset();
         }
 
         protected TextureRegion getRegion() {

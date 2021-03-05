@@ -147,12 +147,7 @@ public class ModFill extends Fill {
         final int sides = 50;
         count=Math.min(sides,count);
         float oneAngle = 360f / count;
-        Cons2<Float,Float> point=(i, radius)->{
-            vector.set(radius, 0.0F).setAngle(oneAngle * i + angle);
-            floats.add(vector.x + x, vector.y + y);
-        };
-        Cons2<Float,Float> pointDown=(i, radius)->{
-            float v = vector.angleTo(0, 0);
+        Floatc2 point=(i, radius)->{
             vector.set(radius, 0.0F).setAngle(oneAngle * i + angle);
             floats.add(vector.x + x, vector.y + y);
         };
@@ -160,7 +155,9 @@ public class ModFill extends Fill {
             floats.clear();
             point.get(i2,radius1);
             point.get(i,radius2);
-            point.get(i,radius2-width);
+//            Vec2 cpy = vector.trns(oneAngle * i2 + angle, radius2-width, 0.0F).cpy();
+//            Vec2 cpy2 = vector.trns(oneAngle * i + angle, radius1-width, 0.0F).cpy();
+            point.get(i,radius2*((radius1-width)/radius1));
             point.get(i2,radius1-width);
             ModFill.quad(floats);
         };
