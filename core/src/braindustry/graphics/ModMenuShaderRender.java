@@ -1,10 +1,10 @@
 package braindustry.graphics;
 
+import ModVars.modVars;
 import arc.Core;
+import arc.files.Fi;
 import arc.func.Floatc2;
-import arc.graphics.Camera;
-import arc.graphics.Color;
-import arc.graphics.Texture;
+import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.graphics.gl.FrameBuffer;
 import arc.graphics.gl.Shader;
@@ -13,10 +13,7 @@ import arc.math.Mat;
 import arc.math.Mathf;
 import arc.scene.ui.layout.Scl;
 import arc.struct.Seq;
-import arc.util.Log;
-import arc.util.Structs;
-import arc.util.Time;
-import arc.util.Tmp;
+import arc.util.*;
 import arc.util.noise.RidgedPerlin;
 import arc.util.noise.Simplex;
 import braindustry.content.Blocks.ModBlocks;
@@ -37,6 +34,9 @@ import mindustry.world.blocks.environment.OreBlock;
 import java.util.Iterator;
 
 import static ModVars.modFunc.fullName;
+import static arc.Core.camera;
+import static mindustry.Vars.*;
+import static mindustry.Vars.ui;
 
 public class ModMenuShaderRender extends MenuRenderer {
     private static final float darkness = 0.3F;
@@ -52,13 +52,62 @@ public class ModMenuShaderRender extends MenuRenderer {
     private float flyerRot;
     private int flyers;
     private UnitType flyerType;
-    public TextureRegion logo;
+    public void takeBackgroundScreenshot(){
+        int aFloat = (int) modVars.settings.getFloat("background.screenshot.scl");
+        int w = width * tilesize* aFloat, h = height * tilesize*aFloat;
+        int memory = w * h * 4 / 1024 / 1024;
 
+        if(memory >= 65){
+            ui.showInfo("@screenshot.invalid");
+            return;
+        }
+        FrameBuffer buffer = new FrameBuffer(w, h);
+        float lastDelta = Time.delta;
+        Time.delta=0;
+        render();
+        float vpW = camera.width, vpH = camera.height, px = camera.position.x, py = camera.position.y;
+        disableUI = true;
+        camera.width = w;
+        camera.height = h;
+        camera.position.x = w / 2f + tilesize / 2f;
+        camera.position.y = h / 2f + tilesize / 2f;
+        buffer.begin();
+        render();
+        buffer.end();
+        disableUI = false;
+        camera.width = vpW;
+        camera.height = vpH;
+        camera.position.set(px, py);
+        buffer.begin();
+        byte[] lines = ScreenUtils.getFrameBufferPixels(0, 0, w, h, true);
+        for(int i = 0; i < lines.length; i += 4){
+            lines[i + 3] = (byte)255;
+        }
+        buffer.end();
+        Pixmap fullPixmap = new Pixmap(w, h, Pixmap.Format.rgba8888);
+        Buffers.copy(lines, 0, fullPixmap.getPixels(), lines.length);
+        Fi file = screenshotDirectory.child("screenshot-background-" + Time.millis() + ".png");
+        PixmapIO.writePNG(file, fullPixmap);
+        fullPixmap.dispose();
+        ui.showInfoFade(Core.bundle.format("screenshot", file.toString()));
+
+        buffer.dispose();
+        Time.delta=lastDelta;
+    }
     public ModMenuShaderRender() {
         this.width = !Vars.mobile ? 100 : 60;
         this.height = !Vars.mobile ? 50 : 40;
+        buildMain();
+    }
+    public void rebuild(){
+        batch.dispose();
+        batch=null;
+        buildMain();
+    }
+    protected void buildMain() {
         this.camera = new Camera();
         this.mat = new Mat();
+        Mathf.rand.setSeed(System.nanoTime());
         this.time = 0.0F;
         this.flyerRot = 45.0F;
         this.flyers = Mathf.chance(0.2D) ? Mathf.random(35) : Mathf.random(15);
@@ -73,10 +122,8 @@ public class ModMenuShaderRender extends MenuRenderer {
         this.generate();
         this.cache();
         Log.info("Time to generate menu: @", Time.elapsed());
-        logo =Core.atlas.find(fullName("logo"));
-        Log.info("LOGO: u: @, v: @, u2: @, v2: @,w: @,h: @",logo.toString(), Mathf.round(logo.u,0.000001f), Mathf.round(logo.v,0.000001f), logo.u2, logo.v2,(logo.u2- logo.u)* logo.width);
-//        logoRegion= MainModClass.getIcon();
     }
+
     public static Shader createShader() {
         return new Shader("attribute vec4 a_position;\nattribute vec4 a_color;\nattribute vec2 a_texCoord0;\nattribute vec4 a_mix_color;\nuniform mat4 u_projTrans;\nvarying vec4 v_color;\nvarying vec4 v_mix_color;\nvarying vec2 v_texCoords;\n\nvoid main(){\n   v_color = a_color;\n   v_color.a = v_color.a * (255.0/254.0);\n   v_mix_color = a_mix_color;\n   v_mix_color.a *= (255.0/254.0);\n   v_texCoords = a_texCoord0;\n   gl_Position = u_projTrans * a_position;\n}",
                 "\nvarying lowp vec4 v_color;\nvarying lowp vec4 v_mix_color;\nvarying highp vec2 v_texCoords;\nuniform highp sampler2D u_texture;\n\nvoid main(){\n  vec4 c = texture2D(u_texture, v_texCoords);\n  gl_FragColor = v_color * mix(c, vec4(v_mix_color.rgb, c.a), v_mix_color.a);\n}");
@@ -95,7 +142,6 @@ public class ModMenuShaderRender extends MenuRenderer {
         RidgedPerlin rid = new RidgedPerlin(1 + offset, 1);
 //        Rand last = Mathf.rand;
 //        Mathf.rand=new Rand(System.nanoTime());
-        Mathf.rand.setSeed(System.nanoTime());
         Block[] selected = Structs.select(new Block[][]{
                 {Blocks.sand, Blocks.sandWall},
                 {Blocks.shale, Blocks.shaleWall},

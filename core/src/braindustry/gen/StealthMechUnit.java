@@ -89,7 +89,7 @@ public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEn
     public boolean selectStealth() {
         boolean bool;
         if (isLocal()) {
-            bool = modVars.keyBinds.keyTap(ModBinding.stealthBing);
+            bool = modVars.keyBinds.keyTap(ModBinding.special_key);
             if (Vars.mobile) {
                 if (!check2 && longPress) {
                     check2 = true;

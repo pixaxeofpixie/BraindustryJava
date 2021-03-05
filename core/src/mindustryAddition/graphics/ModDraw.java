@@ -4,6 +4,8 @@ import ModVars.math.ModMath;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Font;
+import arc.graphics.g2d.FontCache;
+import arc.graphics.g2d.GlyphLayout;
 import arc.math.Mathf;
 import arc.math.geom.Position;
 import arc.math.geom.Vec2;
@@ -27,7 +29,10 @@ public class ModDraw extends Draw{
 
         float z = Draw.z();
         Draw.z(z+1.f);
-        font.draw(text, pos.getX(), pos.getY());
+        FontCache cache = font.getCache();
+        cache.clear();
+        GlyphLayout layout = cache.addText(text, pos.getX(), pos.getY());
+        font.draw(text, pos.getX()- layout.width / 2f, pos.getY()- layout.height / 2f);
         Draw.z(z);
 
         font.setUseIntegerPositions(ints);

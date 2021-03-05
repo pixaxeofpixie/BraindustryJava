@@ -12,6 +12,7 @@ import arc.scene.actions.Actions;
 import arc.scene.event.Touchable;
 import arc.scene.style.Drawable;
 import arc.scene.ui.Button;
+import arc.scene.ui.TextField;
 import arc.scene.ui.layout.Scl;
 import arc.scene.ui.layout.Table;
 import arc.scene.ui.layout.WidgetGroup;
@@ -19,6 +20,7 @@ import arc.util.Align;
 import arc.util.Tmp;
 import braindustry.graphics.ModMenuShaderRender;
 import braindustry.graphics.ModShaders;
+import braindustry.input.ModBinding;
 import mindustry.core.Version;
 import mindustry.game.EventType;
 import mindustry.gen.Icon;
@@ -29,6 +31,7 @@ import mindustry.ui.Styles;
 import mindustry.ui.fragments.MenuFragment;
 
 import static ModVars.modFunc.fullName;
+import static arc.Core.scene;
 import static mindustry.Vars.*;
 
 public class ModMenuFragment extends MenuFragment {
@@ -78,7 +81,14 @@ public class ModMenuFragment extends MenuFragment {
 
         parent = group;
 
-        parent.fill((x, y, w, h) -> renderer.render());
+        parent.fill((x, y, w, h) -> {
+            try {
+                if(!mobile && Core.input.keyTap(ModBinding.menu_background_screenshot) && !(scene.getKeyboardFocus() instanceof TextField) && !scene.hasKeyboard()){
+
+                }
+            } catch (NullPointerException ignored){}
+            renderer.render();
+        });
 
         parent.fill(c -> {
             container = c;
@@ -214,6 +224,8 @@ public class ModMenuFragment extends MenuFragment {
                     //not enough space for this button
                     //new Buttoni("@schematics", Icon.paste, ui.schematics::show),
                     new Buttoni("@settings", Icon.settings, ui.settings::show),
+                    new Buttoni("@rebuild_menu",Icon.refresh,renderer::rebuild),
+                    new Buttoni("@background.screenshot",Icon.copy,renderer::takeBackgroundScreenshot),
                     new Buttoni("@about.button", Icon.info, ui.about::show),
                     new Buttoni("@quit", Icon.exit, Core.app::exit)
             );

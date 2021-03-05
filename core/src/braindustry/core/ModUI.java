@@ -52,15 +52,15 @@ public class ModUI implements Disposable {
 
             boolean inMenu = Vars.state.isMenu() || !Vars.ui.planet.isShown();
             if (!controls.isShown()){
-                if (keyBinds.keyTap(unitDialogBing) && noDialog && inGame) {
+                if (keyBinds.keyTap(show_unit_dialog) && noDialog && inGame) {
                     openUnitChooseDialog();
-                } else if (keyBinds.keyTap(teamDialogBing) && noDialog && inGame) {
+                } else if (keyBinds.keyTap(show_team_dialog) && noDialog && inGame) {
                     openTeamChooseDialog();
-                } else if (keyBinds.keyTap(unlockDialogBing) && !inMenu) {
+                } else if (keyBinds.keyTap(show_unlock_dialog) && !inMenu) {
                     openUnlockContentDialog();
-                } else if (keyBinds.keyTap(itemManagerDialogBing) && noDialog) {
+                } else if (keyBinds.keyTap(show_item_manager_dialog) && noDialog) {
                     openModCheatItemsMenu();
-                } else if (keyBinds.keyTap(rulesEditDialogBing) && inGame && noDialog){
+                } else if (keyBinds.keyTap(show_rules_edit_dialog) && inGame && noDialog){
                     openRulesEditDialog();
                 }
             }

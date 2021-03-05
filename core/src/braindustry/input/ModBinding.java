@@ -9,12 +9,13 @@ import braindustry.MainModClass;
 
 public enum ModBinding implements KeyBinds.KeyBind {
 
-    teamDialogBing(KeyCode.b),
-    unitDialogBing(KeyCode.u),
-    rulesEditDialogBing(KeyCode.unknown),
-    itemManagerDialogBing(KeyCode.unknown),
-    unlockDialogBing(KeyCode.unknown),
-    stealthBing(KeyCode.h),
+    show_team_dialog(KeyCode.b),
+    show_unit_dialog(KeyCode.u),
+    show_rules_edit_dialog(KeyCode.unknown),
+    show_item_manager_dialog(KeyCode.unknown),
+    show_unlock_dialog(KeyCode.unknown),
+    special_key(KeyCode.h),
+    menu_background_screenshot(KeyCode.unknown),
     ;
 
     private final KeyBinds.KeybindValue defaultValue;
