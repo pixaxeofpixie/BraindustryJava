@@ -4,7 +4,6 @@ import ModVars.modVars;
 import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Lines;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
@@ -229,7 +228,6 @@ public class TestBlock extends Block {
                 Draw.color(Color.green);
                 Draw.alpha(0.25f);
                 float offset = Mathf.ceil(size / 2f);
-                ModDraw.drawLabel(x,y,"getStroke: "+ Lines.getStroke());
                 ModLines.rect(front.x - offset, front.y - offset, size, size,settingsRot);
             }
         }
