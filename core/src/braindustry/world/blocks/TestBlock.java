@@ -15,7 +15,7 @@ import arc.util.Tmp;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import braindustry.annotations.ModAnnotations;
-import braindustry.cfunc.Couple;
+import braindustry.content.ModFx;
 import braindustry.graphics.ModShaders;
 import braindustry.io.ModTypeIO;
 import mindustry.Vars;
@@ -29,7 +29,6 @@ import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.Tile;
-import mindustryAddition.graphics.ModDraw;
 import mindustryAddition.graphics.ModLines;
 import mindustryAddition.world.blocks.BuildingLabel;
 
@@ -109,7 +108,8 @@ public class TestBlock extends Block {
             TestBlockBuild me = this;
             table.table(Tex.buttonTrans,(t) -> {
                 t.button(Icon.up,Styles.clearPartiali, () -> {
-                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("2c5777"), Color.valueOf("11222d"), Couple.of(2f,4f));
+                    ModFx.fireworkTrail.at(x,y,rotdeg(),Color.purple);
+//                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("2c5777"), Color.valueOf("11222d"), Couple.of(2f,4f));
 //                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("6757d1"), Color.valueOf("9288cc"), Couple.of(2f,4f));
                 });
                 t.button(Icon.pick,Styles.clearPartiali, () -> {
@@ -216,7 +216,6 @@ public class TestBlock extends Block {
             super.updateTile();
             time += this.delta() / 60f;
         }
-
         public void draw() {
             float settingsRot=modVars.settings.getFloat("angle");
             float settingsStroke=modVars.settings.getFloat("stroke",1f);
@@ -227,7 +226,7 @@ public class TestBlock extends Block {
             Draw.reset();
             Lines.stroke(settingsStroke);
             Draw.color(selectedColor);
-            ModLines.crystal(x, y,8f, (size) * 8f, rotdeg(),(int) someVariable);
+//            ModLines.crystal(x, y,8f, (size) * 8f, rotdeg(),(int) someVariable);
 //            ModFill.spikesSwirl(x, y, (size) * 8, 8, modVars.settings.getFloat("angle") / 360f, rotdeg(), someVariable);
             Draw.reset();
             Building front = front();

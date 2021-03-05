@@ -5,6 +5,7 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Font;
 import arc.math.Mathf;
+import arc.math.geom.Position;
 import arc.math.geom.Vec2;
 import arc.scene.ui.layout.Scl;
 import arc.struct.Seq;
@@ -16,7 +17,7 @@ import braindustry.content.ModFx;
 import mindustry.ui.Fonts;
 
 public class ModDraw extends Draw{
-    public static void drawLabel(Vec2 pos, float textSize, Color color, String text){
+    public static void drawLabel(Position pos, float textSize, Color color, String text){
         Font font = Fonts.outline;
         boolean ints = font.usesIntegerPositions();
         font.getData().setScale(textSize / Scl.scl(1.0f));
@@ -26,7 +27,7 @@ public class ModDraw extends Draw{
 
         float z = Draw.z();
         Draw.z(z+1.f);
-        font.draw(text, pos.x, pos.y);
+        font.draw(text, pos.getX(), pos.getY());
         Draw.z(z);
 
         font.setUseIntegerPositions(ints);
@@ -71,19 +72,19 @@ public class ModDraw extends Draw{
             couple3s.remove(c);
         }
     }
-    public static void drawLabel(Vec2 pos,float textSize,String text){
+    public static void drawLabel(Position pos,float textSize,String text){
         drawLabel(pos,textSize,Color.white,text);
     }
-    public static void drawLabel(Vec2 pos,Color color,String text){
+    public static void drawLabel(Position pos,Color color,String text){
         drawLabel(pos,0.23f,color,text);
     }
-    public static void drawLabel(Vec2 pos,String text){
+    public static void drawLabel(Position pos,String text){
         drawLabel(pos,Color.white,text);
     }
     public static void drawLabel(float x,float y, float textSize, Color color, String text){
         drawLabel(new Vec2(x,y),textSize,color,text);
     }
-    public static void drawLabel(float x,float y,float textSize,String text){
+    public static void drawLabel(float x    ,float y,float textSize,String text){
         drawLabel(x,y,textSize,Color.white,text);
     }
     public static void drawLabel(float x,float y,Color color,String text){

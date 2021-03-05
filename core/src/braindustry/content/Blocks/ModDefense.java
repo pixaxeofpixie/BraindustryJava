@@ -725,6 +725,8 @@ class ModDefense implements ContentList {
 //                                this.length = 4;
                                 this.hittable = true;
                                 this.ammoMultiplier = 1;
+                                trailChance=100f;
+                                trailEffect=ModFx.fireworkTrail;
                                 this.backColor = ModPal.blackHoleLaserBackColor;
                                 this.frontColor = ModPal.blackHoleLaserColor;
                                 this.hitColor = this.trailColor=this.lightColor=this.lightningColor=Color.violet;
