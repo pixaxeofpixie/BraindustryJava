@@ -101,6 +101,8 @@ public class ModMenuShaderRender extends MenuRenderer {
     }
     public void rebuild(){
         batch.dispose();
+        shadows.dispose();
+        shadows=null;
         batch=null;
         buildMain(false);
     }
@@ -117,7 +119,7 @@ public class ModMenuShaderRender extends MenuRenderer {
                 UnitTypes.poly, UnitTypes.mega,
                 UnitTypes.zenith,
                 ModUnitTypes.armor, ModUnitTypes.armor,
-                ModUnitTypes.chainmail);
+                ModUnitTypes.chainmail,ModUnitTypes.chestplate);
       if(timeMark)  Time.mark();
         this.generate();
         this.cache();
