@@ -125,4 +125,35 @@ public static void circleRect(float x,float y,float radius){
         }
 //        poly(floats);
     }
+    public static void tri(FloatSeq floats){
+        if (floats.size<6)return;
+        float[] items = floats.items;
+        tri(items[0],items[1],items[2],items[3],items[4],items[5]);
+    }
+    public static void quad(FloatSeq floats){
+        if (floats.size<8)return;
+        float[] items = floats.items;
+        quad(items[0],items[1],items[2],items[3],items[4],items[5],items[6],items[7]);
+    }
+    private static void point(float x,float y,float i,float radius,float angle){
+    }
+    public static void crystal(float x, float y, float radius1, float radius2, float angle, int count) {
+        if (count==0)return;
+        final float sides = 50;
+        float oneAngle = 360f / count;
+        float offset= oneAngle/2f;
+        Cons2<Float,Float> point=(i,radius)->{
+            vector.set(radius, 0.0F).setAngle(oneAngle * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+        };
+        floats.clear();
+        for (float i = 0; i < count; i++) {
+            floats.add(x,y);
+            point.get(i-0.5f,radius1);
+            point.get(i,radius2);
+            point.get(i+0.5f,radius1);
+            quad(floats);
+            floats.clear();
+        }
+    }
 }

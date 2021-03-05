@@ -1,5 +1,6 @@
-package ModVars.Classes.UI;
+package braindustry.ui.dialogs;
 
+import ModVars.Classes.UI.ModTextInput;
 import arc.func.Cons;
 import arc.graphics.Color;
 import arc.scene.Element;
@@ -71,7 +72,7 @@ public class ModColorPicker extends BaseDialog {
                 t.row();
             }
             t.button("Write hex",()->{
-                ModTextInput.showTextInput("white hex color","hex",this.current.toString().length()-(alpha?0:2),this.current.toString(),(f,s)->{
+                ModTextInput.showTextInput("white hex color","hex",this.current.toString().length()-(alpha?0:2),this.current.toString(),(f, s)->{
                     return Seq.with("abcdef1234567890#".split("")).contains((s+"").toLowerCase());
                 },(s -> {
                     this.current.set(Color.valueOf(s));

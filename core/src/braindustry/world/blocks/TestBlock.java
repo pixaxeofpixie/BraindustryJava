@@ -16,8 +16,8 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import braindustry.annotations.ModAnnotations;
 import braindustry.cfunc.Couple;
-import braindustry.content.ModFx;
 import braindustry.graphics.ModShaders;
+import braindustry.io.ModTypeIO;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.Team;
@@ -25,12 +25,13 @@ import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
 import mindustry.graphics.Layer;
-import mindustry.graphics.Pal;
+import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustryAddition.graphics.ModDraw;
 import mindustryAddition.graphics.ModFill;
+import mindustryAddition.graphics.ModLines;
 import mindustryAddition.world.blocks.BuildingLabel;
 
 import static ModVars.modFunc.fullName;
@@ -55,6 +56,9 @@ public class TestBlock extends Block {
         saveConfig = true;
         this.<Integer, TestBlockBuild>config(Integer.class, (build, value) -> {
             build.selectedSprite = value % build.getSizeSprites().length;
+        });
+        this.config(Color.class, (TestBlockBuild build,Color value) -> {
+            build.selectedColor=value;
         });
         this.<TestBlockBuild>configClear(build -> {
             build.selectedSprite = 1;
@@ -97,22 +101,23 @@ public class TestBlock extends Block {
         private float time = 0;
         private int spriteIndex = 1;
         private int selectedSprite;
-        private float spikeOffset = 0.5f;
+        private float someVariable = 0.5f;
+        public Color selectedColor=Color.white.cpy();
 
         @Override
         public void buildConfiguration(Table table) {
             super.buildConfiguration(table);
             TestBlockBuild me = this;
-            table.table((t) -> {
-                t.button(Icon.up, () -> {
+            table.table(Tex.buttonTrans,(t) -> {
+                t.button(Icon.up,Styles.clearPartiali, () -> {
                     ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("2c5777"), Color.valueOf("11222d"), Couple.of(2f,4f));
 //                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("6757d1"), Color.valueOf("9288cc"), Couple.of(2f,4f));
                 });
-                t.button(Icon.terminal, () -> {
-                    ModFx.Spirals.at(x, y, size, Pal.lancerLaser);
-                })
-                ;
-                t.button(Icon.edit, () -> {
+                t.button(Icon.pick,Styles.clearPartiali, () -> {
+                    modVars.modUI.colorPicker.show(selectedColor,color->configure(color));
+//                    ModFx.Spirals.at(x, y, size, Pal.lancerLaser);
+                })                ;
+                t.button(Icon.edit,Styles.clearPartiali, () -> {
                     BaseDialog dialog = new BaseDialog("") {
                         @Override
                         public void draw() {
@@ -131,7 +136,7 @@ public class TestBlock extends Block {
                     dialog.show();
                 });
             }).row();
-            table.table(Tex.button, t -> {
+            table.table(Tex.buttonTrans, t -> {
                 t.slider(0, 360, .001f, modVars.settings.getFloat("angle"), (f) -> {
                     modVars.settings.setFloat("angle", Mathf.round(f, 0.001f));
                 }).row();
@@ -144,17 +149,17 @@ public class TestBlock extends Block {
                     return builder.toString();
                 });
             }).row();
-            table.table(Tex.button, t -> {
+            table.table(Tex.buttonTrans, t -> {
                 TextureRegion[] sizeSprites = getSizeSprites();
                 int max = sizeSprites.length;
-                t.slider(-1, 1, 0.000001f, spikeOffset, (f) -> {
-                    spikeOffset = f;
+                t.slider(1, 10, 1, someVariable, (f) -> {
+                    someVariable = f;
                 }).row();
                 t.label(() -> {
-                    return Strings.format("@", spikeOffset);
+                    return Strings.format("@", someVariable);
                 }).right();
             }).row();
-            table.table(Tex.button, t -> {
+            table.table(Tex.buttonTrans, t -> {
                 TextureRegion[] sizeSprites = getSizeSprites();
                 int max = sizeSprites.length;
                 t.slider(1, max, 1, selectedSprite + 1, (f) -> {
@@ -194,10 +199,6 @@ public class TestBlock extends Block {
             }
         }
 
-        @Override
-        public byte version() {
-            return 1;
-        }
 
         public Building front() {
             return this.nearby(this.rotation);
@@ -210,13 +211,15 @@ public class TestBlock extends Block {
         }
 
         public void draw() {
+            float settingsRot=modVars.settings.getFloat("angle");
             TextureRegion region = getRegion();
             Draw.rect(region, this.x, this.y, this.block.size * 8, this.block.size * 8, 0.0F);
 //            Draw.rect(editorIcon(), x, y + size * 8, size * 8, size * 8, 0f);
-            Draw.alpha(0.5f);
-            ModFill.spikesSwirl(x, y, (size) * 8, 8, modVars.settings.getFloat("angle") / 360f, rotdeg(), spikeOffset);
-//            Lines.stroke(40f);
-//            Lines.swirl(x+(size+2)*8,y,(size+1)*8, modVars.settings.getFloat("angle")/360f,rotdeg());
+//            Draw.alpha(0.5f);
+            Draw.reset();
+            Draw.color(selectedColor);
+            ModFill.crystal(x, y,8f, (size) * 8f, rotdeg(),(int) someVariable);
+//            ModFill.spikesSwirl(x, y, (size) * 8, 8, modVars.settings.getFloat("angle") / 360f, rotdeg(), someVariable);
             Draw.reset();
             Building front = this.front();
 //            if (true)return;
@@ -226,7 +229,8 @@ public class TestBlock extends Block {
                 Draw.color(Color.green);
                 Draw.alpha(0.25f);
                 float offset = Mathf.ceil(size / 2f);
-                Lines.rect(front.x - offset, front.y - offset, size, size);
+                ModDraw.drawLabel(x,y,"getStroke: "+ Lines.getStroke());
+                ModLines.rect(front.x - offset, front.y - offset, size, size,settingsRot);
             }
         }
 
@@ -243,12 +247,22 @@ public class TestBlock extends Block {
         public void write(Writes write) {
             super.write(write);
             write.i(selectedSprite);
+            ModTypeIO.writeColor(write,selectedColor);
+            write.f(someVariable);
         }
 
         @Override
+        public byte version() {
+            return 2;
+        }
+        @Override
         public void read(Reads read, byte revision) {
-            if (revision > 0) {
+            if (revision >=1) {
                 selectedSprite = read.i() % getSizeSprites().length;
+            }
+            if (revision>=2){
+                selectedColor= ModTypeIO.readColor(read);
+                someVariable=read.f();
             }
         }
     }

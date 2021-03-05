@@ -16,7 +16,7 @@ import braindustry.gen.StealthUnitc;
 import braindustry.graphics.g3d.ModPlanetRenderer;
 import braindustry.input.ModBinding;
 import braindustry.input.ModKeyBinds;
-import braindustry.ui.dialogs.ModPlanetDialog;
+import braindustry.ui.dialogs.*;
 import braindustry.ui.fragments.*;
 import mindustry.Vars;
 import mindustry.ui.dialogs.BaseDialog;
@@ -27,6 +27,7 @@ import static ModVars.modVars.*;
 import static braindustry.input.ModBinding.*;
 
 public class ModUI implements Disposable {
+    public ModColorPicker colorPicker;
     static {
         //x axis or not
         ModMenuFragment.xAxis(true);
@@ -39,8 +40,8 @@ public class ModUI implements Disposable {
 
     }
     public void init() {
-        
         if (Vars.headless) return;
+        colorPicker=new ModColorPicker();
         AdvancedSettingsMenuDialog.init();
         ModHudFragment.init();
         Group nullGroup=new Group() {};

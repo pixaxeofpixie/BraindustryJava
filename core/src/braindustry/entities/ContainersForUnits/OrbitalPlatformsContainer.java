@@ -188,9 +188,11 @@ public class OrbitalPlatformsContainer extends UnitContainer {
     }
 protected void rotateTo(OrbitalPlatform platform,float angel){
     float v =  ((ability.rotateSpeed() % 360f) / 180f);
+    
     float speed =Math.abs(platform.orbitRotation %360f - angel %360f) * v;
     speed=Math.min(ability.rotateSpeed(),speed);
 //            float perfectAngle=
+
     platform.orbitRotation = Mathf.mod(ModAngles.moveLerpToward(platform.orbitRotation, angel, speed * Time.delta),360f);
 }
     public void update() {
