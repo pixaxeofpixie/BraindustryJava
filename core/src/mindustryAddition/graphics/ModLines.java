@@ -9,7 +9,13 @@ import arc.struct.FloatSeq;
 
 public class ModLines extends Lines {
     static FloatSeq floats = new FloatSeq();
+    private static Vec2 vector = new Vec2();
 
+    public static void crystal(float x, float y, float radius1, float radius2, float angle, int count) {
+        if (count==0)return;
+        final float stroke = getStroke();
+        ModFill.crystalLine(x,y,radius1,radius2,angle,count,stroke);
+    }
     public static void rect(float x, float y, float width, float height, float offsetx, float offsety, float rot) {
         float stroke = getStroke();
         Vec2[] points1 = ModGeometry.rectPoints(x+offsetx, y+offsety, width, height, rot).toArray(Vec2.class);

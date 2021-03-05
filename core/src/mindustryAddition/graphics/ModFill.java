@@ -2,12 +2,12 @@ package mindustryAddition.graphics;
 
 import arc.func.Cons;
 import arc.func.Cons2;
+import arc.func.Floatc2;
 import arc.graphics.g2d.Fill;
 import arc.math.geom.Vec2;
 import arc.struct.FloatSeq;
 
 public class ModFill extends Fill {
-    private static float stroke = 1.0F;
     private static Vec2 vector = new Vec2();
     private static Vec2 u = new Vec2();
     private static Vec2 v = new Vec2();
@@ -17,94 +17,99 @@ public class ModFill extends Fill {
     private static FloatSeq floatBuilder = new FloatSeq(20);
     private static boolean building;
     private static float circlePrecision = 0.4F;
+
     public static void swirl(float x, float y, float radius, float finion, float angle) {
-       final float sides = 50;
-        int max = (int)(sides * (finion + 0.001F));
+        final float sides = 50;
+        int max = (int) (sides * (finion + 0.001F));
         vector.set(0.0F, 0.0F);
         floats.clear();
 
-        floats.add(x,y);
-        Cons<Float> cons=(i)->{
-            vector.set(radius, 0.0F).setAngle(360.0F /sides * i + angle);
+        floats.add(x, y);
+        Cons<Float> cons = (i) -> {
+            vector.set(radius, 0.0F).setAngle(360.0F / sides * i + angle);
             floats.add(vector.x + x, vector.y + y);
         };
-        int startI=0;
-        if (max%2!=0){
-            startI=1;
+        int startI = 0;
+        if (max % 2 != 0) {
+            startI = 1;
             cons.get(0f);
             cons.get(1f);
             cons.get(1f);
 //            cons.get(2f);
         }
-        for(float i = startI; i < (max); i+=2f) {
+        for (float i = startI; i < (max); i += 2f) {
             cons.get(i);
-            cons.get(i+1f);
-            cons.get(i+2f);
+            cons.get(i + 1f);
+            cons.get(i + 2f);
         }
-       poly(floats);
+        poly(floats);
     }
-public static void circleRect(float x,float y,float radius){
-    swirl(x,y,radius,1f,0f);
-}
-    public static void spikesSwirl(float x, float y, float radius1,float length, float finion, float angle){
-        spikesSwirl(x,y,radius1,length,finion,angle,0.5f);
+
+    public static void circleRect(float x, float y, float radius) {
+        swirl(x, y, radius, 1f, 0f);
     }
-    public static void spikesSwirl(float x, float y, float radius1,float length, float finion, float angle,float spikeOffset) {
+
+    public static void spikesSwirl(float x, float y, float radius1, float length, float finion, float angle) {
+        spikesSwirl(x, y, radius1, length, finion, angle, 0.5f);
+    }
+
+    public static void spikesSwirl(float x, float y, float radius1, float length, float finion, float angle, float spikeOffset) {
         final float sides = 50;
-        final float radius2=radius1+length;
-        int max = (int)(sides * (finion + 0.001F));
+        final float radius2 = radius1 + length;
+        int max = (int) (sides * (finion + 0.001F));
         vector.set(0.0F, 0.0F);
         floats.clear();
-        Cons2<Float,Float> point=(i,radius)->{
-            vector.set(radius, 0.0F).setAngle(360.0F /sides * i + angle);
+        Cons2<Float, Float> point = (i, radius) -> {
+            vector.set(radius, 0.0F).setAngle(360.0F / sides * i + angle);
             floats.add(vector.x + x, vector.y + y);
-        } ;
-        Runnable flush=()->{
+        };
+        Runnable flush = () -> {
             poly(floats);
             floats.clear();
         };
-        Cons<Float> spike=(i)->{
-            point.get(i,radius1);
-            point.get(i+1f,radius1);
-            point.get(i+spikeOffset,radius2);
-            point.get(i+spikeOffset,radius2);
+        Cons<Float> spike = (i) -> {
+            point.get(i, radius1);
+            point.get(i + 1f, radius1);
+            point.get(i + spikeOffset, radius2);
+            point.get(i + spikeOffset, radius2);
             flush.run();
         };
-        int startI=0;
-        if (max%2!=0){
-            startI=1;
+        int startI = 0;
+        if (max % 2 != 0) {
+            startI = 1;
             spike.get(0f);
         }
 
-        for(float i = startI; i < max; i++) {
+        for (float i = startI; i < max; i++) {
             spike.get(i);
         }
     }
-    public static void doubleSwirl(float x, float y, float radius1,float radius2, float finion, float angle) {
+
+    public static void doubleSwirl(float x, float y, float radius1, float radius2, float finion, float angle) {
         final float sides = 50;
-        int max = (int)(sides * (finion + 0.001F));
+        int max = (int) (sides * (finion + 0.001F));
         vector.set(0.0F, 0.0F);
         floats.clear();
 //        floats.add(x,y);
-        Cons<Float> cons=(i)->{
-            vector.set(radius1, 0.0F).setAngle(360.0F /sides * i + angle);
+        Cons<Float> cons = (i) -> {
+            vector.set(radius1, 0.0F).setAngle(360.0F / sides * i + angle);
             floats.add(vector.x + x, vector.y + y);
-            vector.set(radius2, 0.0F).setAngle(360.0F /sides * i + angle);
-            floats.add(vector.x + x, vector.y + y);
-        };
-        Cons<Float> undoCons=(i)->{
-            vector.set(radius2, 0.0F).setAngle(360.0F /sides * i + angle);
-            floats.add(vector.x + x, vector.y + y);
-            vector.set(radius1, 0.0F).setAngle(360.0F /sides * i + angle);
+            vector.set(radius2, 0.0F).setAngle(360.0F / sides * i + angle);
             floats.add(vector.x + x, vector.y + y);
         };
-        Runnable flush=()->{
+        Cons<Float> undoCons = (i) -> {
+            vector.set(radius2, 0.0F).setAngle(360.0F / sides * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+            vector.set(radius1, 0.0F).setAngle(360.0F / sides * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+        };
+        Runnable flush = () -> {
             poly(floats);
             floats.clear();
         };
-        int startI=0;
-        if (max%2!=0){
-            startI=1;
+        int startI = 0;
+        if (max % 2 != 0) {
+            startI = 1;
             cons.get(0f);
             undoCons.get(1f);
             flush.run();
@@ -115,43 +120,71 @@ public static void circleRect(float x,float y,float radius){
 //            cons.get(2f);
         }
 
-        for(float i = startI; i < (max); i+=2f) {
+        for (float i = startI; i < (max); i += 2f) {
             cons.get(i);
-            undoCons.get(i+1f);
+            undoCons.get(i + 1f);
             flush.run();
-            cons.get(i+1f);
-            undoCons.get(i+2f);
+            cons.get(i + 1f);
+            undoCons.get(i + 2f);
             flush.run();
         }
 //        poly(floats);
     }
-    public static void tri(FloatSeq floats){
-        if (floats.size<6)return;
+
+    public static void tri(FloatSeq floats) {
+        if (floats.size < 6) return;
         float[] items = floats.items;
-        tri(items[0],items[1],items[2],items[3],items[4],items[5]);
+        tri(items[0], items[1], items[2], items[3], items[4], items[5]);
     }
-    public static void quad(FloatSeq floats){
-        if (floats.size<8)return;
+
+    public static void quad(FloatSeq floats) {
+        if (floats.size < 8) return;
         float[] items = floats.items;
-        quad(items[0],items[1],items[2],items[3],items[4],items[5],items[6],items[7]);
+        quad(items[0], items[1], items[2], items[3], items[4], items[5], items[6], items[7]);
     }
-    private static void point(float x,float y,float i,float radius,float angle){
+    public static void crystalLine(float x, float y, float radius1, float radius2, float angle, int count,final float width) {
+        if (count==0)return;
+        final int sides = 50;
+        count=Math.min(sides,count);
+        float oneAngle = 360f / count;
+        Cons2<Float,Float> point=(i, radius)->{
+            vector.set(radius, 0.0F).setAngle(oneAngle * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+        };
+        Cons2<Float,Float> pointDown=(i, radius)->{
+            float v = vector.angleTo(0, 0);
+            vector.set(radius, 0.0F).setAngle(oneAngle * i + angle);
+            floats.add(vector.x + x, vector.y + y);
+        };
+        Floatc2 side=(i, i2)->{
+            floats.clear();
+            point.get(i2,radius1);
+            point.get(i,radius2);
+            point.get(i,radius2-width);
+            point.get(i2,radius1-width);
+            ModFill.quad(floats);
+        };
+        floats.clear();
+        for (float i = 0; i < count; i++) {
+            side.get(i,i-0.5f);
+            side.get(i,i+0.5f);
+        }
     }
     public static void crystal(float x, float y, float radius1, float radius2, float angle, int count) {
-        if (count==0)return;
+        if (count == 0) return;
         final float sides = 50;
         float oneAngle = 360f / count;
-        float offset= oneAngle/2f;
-        Cons2<Float,Float> point=(i,radius)->{
+        float offset = oneAngle / 2f;
+        Cons2<Float, Float> point = (i, radius) -> {
             vector.set(radius, 0.0F).setAngle(oneAngle * i + angle);
             floats.add(vector.x + x, vector.y + y);
         };
         floats.clear();
         for (float i = 0; i < count; i++) {
-            floats.add(x,y);
-            point.get(i-0.5f,radius1);
-            point.get(i,radius2);
-            point.get(i+0.5f,radius1);
+            floats.add(x, y);
+            point.get(i - 0.5f, radius1);
+            point.get(i, radius2);
+            point.get(i + 0.5f, radius1);
             quad(floats);
             floats.clear();
         }

@@ -29,7 +29,6 @@ import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustryAddition.graphics.ModDraw;
-import mindustryAddition.graphics.ModFill;
 import mindustryAddition.graphics.ModLines;
 import mindustryAddition.world.blocks.BuildingLabel;
 
@@ -217,7 +216,7 @@ public class TestBlock extends Block {
 //            Draw.alpha(0.5f);
             Draw.reset();
             Draw.color(selectedColor);
-            ModFill.crystal(x, y,8f, (size) * 8f, rotdeg(),(int) someVariable);
+            ModLines.crystal(x, y,8f, (size) * 8f, rotdeg(),(int) someVariable);
 //            ModFill.spikesSwirl(x, y, (size) * 8, 8, modVars.settings.getFloat("angle") / 360f, rotdeg(), someVariable);
             Draw.reset();
             Building front = this.front();
