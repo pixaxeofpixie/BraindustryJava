@@ -689,7 +689,7 @@ class ModDefense implements ContentList {
 //                this.recoilAmount = 28;
                 this.reloadTime = 120;
                 this.size = 8;
-                this.shots = 4;
+                this.shots = 1;
                 this.health = 5800;
                 this.inaccuracy = 0.2f;
                 this.shootSound = Sounds.plasmaboom;
@@ -697,8 +697,8 @@ class ModDefense implements ContentList {
                 this.targetAir = true;
                 this.targetGround = true;
                 this.ammo(
-                       ModItems.odinum, new BasicBulletType(){public void draw(Bullet b) {
-                            float height = this.height * (1.0F - this.shrinkY + this.shrinkY * b.fout());
+                       ModItems.odinum, new BasicBulletType(4f,120f,"wave-shell"){/*public void draw(Bullet b)*/ {
+                            /*float height = this.height * (1.0F - this.shrinkY + this.shrinkY * b.fout());
                             float width = this.width * (1.0F - this.shrinkX + this.shrinkX * b.fout());
                             float offset = -90.0F + (this.spin != 0.0F ? Mathf.randomSeed((long)b.id, 360.0F) + b.time * this.spin : 0.0F);
                             Color mix = Tmp.c1.set(this.mixColorFrom).lerp(this.mixColorTo, b.fin());
@@ -710,19 +710,19 @@ class ModDefense implements ContentList {
                             Draw.color(this.backColor,this.frontColor,b.fin());
                             Lines.swirl(b.x,b.y,width/height,90f/360f,b.rotation()-45f);
                             Draw.reset();
-                        }
+                        */}
                             {
-                                this.damage = 120;
-                                this.speed = 4;
+                                //this.damage = 120;
+                                //this.speed = 4;
                                 this.hitSize = 50;
                                 this.lifetime = 180;
                                 this.status = StatusEffects.shocked;
                                 this.statusDuration = 38;
-//                                this.bulletSprite = wave;
+                              //  this.bulletSprite = wave-shell;
                                 this.pierce = true;
-                                this.width = 120;
+                                this.width = 1;
                                 this.buildingDamageMultiplier = 0.3f;
-//                                this.length = 4;
+                             //   this.length = 4;
                                 this.hittable = true;
                                 this.ammoMultiplier = 1;
                                 trailChance=100f;
@@ -733,8 +733,8 @@ class ModDefense implements ContentList {
                             }
                         }
                 );
-                this.consumes.liquid(ModLiquids.thoriumRefrigerant,0.2f).optional(false,true);
-                this.requirements(Category.turret, ItemStack.with(ModItems.odinum,400, Items.plastanium,350, Items.silicon,800, Items.titanium,420, Items.metaglass,280));
+                this.consumes.liquid(ModLiquids.liquidMethane,0.1f).optional(false,true);
+                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 1000, Items.titanium, 600, ModItems.phaseAlloy, 400, Items.phaseFabric, 100, Items.silicon, 1400));
             }
         };
         exoticAlloyWallLarge = new Wall("dense-composite-wall-large") {
