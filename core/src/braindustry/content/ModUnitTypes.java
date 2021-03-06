@@ -1801,7 +1801,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        litix = new StealthUnitType("litix") {
+        /*litix = new StealthUnitType("litix") {
             {
                 this.mineSpeed = 13F;
                 this.mineTier = 5;
@@ -1950,7 +1950,8 @@ public class ModUnitTypes implements ContentList {
                                     }
                                 };
                             }
-                        },new ModWeapon("litix-grinder") {
+                        },
+                        new ModWeapon("litix-grinder") {
                     {
                         this.x = 0;
                         this.y = 0;
@@ -2023,7 +2024,7 @@ public class ModUnitTypes implements ContentList {
                         }
                 );
             }
-        };
+        };*/
     }
     private static class Types {
         static Prov<? extends Unit> payload = PayloadUnit::create;
