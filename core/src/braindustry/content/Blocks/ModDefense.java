@@ -689,7 +689,7 @@ class ModDefense implements ContentList {
 //                this.recoilAmount = 28;
                 this.reloadTime = 120;
                 this.size = 8;
-                this.shots = 4;
+                this.shots = 1;
                 this.health = 5800;
                 this.inaccuracy = 0.2f;
                 this.shootSound = Sounds.plasmaboom;
@@ -720,7 +720,7 @@ class ModDefense implements ContentList {
                                 this.statusDuration = 38;
                               //  this.bulletSprite = wave-shell;
                                 this.pierce = true;
-                                this.width = 120;
+                                this.width = 1;
                                 this.buildingDamageMultiplier = 0.3f;
                              //   this.length = 4;
                                 this.hittable = true;
