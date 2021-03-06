@@ -693,11 +693,11 @@ class ModDefense implements ContentList {
                 this.health = 5800;
                 this.inaccuracy = 0.2f;
                 this.shootSound = Sounds.plasmaboom;
-                this.rotateSpeed = 0.6f;
+                this.rotateSpeed = 0.8f;
                 this.targetAir = true;
                 this.targetGround = true;
                 this.ammo(
-                       ModItems.odinum, new BasicBulletType(4f,120f,"wave-shell"){/*public void draw(Bullet b)*/ {
+                       ModItems.plastic, new BasicBulletType(4f,244f,"void-shell"){/*public void draw(Bullet b)*/ {
                             /*float height = this.height * (1.0F - this.shrinkY + this.shrinkY * b.fout());
                             float width = this.width * (1.0F - this.shrinkX + this.shrinkX * b.fout());
                             float offset = -90.0F + (this.spin != 0.0F ? Mathf.randomSeed((long)b.id, 360.0F) + b.time * this.spin : 0.0F);
