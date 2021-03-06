@@ -643,7 +643,7 @@ class ModDefense implements ContentList {
             {
             float brange = range = 880f;
             localizedName = "Shinigami";
-            description = "Railgun turret to defense from higher tiers of units, consumes Dense Composite to shoot, don't use this turret to attack buildings";
+            description = "Railgun turret to defense from higher tiers of units, consumes Dense Composite to shoot, don't use this turret to attack buildings...\n-Destroy?\n-Yea, Shinigami, DESTROY ";
             requirements(Category.turret, ItemStack.with(ModItems.graphenite, 3000, Items.metaglass, 800, ModItems.phaseAlloy, 400, Items.plastanium, 900, Items.silicon, 2400));
             ammo(
                     ModItems.phaseAlloy, new PointBulletType(){{
