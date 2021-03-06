@@ -358,7 +358,7 @@ class ModDefense implements ContentList {
                         this.lightningColor = Color.valueOf("f1fc58");
                     }
                 };
-                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 550, ModItems.exoticAlloy, 600, Items.surgeAlloy, 450, ModItems.chromium, 220, ModItems.chloroAlloy, 300, ModItems.graphenite, 720, Items.metaglass, 220));
+                this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 550, ModItems.exoticAlloy, 600, Items.surgeAlloy, 450, ModItems.chromium, 420, ModItems.graphenite, 1020, Items.metaglass, 420));
                 this.reloadTime = 4;
             }
         };
@@ -372,7 +372,7 @@ class ModDefense implements ContentList {
                 this.hasPower = true;
                 this.shootLength = 14;
                 this.bulletDamage = 32;
-                this.reloadTime = 10;
+                this.reloadTime = 5;
                 this.consumes.power(4.7f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.04f).optional(false, false);
                 this.requirements(Category.turret, ItemStack.with(ModItems.phaseAlloy, 70, Items.silicon, 180, ModItems.odinum, 150));
@@ -613,7 +613,7 @@ class ModDefense implements ContentList {
         gem = new LaserTurret("gem") {
             {
                 localizedName = "Gem";
-                requirements(Category.turret, ItemStack.with(ModItems.chloroAlloy, 480, ModItems.phaseAlloy, 560, ModItems.graphenite, 1250, Items.silicon, 1230, Items.phaseFabric, 430));
+                requirements(Category.turret, ItemStack.with(ModItems.chloroAlloy, 480, ModItems.phaseAlloy, 960, ModItems.graphenite, 2250, Items.silicon, 2230, Items.phaseFabric, 830));
                 size = 14;
                 health = 240 * size * size;
                 range = 240f;
@@ -641,10 +641,10 @@ class ModDefense implements ContentList {
         };
         shinigami = new ItemTurret("shinigami"){
             {
-            float brange = range = 620f;
+            float brange = range = 880f;
             localizedName = "Shinigami";
             description = "Railgun turret to defense from higher tiers of units, consumes Dense Composite to shoot, don't use this turret to attack buildings";
-            requirements(Category.turret, ItemStack.with(ModItems.graphenite, 1000, Items.metaglass, 600, ModItems.phaseAlloy, 400, Items.plastanium, 900, Items.silicon, 1400));
+            requirements(Category.turret, ItemStack.with(ModItems.graphenite, 3000, Items.metaglass, 800, ModItems.phaseAlloy, 400, Items.plastanium, 900, Items.silicon, 2400));
             ammo(
                     ModItems.phaseAlloy, new PointBulletType(){{
                         shootEffect = Fx.lightningShoot;
@@ -653,7 +653,7 @@ class ModDefense implements ContentList {
                         trailEffect = ModFx.shinigamiTrail;
                         despawnEffect = ModFx.instBomb;
                         trailSpacing = 25f;
-                        damage = 14480;
+                        damage = 20480;
                         buildingDamageMultiplier = 0.2f;
                         speed = brange;
                         hitShake = 9f;
@@ -685,12 +685,12 @@ class ModDefense implements ContentList {
             {
                 this.localizedName="Void Wave";
                 this.description = "";
-                this.range = 200;
+                this.range = 660;
 //                this.recoilAmount = 28;
                 this.reloadTime = 120;
                 this.size = 8;
                 this.shots = 1;
-                this.health = 5800;
+                this.health = 12000;
                 this.inaccuracy = 0.2f;
                 this.shootSound = Sounds.plasmaboom;
                 this.rotateSpeed = 0.8f;
@@ -712,7 +712,7 @@ class ModDefense implements ContentList {
                             Draw.reset();
                         */}
                             {
-                                //this.damage = 120;
+                                //this.damage = 800;
                                 //this.speed = 4;
                                 this.hitSize = 50;
                                 this.lifetime = 180;
