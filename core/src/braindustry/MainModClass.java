@@ -26,6 +26,7 @@ import braindustry.gen.ModContentRegions;
 import braindustry.gen.ModPlayer;
 import braindustry.gen.StealthUnitc;
 import braindustry.graphics.ModShaders;
+import braindustry.graphics.g2d.ModBloom;
 import braindustry.type.StealthUnitType;
 import braindustry.world.ModBlock;
 import mindustry.Vars;
@@ -69,6 +70,21 @@ public class MainModClass extends Mod {
         });
         modInfo = Vars.mods.getMod(this.getClass());
         modVars.load();
+        Events.on(EventType.Trigger.class,e->{
+            if (e== EventType.Trigger.preDraw){
+                renderUpdate=true;
+            }
+            if (e== EventType.Trigger.postDraw){
+                renderUpdate=false;
+            }
+            if (e== EventType.Trigger.draw){
+                if (!headless){
+                    if (!(renderer.bloom instanceof ModBloom)){
+                        renderer.bloom= modBloom.parent(renderer.bloom);
+                    }
+                }
+            }
+        });
         EventOn(ClientLoadEvent.class, (e) -> {
             constructor();
         });

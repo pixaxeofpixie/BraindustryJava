@@ -1,5 +1,6 @@
 package braindustry;
 
+import ModVars.modVars;
 import arc.ApplicationCore;
 import arc.ApplicationListener;
 import arc.Events;
@@ -10,17 +11,11 @@ import mindustry.ClientLauncher;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import static ModVars.modVars.*;
+import static ModVars.modVars.launcher;
 import static mindustry.Vars.ui;
 
 public class ModListener extends ApplicationCore {
     public static Seq<Runnable> updaters=new Seq<>();
-    protected class Editor extends ApplicationCore {
-
-        @Override
-        public void setup() {
-
-        }
-    }
     public static void addRun(Runnable runnable){
         updaters.add(runnable);
     }

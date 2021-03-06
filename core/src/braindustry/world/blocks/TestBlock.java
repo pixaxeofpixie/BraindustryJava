@@ -15,10 +15,12 @@ import arc.util.Tmp;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import braindustry.annotations.ModAnnotations;
+import braindustry.content.Blocks.ModBlocks;
 import braindustry.content.ModFx;
 import braindustry.graphics.ModShaders;
 import braindustry.io.ModTypeIO;
 import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.Team;
 import mindustry.gen.Building;
@@ -33,6 +35,7 @@ import mindustryAddition.graphics.ModLines;
 import mindustryAddition.world.blocks.BuildingLabel;
 
 import static ModVars.modFunc.fullName;
+import static ModVars.modVars.floorRenderer;
 
 public class TestBlock extends Block {
     private final static int doubleLength = 4, triableLength = 1;
@@ -108,7 +111,10 @@ public class TestBlock extends Block {
             TestBlockBuild me = this;
             table.table(Tex.buttonTrans,(t) -> {
                 t.button(Icon.up,Styles.clearPartiali, () -> {
-                    ModFx.fireworkTrail.at(x,y,rotdeg(),Color.purple);
+//                    ModFx.fireworkTrail.at(x,y,rotdeg(),Color.purple);
+                    Tile tile = nearbyTile(rotation);
+                    tile.setFloor(Blocks.stone.asFloor());
+                    floorRenderer.recacheTile(tile);
 //                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("2c5777"), Color.valueOf("11222d"), Couple.of(2f,4f));
 //                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("6757d1"), Color.valueOf("9288cc"), Couple.of(2f,4f));
                 });
@@ -203,6 +209,16 @@ public class TestBlock extends Block {
                 return Vars.world.build(this.tile.x - Mathf.ceil(this.block.size / 2f), this.tile.y);
             } else {
                 return rotation == 3 ? Vars.world.build(this.tile.x, this.tile.y - Mathf.ceil(this.block.size / 2f)) : null;
+            }
+        }public Tile nearbyTile(int rotation) {
+            if (rotation == 0) {
+                return Vars.world.tile(this.tile.x + (int) (this.block.size / 2 + 1), this.tile.y);
+            } else if (rotation == 1) {
+                return Vars.world.tile(this.tile.x, this.tile.y + (int) (this.block.size / 2 + 1));
+            } else if (rotation == 2) {
+                return Vars.world.tile(this.tile.x - Mathf.ceil(this.block.size / 2f), this.tile.y);
+            } else {
+                return rotation == 3 ? Vars.world.tile(this.tile.x, this.tile.y - Mathf.ceil(this.block.size / 2f)) : null;
             }
         }
 
