@@ -15,10 +15,9 @@ import arc.util.Tmp;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import braindustry.annotations.ModAnnotations;
-import braindustry.content.Blocks.ModBlocks;
-import braindustry.content.ModFx;
 import braindustry.graphics.ModShaders;
 import braindustry.io.ModTypeIO;
+import braindustry.ui.ModStyles;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.entities.units.BuildPlan;
@@ -110,19 +109,19 @@ public class TestBlock extends Block {
             super.buildConfiguration(table);
             TestBlockBuild me = this;
             table.table(Tex.buttonTrans,(t) -> {
-                t.button(Icon.up,Styles.clearPartiali, () -> {
+                t.button(Icon.up,ModStyles.alphai, () -> {
 //                    ModFx.fireworkTrail.at(x,y,rotdeg(),Color.purple);
                     Tile tile = nearbyTile(rotation);
-                    tile.setFloor(Blocks.stone.asFloor());
+                    tile.setFloor(Blocks.water.asFloor());
                     floorRenderer.recacheTile(tile);
 //                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("2c5777"), Color.valueOf("11222d"), Couple.of(2f,4f));
 //                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("6757d1"), Color.valueOf("9288cc"), Couple.of(2f,4f));
                 });
-                t.button(Icon.pick,Styles.clearPartiali, () -> {
-                    modVars.modUI.colorPicker.show(selectedColor,color->configure(color));
+                t.button(Icon.pick,ModStyles.alphai, () -> {
+                    modVars.modUI.colorPicker.show(selectedColor, this::configure);
 //                    ModFx.Spirals.at(x, y, size, Pal.lancerLaser);
                 })                ;
-                t.button(Icon.edit,Styles.clearPartiali, () -> {
+                t.button(Icon.edit, ModStyles.alphai, () -> {
                     BaseDialog dialog = new BaseDialog("") {
                         @Override
                         public void draw() {

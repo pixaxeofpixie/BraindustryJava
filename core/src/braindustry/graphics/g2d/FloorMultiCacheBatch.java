@@ -14,7 +14,7 @@ import java.util.Iterator;
 
 public class FloorMultiCacheBatch extends Batch {
     private static final int maxSpritesPerCache = 102000;
-    Seq<ModSpriteCache> caches = new Seq<>();
+    Seq<SpriteCache> caches = new Seq<>();
     Shader shader = SpriteCache.createDefaultShader();
     int currentid = -1;
     int maxCacheSize;
@@ -25,27 +25,27 @@ public class FloorMultiCacheBatch extends Batch {
         this.maxCacheSize = maxCacheSize;
     }
 
-    ModSpriteCache currentCache() {
+    SpriteCache currentCache() {
         int needed = this.currentid == -1 ? this.offset / 102000 : this.currentid;
         if (needed >= this.caches.size) {
-            this.caches.add(new ModSpriteCache(102000, 16, this.shader, false));
+            this.caches.add(new SpriteCache(102000, 16, this.shader, false));
         }
 
-        return (ModSpriteCache) this.caches.get(needed);
+        return (SpriteCache) this.caches.get(needed);
     }
 
     public void removeCache(int id) {
         if (id==-1)return;
         int cacheID = Pack.leftShort(id);
         int batch = Pack.rightShort(id);
-        ModSpriteCache spriteCache = caches.get(batch);
+        SpriteCache spriteCache = caches.get(batch);
 //        spriteCache.draw(cacheID);
         removeCacheIDs.add(cacheID);
 //        spriteCache.getCaches().remove(cacheID);
 //        if (currentid==batch)currentid=-1;
     }
     public void removeSelectedCache(){
-        ModSpriteCache spriteCache = currentCache();
+        SpriteCache spriteCache = currentCache();
         caches.remove(spriteCache);
         spriteCache.dispose();
     }
@@ -84,7 +84,7 @@ public class FloorMultiCacheBatch extends Batch {
     public void beginCache(int id) {
         int cacheID = Pack.leftShort(id);
         int batch = Pack.rightShort(id);
-        ModSpriteCache spriteCache = this.caches.get(batch);
+        SpriteCache spriteCache = this.caches.get(batch);
         int size = spriteCache.getCaches().size;
         spriteCache.getCaches().size=cacheID;
         spriteCache.beginCache();
@@ -145,7 +145,7 @@ public class FloorMultiCacheBatch extends Batch {
     public void dispose() {
         super.dispose();
 
-        for (ModSpriteCache cache : this.caches) {
+        for (SpriteCache cache : this.caches) {
             cache.dispose();
         }
 
@@ -166,7 +166,7 @@ public class FloorMultiCacheBatch extends Batch {
         int cacheID = Pack.leftShort(id);
         int batch = Pack.rightShort(id);
         if (this.currentid != batch) {
-            ModSpriteCache prev = this.currentCache();
+            SpriteCache prev = this.currentCache();
             prev.end();
             this.currentid = batch;
             this.currentCache().setProjectionMatrix(prev.getProjectionMatrix());
