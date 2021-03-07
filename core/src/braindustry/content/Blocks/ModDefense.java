@@ -663,7 +663,7 @@ class ModDefense implements ContentList {
             maxAmmo = 40;
             ammoPerShot = 10;
             rotateSpeed = 1.5f;
-            reloadTime = 12000f;
+            reloadTime = 11000f;
             ammoUseEffect = Fx.casing3Double;
             recoilAmount = 10f;
             restitution = 0.009f;
@@ -674,9 +674,9 @@ class ModDefense implements ContentList {
             shootCone = 3f;
             shootSound = Sounds.railgun;
             unitSort = (u, x, y) -> -u.maxHealth;
-            coolantMultiplier = 0.6f;
+            coolantMultiplier = 0.8f;
             health = 260 * size * size;
-            coolantUsage = 1.4f;
+            coolantUsage = 1.1f;
             consumes.add(new ConsumeLiquidFilter(liquid -> liquid.temperature <= 0.5f && liquid.flammability < 0.1f, 10f)).update(false);
             consumes.powerCond(24f, TurretBuild::isActive);
         }};
@@ -687,17 +687,17 @@ class ModDefense implements ContentList {
                 this.description = "";
                 this.range = 660;
 //                this.recoilAmount = 28;
-                this.reloadTime = 120;
+                this.reloadTime = 220;
                 this.size = 8;
-                this.shots = 7;
+                this.shots = 10;
                 this.health = 12000;
-                this.inaccuracy = 7f;
+                this.inaccuracy = 10f;
                 this.shootSound = Sounds.plasmaboom;
-                this.rotateSpeed = 0.8f;
+                this.rotateSpeed = 0.4f;
                 this.targetAir = true;
                 this.targetGround = true;
                 this.ammo(
-                       ModItems.plastic, new BasicBulletType(4f,244f,"void-shell"){/*public void draw(Bullet b)*/ {
+                       ModItems.plastic, new BasicBulletType(4f,1960f,"void-shell"){/*public void draw(Bullet b)*/ {
                             /*float height = this.height * (1.0F - this.shrinkY + this.shrinkY * b.fout());
                             float width = this.width * (1.0F - this.shrinkX + this.shrinkX * b.fout());
                             float offset = -90.0F + (this.spin != 0.0F ? Mathf.randomSeed((long)b.id, 360.0F) + b.time * this.spin : 0.0F);
@@ -712,16 +712,16 @@ class ModDefense implements ContentList {
                             Draw.reset();
                         */}
                             {
-                                //this.damage = 800;
+                                //this.damage = 1900;
                                 //this.speed = 4;
                                 this.hitSize = 50;
                                 this.lifetime = 180;
-                                this.status = StatusEffects.shocked;
-                                this.statusDuration = 38;
+                                this.status = StatusEffects.slow;
+                                this.statusDuration = 120;
                               //  this.bulletSprite = wave-shell;
                                 this.pierce = true;
                                 this.width = 1;
-                                this.buildingDamageMultiplier = 0.3f;
+                                this.buildingDamageMultiplier = 0.6f;
                              //   this.length = 4;
                                 this.hittable = true;
                                 this.ammoMultiplier = 1;
