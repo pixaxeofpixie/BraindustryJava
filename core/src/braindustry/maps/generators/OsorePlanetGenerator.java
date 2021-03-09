@@ -62,6 +62,7 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
         public void generateSector(Sector sector){
 
         //these always have bases
+                
         if(sector.id == 154 || sector.id == 0){
             sector.generateEnemyBase = true;
             return;
@@ -99,25 +100,17 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
     }
 
     @Override
-    public Color getColor(Vec3 position){
-        Block block = getBlock(position);
-        //replace salt with sand color
-        if(block == Blocks.salt) return Blocks.sand.mapColor;
-        return Tmp.c1.set(block.mapColor).a(1f - block.albedo);
-    }
-
-    @Override
     public void genTile(Vec3 position, TileGen tile){
         tile.floor = getBlock(position);
         tile.block = tile.floor.asFloor().wall;
 
         //if(noise.octaveNoise3D(5, 0.6, 8.0, position.x, position.y, position.z) > 0.65){
-            //tile.block = Blocks.air;
+        //    tile.block = Blocks.air;
         //}
 
         if(rid.getValue(position.x, position.y, position.z, 22) > 0.32){
             tile.block = Blocks.air;
         }
-    }
+    
     }
 }
