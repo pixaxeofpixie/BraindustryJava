@@ -6,7 +6,7 @@ import mindustry.type.SectorPreset;
 
 import static ModVars.modFunc.fullName;
 
-public class ModSectorPreset {
+public class ModSectorPreset{
     public static SectorPreset meltingPoint, FFOf;
 
     public void load() {
