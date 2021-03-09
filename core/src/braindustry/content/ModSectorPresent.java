@@ -28,7 +28,5 @@ public class ModSectorPresent {
                 captureWave = 35;
             }
         };
-
-
     }
 }
