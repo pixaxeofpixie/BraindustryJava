@@ -1808,7 +1808,7 @@ public class ModUnitTypes implements ContentList {
                 stealthDuration = 15f * 60f;
                 stealthCooldown = 10f * 60f;
                 abilities.add(new OrbitalPlatformAbility(4, 3f,
-                        new ModWeapon("litix-magma-shooter") {
+                        new ModWeapon("litix-methane-shooter") {
                             {
                                 this.x = 0;
                                 this.y = 0;
@@ -1839,7 +1839,7 @@ public class ModUnitTypes implements ContentList {
                         this.x = 0;
                         this.y = 0;
                         this.shootY = -1f;
-                        this.reload = 70;
+                        this.reload = 80;
                         this.ejectEffect = ModFx.magicShootEffectBig;
                         this.recoil = 6;
                         this.shootSound = Sounds.laserblast;
@@ -1849,18 +1849,18 @@ public class ModUnitTypes implements ContentList {
                         this.bullet = new RailBulletType() {
                             {
                                 this.shootEffect = ModFx.energyShrapnelShoot;
-                                this.length = 370.0F;
-                                this.updateEffectSeg = 70.0F;
+                                this.length = 320.0F;
+                                this.updateEffectSeg = 60.0F;
                                 this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
                                 this.updateEffect = this.trailEffect = ModFx.instTrail;
                                 this.hitEffect = Fx.blastExplosion;
                                 this.smokeEffect = Fx.shootBig2;
-                                this.damage = 1590.0F;
-                                this.pierceDamageFactor = 1.2F;
+                                this.damage = 1690.0F;
+                                this.pierceDamageFactor = 1.1F;
                                 this.despawnEffect = ModFx.instBomb;
-                                this.buildingDamageMultiplier = 1.6f;
+                                this.buildingDamageMultiplier = 1.0f;
                                 this.speed = 1f;
-                                this.hitShake = 5f;
+                                this.hitShake = 6f;
                             }
                         };
                     }
@@ -1886,6 +1886,37 @@ public class ModUnitTypes implements ContentList {
                                                 shootEffect = ModFx.magicShootEffect;
                                                 lifetime = 95f;
                                                 collidesAir = true;
+                                            }
+                                        };
+                                    }
+                                },
+                                new ModWeapon("litix-grinder") {
+                                    {
+                                        this.x = 0;
+                                        this.y = 0;
+                                        this.shootY = -1f;
+                                        this.reload = 60;
+                                        this.ejectEffect = ModFx.eveExplosion;
+                                        this.recoil = 5;
+                                        this.shootSound = Sounds.laserblast;
+                                        this.rotate = true;
+                                        this.rotateSpeed = 0.5f;
+                                        this.mirror = false;
+                                        this.bullet = new RailBulletType() {
+                                            {
+                                                this.shootEffect = ModFx.energyShrapnelShoot;
+                                                this.length = 374.0F;
+                                                this.updateEffectSeg = 70.0F;
+                                                this.pierceEffect = this.hitEffect = ModFx.magicBulletHitBig;
+                                                this.updateEffect = this.trailEffect = ModFx.magicBulletTrail;
+                                                this.hitEffect = Fx.railHit;
+                                                this.smokeEffect = Fx.shootBigSmoke;
+                                                this.damage = 1020.0F;
+                                                this.pierceDamageFactor = 1.9F;
+                                                this.despawnEffect = ModFx.instBomb;
+                                                this.buildingDamageMultiplier = 2.1f;
+                                                this.speed = 1.5f;
+                                                this.hitShake = 5f;
                                             }
                                         };
                                     }
