@@ -22,8 +22,8 @@ import mindustry.world.*;
 
 public class OsorePlanetGenerator extends ModPlanetGenerator{
         
-    public OsorePlanetGenerator(){
-            
+    public OsorePlanetGenerator() {
+
         arr = new Block[][]{
                 {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt},
                 {Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt},
@@ -38,25 +38,25 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
                 {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.dirt},
                 {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.stone, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModBlocks.magmaFloor, Blocks.dirt},
                 {Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.dirt}
-       };
-            
+        };
+
         tars = ObjectMap.of(
                 Blocks.slag, Blocks.mud,
                 Blocks.dirt, Blocks.mud
         );
-            
+
         dec = ObjectMap.of(
                 Blocks.slag, Blocks.dirt,
                 Blocks.dirt, Blocks.dirt,
                 Blocks.slag, Blocks.slag,
                 Blocks.slag, Blocks.slag
         );
-            
+
         water = 0.05f;
         waterOffset = 0.01f;
         scl = 1.3f;
-        
-        
+
+    }
         @Override
             
         public void generateSector(Sector sector){
@@ -80,7 +80,7 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
 
         if(noise < 0.16){
             for(Ptile other : tile.tiles){
-                var osec = sector.planet.getSector(other);
+                Sector osec = sector.planet.getSector(other);
 
                 //Enemy base doesnt spawn in start sector and other maps
                     
