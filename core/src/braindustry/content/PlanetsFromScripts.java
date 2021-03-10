@@ -15,7 +15,7 @@ public class PlanetsFromScripts {
         zetsubo = new Planet("zetsubo", Planets.sun, 3, 2.4f) {
             {
                 hasAtmosphere = false;
-                meshLoader = () -> new SunMesh(this, 4, 5, 0.3f, 1.7f, 1.2f, 1, 1.5f, Color.valueOf("9FFCFFFF"), Color.valueOf("50DDE2FF"), Color.valueOf("4749C9FF"));
+                meshLoader = () -> new SunMesh(this, 4, 5, 0.3f, 1.0f, 1.2f, 1, 1.5f, Color.valueOf("9FFCFFFF"), Color.valueOf("50DDE2FF"), Color.valueOf("4749C9FF"));
                 orbitRadius = 55.7f;
                 accessible = false;
                 bloom = true;
