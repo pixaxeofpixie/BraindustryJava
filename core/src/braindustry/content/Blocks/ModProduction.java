@@ -3,6 +3,8 @@ package braindustry.content.Blocks;
 import Gas.GasStack;
 import Gas.content.Gasses;
 import Gas.world.blocks.production.GasGenericCrafter;
+import Gas.world.consumers.ConsumeGasses;
+import braindustry.content.ModFx;
 import braindustry.content.ModGasses;
 import braindustry.content.ModItems;
 import braindustry.content.ModLiquids;
@@ -262,8 +264,8 @@ class ModProduction implements ContentList {
         };
         phaseAlloySmelter = new GenericSmelter("phase-alloy-smelter") {
             {
-                this.localizedName = "Phase Alloy Smelter";
-                this.description = "Produces universal Phase alloy from Plastanium, Surge alloy and Phase fabric.";
+                this.localizedName = "Dense Composite Smelter";
+                this.description = "Produces universal Dense Composite from Plastanium, Surge alloy and Phase fabric.";
                 this.health = 310;
                 this.liquidCapacity = 0;
                 this.size = 3;
@@ -314,16 +316,58 @@ class ModProduction implements ContentList {
         };
         methaneGasifier = new GasGenericCrafter("methane-gasifier"){
             {
-                this.localizedName = "Liquid Methane Gasifier";
-                this.description = "Turns Liquid Methane into gas";
+                this.localizedName = "Methane Extractor";
+                this.description = "Extract Methane from Oil";
                 this.health = 140;
                 this.size = 2;
                 this.consumes.power(3f);
-                this.consumes.liquid(ModLiquids.liquidMethane, 0.3f);
+                this.consumes.liquid(Liquids.oil, 0.3f);
                 this.outputGas = new GasStack(Gasses.methane, 1);
                 this.requirements(Category.crafting, ItemStack.with( ModItems.odinum, 100, Items.titanium, 100, Items.metaglass, 130, ModItems.chromium, 190));
                 this.updateEffect = Fx.purify;
                 this.updateEffectChance = 0.02f;
+            }
+        };
+        hyperDenseCompoiteSmelter = new GasGenericCrafter("hyper-dense-composite-smelter") {
+            {
+                this.localizedName = "Hyper Dense Composite Smelter";
+                this.description = "Upgraded version of Dense Composite smelter but consumes gas for more effective production.";
+                this.health = 510;
+                this.liquidCapacity = 20;
+                this.size = 7;
+                this.hasPower = true;
+                this.hasLiquids = false;
+                this.hasGas = true;
+                this.hasItems = true;
+                this.craftTime = 100;
+                this.updateEffect = Fx.fuelburn;
+                this.consumes.power(5f);
+                this.consumes.items(ItemStack.with(Items.plastanium, 3, Items.surgeAlloy, 2, Items.phaseFabric, 2));
+                this.consumes.addGas(new ConsumeGasses(Gasses.methane, 1));
+                this.requirements(Category.crafting, ItemStack.with(Items.phaseFabric, 100, Items.plastanium, 100, Items.thorium, 400, ModItems.exoticAlloy, 270, ModItems.graphenite, 380));
+                this.outputItem = new ItemStack(ModItems.phaseAlloy, 5);
+            }
+        };
+        methaneLiquifier = new GasGenericCrafter("methane-liquifier") {
+            {
+                this.localizedName = "Methane Liquifier";
+                this.description = "Turn Methane into Liquid.";
+                this.health = 150;
+                this.liquidCapacity = 20;
+                this.itemCapacity = 25;
+                this.gasCapacity = 15;
+                this.size = 2;
+                this.hasPower = true;
+                this.hasLiquids = false;
+                this.hasGas = true;
+                this.hasItems = true;
+                this.craftTime = 100;
+                this.updateEffect = ModFx.contritumUpdate;
+                this.consumes.power(3f);
+                this.consumes.liquid(Liquids.water, 0.1f);
+                this.consumes.addGas(new ConsumeGasses(Gasses.methane, 1));
+                this.requirements(Category.crafting, ItemStack.with(ModItems.chromium, 150, Items.plastanium, 100, Items.metaglass, 150, ModItems.graphenite, 200));
+                this.outputLiquid = new LiquidStack(ModLiquids.liquidMethane, 1f);
             }
         };
     }

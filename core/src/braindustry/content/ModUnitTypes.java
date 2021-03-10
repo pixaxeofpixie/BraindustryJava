@@ -1801,14 +1801,14 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        /*litix = new StealthUnitType("litix") {
+        litix = new StealthUnitType("litix") {
             {
                 this.mineSpeed = 13F;
                 this.mineTier = 5;
                 stealthDuration = 15f * 60f;
                 stealthCooldown = 10f * 60f;
-                abilities.add(new OrbitalPlatformAbility(6, 3f,
-                        new ModWeapon("litix-magma") {
+                abilities.add(new OrbitalPlatformAbility(4, 3f,
+                        new ModWeapon("litix-magma-shooter") {
                             {
                                 this.x = 0;
                                 this.y = 0;
@@ -1833,124 +1833,7 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                        new ModWeapon("broadsword-weapon") {
-                            {
-                                this.top = true;
-                                this.x = 0;
-                                this.y = 0;
-                                this.shootY = -1f;
-                                this.reload = 120;
-                                this.shots = 7;
-                                this.shotDelay = 5;
-                                this.inaccuracy = 5;
-                                this.ejectEffect = Fx.none;
-                                this.recoil = 2;
-                                this.shootSound = Sounds.laserblast;
-                                this.rotate = true;
-                                this.mirror = false;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.5f;
-                                        this.length = 190;
-                                        this.damage = 40;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.7f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("litix-grinder") {
-                            {
-                                this.x = 0;
-                                this.y = 0;
-                                this.shootY = -1f;
-                                this.reload = 70;
-                                this.ejectEffect = ModFx.magicShootEffectBig;
-                                this.recoil = 6;
-                                this.shootSound = Sounds.laserblast;
-                                this.rotate = true;
-                                this.rotateSpeed = 0.7f;
-                                this.mirror = false;
-                                this.bullet = new RailBulletType() {
-                                    {
-                                        this.shootEffect = ModFx.energyShrapnelShoot;
-                                        this.length = 370.0F;
-                                        this.updateEffectSeg = 70.0F;
-                                        this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
-                                        this.updateEffect = this.trailEffect = ModFx.instTrail;
-                                        this.hitEffect = Fx.blastExplosion;
-                                        this.smokeEffect = Fx.shootBig2;
-                                        this.damage = 1590.0F;
-                                        this.pierceDamageFactor = 1.2F;
-                                        this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 1.6f;
-                                        this.speed = 1f;
-                                        this.hitShake = 5f;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("litix-magma") {
-                            {
-                                this.x = 0;
-                                this.y = 0;
-                                this.shootY = -1f;
-                                this.reload = 50;
-                                this.ejectEffect = Fx.fireballsmoke;
-                                this.recoil = 3f;
-                                this.shots = 7;
-                                this.inaccuracy = 10.0f;
-                                this.rotate = true;
-                                this.shootSound = Sounds.flame;
-                                this.alternate = true;
-                                this.bullet = new LiquidBulletType(ModLiquids.magma) {
-                                    {
-                                        damage = 98;
-                                        speed = 1.9f;
-                                        drag = -0.01f;
-                                        shootEffect = Fx.lightningShoot;
-                                        lifetime = 95f;
-                                        collidesAir = true;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("broadsword-weapon") {
-                            {
-                                this.top = true;
-                                this.x = 0;
-                                this.y = -8f;
-                                this.shootY = -1f;
-                                this.reload = 120;
-                                this.shots = 7;
-                                this.shotDelay = 5;
-                                this.inaccuracy = 5;
-                                this.ejectEffect = Fx.none;
-                                this.recoil = 2;
-                                this.shootSound = Sounds.laserblast;
-                                this.rotate = true;
-                                this.mirror = false;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.5f;
-                                        this.length = 190;
-                                        this.damage = 40;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.7f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
-                                    }
-                                };
-                            }
-                        },
+
                         new ModWeapon("litix-grinder") {
                     {
                         this.x = 0;
@@ -1981,7 +1864,35 @@ public class ModUnitTypes implements ContentList {
                             }
                         };
                     }
-                }));
+                },
+                                new ModWeapon("litix-methane-shooter") {
+                                    {
+                                        this.x = 0;
+                                        this.y = 0;
+                                        this.shootY = -1f;
+                                        this.reload = 40;
+                                        this.ejectEffect = Fx.blastsmoke;
+                                        this.recoil = 2f;
+                                        this.shots = 6;
+                                        this.inaccuracy = 3.0f;
+                                        this.rotate = true;
+                                        this.shootSound = Sounds.beam;
+                                        this.alternate = true;
+                                        this.bullet = new LiquidBulletType(ModLiquids.liquidMethane) {
+                                            {
+                                                damage = 75;
+                                                speed = 2.2f;
+                                                drag = 0.004f;
+                                                shootEffect = ModFx.magicShootEffect;
+                                                lifetime = 95f;
+                                                collidesAir = true;
+                                            }
+                                        };
+                                    }
+                                }
+
+                )
+                );
                 this.constructor = Types.stealthMech;
                 this.defaultController = StealthGroundAI::new;
                 this.speed = 0.62f;
@@ -2024,7 +1935,7 @@ public class ModUnitTypes implements ContentList {
                         }
                 );
             }
-        };*/
+        };
     }
     private static class Types {
         static Prov<? extends Unit> payload = PayloadUnit::create;
