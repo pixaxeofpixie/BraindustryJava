@@ -1,11 +1,11 @@
 ![alt tag]( https://github.com/pixaxeofpixie/pictures/blob/main/logo.png?raw=true)
-## Java Mod By Braindustry Team.
+## Java Mod By Braindustry Team
 
 # Installation Guide
-
+## 1.Via .jar File
 * 1.Go to [releases]( https://github.com/pixaxeofpixie/Braindustry-Mod/releases ).
 
-* 2.Download the latest .jar file(if you android download -droid.jar version).
+* 2.Download the latest .jar file.
 
 * 3.Launch Mindustry.
 
@@ -15,7 +15,14 @@
 
 * 6."Impot File"
 
-* 7.Find file with name "braindustry2.0.jar"(android - droid-braindustry2.0.jar) and click "load".
+* 7.Find file with name "braindustry.jar" and click "load".
+
+## 2.Via Mod Browser
+* 1.Go to in-game Mod Browser.
+
+* 2.Find "Braindustry Mod" in mod list.
+
+* 3.Download.  
 
 # Build Guide
 
@@ -32,6 +39,8 @@ If you Windows  |  If you MacOSX  | If you Linux
 gradlew jar | ./gradlew jar | gradlew jar
 
 * 4.When compilation is end, your build will be in "braindustry/build/libs"
+
+* 5.VERY IMPORTANT.If you add new sprites to mod, type in console "gradlew pack" before "gradlew jar". It's need to create outlines and clean sprites from Photoshop artefacts.
 
 # Mod Screenshots
 
