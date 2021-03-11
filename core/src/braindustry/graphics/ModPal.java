@@ -29,6 +29,9 @@ public class ModPal {
     public static final Color energy = Color.valueOf("FFE93D");
     public static final Color energyLight = Color.valueOf("#FFEF75");
 
+    public static final Color stealth = Color.valueOf("5118bc");
+    public static final Color stealthLight = Color.valueOf("8b53fc");
+
     public static final Color crystalizerDecal = Color.valueOf("#C05D5C");
     public static final Color crystalizerDecalLight = Color.valueOf("F6AE7B");
 

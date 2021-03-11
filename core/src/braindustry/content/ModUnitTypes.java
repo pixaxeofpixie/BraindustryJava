@@ -811,7 +811,7 @@ public class ModUnitTypes implements ContentList {
         //TODO: water
         venti = new ModUnitType("venti") {
             {
-                this.localizedName = "Vixy";
+                this.localizedName = "Stenella";
                 this.description = "First naval unit, has powerful shrapnel gun but needs support.";
                 this.constructor = Types.naval;
                 this.health = 270;
@@ -861,8 +861,8 @@ public class ModUnitTypes implements ContentList {
         };
         lyra = new ModUnitType("lyra") {
             {
-                this.localizedName = "Lyra";
-                this.description = "A T2 sea unit with shrapnel lasers and rocketguns, good at attacking opponent's base, but needs support.";
+                this.localizedName = "Marginata";
+                this.description = "T2 sea unit with shrapnel lasers and rocketguns, good at attacking opponent's base, but needs support.";
                 this.constructor = Types.naval;
                 this.health = 750;
                 this.speed = 0.8f;
@@ -940,7 +940,7 @@ public class ModUnitTypes implements ContentList {
         };
         tropsy = new ModUnitType("tropsy") {
             {
-                this.localizedName = "Tropsy";
+                this.localizedName = "Glacialis";
                 this.description = "An enlarged and improved unit created on the basis of Lyra unit.";
                 this.constructor = Types.naval;
                 this.health = 3920;
@@ -1025,8 +1025,8 @@ public class ModUnitTypes implements ContentList {
         };
         cenda = new ModUnitType("cenda") {
             {
-                this.localizedName = "Cenda";
-                this.description = "A large and heavy attacking naval unit built on the proven \"Tropsy\" design, but with improvements in everything.";
+                this.localizedName = "Orca";
+                this.description = "A large and heavy attacking naval unit built on the proven \"Glacialis\" design, but with improvements in everything.";
                 this.constructor = Types.naval;
                 this.health = 9300;
                 this.speed = 0.6f;
@@ -1115,7 +1115,7 @@ public class ModUnitTypes implements ContentList {
             {
                 this.range = 18;
                 this.constructor = Types.naval;
-                this.localizedName = "Vyvna";
+                this.localizedName = "Physala";
                 this.description = "Giant atomic cruiser, produce energy and fires from railguns and rocket launchers.";
                 this.health = 21900;
                 this.speed = 0.6f;
@@ -1696,8 +1696,8 @@ public class ModUnitTypes implements ContentList {
             {
                 this.range = 620;
                 this.constructor = Types.naval;
-                this.localizedName = "Mouriena";
-                this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers.";
+                this.localizedName = "Moray";
+                this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers and rocket launchers.";
                 this.health = 52000;
                 this.speed = 0.6f;
                 this.accel = 0.12f;
@@ -1807,6 +1807,38 @@ public class ModUnitTypes implements ContentList {
                 this.mineTier = 5;
                 stealthDuration = 15f * 60f;
                 stealthCooldown = 10f * 60f;
+                this.weapons.add(
+                        new ModWeapon("litix-grinder") {
+                            {
+                                this.x = 0;
+                                this.y = 0;
+                                this.shootY = -1f;
+                                this.reload = 80;
+                                this.ejectEffect = ModFx.magicShootEffectBig;
+                                this.recoil = 6;
+                                this.shootSound = Sounds.laserblast;
+                                this.rotate = true;
+                                this.rotateSpeed = 0.7f;
+                                this.mirror = false;
+                                this.bullet = new RailBulletType() {
+                                    {
+                                        this.shootEffect = ModFx.litixShoot;
+                                        this.length = 345.0F;
+                                        this.updateEffectSeg = 70.0F;
+                                        this.pierceEffect = this.hitEffect = ModFx.litixHit;
+                                        this.updateEffect = this.trailEffect = ModFx.litixTrail;
+                                        this.smokeEffect = Fx.reactorsmoke;
+                                        this.damage = 1720.0F;
+                                        this.pierceDamageFactor = 1.5F;
+                                        this.despawnEffect = ModFx.litixBomb;
+                                        this.buildingDamageMultiplier = 1.4f;
+                                        this.speed = 1.4f;
+                                        this.hitShake = 5f;
+                                    }
+                                };
+                            }
+                        }
+                );
                 abilities.add(new OrbitalPlatformAbility(4, 3f,
                         new ModWeapon("litix-methane-shooter") {
                             {
@@ -1826,7 +1858,7 @@ public class ModUnitTypes implements ContentList {
                                         damage = 98;
                                         speed = 1.9f;
                                         drag = -0.01f;
-                                        shootEffect = Fx.lightningShoot;
+                                        shootEffect = ModFx.stealthShoot;
                                         lifetime = 95f;
                                         collidesAir = true;
                                     }
@@ -1840,7 +1872,7 @@ public class ModUnitTypes implements ContentList {
                         this.y = 0;
                         this.shootY = -1f;
                         this.reload = 80;
-                        this.ejectEffect = ModFx.magicShootEffectBig;
+                        this.ejectEffect = ModFx.litixShoot;
                         this.recoil = 6;
                         this.shootSound = Sounds.laserblast;
                         this.rotate = true;
@@ -1849,18 +1881,18 @@ public class ModUnitTypes implements ContentList {
                         this.bullet = new RailBulletType() {
                             {
                                 this.shootEffect = ModFx.energyShrapnelShoot;
-                                this.length = 320.0F;
+                                this.length = 210.0F;
                                 this.updateEffectSeg = 60.0F;
-                                this.pierceEffect = this.hitEffect = ModFx.gemLaserHit;
+                                this.pierceEffect = this.hitEffect = ModFx.instHit;
                                 this.updateEffect = this.trailEffect = ModFx.instTrail;
                                 this.hitEffect = Fx.blastExplosion;
                                 this.smokeEffect = Fx.shootBig2;
-                                this.damage = 1690.0F;
-                                this.pierceDamageFactor = 1.1F;
+                                this.damage = 990.0F;
+                                this.pierceDamageFactor = 1.2F;
                                 this.despawnEffect = ModFx.instBomb;
-                                this.buildingDamageMultiplier = 1.0f;
+                                this.buildingDamageMultiplier = 1.2f;
                                 this.speed = 1f;
-                                this.hitShake = 6f;
+                                this.hitShake = 4f;
                             }
                         };
                     }
@@ -1883,7 +1915,7 @@ public class ModUnitTypes implements ContentList {
                                                 damage = 75;
                                                 speed = 2.2f;
                                                 drag = 0.004f;
-                                                shootEffect = ModFx.magicShootEffect;
+                                                shootEffect = ModFx.stealthShoot;
                                                 lifetime = 95f;
                                                 collidesAir = true;
                                             }
@@ -1896,7 +1928,7 @@ public class ModUnitTypes implements ContentList {
                                         this.y = 0;
                                         this.shootY = -1f;
                                         this.reload = 60;
-                                        this.ejectEffect = ModFx.eveExplosion;
+                                        this.ejectEffect = ModFx.litixShoot;
                                         this.recoil = 5;
                                         this.shootSound = Sounds.laserblast;
                                         this.rotate = true;
@@ -1905,18 +1937,17 @@ public class ModUnitTypes implements ContentList {
                                         this.bullet = new RailBulletType() {
                                             {
                                                 this.shootEffect = ModFx.energyShrapnelShoot;
-                                                this.length = 374.0F;
+                                                this.length = 294.0F;
                                                 this.updateEffectSeg = 70.0F;
-                                                this.pierceEffect = this.hitEffect = ModFx.magicBulletHitBig;
-                                                this.updateEffect = this.trailEffect = ModFx.magicBulletTrail;
-                                                this.hitEffect = Fx.railHit;
+                                                this.pierceEffect = this.hitEffect = Fx.instHit;
+                                                this.updateEffect = this.trailEffect = ModFx.shinigamiTrail;
                                                 this.smokeEffect = Fx.shootBigSmoke;
-                                                this.damage = 1020.0F;
-                                                this.pierceDamageFactor = 1.9F;
-                                                this.despawnEffect = ModFx.instBomb;
-                                                this.buildingDamageMultiplier = 2.1f;
+                                                this.damage = 860.0F;
+                                                this.pierceDamageFactor = 1.5F;
+                                                this.despawnEffect = Fx.instBomb;
+                                                this.buildingDamageMultiplier = 1.8f;
                                                 this.speed = 1.5f;
-                                                this.hitShake = 5f;
+                                                this.hitShake = 3f;
                                             }
                                         };
                                     }

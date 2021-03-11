@@ -194,6 +194,69 @@ public class ModFx {
                 }
 
             }),
+            //litix effects
+            litixBomb = new Effect(18.0F, 120.0F, (e) -> {
+                Draw.color(ModPal.stealth);
+                Lines.stroke(e.fout() * 4.0F);
+                Lines.circle(e.x, e.y, 4.0F + e.finpow() * 20.0F);
+
+                int i;
+                for (i = 0; i < 4; ++i) {
+                    Drawf.tri(e.x, e.y, 6.0F, 80.0F * e.fout(), (float) (i * 90 + 45));
+                }
+
+                Draw.color();
+
+                for (i = 0; i < 4; ++i) {
+                    Drawf.tri(e.x, e.y, 3.0F, 30.0F * e.fout(), (float) (i * 90 + 45));
+                }
+
+            }),
+            litixShoot = new Effect(32.0F, (e) -> {
+                e.scaled(12.0F, (b) -> {
+                    Draw.color(Color.white, ModPal.stealth, b.fin());
+                    Lines.stroke(b.fout() * 3.0F + 0.2F);
+                    Lines.circle(b.x, b.y, b.fin() * 50.0F);
+                });
+                Draw.color(ModPal.stealth);
+                int[] var1 = Mathf.signs;
+                int var2 = var1.length;
+
+                for (int var3 = 0; var3 < var2; ++var3) {
+                    int i = var1[var3];
+                    Drawf.tri(e.x, e.y, 13.0F * e.fout(), 85.0F, e.rotation + 90.0F * (float) i);
+                    Drawf.tri(e.x, e.y, 11.0F * e.fout(), 50.0F, e.rotation + 20.0F * (float) i);
+                    Drawf.tri(e.x, e.y, 5.0F * e.fout(), 60.0F, e.rotation + 12.0F * (float) i);
+                }
+
+            }),
+                    litixHit = new Effect(20.0F, 200.0F, (e) -> {
+                        Draw.color(ModPal.stealth);
+
+                        for (int i = 0; i < 2; ++i) {
+                            Draw.color(i == 0 ? ModPal.stealth : ModPal.stealthLight);
+                            float m = i == 0 ? 1.0F : 0.5F;
+
+                            for (int j = 0; j < 5; ++j) {
+                                float rot = e.rotation + Mathf.randomSeedRange((long) (e.id + j), 50.0F);
+                                float w = 23.0F * e.fout() * m;
+                                Drawf.tri(e.x, e.y, w, (80.0F + Mathf.randomSeedRange((long) (e.id + j), 40.0F)) * m, rot);
+                                Drawf.tri(e.x, e.y, w, 20.0F * m, rot + 180.0F);
+                            }
+                        }
+
+                        e.scaled(10.0F, (c) -> {
+                            Draw.color(ModPal.stealthLight);
+                            Lines.stroke(c.fout() * 2.0F + 0.2F);
+                            Lines.circle(e.x, e.y, c.fin() * 30.0F);
+                        });
+                        e.scaled(12.0F, (c) -> {
+                            Draw.color(ModPal.stealthLight);
+                            Angles.randLenVectors((long) e.id, 25, 5.0F + e.fin() * 80.0F, e.rotation, 60.0F, (x, y) -> {
+                                Fill.square(e.x + x, e.y + y, c.fout() * 3.0F, 45.0F);
+                            });
+                        });
+                    }),
             instTrail = new Effect(30.0F, (e) -> {
                 for (int i = 0; i < 2; ++i) {
                     Draw.color(i == 0 ? ModPal.adamBackColor : ModPal.adamFrontColor);
@@ -386,11 +449,17 @@ public class ModFx {
     /////////
     public static final Effect
             foxShoot = new Effect(30, e -> {
-        Draw.color(Pal.lightFlame, Pal.darkFlame, Color.gray, e.fin());
-        Angles.randLenVectors(e.id, 4, 4.0f + e.fin() * 40.0f, e.rotation, 15, (x, y) -> {
-            Fill.circle(e.x + x, e.y + y, 0.4f + e.fout() * 1.4f);
-        });
-    }),
+                    Draw.color(Pal.lightFlame, Pal.darkFlame, Color.gray, e.fin());
+                    Angles.randLenVectors(e.id, 4, 4.0f + e.fin() * 40.0f, e.rotation, 15, (x, y) -> {
+                    Fill.circle(e.x + x, e.y + y, 0.4f + e.fout() * 1.4f);
+                });
+            }),
+            stealthShoot = new Effect(30, e -> {
+                Draw.color(ModPal.stealth, ModPal.stealthLight, Color.white, e.fin());
+                Angles.randLenVectors(e.id, 4, 4.0f + e.fin() * 40.0f, e.rotation, 15, (x, y) -> {
+                    Fill.circle(e.x + x, e.y + y, 0.4f + e.fout() * 1.4f);
+                });
+            }),
             napalmShoot = new Effect(40, e -> {
                 Draw.color(Pal.lightFlame, Pal.darkFlame, Color.gray, e.fin());
                 Angles.randLenVectors(e.id, 2, 2.0f + e.fin() * 80.0f, e.rotation, 15f, (x, y) -> {
@@ -419,6 +488,16 @@ public class ModFx {
                     Drawf.tri(e.x, e.y, w, 10.0F * m, rot + 180.0F);
                 }
 
+            }),
+            litixTrail = new Effect(55.0F, (e) -> {
+                for (int i = 0; i < 2; ++i) {
+                Draw.color(i == 0 ? ModPal.stealth : ModPal.stealthLight);
+                float m = i == 0 ? 1.2F : 0.8F;
+                float rot = e.rotation + 180.0F;
+                float w = 15.0F * e.fout() * m;
+                Drawf.tri(e.x, e.y, w, (40.0F + Mathf.randomSeedRange((long) e.id, 10.0F)) * m, rot);
+                Drawf.tri(e.x, e.y, w, 13.0F * m, rot + 180.0F);
+                }
             });
     public static final Effect magicBulletTrail = new Effect(30, Distance, e -> {
         Draw.color(ModPal.magicLight, ModPal.magic, e.fout());
