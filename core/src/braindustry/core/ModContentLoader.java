@@ -62,8 +62,8 @@ public class ModContentLoader extends ContentLoader {
             new ModUnitTypes(),
             new ModBlocks(),
             new ModTechTree(),
-//            new ModPlanets(),
-//            new ModSectorPresets(),
+            new ModPlanets(),
+            new ModSectorPresets(),
     };
 
     public ModContentLoader(){

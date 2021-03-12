@@ -4,11 +4,12 @@ import arc.graphics.Color;
 import arc.math.Mathf;
 import braindustry.maps.generators.OsorePlanetGenerator;
 import mindustry.content.Planets;
+import mindustry.ctype.ContentList;
 import mindustry.graphics.g3d.HexMesh;
 import mindustry.graphics.g3d.SunMesh;
 import mindustry.type.Planet;
 
-public class PlanetsFromScripts {
+public class ModPlanets implements ContentList {
     public static Planet zetsubo, osore;
 
     public void load() {
