@@ -2,13 +2,11 @@ package braindustry.type;
 
 import ModVars.Interface.InitableAbility;
 import ModVars.Interface.LoadableAbility;
-import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import braindustry.ModListener;
 import braindustry.entities.abilities.ModAbility;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Unit;
-import mindustry.mod.Mod;
 import mindustry.type.UnitType;
 
 import java.util.Objects;
@@ -24,7 +22,7 @@ public class ModUnitType extends UnitType {
 
     @Override
     public void drawBody(Unit unit) {
-        Seq<ModAbility> modAbilities=abilities.map(this::getModAbil).select(Objects::nonNull);
+        Seq<ModAbility> modAbilities= getModAbilities();
         Seq<ModAbility> select = modAbilities.select(ModAbility::drawBody);
         if (select.size==0){
             super.drawBody(unit);
@@ -32,7 +30,7 @@ public class ModUnitType extends UnitType {
             select.each(a->a.drawBody(unit));
         }
     }
-private ModAbility getModAbil(Ability ability){
+public ModAbility toModAbility(Ability ability){
         if (ability instanceof ModAbility)return (ModAbility) ability;
         return null;
 }
@@ -48,12 +46,16 @@ private ModAbility getModAbil(Ability ability){
     @Override
     public void init() {
         super.init();
-        abilities.map(this::getModAbil).select(Objects::nonNull).each(ModAbility::init);
+        getModAbilities().each(ModAbility::init);
+    }
+
+    public Seq<ModAbility> getModAbilities() {
+        return abilities.map(this::toModAbility).select(Objects::nonNull);
     }
 
     @Override
     public void load() {
         super.load();
-        abilities.map(this::getModAbil).select(Objects::nonNull).each(ModAbility::load);
+        getModAbilities().each(ModAbility::load);
     }
 }

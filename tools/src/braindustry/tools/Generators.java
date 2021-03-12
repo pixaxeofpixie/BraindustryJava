@@ -22,6 +22,7 @@ import arc.util.noise.Noise;
 import arc.util.noise.RidgedPerlin;
 import arc.util.noise.VoronoiNoise;
 import braindustry.gen.ModContentRegions;
+import braindustry.type.ModUnitType;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.Team;
 import mindustry.gen.Legsc;
@@ -317,8 +318,13 @@ public class Generators {
                         ModImagePacker.replace(t, outline.get(ModImagePacker.get(t)));
                     }
                 };
-
-                for (Weapon weapon : type.weapons) {
+                Seq<Weapon> abilitiesWeapons=new Seq<>();
+                if (type instanceof ModUnitType){
+                    ((ModUnitType) type).getModAbilities().each(modAbility -> {
+                        abilitiesWeapons.addAll(modAbility.weapons());
+                    });
+                }
+                for (Weapon weapon : type.weapons.copy().addAll(abilitiesWeapons)) {
                     if (outlined.add(weapon.name) && ModImagePacker.has(weapon.name)) {
                         outline.get(ModImagePacker.get(weapon.name)).save(weapon.name + "-outline");
                     }

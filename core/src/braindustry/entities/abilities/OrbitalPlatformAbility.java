@@ -60,6 +60,11 @@ public class OrbitalPlatformAbility extends ModAbility {
     }
 
     @Override
+    public Seq<Weapon> weapons() {
+        return weapons.copy();
+    }
+
+    @Override
     public void update(Unit unit) {
         getContainer(unit).update();
     }
