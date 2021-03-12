@@ -120,7 +120,7 @@ class ModUnitsBlocks implements ContentList {
         ultraReconstructor = new Reconstructor("ultra-reconstructor") {
             {
                 this.localizedName = "Ultra Reconstructor";
-                this.description = "Giant reconstructor for production of collosal TX Units, consumes Liquid Methane and engame rare resources";
+                this.description = "Giant reconstructor for production of collosal TX Units, consumes Liquid Methane and endgame rare resources";
                 this.size = 11;
                 this.consumes.power(96f);
                 this.consumes.liquid(ModLiquids.liquidMethane, 1.2f).optional(false, false);
@@ -129,7 +129,8 @@ class ModUnitsBlocks implements ContentList {
                 this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, ModItems.chloroAlloy, 400, ModItems.odinum, 700, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.aquila, ModUnitTypes.griffon},
-                        new UnitType[]{ModUnitTypes.vyvna, ModUnitTypes.moureno}
+                        new UnitType[]{ModUnitTypes.vyvna, ModUnitTypes.moureno},
+                        new UnitType[]{ModUnitTypes.maverix, ModUnitTypes.litix}
                 );
             }
         };

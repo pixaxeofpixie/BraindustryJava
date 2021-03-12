@@ -320,6 +320,10 @@ class ModProduction implements ContentList {
                 this.description = "Extract Methane from Oil";
                 this.health = 140;
                 this.size = 2;
+                this.hasPower = true;
+                this.hasLiquids = true;
+                this.hasGas = true;
+                this.hasItems = true;
                 this.consumes.power(3f);
                 this.consumes.liquid(Liquids.oil, 0.3f);
                 this.outputGas = new GasStack(Gasses.methane, 1);
@@ -358,7 +362,7 @@ class ModProduction implements ContentList {
                 this.gasCapacity = 15;
                 this.size = 2;
                 this.hasPower = true;
-                this.hasLiquids = false;
+                this.hasLiquids = true;
                 this.hasGas = true;
                 this.hasItems = true;
                 this.craftTime = 100;
