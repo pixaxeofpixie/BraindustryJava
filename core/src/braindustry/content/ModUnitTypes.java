@@ -1808,7 +1808,7 @@ public class ModUnitTypes implements ContentList {
                 stealthDuration = 15f * 60f;
                 stealthCooldown = 10f * 60f;
                 this.weapons.add(
-                        new ModWeapon("litix-grinder") {
+                        new ModWeapon("litix-striker") {
                             {
                                 this.x = 0;
                                 this.y = 0;
@@ -1853,7 +1853,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet = new LiquidBulletType(ModLiquids.magma) {
+                                this.bullet = new LiquidBulletType(ModLiquids.liquidMethane) {
                                     {
                                         damage = 98;
                                         speed = 1.9f;
@@ -1872,7 +1872,7 @@ public class ModUnitTypes implements ContentList {
                         this.y = 0;
                         this.shootY = -1f;
                         this.reload = 80;
-                        this.ejectEffect = ModFx.litixShoot;
+                        this.ejectEffect = ModFx.instShoot;
                         this.recoil = 6;
                         this.shootSound = Sounds.laserblast;
                         this.rotate = true;
@@ -1928,7 +1928,7 @@ public class ModUnitTypes implements ContentList {
                                         this.y = 0;
                                         this.shootY = -1f;
                                         this.reload = 60;
-                                        this.ejectEffect = ModFx.litixShoot;
+                                        this.ejectEffect = Fx.instShoot;
                                         this.recoil = 5;
                                         this.shootSound = Sounds.laserblast;
                                         this.rotate = true;
@@ -1972,7 +1972,7 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("maverix-weapon") {
                             {
-                                this.x = 22;
+                                this.x = 34;
                                 this.y = 0;
                                 this.shootY = 5f;
                                 this.reload = 50;
@@ -1980,10 +1980,10 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 3f;
                                 this.shots = 7;
                                 this.inaccuracy = 16.0f;
-                                this.rotate = false;
+                                this.rotate = true;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
-                                this.bullet = new LiquidBulletType(ModLiquids.magma) {
+                                this.bullet = new LiquidBulletType(ModLiquids.liquidMethane) {
                                     {
                                         damage = 98;
                                         speed = 1.9f;

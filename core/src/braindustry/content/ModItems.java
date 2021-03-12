@@ -68,7 +68,7 @@ public class ModItems implements ContentList {
                 this.explosiveness = 0;
                 this.radioactivity = 0;
                 this.cost = 1.5f;
-                this.color = Color.valueOf("FF4F00");
+                this.color = Color.valueOf("DEC74D");
             }
         };
 

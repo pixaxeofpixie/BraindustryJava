@@ -28,7 +28,7 @@ public class ModLiquids implements ContentList {
                 this.flammability = 0;
                 this.explosiveness = 0;
                 this.viscosity = 0.7f;
-                this.color = Color.valueOf("c9523a");
+                this.color = Color.valueOf("FF2F33");
             }
         };
 
