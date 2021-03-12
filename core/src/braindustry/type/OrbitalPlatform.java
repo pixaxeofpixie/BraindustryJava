@@ -19,7 +19,7 @@ import mindustry.type.Weapon;
 public class OrbitalPlatform implements Position {
    public float rotation=0f;
    public float orbitRotation=0f;
-   public final long id;
+   public  long id;
    public final OrbitalPlatformAbility ability;
    public WeaponMount mount=null;
    public static int sequenceNum = 0;
@@ -29,7 +29,7 @@ public float x,y;
    public OrbitalPlatform(OrbitalPlatformAbility ability, Unit unit, Weapon weapon) {
       this.ability = ability;
       this.unit = unit;
-      id=EntityGroup.nextId();
+//      id=EntityGroup.nextId();
 //      setupWeapon(ability);
 
       if (weapon!=null) {
@@ -88,6 +88,11 @@ public float x,y;
 
       float xr = Mathf.range(weapon.xRand);
       return weapon.bullet.create(unit, unit.team(), x + Angles.trnsx(angle, 0, xr), y + Angles.trnsy(angle, 0, xr), angle, (1.0F - weapon.velocityRnd) + Mathf.random(weapon.velocityRnd), lifescl);
+   }
+
+   public OrbitalPlatform id(long id) {
+      this.id = id;
+      return this;
    }
 
    @Override

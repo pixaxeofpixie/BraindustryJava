@@ -35,7 +35,7 @@ public class OrbitalPlatformsContainer extends UnitContainer {
         super(unit);
         this.ability = ability;
         for (int i = 0; i < ability.platformsCount(); i++) {
-            orbitalPlatforms.add(new OrbitalPlatform(ability, unit, ability.weapons.get(i)));
+            orbitalPlatforms.add(new OrbitalPlatform(ability, unit, ability.weapons.get(i)).id(i));
         }
     }
 
@@ -60,8 +60,7 @@ public class OrbitalPlatformsContainer extends UnitContainer {
         int platformsCount = orbitalPlatforms.size;
         float oneAngle = 360f / (float) platformsCount;
         float hitSize = unit.hitSize;
-        for (int i = 0; i < platformsCount; i++) {
-            OrbitalPlatform platform = orbitalPlatforms.get(i);
+        for (OrbitalPlatform platform : orbitalPlatforms) {
 
             Vec2 platformPos = Tmp.v1.set(unit).add(Tmp.v2.trns(platform.orbitRotation, hitSize, hitSize));
             float platformRot = Tmp.v2.set(unit).angleTo(platformPos);
@@ -189,7 +188,7 @@ public class OrbitalPlatformsContainer extends UnitContainer {
 protected void rotateTo(OrbitalPlatform platform,float angel){
     float v =  ((ability.rotateSpeed() % 360f) / 180f);
     
-    float speed =Math.abs(platform.orbitRotation %360f - angel %360f) * v;
+    float speed =Math.abs(platform.orbitRotation %360f - angel %360f) * 0.01f;
     speed=Math.min(ability.rotateSpeed(),speed);
 //            float perfectAngle=
 
@@ -202,14 +201,13 @@ protected void rotateTo(OrbitalPlatform platform,float angel){
         float platformHitsize=16f;
         Vec2 target=new Vec2(unit.aimX(),unit.aimY());
         float onePlatformAngle= ModMath.atan(platformHitsize/unit.hitSize());
-        for (int i = 0; i < orbitalPlatforms.size; i++) {
-            OrbitalPlatform platform = orbitalPlatforms.get(i);
+        for (OrbitalPlatform platform : orbitalPlatforms) {
             updateWeapon(platform);
             if (!unit.isShooting()){
-                rotateTo(platform,unitRotation+oneAngle * (i));
+                rotateTo(platform,unitRotation+oneAngle * (platform.id));
             } else {
                 float v = unit.angleTo(target)-90f;
-                rotateTo(platform, v+((i+platformCount/2f)%platformCount)*onePlatformAngle);
+                rotateTo(platform, v+((platform.id+platformCount/2f)%platformCount)*onePlatformAngle);
 
             }
         }

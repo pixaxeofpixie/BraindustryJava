@@ -62,7 +62,7 @@ public class GasGenericCrafter extends GasBlock {
         }
 
         if (outputGas != null) {
-            aStats.add(Stat.output, outputGas.gas, outputLiquid.amount * (60f / craftTime), true);
+            aStats.add(Stat.output, outputGas.gas, outputGas.amount * (60f / craftTime), true);
         }
     }
 
