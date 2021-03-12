@@ -18,6 +18,7 @@ import mindustry.content.Liquids;
 import mindustry.ctype.UnlockableContent;
 import mindustry.gen.Building;
 import mindustry.graphics.Pal;
+import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.Liquid;
 import mindustry.ui.Bar;
@@ -26,9 +27,12 @@ import mindustry.world.consumers.ConsumeItems;
 import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.consumers.ConsumePower;
 import mindustry.world.consumers.ConsumeType;
+import mindustry.world.meta.BlockGroup;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 import mindustry.world.meta.values.ItemListValue;
+
+import static mindustry.Vars.tilesize;
 
 public class GasBlock extends Block {
     public final GasConsumers consumes = new GasConsumers();
@@ -76,8 +80,50 @@ public class GasBlock extends Block {
 
     @Override
     public void init() {
-        super.init();
-        this.consumes.init();
+        for (ConsumeType value : ConsumeType.values()) {
+            if (consumes.has(value)) {
+                super.consumes.add(consumes.get(value));
+            }
+        }
+        if(health == -1){
+            health = size * size * 40;
+        }
+
+        if(group == BlockGroup.transportation || consumes.has(ConsumeType.item) || category == Category.distribution){
+            acceptsItems = true;
+        }
+
+        offset = ((size + 1) % 2) * tilesize / 2f;
+
+        buildCost = 0f;
+        for(ItemStack stack : requirements){
+            buildCost += stack.amount * stack.item.cost;
+        }
+        buildCost *= buildCostMultiplier;
+
+        if(consumes.has(ConsumeType.power)) hasPower = true;
+        if(consumes.has(ConsumeType.item)) hasItems = true;
+        if(consumes.has(ConsumeType.liquid)) hasLiquids = true;
+        if(consumes.hasGas()) hasGas = true;
+
+        setBars();
+
+        stats.useCategories = true;
+
+        consumes.init();
+        super.consumes.init();
+
+        if(!logicConfigurable){
+            configurations.each((key, val) -> {
+                if(UnlockableContent.class.isAssignableFrom(key)){
+                    logicConfigurable = true;
+                }
+            });
+        }
+
+        if(!outputsPower && consumes.hasPower() && consumes.getPower().buffered){
+            throw new IllegalArgumentException("Consumer using buffered power: " + name);
+        }
     }
 
     public void setStats() {

@@ -60,11 +60,11 @@ public class GasConsumeModule extends ConsumeModule {
 
 
     public boolean valid() {
-        return this.valid && this.entity.shouldConsume() && this.entity.enabled;
+        return valid && entity.shouldConsume() && entity.enabled;
     }
 
     public boolean optionalValid() {
-        return this.valid() && this.optionalValid && this.entity.enabled;
+        return valid() && optionalValid && entity.enabled;
     }
 
     @Override
