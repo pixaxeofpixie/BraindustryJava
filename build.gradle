@@ -70,7 +70,7 @@ dependencies {
 allprojects {
     tasks.withType(JavaCompile) {
         if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
-            options.compilerArgs.addAll(['--release', '14'])
+            options.compilerArgs.addAll(['--release', '8'])
         }
     }
     apply plugin: 'maven'
@@ -114,7 +114,7 @@ configure(subprojects - project(":annotations")) {
         options {
             addStringOption('Xdoclint:none', '-quiet')
             addBooleanOption('-enable-preview', true)
-            addStringOption('-release', '14')
+            addStringOption('-release', '8')
             addStringOption('-source','14')
         }
     }
@@ -167,7 +167,6 @@ configure (project(":core")){
         options {
 //            addStringOption('Xdoclint:none', '-quiet')
             addStringOption('-release', '8')
-            addStringOption('-source','14')
         }
     }
 }
