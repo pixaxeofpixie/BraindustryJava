@@ -3,7 +3,9 @@ package braindustry.entities.ContainersForUnits;
 import ModVars.math.ModAngles;
 import ModVars.math.ModMath;
 import arc.graphics.Blending;
+import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Fill;
 import arc.math.Angles;
 import arc.math.Mathf;
 import arc.math.geom.Vec2;
@@ -16,10 +18,12 @@ import braindustry.type.UnitContainer;
 import mindustry.audio.SoundLoop;
 import mindustry.entities.units.WeaponMount;
 import mindustry.gen.Sounds;
+import mindustry.gen.Trailc;
 import mindustry.gen.Unit;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
+import mindustry.graphics.Trail;
 import mindustry.type.Weapon;
 
 import static mindustry.Vars.*;
@@ -53,6 +57,36 @@ public class OrbitalPlatformsContainer extends UnitContainer {
         }
     }
 
+    public void drawEngines(OrbitalPlatform platform){
+
+        float scale = 0.5f;
+//        float offset = ability.engineOffset/2f + ability.engineOffset/2f*scale;
+
+        float engineSize = ability.engineSize;
+        Seq<Vec2> enginePosses = ability.enginePosses;
+        enginePosses.each(enginePos->{
+
+            int index = enginePosses.indexOf(enginePos);
+            float rotation = platform.rotation/*+ 360f/ enginePosses.size*index*/;
+
+            Draw.color(unit.team.color);
+            Vec2 engineOffset=enginePos.cpy().rotate(rotation);
+            Fill.circle(
+                    platform.x + engineOffset.x,
+                    platform.y + engineOffset.y,
+                    (engineSize + Mathf.absin(Time.time, 2f, engineSize / 4f)) * scale
+            );
+            Draw.color(Color.white);
+            Vec2 one=new Vec2(Angles.trnsx(enginePos.angle(),  1f),Angles.trnsy(enginePos.angle(), 1f));
+            engineOffset.sub(one);
+            Fill.circle(
+                    platform.x  + engineOffset.x,
+                    platform.y  + engineOffset.y,
+                    (engineSize + Mathf.absin(Time.time, 2f, engineSize / 4f)) / 2f  * scale
+            );
+            Draw.color();
+        });
+    }
     @Override
     public void draw() {
         float unitZ = unit.elevation > 0.5f ? (unit.type.lowAltitude ? Layer.flyingUnitLow : Layer.flyingUnit) : unit.type.groundLayer + Mathf.clamp(unit.type.hitSize / 4000f, 0, 0.01f);
@@ -67,6 +101,8 @@ public class OrbitalPlatformsContainer extends UnitContainer {
             platformRot = 0f;
             platform.set(platformPos);
             Draw.z(z);
+            drawEngines(platform);
+            Draw.rect(ability.outlineRegion(), platformPos.x, platformPos.y, platformRot - 90);
             Draw.rect(ability.region(), platformPos.x, platformPos.y, platformRot - 90);
             drawWeapon(platform);
             Draw.z(Math.min(Layer.darkness, z - 1f));

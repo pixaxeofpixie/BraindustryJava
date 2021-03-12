@@ -319,10 +319,16 @@ public class Generators {
                     }
                 };
                 Seq<Weapon> abilitiesWeapons=new Seq<>();
+                Seq<TextureRegion> outlineRegions=new Seq<>();
                 if (type instanceof ModUnitType){
                     ((ModUnitType) type).getModAbilities().each(modAbility -> {
                         abilitiesWeapons.addAll(modAbility.weapons());
+                        outlineRegions.addAll(modAbility.outlineRegions());
                     });
+                }
+                for (TextureRegion outlineRegion : outlineRegions) {
+                    if (!outlineRegion.found())continue;
+                    outline.get(ModImagePacker.get(outlineRegion)).save(outlineRegion.asAtlas().name + "-outline");
                 }
                 for (Weapon weapon : type.weapons.copy().addAll(abilitiesWeapons)) {
                     if (outlined.add(weapon.name) && ModImagePacker.has(weapon.name)) {

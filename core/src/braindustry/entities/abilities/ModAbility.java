@@ -2,6 +2,7 @@ package braindustry.entities.abilities;
 
 import ModVars.Interface.InitableAbility;
 import ModVars.Interface.LoadableAbility;
+import arc.graphics.g2d.TextureRegion;
 import arc.struct.Seq;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Unit;
@@ -27,6 +28,10 @@ public abstract class ModAbility extends Ability implements LoadableAbility, Ini
     }
 
     public Seq<Weapon> weapons() {
+        return new Seq<>();
+    }
+
+    public Seq<? extends TextureRegion> outlineRegions() {
         return new Seq<>();
     }
 }
