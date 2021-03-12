@@ -7,17 +7,23 @@ import Gas.world.draw.GasDrawBlock;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.struct.EnumSet;
+import arc.util.Log;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.content.Fx;
 import mindustry.entities.Effect;
+import mindustry.gen.Building;
 import mindustry.gen.Sounds;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
+import mindustry.type.Liquid;
 import mindustry.type.LiquidStack;
 import mindustry.world.meta.BlockFlag;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
+
+import static mindustry.Vars.net;
+import static mindustry.Vars.state;
 
 public class GasGenericCrafter extends GasBlock {
     public ItemStack outputItem;
@@ -99,10 +105,25 @@ public class GasGenericCrafter extends GasBlock {
             if (outputItem != null && items.get(outputItem.item) >= itemCapacity) {
                 return false;
             }
-
-            return (outputLiquid == null || !(liquids.get(outputLiquid.liquid) >= liquidCapacity - 0.001f)) && enabled;
+            boolean gasBool = outputGas != null && gasses != null && gasses.get(outputGas.gas) >= gasCapacity - 0.001f;
+            boolean liquidBool = outputLiquid == null || !(liquids!=null && liquids.get(outputLiquid.liquid) >= liquidCapacity - 0.001f);
+            return (liquidBool || gasBool) && enabled;
         }
-
+        public void dumpLiquid(Liquid liquid, float scaling) {
+            int dump = this.cdump;
+            if (liquids.get(liquid) <= 1.0E-4F) return;
+            if (!net.client() && state.isCampaign() && team == state.rules.defaultTeam) liquid.unlock();
+            for (int i = 0; i < proximity.size; i++) {
+                incrementDump(proximity.size);
+                Building other = proximity.get((i + dump) % proximity.size);
+                other = other.getLiquidDestination(this, liquid);
+                if (other != null && other.team == team && other.block.hasLiquids && canDumpLiquid(other, liquid) && other.liquids != null) {
+                    float ofract = other.liquids.get(liquid) / other.block.liquidCapacity;
+                    float fract = liquids.get(liquid) / block.liquidCapacity;
+                    if (ofract < fract) transferLiquid(other, (fract - ofract) * block.liquidCapacity / scaling, liquid);
+                }
+            }
+        }
         @Override
         public void updateTile(){
             if (consValid()) {
@@ -142,11 +163,11 @@ public class GasGenericCrafter extends GasBlock {
                 dump(outputItem.item);
             }
 
-            if (outputLiquid != null) {
+            if (outputLiquid != null && outputLiquid.liquid!=null && hasLiquids) {
                 dumpLiquid(outputLiquid.liquid);
             }
 
-            if (outputLiquid != null) {
+            if (outputGas != null && outputGas.gas!=null && hasGas) {
                 dumpGas(outputGas.gas);
             }
         }

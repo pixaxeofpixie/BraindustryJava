@@ -7,10 +7,14 @@ import Gas.world.modules.GasConsumeModule;
 import Gas.world.modules.GasModule;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Fill;
 import arc.math.Mathf;
+import arc.scene.ui.layout.Table;
+import arc.util.Interval;
 import arc.util.Time;
 import braindustry.content.ModFx;
 import mindustry.Vars;
+import mindustry.audio.SoundLoop;
 import mindustry.content.Fx;
 import mindustry.core.World;
 import mindustry.ctype.Content;
@@ -19,16 +23,28 @@ import mindustry.entities.Effect;
 import mindustry.entities.Puddles;
 import mindustry.game.Team;
 import mindustry.gen.Building;
+import mindustry.gen.Sounds;
 import mindustry.graphics.Drawf;
+import mindustry.graphics.Layer;
+import mindustry.graphics.Pal;
 import mindustry.logic.LAccess;
 import mindustry.type.Item;
 import mindustry.type.Liquid;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.ControlBlock;
+import mindustry.world.blocks.power.PowerGraph;
+import mindustry.world.consumers.Consume;
 import mindustry.world.consumers.ConsumeType;
+import mindustry.world.modules.ConsumeModule;
+import mindustry.world.modules.ItemModule;
+import mindustry.world.modules.LiquidModule;
+import mindustry.world.modules.PowerModule;
 
 import java.util.Iterator;
+
+import static mindustry.Vars.emptyTile;
+import static mindustry.Vars.tilesize;
 
 public class GasBuilding extends Building {
     public GasModule gasses;
@@ -211,7 +227,19 @@ public class GasBuilding extends Building {
             return power != null && block.consumes.has(ConsumeType.power) && !block.consumes.getPower().buffered ? power.status : 1.0F;
         }
     }
-
+    public void drawStatus() {
+        if (block.enableDrawStatus && block.consumes.any()) {
+            float multiplier = block.size > 1 ? 1 : 0.64F;
+            float brcx = x + (block.size * tilesize / 2.0F) - (tilesize * multiplier / 2.0F);
+            float brcy = y - (block.size * tilesize / 2.0F) + (tilesize * multiplier / 2.0F);
+            Draw.z(Layer.power + 1);
+            Draw.color(Pal.gray);
+            Fill.square(brcx, brcy, 2.5F * multiplier, 45);
+            Draw.color(status().color);
+            Fill.square(brcx, brcy, 1.5F * multiplier, 45);
+            Draw.color();
+        }
+    }
     public GasModule gasses() {
         return gasses;
     }
@@ -239,18 +267,52 @@ public class GasBuilding extends Building {
     }
 
     @Override
+    public void displayConsumption(Table table) {
+        table.left();
+        for (Consume cons : block.consumes.all()) {
+            if (cons.isOptional() && cons.isBoost()) continue;
+            cons.build(this, table);
+        }
+    }
+
+    @Override
+    public void displayBars(Table table) {
+        super.displayBars(table);
+    }
+
+    @Override
     public GasBlock block(){
         return block;
     }
+
     @Override
     public GasBuilding create(Block block, Team team) {
-        GasBuilding out = (GasBuilding) super.create(block, team);
-        this.block = (GasBlock)super.block();
-        if (block().hasGas) {
+        return create((GasBlock)block,team);
+    }
+
+    public GasBuilding create(GasBlock block, Team team) {
+        this.tile = emptyTile;
+        super.block=block;
+        this.block = block;
+        this.team = team;
+        if (block.loopSound != Sounds.none) {
+            sound = new SoundLoop(block.loopSound, block.loopSoundVolume);
+        }
+        health = block.health;
+        maxHealth(block.health);
+        timer(new Interval(block.timers));
+        cons = new GasConsumeModule(this);
+        if (block.hasItems) items = new ItemModule();
+        if (block.hasLiquids) liquids = new LiquidModule();
+        if (block.hasPower) {
+            power = new PowerModule();
+            power.graph.add(this);
+        }
+        if (block.hasGas) {
             gasses = new GasModule();
         }
-        cons = new GasConsumeModule(out);
-        return out;
+        initialized = true;
+        return this;
     }
 
     public void dumpGas(Gas gas) {
