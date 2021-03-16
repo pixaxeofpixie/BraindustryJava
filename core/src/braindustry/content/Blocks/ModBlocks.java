@@ -33,7 +33,7 @@ public class ModBlocks implements ContentList {
     //environment
     magmaFloor, obsidianBlock, obsidianFloor, oreChromium, oreOdinum,
             crimzesWall, crimzesFloor, jungleWall, jungleFloor, graysand, dirtRocksWall, liquidMethaneFloor, blackIce,
-            blackIceWall, blackSnow, blackSnowWall, blackTree, darkPine, darkShrubs, greenTree, metallicPine, swampWater, swampSandWater,
+            blackIceWall, blackSnow, blackSnowWall, blackTree, darkPine, darkShrubs, greenTree, metallicPine, swampWater, swampSandWater, darkShrubsFloor,
 
     //power
     differentialMagmaGenerator, grapheniteSolarCollectorLarge, magmaGenerator, odinumReactor, blackHoleReactor, phaseAlloySolarPanel,
