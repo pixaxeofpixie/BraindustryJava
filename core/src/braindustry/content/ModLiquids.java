@@ -23,7 +23,7 @@ public class ModLiquids implements ContentList {
             {
                 this.localizedName = "Magma";
                 this.description = "Very hot slurry. Can be used in Magma Generator.";
-                this.temperature = 100f;
+                this.temperature = 9f;
                 this.heatCapacity = 0;
                 this.flammability = 0;
                 this.explosiveness = 0;
