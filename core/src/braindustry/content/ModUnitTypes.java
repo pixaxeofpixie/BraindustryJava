@@ -591,9 +591,6 @@ public class ModUnitTypes implements ContentList {
                                     }};
                                     }
                                 });
-                            }
-                        };
-                );
             }
         };
         chainmail = new ModUnitType("chainmail") {
