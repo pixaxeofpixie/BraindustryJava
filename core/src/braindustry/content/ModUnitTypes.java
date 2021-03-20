@@ -473,6 +473,7 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = false;
                                 this.bullet = new BasicBulletType(){{
                                     this.damage = 40;
+                                    this.speed = 1f;
                                     this.width = 5f;
                                     this.height = 10f;
                                     this.lifetime = 25f;
@@ -517,7 +518,8 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 25;
+                                        this.damage = 40;
+                                        this.speed = 1.2f;
                                         this.pierce = true;
                                         this.pierceCap = 2;
                                         this.width = 14f;
@@ -579,15 +581,18 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.mirror = false;
                                  this.bullet = new BasicBulletType(){{
-                                    this.damage = 40;
+                                    this.damage = 60;
+                                    this.speed = 1.4f;
+                                    this.pierce = true;
+                                    this.pierceCap = 3;
                                     this.width = 5f;
                                     this.height = 10f;
                                     this.lifetime = 25f;
                                     this.shootEffect = Fx.shootBig;
-                                    this.lightning = 2;
+                                    this.lightning = 4;
                                     this.lightningLength = 6;
                                     this.lightningColor = Pal.surge;
-                                    this.lightningDamage = 6;
+                                    this.lightningDamage = 12;
                                     }};
                                     }
                                 });
@@ -651,7 +656,7 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 14;
                                 this.reload = 120;
                                 this.recoil = 4;
-                                this.shotDelay = 4;
+                                this.shotDelay = 8;
                                 this.shootSound = Sounds.sap;
                                 this.shots = 7;
                                 this.inaccuracy = 6.5f;
@@ -661,9 +666,14 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.rotateSpeed = 1f;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 45;
+                                        this.damage = 90;
+                                        this.speed = 1.4;
                                         this.pierce = true;
-                                        this.pierceCap = 2;
+                                        this.pierceCap = 6;
+                                        this.lightning = 6;
+                                        this.lightningLength = 6;
+                                        this.lightningColor = Pal.surge;
+                                        this.lightningDamage = 18;
                                         this.width = 14f;
                                         this.height = 33f;
                                         this.lifetime = 40f;
@@ -909,7 +919,7 @@ public class ModUnitTypes implements ContentList {
                                         this.width = 10;
                                         this.height = 20;
                                         this.shrinkY = 0.1f;
-                                        this.drag = -0.1f;
+                                        this.drag = 0.1f;
                                         this.splashDamageRadius = 20;
                                         this.splashDamage = 45;
                                         this.lifetime = 45;
