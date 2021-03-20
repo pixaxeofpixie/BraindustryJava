@@ -473,10 +473,10 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = false;
                                 this.bullet = new BasicBulletType(){{
                                     this.damage = 40;
-                                    this.speed = 2.3f;
+                                    this.speed = 4.3f;
                                     this.width = 5f;
                                     this.height = 10f;
-                                    this.lifetime = 45f;
+                                    this.lifetime = 125f;
                                     this.shootEffect = Fx.shootBig;
                                     this.lightning = 2;
                                     this.lightningLength = 6;
@@ -519,12 +519,12 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
                                         this.damage = 40;
-                                        this.speed = 2.4f;
+                                        this.speed = 3.4f;
                                         this.pierce = true;
                                         this.pierceCap = 2;
                                         this.width = 14f;
                                         this.height = 33f;
-                                        this.lifetime = 55f;
+                                        this.lifetime = 165f;
                                         this.shootEffect = Fx.shootBig;
                                     }
                                 };
@@ -587,7 +587,7 @@ public class ModUnitTypes implements ContentList {
                                     this.pierceCap = 3;
                                     this.width = 5f;
                                     this.height = 10f;
-                                    this.lifetime = 65f;
+                                    this.lifetime = 205f;
                                     this.shootEffect = Fx.shootBig;
                                     this.lightning = 4;
                                     this.lightningLength = 6;
@@ -667,16 +667,16 @@ public class ModUnitTypes implements ContentList {
                                 this.rotateSpeed = 1f;
                                 this.bullet = new BasicBulletType(){{
                                         this.damage = 90;
-                                        this.speed = 2.8f;
+                                        this.speed = 3.8f;
                                         this.pierce = true;
                                         this.pierceCap = 6;
                                         this.lightning = 6;
-                                        this.lightningLength = 6;
+                                        this.lightningLength = 4;
                                         this.lightningColor = Pal.surge;
                                         this.lightningDamage = 18;
                                         this.width = 14f;
                                         this.height = 33f;
-                                        this.lifetime = 80f;
+                                        this.lifetime = 230f;
                                         this.shootEffect = Fx.shootBig;
                                     }
                                 };
