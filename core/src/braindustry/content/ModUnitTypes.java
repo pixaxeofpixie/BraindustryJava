@@ -758,7 +758,6 @@ public class ModUnitTypes implements ContentList {
                                         statusDuration = 60f * 7;
                                     }};
                                 }};
-                                    }
                                 };
                             }
                         },
@@ -776,7 +775,7 @@ public class ModUnitTypes implements ContentList {
                                 this.alternate = true;
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 30;
+                                        this.damage = 70;
                                         this.speed = 13.4f;
                                         this.pierce = true;
                                         this.pierceCap = 16;
