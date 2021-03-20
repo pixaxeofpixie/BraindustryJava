@@ -592,7 +592,7 @@ public class ModUnitTypes implements ContentList {
                                     }
                                 });
                             }
-                        }
+                        };
                 );
             }
         };
