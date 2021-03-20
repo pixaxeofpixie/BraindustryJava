@@ -590,7 +590,7 @@ public class ModUnitTypes implements ContentList {
                                     this.lightningDamage = 6;
                                     }};
                                     }
-                                };
+                                });
                             }
                         }
                 );
