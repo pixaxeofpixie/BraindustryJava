@@ -476,7 +476,7 @@ public class ModUnitTypes implements ContentList {
                                     this.speed = 14.3f;
                                     this.width = 9f;
                                     this.height = 18f;
-                                    this.lifetime = 125f;
+                                    this.lifetime = 15f;
                                     this.shootEffect = Fx.shootBig;
                                     this.lightning = 2;
                                     this.lightningLength = 6;
@@ -518,13 +518,13 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 40;
+                                        this.damage = 60;
                                         this.speed = 13.4f;
                                         this.pierce = true;
                                         this.pierceCap = 2;
                                         this.width = 14f;
                                         this.height = 33f;
-                                        this.lifetime = 165f;
+                                        this.lifetime = 25f;
                                         this.shootEffect = Fx.shootBig;
                                     }
                                 };
@@ -587,12 +587,12 @@ public class ModUnitTypes implements ContentList {
                                     this.pierceCap = 3;
                                     this.width = 10f;
                                     this.height = 17f;
-                                    this.lifetime = 205f;
+                                    this.lifetime = 55f;
                                     this.shootEffect = Fx.shootBig;
                                     this.lightning = 4;
                                     this.lightningLength = 6;
                                     this.lightningColor = Pal.surge;
-                                    this.lightningDamage = 12;
+                                    this.lightningDamage = 8;
                                     }};
                                     }
                                 });
@@ -656,7 +656,7 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 14;
                                 this.reload = 120;
                                 this.recoil = 4;
-                                this.shotDelay = 8;
+                                this.shotDelay = 9;
                                 this.shootSound = Sounds.sap;
                                 this.shots = 7;
                                 this.inaccuracy = 6.5f;
@@ -670,13 +670,13 @@ public class ModUnitTypes implements ContentList {
                                         this.speed = 13.8f;
                                         this.pierce = true;
                                         this.pierceCap = 6;
-                                        this.lightning = 6;
+                                        this.lightning = 3;
                                         this.lightningLength = 4;
                                         this.lightningColor = Pal.surge;
-                                        this.lightningDamage = 18;
+                                        this.lightningDamage = 11;
                                         this.width = 14f;
                                         this.height = 33f;
-                                        this.lifetime = 230f;
+                                        this.lifetime = 60f;
                                         this.shootEffect = Fx.shootBig;
                                     }
                                 };
@@ -745,58 +745,27 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("broadsword-weapon") {
                             {
-                                this.y = -4f;
-                                this.x = 29;
-                                this.reload = 165;
-                                this.shotDelay = 3;
-                                this.recoil = 3;
-                                this.shootSound = Sounds.laserblast;
-                                this.shots = 4;
-                                this.inaccuracy = 5;
-                                this.velocityRnd = 0.1f;
-                                this.alternate = true;
-                                this.mirror = true;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.5f;
-                                        this.length = 140;
-                                        this.damage = 90;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.6f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("broadsword-weapon") {
-                            {
                                 this.y = -1f;
                                 this.x = 25;
-                                this.reload = 165;
+                                this.reload = 80;
                                 this.shotDelay = 5;
                                 this.recoil = 3;
+                                this.rotate = true;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 8;
-                                this.inaccuracy = 5;
+                                this.shots = 48;
+                                this.inaccuracy = 8;
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
                                 this.mirror = true;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.4f;
-                                        this.length = 160;
-                                        this.damage = 60;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.6f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
+                                this.bullet = new BasicBulletType(){{
+                                        this.damage = 50;
+                                        this.speed = 13.4f;
+                                        this.pierce = true;
+                                        this.pierceCap = 8;
+                                        this.width = 14f;
+                                        this.height = 33f;
+                                        this.lifetime = 25f;
+                                        this.shootEffect = Fx.shootBig;
                                     }
                                 };
                             }
