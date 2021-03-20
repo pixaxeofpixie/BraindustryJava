@@ -708,7 +708,7 @@ public class ModUnitTypes implements ContentList {
                 this.range = 140;
                 abilities.add(new RepairFieldAbility(7f, 60f * 4, 50f), new ForceFieldAbility(150f, 4f, 3000f, 60f * 7));
                 this.weapons.add(
-                        new ModWeapon("bomb-weapon") {
+                         new ModWeapon("bomb-weapon") {
                             {
                                 this.x = 12;
                                 this.y = -30f;
@@ -717,47 +717,29 @@ public class ModUnitTypes implements ContentList {
                                 this.minShootVelocity = 0.02f;
                                 this.soundPitchMin = 1;
                                 this.shootSound = Sounds.plasmadrop;
-                                this.bullet = new ArtilleryBulletType(3.5f, 90) {{
-                                    hitEffect = Fx.massiveExplosion;
-                                    knockback = 0.9f;
-                                    lifetime = 0f;
-                                    width = height = 25f;
-                                    collidesTiles = collides = true;
-                                    ammoMultiplier = 4f;
-                                    splashDamageRadius = 115f;
-                                    splashDamage = 440f;
-                                    backColor = Pal.plastaniumBack;
-                                    frontColor = lightningColor = Pal.plastanium;
-                                    lightning = 18;
-                                    lightningLength = 9;
-                                    smokeEffect = Fx.shootBigSmoke2;
-                                    despawnShake = 2.1f;
-                                    healPercent = 10;
-                                    status = StatusEffects.shocked;
-                                    statusDuration = 70f * 10;
-                                    collidesAir = false;
-                                    fragLifeMin = 0.4f;
-                                    fragBullets = 12;
-
-                                    fragBullet = new ArtilleryBulletType(2.3f, 30) {{
-                                        hitEffect = Fx.blastExplosion;
-                                        knockback = 0.7f;
-                                        lifetime = 65f;
-                                        width = height = 17f;
-                                        collidesTiles = false;
-                                        splashDamageRadius = 30f;
-                                        splashDamage = 90f;
-                                        backColor = Pal.plastaniumFront;
-                                        frontColor = lightningColor = Pal.bulletYellow;
-                                        lightning = 4;
-                                        lightningLength = 3;
-                                        smokeEffect = Fx.shootBigSmoke2;
-                                        hitShake = 6f;
-
-                                        status = StatusEffects.shocked;
-                                        statusDuration = 60f * 7;
-                                    }};
-                                }};
+                                this.bullet = new BasicBulletType() {
+                                    {
+                                        this.width = 45;
+                                        this.height = 45;
+                                        this.maxRange = 40;
+                                        //this.ignoreRotation = true;
+                                        this.hitSound = Sounds.plasmaboom;
+                                        //this.shootCone = 160;
+                                        this.despawnShake = 2.1f;
+                                        this.collidesAir = false;
+                                        this.lifetime = 0;
+                                        this.despawnEffect = ModFx.yellowBomb;
+                                        this.hitEffect = Fx.massiveExplosion;
+                                        this.keepVelocity = false;
+                                        this.spin = 1;
+                                        this.shrinkY = 0.5f;
+                                        this.shrinkX = 0.5f;
+                                        this.speed = 0.004f;
+                                        this.collides = false;
+                                        this.healPercent = 10;
+                                        this.splashDamage = 400;
+                                        this.splashDamageRadius = 110;
+                                    }
                                 };
                             }
                         },
