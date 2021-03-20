@@ -667,7 +667,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotateSpeed = 1f;
                                 this.bullet = new BasicBulletType(){{
                                         this.damage = 90;
-                                        this.speed = 1.4;
+                                        this.speed = 1.4f;
                                         this.pierce = true;
                                         this.pierceCap = 6;
                                         this.lightning = 6;
