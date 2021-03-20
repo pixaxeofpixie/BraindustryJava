@@ -471,7 +471,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = new BasicBulletType(7f, 35){{
+                                this.bullet = new BasicBulletType(7f, 35);{{
                                     this.width = 2f;
                                     this.height = 10f;
                                     this.lifetime = 25f;
@@ -576,7 +576,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = BasicBulletType(13f, 65){{
+                                this.bullet = BasicBulletType(13f, 65);{{
                                     pierce = true;
                                     pierceCap = 4;
                                     width = 7f;
@@ -679,7 +679,7 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = true;
                                 this.rotate = true;
                                 this.rotateSpeed = 1f;
-                                this.bullet = new BasicBulletType(13f, 25){{
+                                this.bullet = new BasicBulletType(13f, 25);{{
                                         this.pierce = true;
                                         this.pierceCap = 2;
                                         this.width = 14f;
