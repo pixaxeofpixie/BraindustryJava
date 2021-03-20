@@ -148,7 +148,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.95f;
                                         this.length = 50;
-                                        this.damage = 10;
+                                        this.damage = 25;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("8efff0");
                                         this.color = Color.valueOf("8efff0");
@@ -454,7 +454,7 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.health = 210;
                 this.range = 70;
-                this.armor = 2;
+                this.armor = 6;
                 this.engineOffset = 3;
                 this.engineSize = 2;
                 this.rotateSpeed = 10;
@@ -471,18 +471,15 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.2f;
-                                        this.length = 75;
-                                        this.damage = 25;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.7f;
-                                        this.lifetime = 20;
-                                        this.knockback = 1.24f;
+                                this.bullet = new BasicBulletType(7f, 35){{
+                                    this.width = 2f;
+                                    this.height = 10f;
+                                    this.lifetime = 25f;
+                                    this.shootEffect = Fx.shootBig;
+                                    this.lightning = 2;
+                                    this.lightningLength = 6;
+                                    this.lightningColor = Pal.surge;
+                                    this.lightningDamage = 6;
                                     }
                                 };
                             }
@@ -497,7 +494,7 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.8f;
                 this.flying = true;
                 this.health = 660;
-                this.armor = 4;
+                this.armor = 10;
                 this.range = 90;
                 this.engineOffset = 6;
                 this.rotateSpeed = 3;
@@ -509,26 +506,22 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 5;
                                 this.y = -4f;
                                 this.shootY = 4;
-                                this.reload = 30;
+                                this.reload = 40;
                                 this.shots = 2;
-                                this.inaccuracy = 6;
+                                this.inaccuracy = 1;
+                                this.shotDelay = 5;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = true;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.3f;
-                                        this.length = 90;
-                                        this.damage = 40;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.9f;
-                                        this.lifetime = 20;
-                                        this.knockback = 1.3f;
+                                this.bullet = new BasicBulletType(13f, 25){{
+                                        this.pierce = true;
+                                        this.pierceCap = 2;
+                                        this.width = 14f;
+                                        this.height = 33f;
+                                        this.lifetime = 15f;
+                                        this.shootEffect = Fx.shootBig;
                                     }
                                 };
                             }
@@ -576,25 +569,42 @@ public class ModUnitTypes implements ContentList {
                                 this.shootY = -1f;
                                 this.reload = 120;
                                 this.shots = 5;
-                                this.shotDelay = 5;
+                                this.shotDelay = 8;
                                 this.inaccuracy = 7;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.5f;
-                                        this.length = 110;
-                                        this.damage = 80;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.7f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
+                                this.bullet = BasicBulletType(13f, 65){{
+                                    pierce = true;
+                                    pierceCap = 4;
+                                    width = 7f;
+                                    height = 15f;
+                                    lifetime = 15f;
+                                    shootEffect = Fx.shootBig;
+                                    fragVelocityMin = 0.4f;
+
+                                    hitEffect = Fx.blastExplosion;
+                                    splashDamage = 16f;
+                                    splashDamageRadius = 13f;
+
+                                    fragBullets = 3;
+                                    fragLifeMin = 3f;
+                                    fragCone = 30f;
+
+                                    fragBullet = new BasicBulletType(9f, 18){{
+                                    width = 6f;
+                                    height = 6f;
+                                    pierce = true;
+                                    pierceBuilding = true;
+                                    pierceCap = 2;
+
+                                    lifetime = 20f;
+                                    hitEffect = Fx.flakExplosion;
+                                    splashDamage = 9f;
+                                    splashDamageRadius = 5f;
+                                    }};
                                     }
                                 };
                             }
@@ -658,29 +668,24 @@ public class ModUnitTypes implements ContentList {
                                 this.top = true;
                                 this.y = -3f;
                                 this.x = 14;
-                                this.reload = 150;
+                                this.reload = 120;
                                 this.recoil = 4;
                                 this.shotDelay = 4;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 8;
+                                this.shots = 7;
                                 this.inaccuracy = 6.5f;
                                 this.velocityRnd = 0.2f;
                                 this.alternate = true;
                                 this.mirror = true;
                                 this.rotate = true;
                                 this.rotateSpeed = 1f;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.5f;
-                                        this.length = 140;
-                                        this.damage = 120;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.7f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
+                                this.bullet = new BasicBulletType(13f, 25){{
+                                        this.pierce = true;
+                                        this.pierceCap = 2;
+                                        this.width = 14f;
+                                        this.height = 33f;
+                                        this.lifetime = 40f;
+                                        this.shootEffect = Fx.shootBig;
                                     }
                                 };
                             }
