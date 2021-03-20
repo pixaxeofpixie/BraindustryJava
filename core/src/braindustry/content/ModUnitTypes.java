@@ -578,35 +578,16 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = new BasicBulletType();{{
-                                    damage = 35;
-                                    pierce = true;
-                                    pierceCap = 4;
-                                    width = 7f;
-                                    height = 15f;
-                                    lifetime = 15f;
-                                    shootEffect = Fx.shootBig;
-                                    fragVelocityMin = 0.4f;
-
-                                    hitEffect = Fx.blastExplosion;
-                                    splashDamage = 16f;
-                                    splashDamageRadius = 13f;
-
-                                    fragBullets = 3;
-                                    fragLifeMin = 3f;
-                                    fragCone = 30f;
-
-                                    fragBullet = new BasicBulletType(9f, 18){{
-                                    width = 6f;
-                                    height = 6f;
-                                    pierce = true;
-                                    pierceBuilding = true;
-                                    pierceCap = 2;
-
-                                    lifetime = 20f;
-                                    hitEffect = Fx.flakExplosion;
-                                    splashDamage = 9f;
-                                    splashDamageRadius = 5f;
+                                 this.bullet = new BasicBulletType(){{
+                                    this.damage = 40;
+                                    this.width = 5f;
+                                    this.height = 10f;
+                                    this.lifetime = 25f;
+                                    this.shootEffect = Fx.shootBig;
+                                    this.lightning = 2;
+                                    this.lightningLength = 6;
+                                    this.lightningColor = Pal.surge;
+                                    this.lightningDamage = 6;
                                     }};
                                     }
                                 };
