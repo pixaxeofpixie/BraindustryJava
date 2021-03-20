@@ -578,7 +578,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = BasicBulletType();{{
+                                this.bullet = new BasicBulletType();{{
                                     this.damage = 35;
                                     this.pierce = true;
                                     this.pierceCap = 4;
