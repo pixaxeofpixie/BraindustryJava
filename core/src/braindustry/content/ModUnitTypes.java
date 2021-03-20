@@ -579,34 +579,34 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.mirror = false;
                                 this.bullet = new BasicBulletType();{{
-                                    this.damage = 35;
-                                    this.pierce = true;
-                                    this.pierceCap = 4;
-                                    this.width = 7f;
-                                    this.height = 15f;
-                                    this.lifetime = 15f;
-                                    this.shootEffect = Fx.shootBig;
-                                    this.fragVelocityMin = 0.4f;
+                                    damage = 35;
+                                    pierce = true;
+                                    pierceCap = 4;
+                                    width = 7f;
+                                    height = 15f;
+                                    lifetime = 15f;
+                                    shootEffect = Fx.shootBig;
+                                    fragVelocityMin = 0.4f;
 
-                                    this.hitEffect = Fx.blastExplosion;
-                                    this.splashDamage = 16f;
-                                    this.splashDamageRadius = 13f;
+                                    hitEffect = Fx.blastExplosion;
+                                    splashDamage = 16f;
+                                    splashDamageRadius = 13f;
 
-                                    this.fragBullets = 3;
-                                    this.fragLifeMin = 3f;
-                                    this.fragCone = 30f;
+                                    fragBullets = 3;
+                                    fragLifeMin = 3f;
+                                    fragCone = 30f;
 
-                                    this.fragBullet = new BasicBulletType(9f, 18){{
-                                    this.width = 6f;
-                                    this.height = 6f;
-                                    this.pierce = true;
-                                    this.pierceBuilding = true;
-                                    this.pierceCap = 2;
+                                    fragBullet = new BasicBulletType(9f, 18){{
+                                    width = 6f;
+                                    height = 6f;
+                                    pierce = true;
+                                    pierceBuilding = true;
+                                    pierceCap = 2;
 
-                                    this.lifetime = 20f;
-                                    this.hitEffect = Fx.flakExplosion;
-                                    this.splashDamage = 9f;
-                                    this.splashDamageRadius = 5f;
+                                    lifetime = 20f;
+                                    hitEffect = Fx.flakExplosion;
+                                    splashDamage = 9f;
+                                    splashDamageRadius = 5f;
                                     }};
                                     }
                                 };
