@@ -472,7 +472,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.mirror = false;
                                 this.bullet = new BasicBulletType(){{
-                                    this.damage = 40;
+                                    this.damage = 20;
                                     this.speed = 14.3f;
                                     this.width = 9f;
                                     this.height = 18f;
@@ -747,24 +747,32 @@ public class ModUnitTypes implements ContentList {
                             {
                                 this.y = -1f;
                                 this.x = 25;
-                                this.reload = 80;
+                                this.reload = 160;
                                 this.shotDelay = 5;
                                 this.recoil = 3;
                                 this.rotate = true;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 48;
-                                this.inaccuracy = 8;
+                                this.shots = 32;
+                                this.inaccuracy = 7;
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 50;
+                                        this.damage = 30;
                                         this.speed = 13.4f;
                                         this.pierce = true;
-                                        this.pierceCap = 8;
+                                        this.pierceCap = 16;
                                         this.width = 14f;
                                         this.height = 33f;
                                         this.lifetime = 25f;
+                                        this.shootEffect = Fx.shootBig;
+                                        this.lightning = 3;
+                                        this.lightningLength = 4;
+                                        this.lightningColor = Pal.surge;
+                                        this.lightningDamage = 11;
+                                        this.width = 14f;
+                                        this.height = 33f;
+                                        this.lifetime = 60f;
                                         this.shootEffect = Fx.shootBig;
                                     }
                                 };
