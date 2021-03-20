@@ -471,8 +471,9 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = new BasicBulletType(7f, 35);{{
-                                    this.width = 2f;
+                                this.bullet = new BasicBulletType(){{
+                                    this.damage = 40;
+                                    this.width = 5f;
                                     this.height = 10f;
                                     this.lifetime = 25f;
                                     this.shootEffect = Fx.shootBig;
@@ -498,7 +499,7 @@ public class ModUnitTypes implements ContentList {
                 this.range = 90;
                 this.engineOffset = 6;
                 this.rotateSpeed = 3;
-                abilities.add(new RepairFieldAbility(4f, 60f * 5, 40f), new ForceFieldAbility(40f, 5f, 400f, 60f * 8));
+                abilities.add(new RepairFieldAbility(4f, 60f * 5, 40f), new ForceFieldAbility(40f, 5f, 200f, 60f * 8));
                 this.weapons.add(
                         new ModWeapon("armor-weapon") {
                             {
@@ -515,7 +516,8 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = true;
-                                this.bullet = new BasicBulletType(13f, 25){{
+                                this.bullet = new BasicBulletType(){{
+                                        this.damage = 25;
                                         this.pierce = true;
                                         this.pierceCap = 2;
                                         this.width = 14f;
@@ -576,34 +578,35 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = BasicBulletType(13f, 65);{{
-                                    pierce = true;
-                                    pierceCap = 4;
-                                    width = 7f;
-                                    height = 15f;
-                                    lifetime = 15f;
-                                    shootEffect = Fx.shootBig;
-                                    fragVelocityMin = 0.4f;
+                                this.bullet = BasicBulletType(){{
+                                    this.damage = 35;
+                                    this.pierce = true;
+                                    this.pierceCap = 4;
+                                    this.width = 7f;
+                                    this.height = 15f;
+                                    this.lifetime = 15f;
+                                    this.shootEffect = Fx.shootBig;
+                                    this.fragVelocityMin = 0.4f;
 
-                                    hitEffect = Fx.blastExplosion;
-                                    splashDamage = 16f;
-                                    splashDamageRadius = 13f;
+                                    this.hitEffect = Fx.blastExplosion;
+                                    this.splashDamage = 16f;
+                                    this.splashDamageRadius = 13f;
 
-                                    fragBullets = 3;
-                                    fragLifeMin = 3f;
-                                    fragCone = 30f;
+                                    this.fragBullets = 3;
+                                    this.fragLifeMin = 3f;
+                                    this.fragCone = 30f;
 
-                                    fragBullet = new BasicBulletType(9f, 18){{
-                                    width = 6f;
-                                    height = 6f;
-                                    pierce = true;
-                                    pierceBuilding = true;
-                                    pierceCap = 2;
+                                    this.fragBullet = new BasicBulletType(9f, 18){{
+                                    this.width = 6f;
+                                    this.height = 6f;
+                                    this.pierce = true;
+                                    this.pierceBuilding = true;
+                                    this.pierceCap = 2;
 
-                                    lifetime = 20f;
-                                    hitEffect = Fx.flakExplosion;
-                                    splashDamage = 9f;
-                                    splashDamageRadius = 5f;
+                                    this.lifetime = 20f;
+                                    this.hitEffect = Fx.flakExplosion;
+                                    this.splashDamage = 9f;
+                                    this.splashDamageRadius = 5f;
                                     }};
                                     }
                                 };
@@ -628,7 +631,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 1.3f;
                 this.rotateShooting = false;
                 this.commandLimit = 6;
-                abilities.add(new RepairFieldAbility(6f, 60f * 5, 60f), new ForceFieldAbility(90f, 5f, 2300f, 60f * 7));
+                abilities.add(new RepairFieldAbility(6f, 60f * 5, 60f), new ForceFieldAbility(90f, 5f, 1300f, 60f * 7));
                 this.weapons.add(
                         new ModWeapon("bomb-weapon") {
                             {
@@ -679,7 +682,8 @@ public class ModUnitTypes implements ContentList {
                                 this.mirror = true;
                                 this.rotate = true;
                                 this.rotateSpeed = 1f;
-                                this.bullet = new BasicBulletType(13f, 25);{{
+                                this.bullet = new BasicBulletType(){{
+                                        this.damage = 45;
                                         this.pierce = true;
                                         this.pierceCap = 2;
                                         this.width = 14f;
@@ -698,7 +702,7 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.payload;
                 this.localizedName = "Quix";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
-                this.armor = 18;
+                this.armor = 38;
                 this.health = 11000;
                 this.speed = 0.5f;
                 this.rotateSpeed = 1;
@@ -714,7 +718,7 @@ public class ModUnitTypes implements ContentList {
                 this.payloadCapacity = 380;
                 this.buildSpeed = 5;
                 this.range = 140;
-                abilities.add(new RepairFieldAbility(7f, 60f * 4, 50f), new ForceFieldAbility(150f, 4f, 8000f, 60f * 7));
+                abilities.add(new RepairFieldAbility(7f, 60f * 4, 50f), new ForceFieldAbility(150f, 4f, 3000f, 60f * 7));
                 this.weapons.add(
                         new ModWeapon("bomb-weapon") {
                             {
