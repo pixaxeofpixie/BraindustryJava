@@ -8,8 +8,9 @@ import mindustry.type.SectorPreset;
 import static ModVars.modFunc.fullName;
 
 public class ModSectorPresets implements ContentList {
-    public static SectorPreset meltingPoint, FFOf,icyBeach,magmaticElectrostation,methaneLaboratories,ritual,polarRift,spacePort;
-
+    public static SectorPreset meltingPoint, FFOf,icyBeach,magmaticElectrostation,methaneLaboratories,ritual,polarRift,spacePort,
+            azureLandscape, icyDarkness, deentForest, emeraldSwamp, jungleExplorationComplex;
+//osore sectors
     public void load() {
         meltingPoint = new SectorPreset("melting-point", ModPlanets.osore, 20) {
             {
@@ -66,6 +67,31 @@ public class ModSectorPresets implements ContentList {
                 //alwaysUnlocked = true;
                 difficulty = 6;
                 captureWave = 40;
+            }
+        };
+        spacePort= new SectorPreset("space-port", ModPlanets.osore, 25) {
+            {
+                localizedName = "Space Port";
+                alwaysUnlocked = true;
+                difficulty = 4;
+                captureWave = 30;
+            }
+        };
+        //shinrin sectors
+        azureLandscape = new SectorPreset("azure-landscape", ModPlanets.shinrin, 85) {
+            {
+                localizedName = "Azure Landscape";
+                alwaysUnlocked = true;
+                difficulty = 10;
+                captureWave = 35;
+            }
+        };
+        jungleExplorationComplex = new SectorPreset("jungle-explorer-complex", ModPlanets.shinrin, 42) {
+            {
+                localizedName = "Jungle Exploration Complex";
+                alwaysUnlocked = true;
+                difficulty = 4;
+                captureWave = 35;
             }
         };
     }

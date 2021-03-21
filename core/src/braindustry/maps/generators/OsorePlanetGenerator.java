@@ -25,36 +25,36 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
     public OsorePlanetGenerator() {
 
         arr = new Block[][]{
-                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt},
-                {Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt},
-                {ModBlocks.magmaFloor, Blocks.dirt, Blocks.mud, Blocks.craters, Blocks.stone, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt},
-                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, ModBlocks.magmaFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.dirt},
-                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt},
-                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, ModBlocks.magmaFloor, Blocks.dirt},
-                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, ModBlocks.magmaFloor, ModBlocks.magmaFloor},
-                {ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.dirt},
-                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, ModBlocks.magmaFloor, Blocks.dirt, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt},
-                {Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.dirt, ModBlocks.magmaFloor, Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt},
-                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.dirt, ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt, Blocks.dirt},
-                {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.stone, ModBlocks.magmaFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt, ModBlocks.magmaFloor, Blocks.dirt},
-                {Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.dirt}
+                {ModBlocks.liquidMethaneFloor, ModBlocks.crimzesFloor, Blocks.snow, Blocks.snow, Blocks.mud, Blocks.ice, Blocks.ice, Blocks.iceSnow, ModBlocks.crimzesFloor, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt},
+                {Blocks.dirt, ModBlocks.obsidianFloor, Blocks.mud, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt},
+                {ModBlocks.magmaFloor, Blocks.dirt, Blocks.mud, Blocks.craters, Blocks.stone, ModBlocks.crimzesFloor, Blocks.dirt, Blocks.stone, Blocks.stone, ModBlocks.obsidianFloor, ModBlocks.crimzesFloor, Blocks.dirt, Blocks.dirt},
+                {ModBlocks.magmaFloor, Blocks.stone, Blocks.mud, ModBlocks.obsidianFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.dirt, ModBlocks.crimzesFloor,  ModBlocks.crimzesFloor, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.obsidianFloor, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.dirt, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt},
+                {ModBlocks.magmaFloor, Blocks.stone, Blocks.stone, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.stone, Blocks.stone, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.dirt},
+                {ModBlocks.magmaFloor, ModBlocks.obsidianFloor, ModBlocks.crimzesFloor, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud,  ModBlocks.crimzesFloor, ModBlocks.obsidianFloor},
+                {ModBlocks.magmaFloor, ModBlocks.obsidianFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.stone, Blocks.mud, Blocks.stone, Blocks.stone, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.mud, Blocks.dirt},
+                {ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.dirt},
+                {ModBlocks.liquidMethaneFloor, Blocks.iceSnow, Blocks.mud, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt},
+                {ModBlocks.liquidMethaneFloor, Blocks.iceSnow, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.snow, Blocks.snow, Blocks.stone},
+                {ModBlocks.liquidMethaneFloor, Blocks.snow, Blocks.mud, Blocks.dirt, Blocks.snow, Blocks.mud, Blocks.stone, Blocks.snow, Blocks.stone, Blocks.dirt, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.dirt},
+                {ModBlocks.liquidMethaneFloor, Blocks.mud, Blocks.ice, Blocks.snow, Blocks.snow, Blocks.mud, Blocks.dirt, Blocks.ice, Blocks.snow, Blocks.stone, ModBlocks.crimzesFloor, Blocks.stone, Blocks.dirt}
         };
 
         tars = ObjectMap.of(
-                Blocks.slag, Blocks.mud,
-                Blocks.dirt, Blocks.mud
+                Blocks.mud, ModBlocks.crimzesFloor,
+                Blocks.dirt, ModBlocks.obsidianFloor
         );
 
         dec = ObjectMap.of(
-                Blocks.slag, Blocks.dirt,
-                Blocks.dirt, Blocks.dirt,
-                Blocks.slag, Blocks.slag,
-                Blocks.slag, Blocks.slag
+                ModBlocks.crimzesFloor, Blocks.snow,
+                Blocks.dirt, ModBlocks.obsidianFloor,
+                Blocks.stone, Blocks.mud,
+                ModBlocks.magmaFloor, ModBlocks.liquidMethaneFloor
         );
 
         water = 0.05f;
-        waterOffset = 0.01f;
-        scl = 1.3f;
+        waterOffset = 0.04f;
+        scl = 4.5f;
 
     }
         @Override

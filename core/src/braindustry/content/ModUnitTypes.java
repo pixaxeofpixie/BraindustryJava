@@ -57,7 +57,7 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.56f;
                 this.mechSideSway = 0.25f;
                 this.hitSize = 5;
-                this.rotateSpeed = 1;
+                this.rotateSpeed = 4;
                 this.armor = 0.5f;
                 this.hovering = true;
                 this.landShake = 0.1f;
@@ -83,7 +83,7 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 13;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 1;
-                                this.shots = 12;
+                                this.shots = 4;
                                 this.shotDelay = 2;
                                 this.rotate = false;
                                 this.shootSound = Sounds.laser;
@@ -91,7 +91,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.8f;
                                         this.length = 30;
-                                        this.damage = 8;
+                                        this.damage = 27;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("8efff0");
                                         this.color = Color.valueOf("8efff0");
@@ -152,7 +152,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.95f;
                                         this.length = 50;
-                                        this.damage = 10;
+                                        this.damage = 35;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("8efff0");
                                         this.color = Color.valueOf("8efff0");
@@ -207,7 +207,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.8f;
                                         this.length = 150;
-                                        this.damage = 18;
+                                        this.damage = 68;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("8efff0");
                                         this.color = Color.valueOf("8efff0");
@@ -268,7 +268,7 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new LaserBulletType() {
                                     {
                                         this.length = 500;
-                                        this.damage = 300;
+                                        this.damage = 370;
                                         this.width = 60;
                                         this.lifetime = 60;
                                         this.lightningSpacing = 40;
@@ -306,7 +306,7 @@ public class ModUnitTypes implements ContentList {
                                     {
                                         this.sapStrength = 0.7f;
                                         this.length = 200;
-                                        this.damage = 20;
+                                        this.damage = 40;
                                         this.shootEffect = Fx.shootSmall;
                                         this.hitColor = Color.valueOf("8efff0");
                                         this.color = Color.valueOf("8efff0");
@@ -458,7 +458,7 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.health = 210;
                 this.range = 70;
-                this.armor = 2;
+                this.armor = 6;
                 this.engineOffset = 3;
                 this.engineSize = 2;
                 this.rotateSpeed = 10;
@@ -475,18 +475,17 @@ public class ModUnitTypes implements ContentList {
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.2f;
-                                        this.length = 75;
-                                        this.damage = 25;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.7f;
-                                        this.lifetime = 20;
-                                        this.knockback = 1.24f;
+                                this.bullet = new BasicBulletType(){{
+                                    this.damage = 20;
+                                    this.speed = 14.3f;
+                                    this.width = 9f;
+                                    this.height = 18f;
+                                    this.lifetime = 15f;
+                                    this.shootEffect = Fx.shootBig;
+                                    this.lightning = 2;
+                                    this.lightningLength = 6;
+                                    this.lightningColor = Pal.surge;
+                                    this.lightningDamage = 6;
                                     }
                                 };
                             }
@@ -501,11 +500,11 @@ public class ModUnitTypes implements ContentList {
                 this.speed = 0.8f;
                 this.flying = true;
                 this.health = 660;
-                this.armor = 4;
+                this.armor = 10;
                 this.range = 90;
                 this.engineOffset = 6;
                 this.rotateSpeed = 3;
-                abilities.add(new RepairFieldAbility(4f, 60f * 5, 40f), new ForceFieldAbility(40f, 5f, 400f, 60f * 8));
+                abilities.add(new RepairFieldAbility(4f, 60f * 5, 40f), new ForceFieldAbility(40f, 5f, 200f, 60f * 8));
                 this.weapons.add(
                         new ModWeapon("armor-weapon") {
                             {
@@ -513,26 +512,24 @@ public class ModUnitTypes implements ContentList {
                                 this.x = 5;
                                 this.y = -4f;
                                 this.shootY = 4;
-                                this.reload = 30;
+                                this.reload = 40;
                                 this.shots = 2;
-                                this.inaccuracy = 6;
+                                this.inaccuracy = 1;
+                                this.shotDelay = 5;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = true;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.3f;
-                                        this.length = 90;
-                                        this.damage = 40;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.9f;
-                                        this.lifetime = 20;
-                                        this.knockback = 1.3f;
+                                this.bullet = new BasicBulletType(){{
+                                        this.damage = 60;
+                                        this.speed = 13.4f;
+                                        this.pierce = true;
+                                        this.pierceCap = 2;
+                                        this.width = 14f;
+                                        this.height = 33f;
+                                        this.lifetime = 25f;
+                                        this.shootEffect = Fx.shootBig;
                                     }
                                 };
                             }
@@ -580,30 +577,29 @@ public class ModUnitTypes implements ContentList {
                                 this.shootY = -1f;
                                 this.reload = 120;
                                 this.shots = 5;
-                                this.shotDelay = 5;
+                                this.shotDelay = 8;
                                 this.inaccuracy = 7;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
                                 this.shootSound = Sounds.laserblast;
                                 this.rotate = true;
                                 this.mirror = false;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.5f;
-                                        this.length = 110;
-                                        this.damage = 80;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.7f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
+                                 this.bullet = new BasicBulletType(){{
+                                    this.damage = 60;
+                                    this.speed = 12.6f;
+                                    this.pierce = true;
+                                    this.pierceCap = 3;
+                                    this.width = 10f;
+                                    this.height = 17f;
+                                    this.lifetime = 30f;
+                                    this.shootEffect = Fx.shootBig;
+                                    this.lightning = 4;
+                                    this.lightningLength = 6;
+                                    this.lightningColor = Pal.surge;
+                                    this.lightningDamage = 8;
+                                    }};
                                     }
-                                };
-                            }
-                        }
-                );
+                                });
             }
         };
         chainmail = new ModUnitType("chainmail") {
@@ -622,7 +618,7 @@ public class ModUnitTypes implements ContentList {
                 this.buildSpeed = 1.3f;
                 this.rotateShooting = false;
                 this.commandLimit = 6;
-                abilities.add(new RepairFieldAbility(6f, 60f * 5, 60f), new ForceFieldAbility(90f, 5f, 2300f, 60f * 7));
+                abilities.add(new RepairFieldAbility(6f, 60f * 5, 60f), new ForceFieldAbility(90f, 5f, 1300f, 60f * 7));
                 this.weapons.add(
                         new ModWeapon("bomb-weapon") {
                             {
@@ -662,29 +658,30 @@ public class ModUnitTypes implements ContentList {
                                 this.top = true;
                                 this.y = -3f;
                                 this.x = 14;
-                                this.reload = 150;
+                                this.reload = 120;
                                 this.recoil = 4;
-                                this.shotDelay = 4;
+                                this.shotDelay = 9;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 8;
+                                this.shots = 7;
                                 this.inaccuracy = 6.5f;
                                 this.velocityRnd = 0.2f;
                                 this.alternate = true;
                                 this.mirror = true;
                                 this.rotate = true;
                                 this.rotateSpeed = 1f;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.5f;
-                                        this.length = 140;
-                                        this.damage = 120;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.7f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
+                                this.bullet = new BasicBulletType(){{
+                                        this.damage = 90;
+                                        this.speed = 13.8f;
+                                        this.pierce = true;
+                                        this.pierceCap = 6;
+                                        this.lightning = 3;
+                                        this.lightningLength = 4;
+                                        this.lightningColor = Pal.surge;
+                                        this.lightningDamage = 11;
+                                        this.width = 14f;
+                                        this.height = 33f;
+                                        this.lifetime = 35f;
+                                        this.shootEffect = Fx.shootBig;
                                     }
                                 };
                             }
@@ -697,7 +694,7 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.payload;
                 this.localizedName = "Quix";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
-                this.armor = 18;
+                this.armor = 38;
                 this.health = 11000;
                 this.speed = 0.5f;
                 this.rotateSpeed = 1;
@@ -713,9 +710,9 @@ public class ModUnitTypes implements ContentList {
                 this.payloadCapacity = 380;
                 this.buildSpeed = 5;
                 this.range = 140;
-                abilities.add(new RepairFieldAbility(7f, 60f * 4, 50f), new ForceFieldAbility(150f, 4f, 8000f, 60f * 7));
+                abilities.add(new RepairFieldAbility(7f, 60f * 4, 50f), new ForceFieldAbility(150f, 4f, 3000f, 60f * 7));
                 this.weapons.add(
-                        new ModWeapon("bomb-weapon") {
+                         new ModWeapon("bomb-weapon") {
                             {
                                 this.x = 12;
                                 this.y = -30f;
@@ -752,58 +749,34 @@ public class ModUnitTypes implements ContentList {
                         },
                         new ModWeapon("broadsword-weapon") {
                             {
-                                this.y = -4f;
-                                this.x = 29;
-                                this.reload = 165;
-                                this.shotDelay = 3;
-                                this.recoil = 3;
-                                this.shootSound = Sounds.laserblast;
-                                this.shots = 4;
-                                this.inaccuracy = 5;
-                                this.velocityRnd = 0.1f;
-                                this.alternate = true;
-                                this.mirror = true;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.5f;
-                                        this.length = 140;
-                                        this.damage = 90;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.6f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
-                                    }
-                                };
-                            }
-                        },
-                        new ModWeapon("broadsword-weapon") {
-                            {
                                 this.y = -1f;
                                 this.x = 25;
-                                this.reload = 165;
-                                this.shotDelay = 5;
+                                this.reload = 160;                                
                                 this.recoil = 3;
+                                this.rotate = true;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 8;
-                                this.inaccuracy = 5;
+                                this.shots = 32;
+                                this.inaccuracy = 7;
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
                                 this.mirror = true;
-                                this.bullet = new SapBulletType() {
-                                    {
-                                        this.sapStrength = 0.4f;
-                                        this.length = 160;
-                                        this.damage = 60;
-                                        this.shootEffect = Fx.shootSmall;
-                                        this.hitColor = Color.valueOf("D6FF33");
-                                        this.color = Color.valueOf("FFE70F");
-                                        this.despawnEffect = Fx.none;
-                                        this.width = 0.6f;
-                                        this.lifetime = 40;
-                                        this.knockback = 1.3f;
+                                this.bullet = new BasicBulletType(){{
+                                        this.damage = 70;
+                                        this.speed = 13.4f;
+                                        this.pierce = true;
+                                        this.pierceCap = 16;
+                                        this.width = 14f;
+                                        this.height = 33f;
+                                        this.lifetime = 25f;
+                                        this.shootEffect = Fx.shootBig;
+                                        this.lightning = 3;
+                                        this.lightningLength = 4;
+                                        this.lightningColor = Pal.surge;
+                                        this.lightningDamage = 11;
+                                        this.width = 14f;
+                                        this.height = 33f;
+                                        this.lifetime = 40f;
+                                        this.shootEffect = Fx.shootBig;
                                     }
                                 };
                             }
@@ -926,7 +899,7 @@ public class ModUnitTypes implements ContentList {
                                         this.width = 10;
                                         this.height = 20;
                                         this.shrinkY = 0.1f;
-                                        this.drag = -0.1f;
+                                        this.drag = 0.1f;
                                         this.splashDamageRadius = 20;
                                         this.splashDamage = 45;
                                         this.lifetime = 45;

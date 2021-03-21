@@ -202,5 +202,11 @@ class ModEnvironmentBlocks {
         metallicPine = new StaticTree("metallic-pine"){{
             variants = 0;
         }};
+        darkShrubsFloor = new Floor("black-grass") {
+            {
+                this.localizedName = "Dark Grass";
+                this.variants = 3;
+            }
+        };
     }
 }
