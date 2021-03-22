@@ -55,8 +55,6 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
         water = 0.05f;
         waterOffset = 0.04f;
         scl = 4.5f;
-
-    }
         
         @Override
             
