@@ -145,4 +145,5 @@ public class ModPlanetGenerator extends PlanetGenerator {
 
         generate(tiles);
     }
+    }
 }
