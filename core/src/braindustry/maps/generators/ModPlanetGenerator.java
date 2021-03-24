@@ -3,15 +3,23 @@ package braindustry.maps.generators;
 import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.math.geom.Vec3;
+import arc.struct.IntSeq;
 import arc.struct.ObjectMap;
 import arc.util.Tmp;
+import arc.util.noise.Noise;
 import arc.util.noise.RidgedPerlin;
 import arc.util.noise.Simplex;
 import mindustry.content.Blocks;
+import mindustry.graphics.g3d.HexMesher;
+import mindustry.graphics.g3d.PlanetGrid;
 import mindustry.maps.generators.BaseGenerator;
+import mindustry.maps.generators.BasicGenerator;
 import mindustry.maps.generators.PlanetGenerator;
+import mindustry.type.Sector;
 import mindustry.world.Block;
+import mindustry.world.Tile;
 import mindustry.world.TileGen;
+import mindustry.world.Tiles;
 
 public class ModPlanetGenerator extends PlanetGenerator {
     public final Simplex simplex = new Simplex();
@@ -84,14 +92,14 @@ public class ModPlanetGenerator extends PlanetGenerator {
         }
     }
     
-    public abstract class PlanetGenerator extends BasicGenerator implements HexMesher{
+    public abstract class PlanetGenerator extends BasicGenerator implements HexMesher {
     protected IntSeq ints = new IntSeq();
     protected Sector sector;
     protected Simplex noise = new Simplex();
 
     /** Should generate sector bases for a planet. */
     public void generateSector(Sector sector){
-        Ptile tile = sector.tile;
+        PlanetGrid.Ptile tile = sector.tile;
 
         boolean any = false;
         float noise = Noise.snoise3(tile.v.x, tile.v.y, tile.v.z, 0.001f, 0.5f);
@@ -101,7 +109,7 @@ public class ModPlanetGenerator extends PlanetGenerator {
         }
 
         if(noise < 0.15){
-            for(Ptile other : tile.tiles){
+            for(PlanetGrid.Ptile other : tile.tiles){
                 //no sectors near start sector!
                 if(sector.planet.getSector(other).id == sector.planet.startSector){
                     return;

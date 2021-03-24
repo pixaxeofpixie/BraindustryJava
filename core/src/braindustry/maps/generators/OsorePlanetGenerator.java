@@ -56,7 +56,7 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
         waterOffset = 0.04f;
         scl = 4.5f;
         
-        @Override
+       /* @Override
             
         public void generateSector(Sector sector){
 
@@ -130,5 +130,5 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
         }else{
             return res;
         }
-    }
-}
+    }*/
+}};

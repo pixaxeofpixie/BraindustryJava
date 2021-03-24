@@ -141,6 +141,9 @@ class ModPowerBlocks implements ContentList {
                 this.hasPower = true;
                 this.hasLiquids = true;
                 this.hasItems = false;
+                this.hasGas = true;
+                this.gasCapacity = 100;
+                this.itemCapacity = 60;
                 //this.itemCapacity = 120;
                 this.liquidCapacity = 100;
                 this.itemDuration = 240;
