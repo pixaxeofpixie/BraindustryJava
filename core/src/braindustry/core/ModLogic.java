@@ -5,11 +5,14 @@ import arc.Events;
 import arc.struct.Seq;
 import braindustry.content.ModBullets;
 import braindustry.content.ModUnitTypes;
+import braindustry.type.ModUnitType;
 import mindustry.game.EventType;
+import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
+import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
 
 public class ModLogic implements ApplicationListener {
@@ -18,13 +21,23 @@ public class ModLogic implements ApplicationListener {
             Groups.build.each(this::removeUnitPowerGenerators);
         });
         Events.on(EventType.UnitDestroyEvent.class, (e) -> {
-            Seq<UnitType> types = Seq.with(ModUnitTypes.griffon, ModUnitTypes.moureno);
             Unit unit = e.unit;
-            if (types.contains(unit.type)) {
-                float anglePart = 360f / 5f;
+            if (!(unit.type instanceof ModUnitType))return;
+            ModUnitType type= (ModUnitType) unit.type;
+            if (type.hasAfterDeathLaser) {
+
+                float anglePart = 360f / (float)type.afterDeathLaserCount;
                 for (float i = 0; i < 360f / anglePart; i++) {
 //                    print("i: @,anglePart: @",i,anglePart);
                     Call.createBullet(ModBullets.deathLaser, unit.team, unit.x, unit.y, (360f + unit.rotation + 90f + anglePart / 2f + anglePart * i) % 360f, 1200f, 1f, 30f);
+                }
+            }
+            if (type.dropItems.length>0){
+                for (Team team : Team.all) {
+                    if (!team.active() || team.cores().isEmpty())continue;
+                    for (ItemStack stack : type.dropItems) {
+                        team.core().items.add(stack.item,stack.amount);
+                    }
                 }
             }
         });

@@ -28,10 +28,10 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
                 {ModBlocks.liquidMethaneFloor, ModBlocks.crimzesFloor, Blocks.snow, Blocks.snow, Blocks.mud, Blocks.ice, Blocks.ice, Blocks.iceSnow, ModBlocks.crimzesFloor, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt},
                 {Blocks.dirt, ModBlocks.obsidianFloor, Blocks.mud, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt},
                 {ModBlocks.magmaFloor, Blocks.dirt, Blocks.mud, Blocks.craters, Blocks.stone, ModBlocks.crimzesFloor, Blocks.dirt, Blocks.stone, Blocks.stone, ModBlocks.obsidianFloor, ModBlocks.crimzesFloor, Blocks.dirt, Blocks.dirt},
-                {ModBlocks.magmaFloor, Blocks.stone, Blocks.mud, ModBlocks.obsidianFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.dirt, ModBlocks.crimzesFloor,  ModBlocks.crimzesFloor, Blocks.dirt},
+                {ModBlocks.magmaFloor, Blocks.stone, Blocks.mud, ModBlocks.obsidianFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.dirt, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.dirt},
                 {ModBlocks.magmaFloor, ModBlocks.obsidianFloor, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.dirt, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt},
                 {ModBlocks.magmaFloor, Blocks.stone, Blocks.stone, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, Blocks.stone, Blocks.stone, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.dirt},
-                {ModBlocks.magmaFloor, ModBlocks.obsidianFloor, ModBlocks.crimzesFloor, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud,  ModBlocks.crimzesFloor, ModBlocks.obsidianFloor},
+                {ModBlocks.magmaFloor, ModBlocks.obsidianFloor, ModBlocks.crimzesFloor, Blocks.stone, Blocks.dirt, Blocks.dirt, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.mud, ModBlocks.crimzesFloor, ModBlocks.obsidianFloor},
                 {ModBlocks.magmaFloor, ModBlocks.obsidianFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.stone, Blocks.mud, Blocks.stone, Blocks.stone, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.mud, Blocks.dirt},
                 {ModBlocks.magmaFloor, Blocks.mud, Blocks.mud, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.dirt},
                 {ModBlocks.liquidMethaneFloor, Blocks.iceSnow, Blocks.mud, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt},
@@ -55,8 +55,8 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
         water = 0.05f;
         waterOffset = 0.04f;
         scl = 4.5f;
-        
-       /* @Override
+    }
+        @Override
             
         public void generateSector(Sector sector){
 
@@ -111,7 +111,7 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
             tile.block = Blocks.air;
         }
     }
-    Block getBlock(Vec3 position){
+    public Block getBlock(Vec3 position){
         float height = rawHeight(position);
         Tmp.v31.set(position);
         position = Tmp.v33.set(position).scl(scl);
@@ -130,5 +130,5 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
         }else{
             return res;
         }
-    }*/
-}};
+    }
+}
