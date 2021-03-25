@@ -1,7 +1,7 @@
 name: "braindustry-java"
 displayName: "Braindustry"
-author: "Braindustry Team & MotrONa & G0rillaGlue"
+author: " Zelaux, KOSTOLOM, PixaxeOfPixie, Vervalamis, SuperJaba2000"
 main: "braindustry.Starter"
 version: 2.0
-minGameVersion: 123
+minGameVersion: 126
 
