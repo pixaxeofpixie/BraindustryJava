@@ -4,6 +4,7 @@ import ModVars.Interface.InitableAbility;
 import ModVars.Interface.LoadableAbility;
 import arc.struct.Seq;
 import braindustry.ModListener;
+import braindustry.content.ModItems;
 import braindustry.entities.abilities.ModAbility;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Unit;
@@ -13,8 +14,8 @@ import mindustry.type.UnitType;
 import java.util.Objects;
 
 public class ModUnitType extends UnitType {
-    public ItemStack[] dropItems=ItemStack.empty;
-    public boolean hasAfterDeathLaser=false;
+    public ItemStack[] dropItems=ItemStack.with(ModItems.chloroAlloy, 342);
+    public boolean hasAfterDeathLaser=true;
     public int afterDeathLaserCount=5;
     public ModUnitType(String name) {
         super(name);

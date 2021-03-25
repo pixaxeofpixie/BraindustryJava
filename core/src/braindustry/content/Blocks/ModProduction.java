@@ -338,7 +338,7 @@ class ModProduction implements ContentList {
                 this.description = "Upgraded version of Dense Composite smelter but consumes gas for more effective production.";
                 this.health = 510;
                 this.liquidCapacity = 20;
-                this.size = 7;
+                this.size = 6;
                 this.hasPower = true;
                 this.hasLiquids = false;
                 this.hasGas = true;
