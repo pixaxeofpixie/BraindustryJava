@@ -544,7 +544,7 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.hitSize = 12;
                 this.engineSize = 3.2f;
-                this.armor = 6;
+                this.armor = 18;
                 this.health = 1600;
                 this.range = 110;
                 this.engineOffset = 7;
@@ -608,7 +608,7 @@ public class ModUnitTypes implements ContentList {
                 this.flying = true;
                 this.hitSize = 27;
                 this.engineSize = 7;
-                this.armor = 10;
+                this.armor = 29;
                 this.health = 6000;
                 this.rotateSpeed = 1.2f;
                 this.targetAir = true;
