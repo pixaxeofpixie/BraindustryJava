@@ -1,6 +1,6 @@
 name: "braindustry-java"
 displayName: "Braindustry"
-author: " Zelaux, KOSTOLOM, PixaxeOfPixie, Vervalamis, SuperJaba2000"
+author: " Zelaux, KOSTOLOM, PixaxeOfPixie, Vervalamis, SuperJaba2000, GorillaGlue"
 main: "braindustry.Starter"
 version: 2.0
 minGameVersion: 126
