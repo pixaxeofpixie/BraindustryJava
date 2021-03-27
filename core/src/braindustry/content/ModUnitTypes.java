@@ -238,7 +238,7 @@ public class ModUnitTypes implements ContentList {
                 this.armor = 7;
                 this.hovering = true;
                 this.commandLimit = 8;
-                this.legCount = 6;
+                this.legCount = 4;
                 this.legLength = 19;
                 this.legTrns = 1;
                 this.legMoveSpace = 3;
@@ -255,7 +255,7 @@ public class ModUnitTypes implements ContentList {
                                 this.y = -5f;
                                 this.shootY = 6;
                                 this.reload = 600;
-                                this.shots = 3;
+                                this.shots = 5;
                                 this.shotDelay = 20;
                                 this.inaccuracy = 10;
                                 this.ejectEffect = Fx.none;
@@ -268,7 +268,7 @@ public class ModUnitTypes implements ContentList {
                                 this.bullet = new LaserBulletType() {
                                     {
                                         this.length = 430;
-                                        this.damage = 470;
+                                        this.damage = 340;
                                         this.width = 60;
                                         this.lifetime = 60;
                                         this.lightningSpacing = 40;
@@ -334,19 +334,17 @@ public class ModUnitTypes implements ContentList {
                 this.hovering = true;
                 this.health = 17000;
                 this.rotateSpeed = 2;
-                this.legCount = 4;
-                this.legMoveSpace = 1.0f;
-                this.legPairOffset = 4;
-                this.legLength = 32;
-                this.legExtension = 6;
-                this.legBaseOffset = 4;
-                this.landShake = 2.1f;
-                this.legSpeed = 0.19f;
-                this.legLengthScl = 1.0f;
-                this.armor = 14;
-                this.rippleScale = 6;
-                this.legSplashDamage = 160;
-                this.legSplashRange = 50;
+                this.legCount = 8;
+                this.legMoveSpace = 0.8f;
+                this.legPairOffset = 3;
+                this.legLength = 75f;
+                this.legExtension = -20;
+                this.legBaseOffset = 8f;
+                this.landShake = 1f;
+                this.legSpeed = 0.1f;
+                this.rippleScale = 3;
+                this.legSplashDamage = 340;
+                this.legSplashRange = 40;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
                         new ModWeapon("aquila-equip1") {
@@ -751,18 +749,18 @@ public class ModUnitTypes implements ContentList {
                             {
                                 this.y = -1f;
                                 this.x = 25;
-                                this.reload = 160;                                
+                                this.reload = 40;                                
                                 this.recoil = 3;
                                 this.rotate = true;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 32;
-                                this.inaccuracy = 7;
+                                this.shots = 12;
+                                this.inaccuracy = 5;
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 70;
-                                        this.speed = 13.4f;
+                                        this.damage = 102;
+                                        this.speed = 11.4f;
                                         this.pierce = true;
                                         this.pierceCap = 16;
                                         this.width = 14f;
@@ -899,7 +897,7 @@ public class ModUnitTypes implements ContentList {
                                         this.width = 10;
                                         this.height = 20;
                                         this.shrinkY = 0.1f;
-                                        this.drag = 0.1f;
+                                        this.speed = 2.0f;
                                         this.splashDamageRadius = 20;
                                         this.splashDamage = 45;
                                         this.lifetime = 45;
