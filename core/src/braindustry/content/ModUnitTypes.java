@@ -69,7 +69,7 @@ public class ModUnitTypes implements ContentList {
                 this.legBaseOffset = 2;
                 this.buildSpeed = 0.8f;
                 this.allowLegStep = true;
-                this.visualElevation = 0.4f;
+                this.visualElevation = 75f;
                 this.ammoType = AmmoTypes.powerHigh;
                 this.mechStepShake = 0.15f;
                 this.mechStepParticles = true;
@@ -132,7 +132,7 @@ public class ModUnitTypes implements ContentList {
                 this.legSplashDamage = 32;
                 this.legSplashRange = 30;
                 this.allowLegStep = true;
-                this.visualElevation = 0.65f;
+                this.visualElevation = 75f;
                 this.immunities.addAll(StatusEffects.burning);
                 this.weapons.add(
                         new ModWeapon("ibis-weapon") {
@@ -189,7 +189,7 @@ public class ModUnitTypes implements ContentList {
                 this.armor = 5;
                 this.buildSpeed = 0.8f;
                 this.allowLegStep = true;
-                this.visualElevation = 0.4f;
+                this.visualElevation = 75f;
                 this.weapons.add(
                         new ModWeapon("capra-weapon") {
                             {
@@ -244,7 +244,7 @@ public class ModUnitTypes implements ContentList {
                 this.legMoveSpace = 3;
                 this.legBaseOffset = 2;
                 this.allowLegStep = true;
-                this.visualElevation = 0.8f;
+                this.visualElevation = 75f;
                 this.mechStepShake = 0.15f;
                 this.mechStepParticles = true;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
@@ -345,6 +345,8 @@ public class ModUnitTypes implements ContentList {
                 this.rippleScale = 3;
                 this.legSplashDamage = 340;
                 this.legSplashRange = 40;
+                this.allowLegStep = true;
+                this.visualElevation = 75f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
                         new ModWeapon("aquila-equip1") {
@@ -1541,7 +1543,7 @@ public class ModUnitTypes implements ContentList {
                 this.legLengthScl = 1f;
                 // this.buildSpeed = 0.8f;
                 this.allowLegStep = true;
-                this.visualElevation = 0.4f;
+                this.visualElevation = 75f;
                 this.ammoType = AmmoTypes.powerHigh;
                 this.mechStepShake = 0.25f;
                 this.mechStepParticles = true;
