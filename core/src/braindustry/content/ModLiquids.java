@@ -29,6 +29,7 @@ public class ModLiquids implements ContentList {
                 this.explosiveness = 0;
                 this.viscosity = 0.7f;
                 this.color = Color.valueOf("FF2F33");
+                lightColor = Color.valueOf("FF5C77").a(0.5f);
             }
         };
 
@@ -40,6 +41,7 @@ public class ModLiquids implements ContentList {
                 this.heatCapacity = 1.32f;
                 this.viscosity = 0.9f;
                 this.color = Color.valueOf("dac5fc");
+                this.lightColor = Color.valueOf("EBCCFF").a(0.3f);
             }
         };
         liquidMethane = new Liquid("liquid-methane") {
@@ -50,6 +52,7 @@ public class ModLiquids implements ContentList {
                 this.heatCapacity = 1.13f;
                 this.viscosity = 0.7f;
                 this.color = Color.valueOf("37f29b");
+                this.lightColor = Color.valueOf("A3FFE8").a(0.3f);
             }
         };
     }
