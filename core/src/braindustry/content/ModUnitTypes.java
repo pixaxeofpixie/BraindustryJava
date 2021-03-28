@@ -1673,7 +1673,7 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.naval;
                 this.localizedName = "Moray";
                 this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers and rocket launchers.";
-                this.health = 52000;
+                this.health = 62000;
                 this.speed = 0.6f;
                 this.accel = 0.12f;
                 this.rotateSpeed = 0.9f;
@@ -1782,38 +1782,6 @@ public class ModUnitTypes implements ContentList {
                 this.mineTier = 5;
                 stealthDuration = 15f * 60f;
                 stealthCooldown = 10f * 60f;
-                this.weapons.add(
-                        new ModWeapon("litix-striker") {
-                            {
-                                this.x = 0;
-                                this.y = 0;
-                                this.shootY = -1f;
-                                this.reload = 80;
-                                this.ejectEffect = ModFx.magicShootEffectBig;
-                                this.recoil = 6;
-                                this.shootSound = Sounds.laserblast;
-                                this.rotate = true;
-                                this.rotateSpeed = 0.7f;
-                                this.mirror = false;
-                                this.bullet = new RailBulletType() {
-                                    {
-                                        this.shootEffect = ModFx.litixShoot;
-                                        this.length = 345.0F;
-                                        this.updateEffectSeg = 70.0F;
-                                        this.pierceEffect = this.hitEffect = ModFx.litixHit;
-                                        this.updateEffect = this.trailEffect = ModFx.litixTrail;
-                                        this.smokeEffect = Fx.reactorsmoke;
-                                        this.damage = 1720.0F;
-                                        this.pierceDamageFactor = 1.5F;
-                                        this.despawnEffect = ModFx.litixBomb;
-                                        this.buildingDamageMultiplier = 1.4f;
-                                        this.speed = 1.4f;
-                                        this.hitShake = 5f;
-                                    }
-                                };
-                            }
-                        }
-                );
                 abilities.add(new OrbitalPlatformAbility(4, 3f,
                                 new ModWeapon("litix-methane-shooter") {
                                     {
@@ -1941,18 +1909,47 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.stealthMech;
                 this.defaultController = StealthGroundAI::new;
                 this.speed = 0.62f;
-                this.rotateSpeed = 3;
+                this.rotateSpeed = 2;
                 this.hitSize = 38;
                 this.armor = 14;
                 this.buildSpeed = 2F;
-                this.health = 44200;
+                this.health = 48200;
                 this.canDrown = false;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int brange = 1;
                 this.localizedName = "Litix";
                 this.description = "Heavy attack unit with orbital magma guns,railguns and sap guns.";
-
-                this.weapons.add(
+                 this.weapons.add(
+                        new ModWeapon("litix-striker") {
+                            {
+                                this.x = 0;
+                                this.y = 0;
+                                this.shootY = -1f;
+                                this.reload = 220;
+                                this.ejectEffect = ModFx.magicShootEffectBig;
+                                this.recoil = 6;
+                                this.shootSound = Sounds.laserblast;
+                                this.rotate = true;
+                                this.rotateSpeed = 0.5f;
+                                this.mirror = false;
+                                this.bullet = new RailBulletType() {
+                                    {
+                                        this.shootEffect = ModFx.litixShoot;
+                                        this.length = 425.0F;
+                                        this.updateEffectSeg = 70.0F;
+                                        this.pierceEffect = this.hitEffect = ModFx.litixHit;
+                                        this.updateEffect = this.trailEffect = ModFx.litixTrail;
+                                        this.smokeEffect = Fx.reactorsmoke;
+                                        this.damage = 2620.0F;
+                                        this.pierceDamageFactor = 1.5F;
+                                        this.despawnEffect = ModFx.litixBomb;
+                                        this.buildingDamageMultiplier = 1.3f;
+                                        this.speed = 1.4f;
+                                        this.hitShake = 5f;
+                                    }
+                                };
+                            }
+                        },
                         new ModWeapon("maverix-weapon") {
                             {
                                 this.x = 34;
@@ -1962,8 +1959,8 @@ public class ModUnitTypes implements ContentList {
                                 this.ejectEffect = Fx.fireballsmoke;
                                 this.recoil = 3f;
                                 this.shots = 7;
-                                this.inaccuracy = 16.0f;
-                                this.rotate = true;
+                                this.inaccuracy = 14.0f;
+                                this.rotate = false;
                                 this.shootSound = Sounds.flame;
                                 this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.liquidMethane) {
