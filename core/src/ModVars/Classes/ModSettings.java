@@ -6,7 +6,7 @@ import arc.Core;
 import arc.Events;
 import arc.math.Mathf;
 import arc.util.Strings;
-import braindustry.MainModClass;
+import braindustry.BraindustryMod;
 import mindustry.Vars;
 import mindustry.game.EventType;
 
@@ -84,7 +84,7 @@ public class ModSettings {
         Events.on(EventType.ClientLoadEvent.class,(e)->{
             Vars.ui.settings.row();
             Vars.ui.settings.button((button) -> {
-                        button.image(MainModClass.getIcon()).size(64, 64);
+                        button.image(BraindustryMod.getIcon()).size(64, 64);
 //                        button.setSize(80f,80f);
                         button.label(() -> Strings.format("@", modInfo==null?"":modInfo.meta.displayName));
                     },

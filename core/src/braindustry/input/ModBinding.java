@@ -1,11 +1,8 @@
 package braindustry.input;
 
-import arc.Core;
 import arc.KeyBinds;
 import arc.input.InputDevice;
 import arc.input.KeyCode;
-import arc.struct.Seq;
-import braindustry.MainModClass;
 
 public enum ModBinding implements KeyBinds.KeyBind {
 
