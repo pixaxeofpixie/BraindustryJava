@@ -18,7 +18,12 @@ buildscript {
 //        gameModFolder = prop["gameModFolder"]
         serverModFolder=null;
         gameModFolder=null;
-        mindustryVersion = 'v125.1'
+        mindustryVersion = 'v126.2'
+        arcModule = { String name ->
+            //skip to last submodule
+            if (name.contains(':')) name = name.split(':').last()
+            return "com.github.Anuken.Arc:$name:0e99b0291f81d74d335dca8b0cf3bf26931f1197"
+        }
     }
     repositories {
         mavenLocal()
@@ -31,7 +36,9 @@ buildscript {
     dependencies {
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.11'
         classpath "com.github.anuken:packr:-SNAPSHOT"
-        classpath "com.github.Anuken.Arc:packer:$mindustryVersion"
+//        classpath "com.github.Anuken.Arc:packer:$mindustryVersion"
+        classpath arcModule("packer")
+        classpath arcModule("g3d")
         classpath "com.github.Anuken.Arc:arc-core:$mindustryVersion"
         classpath "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
         classpath "com.github.Anuken.Mindustry:core:$mindustryVersion"
@@ -51,8 +58,7 @@ ext {
     arcModule = { String name ->
         //skip to last submodule
         if (name.contains(':')) name = name.split(':').last()
-        return "com.github.Anuken.Arc:$name:$mindustryVersion"
-
+        return "com.github.Anuken.Arc:$name:0e99b0291f81d74d335dca8b0cf3bf26931f1197"
     }
 }
 dependencies {
@@ -190,11 +196,11 @@ project(":core") {
         compileJava.dependsOn(preGen)
 
         api "org.lz4:lz4-java:1.4.1"
-        api arcModule("arc-core")
-        api arcModule("extensions:freetype")
-        api arcModule("extensions:g3d")
-        api arcModule("extensions:fx")
-        api arcModule("extensions:arcnet")
+        implementation arcModule("arc-core")
+        implementation arcModule("extensions:freetype")
+        implementation arcModule("extensions:g3d")
+        implementation arcModule("extensions:fx")
+        implementation arcModule("extensions:arcnet")
 //        compileOnly "com.github.Anuken.Mindustry:entities:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:annotations:$mindustryVersion"
         implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"

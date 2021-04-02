@@ -14,6 +14,7 @@ import braindustry.entities.abilities.ImpactReactorAbility;
 import braindustry.entities.abilities.OrbitalPlatformAbility;
 import braindustry.entities.bullets.AdamBulletType;
 import braindustry.entities.bullets.EveBulletType;
+import braindustry.gen.ModSounds;
 import braindustry.gen.StealthMechUnit;
 import braindustry.graphics.ModPal;
 import braindustry.type.ModUnitType;

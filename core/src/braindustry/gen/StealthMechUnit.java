@@ -33,10 +33,7 @@ import mindustry.ai.formations.FormationPattern;
 import mindustry.entities.EntityCollisions;
 import mindustry.entities.units.BuildPlan;
 import mindustry.entities.units.StatusEntry;
-import mindustry.gen.Call;
-import mindustry.gen.Groups;
-import mindustry.gen.Hitboxc;
-import mindustry.gen.Unit;
+import mindustry.gen.*;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
@@ -46,7 +43,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 
 import java.util.Arrays;
 
-public class StealthMechUnit extends CopyMechUnit implements StealthUnitc, ModEntityc {
+public class StealthMechUnit extends MechUnit implements StealthUnitc, ModEntityc {
     public static int classId = 0;
     public boolean inStealth = false;
     public float cooldownStealth = 0;

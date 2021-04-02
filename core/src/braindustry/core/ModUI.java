@@ -41,7 +41,6 @@ public class ModUI implements Disposable {
 
     }
     public void init() {
-        if (Vars.headless) return;
         ModStyles.load();
         colorPicker=new ModColorPicker();
         AdvancedSettingsMenuDialog.init();

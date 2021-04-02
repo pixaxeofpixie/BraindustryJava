@@ -262,4 +262,5 @@ public class ModAnnotations {
     @Retention(RetentionPolicy.SOURCE)
     public @interface AssetFolderFinder {
     }
+    public @interface CashAnnotation1{}
 }

@@ -1,10 +1,7 @@
 package braindustry.graphics;
 
 import arc.Core;
-import arc.graphics.Cubemap;
-import arc.graphics.Mesh;
-import arc.graphics.Texture;
-import arc.graphics.VertexAttribute;
+import arc.graphics.*;
 import arc.graphics.gl.Shader;
 import arc.math.geom.Mat3D;
 import mindustry.graphics.CubemapMesh;
@@ -19,7 +16,7 @@ public class ModCubemapMesh extends CubemapMesh {
         super(map);
         this.map = map;
         this.map.setFilter(Texture.TextureFilter.linear);
-        this.mesh = new Mesh(true, vertices.length, 0, new VertexAttribute(1, 3, "a_position"));
+        this.mesh = new Mesh(true, vertices.length, 0, VertexAttribute.position3);
         this.mesh.getVerticesBuffer().limit(vertices.length);
         this.mesh.getVerticesBuffer().put(vertices, 0, vertices.length);
         this.shader = new ModShaders.ModCupemapShader();
@@ -32,7 +29,7 @@ public class ModCubemapMesh extends CubemapMesh {
     public void render(Mat3D projection) {
         render(projection,50f);
     }
-    public void render(Mat3D projection,float scale) {
+    public void render(Mat3D projection, float scale) {
         this.map.bind();
         this.shader.bind();
         this.shader.setUniformi("u_cubemap", 0);

@@ -25,6 +25,7 @@ import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.ModLightningBulletType;
 import braindustry.gen.ModContentRegions;
 import braindustry.gen.ModPlayer;
+import braindustry.gen.ModSounds;
 import braindustry.gen.StealthUnitc;
 import braindustry.graphics.ModShaders;
 import braindustry.graphics.g2d.ModBloom;
@@ -181,6 +182,10 @@ public class BraindustryMod extends Mod {
         inTry(() -> {
             if (!headless) ModShaders.init();
         });
+        if (!headless) {
+            ModSounds.load();
+            ModSounds.load();
+        }
         new ModContentLoader((load) -> {
             try {
                 load.load();

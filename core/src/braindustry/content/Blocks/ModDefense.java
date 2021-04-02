@@ -1,6 +1,7 @@
 package braindustry.content.Blocks;
 import braindustry.content.*;
 import braindustry.entities.bullets.ContinuousRainbowLaserBulletType;
+import braindustry.gen.ModSounds;
 import braindustry.graphics.ModPal;
 import braindustry.world.blocks.Wall.ReflectionWall;
 import arc.graphics.Color;

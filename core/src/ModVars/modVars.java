@@ -100,8 +100,8 @@ public class modVars {
         SaveIO.versionArray.add(save4);
         SaveIO.versions.remove(save4.version);
         SaveIO.versions.put(save4.version, save4);
-        modUI.init();
         if(!headless){
+            modUI.init();
             modBloom=new ModBloom(null);
         }
         netClient.loadNetHandler();

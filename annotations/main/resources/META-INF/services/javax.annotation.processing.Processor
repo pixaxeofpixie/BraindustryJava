@@ -7,3 +7,4 @@ Gas.annotations.misc.GasLoadRegionProcessor
 braindustry.annotations.misc.ModLoadRegionProcessor
 braindustry.annotations.AdvancedStats.AStatCatProcessor
 braindustry.annotations.AdvancedStats.AStatProcessor
+braindustry.annotations.impl.ModAssetsProcess

@@ -8,7 +8,6 @@ import arc.struct.Seq;
 import braindustry.entities.Advanced.AdvancedLegsUnit;
 import braindustry.entities.Advanced.AdvancedPayloadUnit;
 import braindustry.entities.Advanced.AdvancedUnitWaterMove;
-import braindustry.entities.AmmoDistributeUnit;
 import braindustry.entities.PowerGeneratorUnit;
 import braindustry.versions.ModEntityc;
 
@@ -31,7 +30,7 @@ public class ModEntityMapping {
     static {
         lastClass=0;
         mapClasses(
-                AmmoDistributeUnit.class,
+                null,
                 PowerGeneratorUnit.class,
                 AdvancedLegsUnit.class,
                 AdvancedPayloadUnit.class,
