@@ -486,7 +486,7 @@ public class ModUnitTypes implements ContentList {
                                     this.lightning = 2;
                                     this.lightningLength = 6;
                                     this.lightningColor = Pal.surge;
-                                    this.lightningDamage = 6;
+                                    this.lightningDamage = 3;
                                     }
                                 };
                             }
@@ -523,7 +523,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 60;
+                                        this.damage = 30;
                                         this.speed = 13.4f;
                                         this.pierce = true;
                                         this.pierceCap = 2;
@@ -756,13 +756,13 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 3;
                                 this.rotate = true;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 12;
+                                this.shots = 9;
                                 this.inaccuracy = 5;
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 102;
+                                        this.damage = 32;
                                         this.speed = 11.4f;
                                         this.pierce = true;
                                         this.pierceCap = 16;
@@ -773,7 +773,7 @@ public class ModUnitTypes implements ContentList {
                                         this.lightning = 3;
                                         this.lightningLength = 4;
                                         this.lightningColor = Pal.surge;
-                                        this.lightningDamage = 11;
+                                        this.lightningDamage = 7;
                                         this.width = 14f;
                                         this.height = 33f;
                                         this.lifetime = 40f;
@@ -1373,7 +1373,7 @@ public class ModUnitTypes implements ContentList {
                                         this.damage = 590.0F;
                                         this.pierceDamageFactor = 0.45F;
                                         this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 0.65f;
+                                        this.buildingDamageMultiplier = 1.2f;
                                         this.speed = brange;
                                         this.hitShake = 3f;
                                     }
