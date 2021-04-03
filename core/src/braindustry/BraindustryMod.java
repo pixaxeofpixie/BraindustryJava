@@ -9,31 +9,21 @@ import arc.Events;
 import arc.func.Boolf;
 import arc.func.Func;
 import arc.graphics.g2d.TextureRegion;
-import arc.math.geom.QuadTree;
-import arc.scene.ui.Image;
-import arc.scene.ui.ImageButton;
-import arc.scene.ui.layout.Cell;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.CommandHandler;
 import arc.util.Log;
 import braindustry.audio.ModAudio;
-import braindustry.content.*;
 import braindustry.core.ModContentLoader;
-import braindustry.entities.ZeroEntity;
-import braindustry.entities.bullets.AngelContinuousBulletType;
 import braindustry.entities.bullets.ModLightningBulletType;
 import braindustry.gen.ModContentRegions;
+import braindustry.gen.ModMusics;
 import braindustry.gen.ModPlayer;
 import braindustry.gen.ModSounds;
-import braindustry.gen.StealthUnitc;
 import braindustry.graphics.ModShaders;
 import braindustry.graphics.g2d.ModBloom;
-import braindustry.type.StealthUnitType;
-import braindustry.world.ModBlock;
 import mindustry.Vars;
 import mindustry.content.Blocks;
-import mindustry.ctype.ContentList;
 import mindustry.ctype.MappableContent;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.bullet.BulletType;
@@ -41,21 +31,15 @@ import mindustry.entities.bullet.LightningBulletType;
 import mindustry.game.EventType;
 import mindustry.game.EventType.ClientLoadEvent;
 import mindustry.game.EventType.DisposeEvent;
-import mindustry.game.Team;
-import mindustry.gen.*;
+import mindustry.gen.EntityMapping;
 import mindustry.io.JsonIO;
 import mindustry.mod.Mod;
 import mindustry.type.Item;
-import mindustry.type.UnitType;
-import mindustry.ui.Styles;
-import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.meta.BuildVisibility;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static ModVars.modFunc.*;
 import static ModVars.modVars.*;
@@ -64,24 +48,27 @@ import static mindustry.Vars.*;
 public class BraindustryMod extends Mod {
 
 
+    static Seq<String> names = new Seq<>();
+
     public BraindustryMod() {
+
         EventOn(DisposeEvent.class, (d) -> {
             modUI.dispose();
             Vars.ui.dispose();
         });
         modInfo = Vars.mods.getMod(this.getClass());
         modVars.load();
-        Events.on(EventType.Trigger.class,e->{
-            if (e== EventType.Trigger.preDraw){
-                renderUpdate=true;
+        Events.on(EventType.Trigger.class, e -> {
+            if (e == EventType.Trigger.preDraw) {
+                renderUpdate = true;
             }
-            if (e== EventType.Trigger.postDraw){
-                renderUpdate=false;
+            if (e == EventType.Trigger.postDraw) {
+                renderUpdate = false;
             }
-            if (e== EventType.Trigger.draw){
-                if (!headless){
-                    if (!(renderer.bloom instanceof ModBloom)){
-                        renderer.bloom= modBloom.parent(renderer.bloom);
+            if (e == EventType.Trigger.draw) {
+                if (!headless) {
+                    if (!(renderer.bloom instanceof ModBloom)) {
+                        renderer.bloom = modBloom.parent(renderer.bloom);
                     }
                 }
             }
@@ -98,6 +85,17 @@ public class BraindustryMod extends Mod {
 //        print("modInfo: @",modInfo);
         if (modInfo == null || modInfo.iconTexture == null) return Core.atlas.find("nomap");
         return new TextureRegion(modInfo.iconTexture);
+    }
+
+    public static boolean inPackage(String packageName, Object obj) {
+        if (packageName == null || obj == null) return false;
+        String name;
+        try {
+            name = obj.getClass().getPackage().getName();
+        } catch (Exception e) {
+            return false;
+        }
+        return name.startsWith(packageName + ".");
     }
 
     @Override
@@ -121,7 +119,7 @@ public class BraindustryMod extends Mod {
 
     public void init() {
         if (!loaded) return;
-        getModContent().each(c->{
+        getModContent().each(c -> {
             if (c instanceof MappableContent && !headless) ModContentRegions.loadRegions((MappableContent) c);
         });
         createPlayer();
@@ -183,8 +181,12 @@ public class BraindustryMod extends Mod {
             if (!headless) ModShaders.init();
         });
         if (!headless) {
-            ModSounds.load();
-            ModSounds.load();
+            try {
+                ModSounds.load();
+                ModMusics.load();
+                Log.info("sounds loaded or not?!");
+            } catch (Exception ignored){
+            }
         }
         new ModContentLoader((load) -> {
             try {
@@ -195,22 +197,11 @@ public class BraindustryMod extends Mod {
         });
         GasInit.init(true);
         Vars.content.each((c) -> {
-            if (inPackage("braindustry",c)) {
+            if (inPackage("braindustry", c)) {
                 modVars.addContent(c);
                 if (c instanceof UnlockableContent) checkTranslate((UnlockableContent) c);
             }
         });
         loaded = true;
-    }
-    static Seq<String> names=new Seq<>();
-    public static boolean inPackage(String packageName,Object obj){
-        if (packageName==null || obj==null)return false;
-        String name;
-        try {
-            name = obj.getClass().getPackage().getName();
-        } catch (Exception e){
-            return false;
-        }
-        return name.startsWith(packageName + ".");
     }
 }
