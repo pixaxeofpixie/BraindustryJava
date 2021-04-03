@@ -184,7 +184,6 @@ public class BraindustryMod extends Mod {
             try {
                 ModSounds.load();
                 ModMusics.load();
-                Log.info("sounds loaded or not?!");
             } catch (Exception ignored){
             }
         }
