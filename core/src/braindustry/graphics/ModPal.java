@@ -15,6 +15,10 @@ public class ModPal {
     public static final Color adamBackColor = Color.valueOf("7bafc4");
     public static final Color adamFrontColor = Color.valueOf("b5eff4");
 
+    public static final Color lilithTrailColor = Color.valueOf("796D8E");
+    public static final Color lilithBackColor = Color.valueOf("998DD5");
+    public static final Color lilithFrontColor = Color.valueOf("B8B5E4");
+
     public static final Color blackHoleLaserColor = Color.valueOf("1a1744");
     public static final Color blackHoleLaserBackColor = Color.valueOf("7bafc4");
     public static final Color blackHoleLaserFrontColor = Color.valueOf("0d0b26");

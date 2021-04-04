@@ -14,6 +14,7 @@ import braindustry.entities.abilities.ImpactReactorAbility;
 import braindustry.entities.abilities.OrbitalPlatformAbility;
 import braindustry.entities.bullets.AdamBulletType;
 import braindustry.entities.bullets.EveBulletType;
+import braindustry.entities.bullets.LilithBulletType;
 import braindustry.gen.ModSounds;
 import braindustry.gen.StealthMechUnit;
 import braindustry.graphics.ModPal;
@@ -486,7 +487,7 @@ public class ModUnitTypes implements ContentList {
                                     this.lightning = 2;
                                     this.lightningLength = 6;
                                     this.lightningColor = Pal.surge;
-                                    this.lightningDamage = 3;
+                                    this.lightningDamage = 6;
                                     }
                                 };
                             }
@@ -523,7 +524,7 @@ public class ModUnitTypes implements ContentList {
                                 this.rotate = true;
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 30;
+                                        this.damage = 60;
                                         this.speed = 13.4f;
                                         this.pierce = true;
                                         this.pierceCap = 2;
@@ -756,13 +757,13 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 3;
                                 this.rotate = true;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 9;
+                                this.shots = 12;
                                 this.inaccuracy = 5;
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
                                 this.mirror = true;
                                 this.bullet = new BasicBulletType(){{
-                                        this.damage = 32;
+                                        this.damage = 102;
                                         this.speed = 11.4f;
                                         this.pierce = true;
                                         this.pierceCap = 16;
@@ -773,7 +774,7 @@ public class ModUnitTypes implements ContentList {
                                         this.lightning = 3;
                                         this.lightningLength = 4;
                                         this.lightningColor = Pal.surge;
-                                        this.lightningDamage = 7;
+                                        this.lightningDamage = 11;
                                         this.width = 14f;
                                         this.height = 33f;
                                         this.lifetime = 40f;
@@ -1373,7 +1374,7 @@ public class ModUnitTypes implements ContentList {
                                         this.damage = 590.0F;
                                         this.pierceDamageFactor = 0.45F;
                                         this.despawnEffect = ModFx.instBomb;
-                                        this.buildingDamageMultiplier = 1.2f;
+                                        this.buildingDamageMultiplier = 0.65f;
                                         this.speed = brange;
                                         this.hitShake = 3f;
                                     }
@@ -1905,7 +1906,7 @@ public class ModUnitTypes implements ContentList {
                                     posses.add(new Vec2(point2.x,point2.y).scl(7.5f));
                             }
 
-//                    Log.info("posses: @",posses.toString(", "));
+                    Log.info("posses: @",posses.toString(", "));
                             return posses;
                         }).engineSize(6)
                 );

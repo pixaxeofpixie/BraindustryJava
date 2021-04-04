@@ -177,6 +177,23 @@ public class ModFx {
                     Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 1.0F + e.fout() * 3.0F);
                 });
             }),
+            lilithExplosion = new Effect(24.0F, e -> {
+                Draw.color(ModPal.lilithFrontColor);
+                e.scaled(6.0F, (i) -> {
+                    Lines.stroke(2.0F * i.fout());
+                    Lines.circle(e.x, e.y, 4.0F + i.fin() * 15.0F);
+                    Lines.square(e.x, e.y, 4.2f+ i.fin() * 12.0F, 12.0f);
+                });
+                Draw.color(Color.gray);
+                Angles.randLenVectors((long) e.id, 5, 2.0F + 23.0F * e.finpow(), (x, y) -> {
+                    Fill.circle(e.x + x, e.y + y, e.fout() * 4.0F + 0.5F);
+                });
+                Draw.color(ModPal.adamBackColor);
+                Lines.stroke(e.fout());
+                Angles.randLenVectors((long) (e.id + 1), 4, 1.0F + 23.0F * e.finpow(), (x, y) -> {
+                    Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 1.0F + e.fout() * 3.0F);
+                });
+            }),
             instBomb = new Effect(15.0F, 100.0F, (e) -> {
                 Draw.color(ModPal.adamBackColor);
                 Lines.stroke(e.fout() * 4.0F);

@@ -129,7 +129,7 @@ class ModUnitsBlocks implements ContentList {
                 this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 3100, ModItems.chloroAlloy, 400, ModItems.odinum, 700, Items.plastanium, 400, Items.phaseFabric, 600, Items.silicon, 1500, ModItems.exoticAlloy, 1000));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.aquila, ModUnitTypes.griffon},
-                        new UnitType[]{ModUnitTypes.vyvna, ModUnitTypes.moureno},
+                        new UnitType[]{ModUnitTypes.vyvna, ModUnitTypes.moray},
                         new UnitType[]{ModUnitTypes.maverix, ModUnitTypes.litix}
                 );
             }
