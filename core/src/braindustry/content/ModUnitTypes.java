@@ -33,14 +33,22 @@ import mindustry.entities.bullet.*;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.type.AmmoTypes;
+import mindustry.world.meta.BlockFlag;
 
 
 public class ModUnitTypes implements ContentList {
     public static ModUnitType
-            aquila, aries, armor, broadsword, capra,
-            cenda, chainmail, chestplate, ibis, lacerta,
-            lyra, shield, tropsy, venti, vyvna, tyzen, kryox, intelix,
-            nemesis, maverix, griffon, moureno, litix, tenvy;
+            //spider
+            aquila, aries, ibis, lacerta, capra,
+            //air
+            shield, chainmail, chestplate, broadsword, armor,
+            //naval
+            lyra, cenda, tropsy, venti, vyvna,
+            //stealth
+            tyzen, kryox, intelix, nemesis, maverix,
+            //tx
+            griffon, moray, litix, penumbra;
+
 
     public ModUnitTypes() {
         UnitTypes.class.isArray();
@@ -1591,7 +1599,7 @@ public class ModUnitTypes implements ContentList {
                                         this.collides = true;
                                         this.pierce = true;
                                         this.hittable = true;
-                                        this.absorbable = false;
+                                        this.absorbable = true;
                                         this.damage = 248;
                                         this.shootEffect = ModFx.yellowLaserCharge;
                                         this.despawnEffect = ModFx.energyShrapnelSmoke;
@@ -1671,7 +1679,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        moureno = new ModUnitType("mouriena") {
+        moray = new ModUnitType("moray") {
             {
                 this.range = 620;
                 this.constructor = Types.naval;
@@ -1703,7 +1711,25 @@ public class ModUnitTypes implements ContentList {
 
 
                 this.weapons.add(
-                        new ModWeapon("mouriena-weapon") {{
+                        new ModWeapon("moray-rocket-launcher") {
+                            {
+                                this.reload = 70;
+                                this.x = 14;
+                                this.y = -18f;
+                                this.shadow = 9;
+                                this.rotateSpeed = 0.6f;
+                                this.rotate = true;
+                                this.shots = 2;
+                                this.shotDelay = 20;
+                                this.inaccuracy = 0.3f;
+                                this.velocityRnd = 0.1f;
+                                this.shootSound = Sounds.missile;
+                                this.bullet = new LilithBulletType() {
+                                };
+                            }
+                        },
+
+                        new ModWeapon("moray-artillery") {{
                             top = true;
                             y = -3f;
                             x = 32f;
@@ -1733,7 +1759,7 @@ public class ModUnitTypes implements ContentList {
                                 }
                             };
                         }},
-                        new ModWeapon("moureno-laser-weapon") {{
+                        new ModWeapon("moray-laser-weapon") {{
                             mirror = false;
                             top = true;
                             shake = 6f;
@@ -1774,6 +1800,47 @@ public class ModUnitTypes implements ContentList {
                                     collidesTeam = true;
 
                                     colors = new Color[]{ModPal.blackHoleLaserColor.cpy().a(2.4f), ModPal.blackHoleLaserColor.cpy().a(.4f), ModPal.blackHoleLaserColor.cpy().mul(1.9f), Color.white};
+                                }
+                            };
+                        }},
+                        new ModWeapon("moray-voidwave") {{
+                            top = true;
+                            y = -8f;
+                            x = 23f;
+                            reload = 40f;
+                            recoil = 6f;
+                            shots = 1;
+                            inaccuracy = 1.0f;
+                            shake = 2;
+                            rotate = true;
+                            rotateSpeed = 0.9f;
+                            mirror = true;
+                            ejectEffect = ModFx.litixShoot;
+                            shootSound = Sounds.missile;
+                            bullet = new BasicBulletType(){
+                                {
+                                    this.damage = 960;
+                                    this.width = 15;
+                                    this.height = 16;
+                                    //this.shrinkY = 0.1f;
+                                    this.shrinkX = 0.3f;
+                                    this.speed = 4;
+                                    this.hitSize = 15;
+                                    this.lifetime = 180;
+                                    this.status = StatusEffects.slow;
+                                    this.statusDuration = 120;
+                                    //  this.bulletSprite = wave-shell;
+                                    this.pierce = true;
+                                    this.width = 1;
+                                    this.buildingDamageMultiplier = 0.6f;
+                                    //   this.length = 4;
+                                    this.hittable = true;
+                                    this.ammoMultiplier = 1;
+                                    trailChance=100f;
+                                    trailEffect=ModFx.fireworkTrail;
+                                    this.backColor = ModPal.blackHoleLaserBackColor;
+                                    this.frontColor = ModPal.blackHoleLaserColor;
+                                    this.hitColor = this.trailColor=this.lightColor=this.lightningColor=Color.violet;
                                 }
                             };
                         }}
@@ -1982,6 +2049,83 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
+        penumbra = new ModUnitType("penumbra"){{
+            speed = 0.52f;
+            accel = 0.04f;
+            drag = 0.04f;
+            rotateSpeed = 1f;
+            flying = true;
+            lowAltitude = true;
+            health = 20000;
+            engineOffset = 38;
+            engineSize = 7.3f;
+            constructor = Types.payload;
+            hitSize = 58f;
+            destructibleWreck = false;
+            armor = 13f;
+            targetFlag = BlockFlag.reactor;
+
+            BulletType fragBullet = new FlakBulletType(4f, 5){{
+                shootEffect = Fx.shootBig;
+                ammoMultiplier = 4f;
+                splashDamage = 42f;
+                splashDamageRadius = 25f;
+                collidesGround = true;
+                lifetime = 38f;
+
+                status = StatusEffects.blasted;
+                statusDuration = 60f;
+            }};
+
+            weapons.add(
+                    new ModWeapon("penumbra-laser-mount"){{
+                        shake = 4f;
+                        shootY = 9f;
+                        x = 18f;
+                        y = 5f;
+                        rotateSpeed = 2f;
+                        reload = 45f;
+                        recoil = 4f;
+                        shootSound = Sounds.laser;
+                        shadow = 20f;
+                        rotate = true;
+
+                        bullet = new LaserBulletType(){{
+                            damage = 90f;
+                            sideAngle = 20f;
+                            sideWidth = 1.5f;
+                            sideLength = 80f;
+                            width = 25f;
+                            length = 200f;
+                            shootEffect = Fx.shockwave;
+                            colors = new Color[]{Color.valueOf("72E4A9"), Color.valueOf("5BB36C"), Color.white};
+                        }};
+                    }},
+                    new ModWeapon("penumbra-shotgun"){{
+                        x = 11f;
+                        y = 27f;
+                        rotateSpeed = 2f;
+                        reload = 9f;
+                        shootSound = Sounds.shoot;
+                        shadow = 7f;
+                        rotate = true;
+                        recoil = 0.5f;
+
+                        bullet = fragBullet;
+                    }},
+                    new ModWeapon("penumbra-shotgun"){{
+                        y = -13f;
+                        x = 20f;
+                        reload = 12f;
+                        ejectEffect = Fx.casing1;
+                        rotateSpeed = 7f;
+                        shake = 1f;
+                        shootSound = Sounds.shoot;
+                        rotate = true;
+                        shadow = 12f;
+                        bullet = fragBullet;
+                    }});
+        }};
     }
 
     private static class Types {
@@ -1989,6 +2133,7 @@ public class ModUnitTypes implements ContentList {
         static Prov<? extends Unit> naval = UnitWaterMove::create;
         static Prov<? extends Unit> legs = LegsUnit::create;
         static Prov<? extends Unit> mech = MechUnit::create;
+        //static Prov<? extends Unit> air = FlyingUnit::create; //че так сложно
         static Prov<? extends Unit> stealthMech = StealthMechUnit::new;
 //        static Prov<? extends Unit> powerNaval=PowerGeneratorUnit::new;
     }
