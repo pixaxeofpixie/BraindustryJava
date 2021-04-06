@@ -2100,7 +2100,7 @@ public class ModUnitTypes implements ContentList {
                         rotate = true;
                         recoil = 0.5f;
 
-                        bullet = BasicBulletType(){{
+                        bullet = new BasicBulletType(){{
                                         damage = 82;
                                         speed = 11.4f;
                                         pierce = true;
@@ -2128,7 +2128,7 @@ public class ModUnitTypes implements ContentList {
                         shootSound = Sounds.shoot;
                         rotate = true;
                         shadow = 12f;
-                        bullet = BasicBulletType(){{
+                        bullet = new BasicBulletType(){{
                                         damage = 12;
                                         speed = 11.4f;
                                         pierce = true;
