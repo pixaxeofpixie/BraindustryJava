@@ -2144,7 +2144,7 @@ public class ModUnitTypes implements ContentList {
                             height = 33f;
                             lifetime = 40f;
                             shootEffect = Fx.shootBig;
-                      }}
+                      }};
                     }}
                       );
          }};
