@@ -2085,6 +2085,7 @@ public class ModUnitTypes implements ContentList {
                             shootEffect = Fx.shockwave;
                             colors = new Color[]{Color.valueOf("72E4A9"), Color.valueOf("5BB36C"), Color.white};
                         }};
+                    }},
                     new ModWeapon("penumbra-shotgun"){{
                         x = 17f;
                         y = 32f;
@@ -2143,8 +2144,10 @@ public class ModUnitTypes implements ContentList {
                             height = 33f;
                             lifetime = 40f;
                             shootEffect = Fx.shootBig;
-                        }});
+                        }}
+                      }});
                     };
+                }
     private static class Types {
         static Prov<? extends Unit> payload = PayloadUnit::create;
         static Prov<? extends Unit> naval = UnitWaterMove::create;
