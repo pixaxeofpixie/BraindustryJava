@@ -2085,7 +2085,6 @@ public class ModUnitTypes implements ContentList {
                             shootEffect = Fx.shockwave;
                             colors = new Color[]{Color.valueOf("72E4A9"), Color.valueOf("5BB36C"), Color.white};
                         }};
-                    }},
                     new ModWeapon("penumbra-shotgun"){{
                         x = 17f;
                         y = 32f;
