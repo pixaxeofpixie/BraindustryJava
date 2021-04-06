@@ -2144,8 +2144,10 @@ public class ModUnitTypes implements ContentList {
                             height = 33f;
                             lifetime = 40f;
                             shootEffect = Fx.shootBig;
-                      }});
-                    };
+                      }}
+                    }}
+                      );
+         }};
                 }
     private static class Types {
         static Prov<? extends Unit> payload = PayloadUnit::create;
