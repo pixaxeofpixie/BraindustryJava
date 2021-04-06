@@ -47,7 +47,7 @@ public class ModUnitTypes implements ContentList {
             //stealth
             tyzen, kryox, intelix, nemesis, maverix,
             //tx
-            griffon, moray, litix, penumbra;
+            griffon, moray, litix, penumbra, kraken;
 
 
     public ModUnitTypes() {
@@ -765,7 +765,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 3;
                                 this.rotate = true;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 7;
+                                this.shots = 12;
                                 this.inaccuracy = 5;
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
@@ -1731,8 +1731,8 @@ public class ModUnitTypes implements ContentList {
 
                         new ModWeapon("moray-artillery") {{
                             top = true;
-                            y = 4f;
-                            x = 29f;
+                            y = -3f;
+                            x = 32f;
                             reload = 20f;
                             recoil = 7f;
                             shots = 3;
@@ -1765,7 +1765,7 @@ public class ModUnitTypes implements ContentList {
                             shake = 6f;
                             shootY = 28f;
                             x = 0f;
-                            y = -9f;
+                            y = -4f;
                             rotate = true;
                             rotateSpeed = 0.9f;
 
@@ -1805,9 +1805,9 @@ public class ModUnitTypes implements ContentList {
                         }},
                         new ModWeapon("moray-voidwave") {{
                             top = true;
-                            y = 7f;
+                            y = -8f;
                             x = 23f;
-                            reload = 10f;
+                            reload = 40f;
                             recoil = 6f;
                             shots = 1;
                             inaccuracy = 1.0f;
@@ -1819,7 +1819,7 @@ public class ModUnitTypes implements ContentList {
                             shootSound = Sounds.missile;
                             bullet = new BasicBulletType(){
                                 {
-                                    this.damage = 260;
+                                    this.damage = 960;
                                     this.width = 15;
                                     this.height = 16;
                                     //this.shrinkY = 0.1f;
@@ -2049,12 +2049,16 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-         penumbra = new ModUnitType("penumbra"){{
+        penumbra = new ModUnitType("penumbra"){{
+            localizedName = "Penumbra";
+            description = "Flying unit with long range shotguns, used for reactors destruction";
             speed = 0.52f;
             accel = 0.04f;
             drag = 0.04f;
             rotateSpeed = 1f;
             flying = true;
+            constructor = Types.payload;
+            rotateShooting = false;
             lowAltitude = true;
             health = 15000;
             engineOffset = 38;
@@ -2144,17 +2148,84 @@ public class ModUnitTypes implements ContentList {
                             height = 33f;
                             lifetime = 40f;
                             shootEffect = Fx.shootBig;
-                      }};
+                        }};
                     }}
-                      );
-         }};
-                }
+            );
+        }};
+
+        kraken= new ModUnitType("kraken") {
+            {
+                this.range = 620;
+                this.constructor = Types.naval;
+                this.localizedName = "Kraken";
+                this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers and rocket launchers.";
+                this.health = 162000;
+                this.speed = 0.6f;
+                this.accel = 0.12f;
+                this.rotateSpeed = 0.9f;
+                this.drag = 0.35f;
+                this.hitSize = 224.0F;
+                this.armor = 22;
+                this.rotateShooting = false;
+                this.trailLength = 240;
+                this.trailX = 36;
+                this.trailY = 28;
+                this.trailScl = 0.9f;
+                int brange = 1;
+                this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
+                float spawnTime = 2000;
+
+                abilities.addAll(
+                        new BlackHoleReactorAbility(this, 30f, 35, Integer.MAX_VALUE, 15.0f, new Vec2(-26.25f, 0))
+                        //new UnitSpawnAbility(ModUnitTypes.armor, spawnTime, 22.25f, -45.75f),
+                        //new UnitSpawnAbility(ModUnitTypes.armor, spawnTime, -22.25f, -45.75f),
+                        //new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f),
+                        //new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -36.25f, -48.75f)
+                );
+
+                weapons.add(
+                  new ModWeapon("kraken-canon"){
+                      {
+                          this.x = 0f;
+                          this.y = -30f;
+                          this.shootY = -3f;
+                          this.reload = 125f;
+                          this.ejectEffect = Fx.none;
+                          this.recoil = 5f;
+                          this.rotate = true;
+                          this.shadow = 50;
+                          this.mirror = false;
+                          this.rotateSpeed = 0.5f;
+                          this.shootSound = Sounds.plasmaboom;
+                          this.alternate = true;
+                          this.bullet = new RailBulletType() {
+                              {
+                                  this.shootEffect = ModFx.krakenShoot;
+                                  this.length = 720.0F;
+                                  this.updateEffectSeg = 60.0F;
+                                  this.pierceEffect = this.hitEffect = ModFx.krakenHit;
+                                  this.updateEffect = this.trailEffect = ModFx.krakenTrail;
+                                  this.smokeEffect = ModFx.rapierSmoke;
+                                  this.damage = 8650.0F;
+                                  this.pierceDamageFactor = 0.8F;
+                                  this.despawnEffect = Fx.instBomb;
+                                  this.buildingDamageMultiplier = 0.8f;
+                                  this.speed = brange;
+                                  this.hitShake = 8f;
+                              }
+                          };
+                      }
+                  }
+                );
+            }};
+    }
+
     private static class Types {
         static Prov<? extends Unit> payload = PayloadUnit::create;
         static Prov<? extends Unit> naval = UnitWaterMove::create;
         static Prov<? extends Unit> legs = LegsUnit::create;
         static Prov<? extends Unit> mech = MechUnit::create;
-        //static Prov<? extends Unit> air = FlyingUnit::create; //че так сложно
+        //static Prov<? extends Unit> flying = FlyingUnit::create; //че так сложно
         static Prov<? extends Unit> stealthMech = StealthMechUnit::new;
 //        static Prov<? extends Unit> powerNaval=PowerGeneratorUnit::new;
     }

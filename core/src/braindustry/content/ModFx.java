@@ -44,15 +44,94 @@ public class ModFx {
             fireworkShoot=new Effect(28f,e->{
 
             }),
+
+    krakenRocketExplosion = new Effect(22.0F, e -> {
+        Draw.color(ModPal.krakenFrontColor);
+        e.scaled(6.0F, (i) -> {
+            Lines.stroke(3.0F * i.fout());
+            Lines.circle(e.x, e.y, 3.0F + i.fin() * 15.0F);
+        });
+        Draw.color(Color.gray);
+        Angles.randLenVectors((long) e.id, 5, 2.0F + 23.0F * e.finpow(), (x, y) -> {
+            Fill.circle(e.x + x, e.y + y, e.fout() * 4.0F + 0.5F);
+        });
+        Draw.color(ModPal.krakenBackColor);
+        Lines.stroke(e.fout());
+        Angles.randLenVectors((long) (e.id + 1), 4, 1.0F + 23.0F * e.finpow(), (x, y) -> {
+            Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 1.0F + e.fout() * 3.0F);
+        });
+    }),
+
+    krakenTrail = new Effect(37.0F, (e) -> {
+        for (int i = 0; i < 2; ++i) {
+            Draw.color(i == 0 ? ModPal.krakenBackColor : ModPal.krakenFrontColor);
+            float m = i == 0 ? 1.0F : 0.5F;
+            float rot = e.rotation + 180.0F;
+            float w = 20.0F * e.fout() * m;
+            Drawf.tri(e.x, e.y, w, (30.0F + Mathf.randomSeedRange((long) e.id, 19.0F)) * m, rot);
+            Drawf.tri(e.x, e.y, w, 8.0F * m, rot + 90.0F);
+        }
+
+    }),
+
+    krakenShoot = new Effect(32.0F, (e) -> {
+        e.scaled(22.0F, (b) -> {
+            Draw.color(Color.white, ModPal.krakenFrontColor, b.fin());
+            Lines.stroke(b.fout() * 4.0F + 0.7F);
+            Lines.circle(b.x, b.y, b.fin() * 50.0F);
+            Lines.square(e.x, e.y, b.fin() * 40.0F, 60);
+        });
+        Draw.color(ModPal.krakenFrontColor);
+        int[] var1 = Mathf.signs;
+        int var2 = var1.length;
+
+        for (int var3 = 0; var3 < var2; ++var3) {
+            int i = var1[var3];
+            Drawf.tri(e.x, e.y, 13.0F * e.fout(), 85.0F, e.rotation + 90.0F * (float) i);
+            Drawf.tri(e.x, e.y, 11.0F * e.fout(), 50.0F, e.rotation + 20.0F * (float) i);
+            Drawf.tri(e.x, e.y, 5.0F * e.fout(), 60.0F, e.rotation + 12.0F * (float) i);
+            Drawf.tri(e.x, e.y, 8.0F * e.fout(), 100.0F, e.rotation + 120.0F * (float) i);
+        }
+
+    }),
+
+    krakenHit = new Effect(20.0F, 200.0F, (e) -> {
+        Draw.color(ModPal.stealth);
+
+        for (int i = 0; i < 2; ++i) {
+            Draw.color(i == 0 ? ModPal.krakenTrailColor : ModPal.krakenFrontColor);
+            float m = i == 0 ? 1.0F : 0.5F;
+
+            for (int j = 0; j < 5; ++j) {
+                float rot = e.rotation + Mathf.randomSeedRange((long) (e.id + j), 50.0F);
+                float w = 23.0F * e.fout() * m;
+                Drawf.tri(e.x, e.y, w, (80.0F + Mathf.randomSeedRange((long) (e.id + j), 40.0F)) * m, rot);
+                Drawf.tri(e.x, e.y, w, 20.0F * m, rot + 180.0F);
+            }
+        }
+
+        e.scaled(10.0F, (c) -> {
+            Draw.color(ModPal.stealthLight);
+            Lines.stroke(c.fout() * 2.0F + 0.2F);
+            Lines.circle(e.x, e.y, c.fin() * 30.0F);
+        });
+        e.scaled(12.0F, (c) -> {
+            Draw.color(ModPal.stealthLight);
+            Angles.randLenVectors((long) e.id, 25, 5.0F + e.fin() * 80.0F, e.rotation, 60.0F, (x, y) -> {
+                Fill.square(e.x + x, e.y + y, c.fout() * 3.0F, 45.0F);
+            });
+        });
+    }),
+
             fireworkTrail = new Effect(28f, e -> {
                 Draw.color(e.color, Color.white, e.fin());
-                Angles.randLenVectors(e.id, 3, 8 + 15 * e.finpow(), e.rotation, 360, (x, y) -> {
+                Angles.randLenVectors(e.id, 2, 8 + 15 * e.finpow(), e.rotation, 360, (x, y) -> {
                     Drawf.tri(e.x + x, e.y + y, 4 * e.fout(), 8 * e.fout(), Mathf.angle(x, y));
                     Drawf.tri(e.x + x, e.y + y, 4 * e.fout(), 8 * e.fout(), Mathf.angle(x, y) + 90);
                     Drawf.tri(e.x + x, e.y + y, 4 * e.fout(), 8 * e.fout(), Mathf.angle(x, y) + 180);
                     Drawf.tri(e.x + x, e.y + y, 4 * e.fout(), 8 * e.fout(), Mathf.angle(x, y) + 270);
                 });
-                Angles.randLenVectors(e.id + 1, 3, 12, e.rotation, 360, (x, y) -> {
+                Angles.randLenVectors(e.id + 1, 3, 15, e.rotation, 360, (x, y) -> {
                     Fill.circle(e.x + x, e.y + y, e.fout() * 4);
                 });
             }),

@@ -15,6 +15,10 @@ public class ModPal {
     public static final Color adamBackColor = Color.valueOf("7bafc4");
     public static final Color adamFrontColor = Color.valueOf("b5eff4");
 
+    public static final Color krakenTrailColor = Color.valueOf("BE2E60");
+    public static final Color krakenBackColor = Color.valueOf("9A2647");
+    public static final Color krakenFrontColor = Color.valueOf("F25289");
+
     public static final Color lilithTrailColor = Color.valueOf("796D8E");
     public static final Color lilithBackColor = Color.valueOf("998DD5");
     public static final Color lilithFrontColor = Color.valueOf("B8B5E4");

@@ -346,7 +346,7 @@ class ModDefense implements ContentList {
                         this.pierce = true;
                         this.hittable = true;
                         this.absorbable = false;
-                        this.damage = 82;
+                        this.damage = 3890;
                         this.shootEffect = Fx.railShoot;
                         this.despawnEffect = Fx.railHit;
                         this.knockback = 1;
