@@ -2115,7 +2115,7 @@ public class ModUnitTypes implements ContentList {
                             height = 33f;
                             lifetime = 40f;
                             shootEffect = Fx.shootBig;
-                        }},
+                        }};
                     }},
                     new ModWeapon("penumbra-shotgun"){{
                         y = -13f;
@@ -2145,7 +2145,7 @@ public class ModUnitTypes implements ContentList {
                             lifetime = 40f;
                             shootEffect = Fx.shootBig;
                         }});
-                    }};
+                    };
     private static class Types {
         static Prov<? extends Unit> payload = PayloadUnit::create;
         static Prov<? extends Unit> naval = UnitWaterMove::create;
