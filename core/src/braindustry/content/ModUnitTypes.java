@@ -765,7 +765,7 @@ public class ModUnitTypes implements ContentList {
                                 this.recoil = 3;
                                 this.rotate = true;
                                 this.shootSound = Sounds.sap;
-                                this.shots = 12;
+                                this.shots = 7;
                                 this.inaccuracy = 5;
                                 this.velocityRnd = 0.1f;
                                 this.alternate = true;
@@ -1731,8 +1731,8 @@ public class ModUnitTypes implements ContentList {
 
                         new ModWeapon("moray-artillery") {{
                             top = true;
-                            y = -3f;
-                            x = 32f;
+                            y = 4f;
+                            x = 29f;
                             reload = 20f;
                             recoil = 7f;
                             shots = 3;
@@ -1765,7 +1765,7 @@ public class ModUnitTypes implements ContentList {
                             shake = 6f;
                             shootY = 28f;
                             x = 0f;
-                            y = -4f;
+                            y = -9f;
                             rotate = true;
                             rotateSpeed = 0.9f;
 
@@ -1805,9 +1805,9 @@ public class ModUnitTypes implements ContentList {
                         }},
                         new ModWeapon("moray-voidwave") {{
                             top = true;
-                            y = -8f;
+                            y = 7f;
                             x = 23f;
-                            reload = 40f;
+                            reload = 10f;
                             recoil = 6f;
                             shots = 1;
                             inaccuracy = 1.0f;
@@ -1819,7 +1819,7 @@ public class ModUnitTypes implements ContentList {
                             shootSound = Sounds.missile;
                             bullet = new BasicBulletType(){
                                 {
-                                    this.damage = 960;
+                                    this.damage = 260;
                                     this.width = 15;
                                     this.height = 16;
                                     //this.shrinkY = 0.1f;
@@ -2056,27 +2056,14 @@ public class ModUnitTypes implements ContentList {
             rotateSpeed = 1f;
             flying = true;
             lowAltitude = true;
-            health = 20000;
+            health = 15000;
             engineOffset = 38;
             engineSize = 7.3f;
             constructor = Types.payload;
             hitSize = 58f;
             destructibleWreck = false;
-            armor = 13f;
+            armor = 83f;
             targetFlag = BlockFlag.reactor;
-
-            BulletType fragBullet = new FlakBulletType(4f, 5){{
-                shootEffect = Fx.shootBig;
-                ammoMultiplier = 4f;
-                splashDamage = 42f;
-                splashDamageRadius = 25f;
-                collidesGround = true;
-                lifetime = 38f;
-
-                status = StatusEffects.blasted;
-                statusDuration = 60f;
-            }};
-
             weapons.add(
                     new ModWeapon("penumbra-laser-mount"){{
                         shake = 4f;
@@ -2084,38 +2071,56 @@ public class ModUnitTypes implements ContentList {
                         x = 18f;
                         y = 5f;
                         rotateSpeed = 2f;
-                        reload = 45f;
+                        reload = 65f;
                         recoil = 4f;
                         shootSound = Sounds.laser;
                         shadow = 20f;
                         rotate = true;
 
                         bullet = new LaserBulletType(){{
-                            damage = 90f;
+                            damage = 600f;
                             sideAngle = 20f;
                             sideWidth = 1.5f;
                             sideLength = 80f;
                             width = 25f;
-                            length = 200f;
+                            length = 270f;
                             shootEffect = Fx.shockwave;
                             colors = new Color[]{Color.valueOf("72E4A9"), Color.valueOf("5BB36C"), Color.white};
                         }};
                     }},
                     new ModWeapon("penumbra-shotgun"){{
-                        x = 11f;
-                        y = 27f;
-                        rotateSpeed = 2f;
-                        reload = 9f;
+                        x = 17f;
+                        y = 32f;
+                        rotateSpeed = 2.2f;
+                        reload = 20f;
+                        shots = 4;
+                        inaccuracy = 5f;
                         shootSound = Sounds.shoot;
                         shadow = 7f;
                         rotate = true;
                         recoil = 0.5f;
 
-                        bullet = fragBullet;
+                        bullet = BasicBulletType(){{
+                                        damage = 82;
+                                        speed = 11.4f;
+                                        pierce = true;
+                                        pierceCap = 16;
+                                        width = 14f;
+                                        height = 33f;
+                                        lifetime = 25f;
+                                        shootEffect = Fx.shootBig;
+                                        lightning = 4;
+                                        lightningLength = 4;
+                                        lightningColor = Pal.surge;
+                                        lightningDamage = 22;
+                                        width = 14f;
+                                        height = 33f;
+                                        lifetime = 40f;
+                                        shootEffect = Fx.shootBig;
                     }},
                     new ModWeapon("penumbra-shotgun"){{
                         y = -13f;
-                        x = 20f;
+                        x = 18f;
                         reload = 12f;
                         ejectEffect = Fx.casing1;
                         rotateSpeed = 7f;
@@ -2123,7 +2128,23 @@ public class ModUnitTypes implements ContentList {
                         shootSound = Sounds.shoot;
                         rotate = true;
                         shadow = 12f;
-                        bullet = fragBullet;
+                        bullet = BasicBulletType(){{
+                                        damage = 12;
+                                        speed = 11.4f;
+                                        pierce = true;
+                                        pierceCap = 18;
+                                        width = 14f;
+                                        height = 33f;
+                                        lifetime = 25f;
+                                        shootEffect = Fx.shootBig;
+                                        lightning = 8;
+                                        lightningLength = 4;
+                                        lightningColor = Pal.surge;
+                                        lightningDamage = 31;
+                                        width = 14f;
+                                        height = 33f;
+                                        lifetime = 40f;
+                                        shootEffect = Fx.shootBig;
                     }});
         }};
     }
