@@ -2049,7 +2049,7 @@ public class ModUnitTypes implements ContentList {
                 );
             }
         };
-        penumbra = new ModUnitType("penumbra"){{
+         penumbra = new ModUnitType("penumbra"){{
             speed = 0.52f;
             accel = 0.04f;
             drag = 0.04f;
@@ -2059,11 +2059,9 @@ public class ModUnitTypes implements ContentList {
             health = 15000;
             engineOffset = 38;
             engineSize = 7.3f;
-            constructor = Types.payload;
             hitSize = 58f;
             destructibleWreck = false;
             armor = 83f;
-            targetFlag = BlockFlag.reactor;
             weapons.add(
                     new ModWeapon("penumbra-laser-mount"){{
                         shake = 4f;
@@ -2101,22 +2099,23 @@ public class ModUnitTypes implements ContentList {
                         recoil = 0.5f;
 
                         bullet = new BasicBulletType(){{
-                                        damage = 82;
-                                        speed = 11.4f;
-                                        pierce = true;
-                                        pierceCap = 16;
-                                        width = 14f;
-                                        height = 33f;
-                                        lifetime = 25f;
-                                        shootEffect = Fx.shootBig;
-                                        lightning = 4;
-                                        lightningLength = 4;
-                                        lightningColor = Pal.surge;
-                                        lightningDamage = 22;
-                                        width = 14f;
-                                        height = 33f;
-                                        lifetime = 40f;
-                                        shootEffect = Fx.shootBig;
+                            damage = 82;
+                            speed = 11.4f;
+                            pierce = true;
+                            pierceCap = 16;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 25f;
+                            shootEffect = Fx.shootBig;
+                            lightning = 4;
+                            lightningLength = 4;
+                            lightningColor = Pal.surge;
+                            lightningDamage = 22;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 40f;
+                            shootEffect = Fx.shootBig;
+                        }},
                     }},
                     new ModWeapon("penumbra-shotgun"){{
                         y = -13f;
@@ -2129,26 +2128,24 @@ public class ModUnitTypes implements ContentList {
                         rotate = true;
                         shadow = 12f;
                         bullet = new BasicBulletType(){{
-                                        damage = 12;
-                                        speed = 11.4f;
-                                        pierce = true;
-                                        pierceCap = 18;
-                                        width = 14f;
-                                        height = 33f;
-                                        lifetime = 25f;
-                                        shootEffect = Fx.shootBig;
-                                        lightning = 8;
-                                        lightningLength = 4;
-                                        lightningColor = Pal.surge;
-                                        lightningDamage = 31;
-                                        width = 14f;
-                                        height = 33f;
-                                        lifetime = 40f;
-                                        shootEffect = Fx.shootBig;
-                    }});
-        }};
-    }
-
+                            damage = 12;
+                            speed = 11.4f;
+                            pierce = true;
+                            pierceCap = 18;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 25f;
+                            shootEffect = Fx.shootBig;
+                            lightning = 8;
+                            lightningLength = 4;
+                            lightningColor = Pal.surge;
+                            lightningDamage = 31;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 40f;
+                            shootEffect = Fx.shootBig;
+                        }});
+                    }};
     private static class Types {
         static Prov<? extends Unit> payload = PayloadUnit::create;
         static Prov<? extends Unit> naval = UnitWaterMove::create;
