@@ -2122,7 +2122,7 @@ public class ModUnitTypes implements ContentList {
                         x = 17f;
                         y = 32f;
                         rotateSpeed = 2.2f;
-                        reload = 20f;
+                        reload = 0f;
                         shots = 4;
                         inaccuracy = 5f;
                         shootSound = Sounds.shoot;
@@ -2152,7 +2152,67 @@ public class ModUnitTypes implements ContentList {
                     new ModWeapon("penumbra-shotgun"){{
                         y = -13f;
                         x = 18f;
-                        reload = 2f;
+                        reload = 9f;
+                        ejectEffect = Fx.casing1;
+                        rotateSpeed = 7f;
+                        shake = 1f;
+                        firstShotDelay = 3;
+                        shootSound = Sounds.shoot;
+                        rotate = true;
+                        shadow = 12f;
+                        bullet = new BasicBulletType(){{
+                            damage = 12;
+                            speed = 11.7f;
+                            pierce = true;
+                            pierceCap = 3;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 25f;
+                            shootEffect = Fx.shootBig;
+                            lightning = 8;
+                            lightningLength = 16;
+                            lightningColor = Pal.surge;
+                            lightningDamage = 51;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 40f;
+                            shootEffect = Fx.shootBig;
+                        }};
+                    }},
+                    new ModWeapon(){{
+                        y = -13f;
+                        x = 18f;
+                        reload = 9f;
+                        ejectEffect = Fx.casing1;
+                        rotateSpeed = 7f;
+                        shake = 1f;
+                        firstShotDelay = 6;
+                        shootSound = Sounds.shoot;
+                        rotate = true;
+                        shadow = 12f;
+                        bullet = new BasicBulletType(){{
+                            damage = 12;
+                            speed = 11.7f;
+                            pierce = true;
+                            pierceCap = 3;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 25f;
+                            shootEffect = Fx.shootBig;
+                            lightning = 8;
+                            lightningLength = 16;
+                            lightningColor = Pal.surge;
+                            lightningDamage = 51;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 40f;
+                            shootEffect = Fx.shootBig;
+                        }};
+                    }},
+                    new ModWeapon(){{
+                        y = -13f;
+                        x = 18f;
+                        reload = 9f;
                         ejectEffect = Fx.casing1;
                         rotateSpeed = 7f;
                         shake = 1f;
@@ -2161,7 +2221,7 @@ public class ModUnitTypes implements ContentList {
                         shadow = 12f;
                         bullet = new BasicBulletType(){{
                             damage = 12;
-                            speed = 11.4f;
+                            speed = 12f;
                             pierce = true;
                             pierceCap = 3;
                             width = 14f;
