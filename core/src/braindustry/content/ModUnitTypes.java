@@ -2179,7 +2179,7 @@ public class ModUnitTypes implements ContentList {
                             shootEffect = Fx.shootBig;
                         }};
                     }},
-                    new ModWeapon(){{
+                    new ModWeapon("penumbra-shotgun"){{
                         y = -13f;
                         x = 18f;
                         reload = 9f;
@@ -2209,7 +2209,7 @@ public class ModUnitTypes implements ContentList {
                             shootEffect = Fx.shootBig;
                         }};
                     }},
-                    new ModWeapon(){{
+                    new ModWeapon("penumbra-shotgun"){{
                         y = -13f;
                         x = 18f;
                         reload = 9f;
