@@ -1534,7 +1534,7 @@ public class ModUnitTypes implements ContentList {
                 this.groundLayer = 60.0F;
                 this.localizedName = "Griffon";
                 this.description = "Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
-                this.health = 46000;
+                this.health = 52000;
                 this.speed = 0.4f;
                 this.mechSideSway = 0.25f;
                 this.hitSize = 108;
@@ -1565,7 +1565,7 @@ public class ModUnitTypes implements ContentList {
                                 mirror = false;
                                 top = false;
                                 shake = 5.5f;
-                                shootY = 15f;
+                                shootY = 4f;
                                 x = y = 0f;
 
                                 firstShotDelay = ModFx.yellowLaserCharge.lifetime - 1f;
@@ -1725,7 +1725,35 @@ public class ModUnitTypes implements ContentList {
                                 this.velocityRnd = 0.1f;
                                 this.shootSound = Sounds.missile;
                                 this.bullet = new LilithBulletType() {
-                                };
+                                    {
+
+                                    fragLifeMin = 0.3f;
+                                    fragBullets = 13;
+
+                                    fragBullet = new MissileBulletType(){{
+                                        this.width = 14;
+                                        this.height = 16;
+                                        this.shrinkY = 0.1f;
+                                        this.speed = 2.2f;
+                                        this.drag = 0f;
+                                        this.splashDamageRadius = 25f;
+                                        this.splashDamage = 24f;
+                                        this.hitEffect =this.despawnEffect = ModFx.lilithExplosion;
+                                        this.homingPower = 0.2f;
+                                        this.lightningDamage = 10f;
+                                        this.lightning = 3;
+                                        this.lightningLength = 4;
+                                        this.makeFire = true;
+                                        this.status = StatusEffects.slow;
+                                        this.lifetime = 90f;
+                                        this.trailColor = ModPal.lilithTrailColor;
+                                        this.backColor = ModPal.lilithBackColor;
+                                        this.frontColor = ModPal.lilithFrontColor;
+                                        this.lightningColor=this.backColor;
+                                        this.weaveScale = 1f;
+                                        this.weaveMag = 3f;
+                                    }};
+                                }};
                             }
                         },
 
@@ -2174,16 +2202,57 @@ public class ModUnitTypes implements ContentList {
                 int brange = 1;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting, StatusEffects.freezing, StatusEffects.corroded);
                 float spawnTime = 2000;
-
-                abilities.addAll(
-                        new BlackHoleReactorAbility(this, 30f, 35, Integer.MAX_VALUE, 15.0f, new Vec2(-26.25f, 0))
-                        //new UnitSpawnAbility(ModUnitTypes.armor, spawnTime, 22.25f, -45.75f),
-                        //new UnitSpawnAbility(ModUnitTypes.armor, spawnTime, -22.25f, -45.75f),
-                        //new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f),
-                        //new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -36.25f, -48.75f)
+                        abilities.add(
+                                new RepairFieldAbility(6f, 60f * 5, 250f),
+                                new ForceFieldAbility(240f, 7f, 360f, 60f * 8),
+                                new BlackHoleReactorAbility(this, 30f, 35, Integer.MAX_VALUE, 15.0f, new Vec2(-26.25f, 0))
+                                //new UnitSpawnAbility(ModUnitTypes.armor, spawnTime, 22.25f, -45.75f),
+                                //new UnitSpawnAbility(ModUnitTypes.armor, spawnTime, -22.25f, -45.75f),
+                                //new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, 36.25f, -48.75f),
+                                //new UnitSpawnAbility(ModUnitTypes.venti, spawnTime, -36.25f, -48.75f)
                 );
 
                 weapons.add(
+                        new ModWeapon("kraken-launcher") {
+                            {
+                                this.reload = 70;
+                                this.x = 14;
+                                this.y = -18f;
+                                this.shadow = 9;
+                                this.rotateSpeed = 0.6f;
+                                this.rotate = true;
+                                this.shots = 6;
+                                this.shotDelay = 20;
+                                this.inaccuracy = 0.3f;
+                                this.velocityRnd = 0.1f;
+                                this.shootSound = Sounds.missile;
+                                this.bullet = new MissileBulletType() {{
+                                    this.width = 23;
+                                    this.height = 24;
+                                    this.shrinkY = 0.1f;
+                                    this.speed = 2.3f;
+                                    this.drag = 0f;
+                                    this.splashDamageRadius = 40f;
+                                    this.splashDamage = 62f;
+                                    this.hitEffect =this.despawnEffect = ModFx.lilithExplosion;
+                                    this.homingPower = 0.3f;
+                                    this.lightningDamage = 10f;
+                                    this.lightning = 7;
+                                    this.lightningLength = 7;
+                                    this.makeFire = true;
+                                    this.status = StatusEffects.disarmed;
+                                    this.lifetime = 90f;
+                                    this.trailColor = ModPal.lilithTrailColor;
+                                    this.backColor = ModPal.lilithBackColor;
+                                    this.frontColor = ModPal.lilithFrontColor;
+                                    this.lightningColor=this.backColor;
+                                    this.weaveScale = 2f;
+                                    this.weaveMag = 5f;
+                                }
+                                };
+                            }
+                        },
+
                   new ModWeapon("kraken-canon"){
                       {
                           this.x = 0f;

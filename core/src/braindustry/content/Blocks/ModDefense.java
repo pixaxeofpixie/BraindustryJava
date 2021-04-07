@@ -50,7 +50,7 @@ class ModDefense implements ContentList {
                 this.targetAir = true;
                 this.targetGround = true;
                 this.ammo(
-                        ModItems.phaseAlloy, new SpikeCircleOrbonBullet(){
+                        ModItems.graphenite, new SpikeCircleOrbonBullet(){
                             {
                                 this.hitEffect = ModFx.circleSpikeHit;
                                 this.ammoMultiplier = 4.0f;
@@ -73,7 +73,7 @@ class ModDefense implements ContentList {
                         }
                     );
                 this.consumes.liquid(Liquids.cryofluid,0.2f).optional(false,true);
-                this.requirements(Category.turret, ItemStack.with(ModItems.odinum,400, Items.plastanium,350, Items.silicon,800, Items.titanium,420, Items.metaglass,280));
+                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite,400, Items.plastanium,350, Items.silicon,800, Items.titanium,420, Items.metaglass,280));
             }
         };
         axon = new ItemTurret("axon") {
@@ -137,9 +137,9 @@ class ModDefense implements ContentList {
                 this.shots = 4;
                 this.rotate = true;
                 this.shootSound = Sounds.laser;
-                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 300, Items.silicon, 340, ModItems.chromium, 250, ModItems.odinum, 240));
+                this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 300, Items.silicon, 340, Items.plastanium, 250, Items.graphite, 240));
                 this.ammo(
-                        ModItems.chromium, new ShrapnelBulletType() {
+                        ModItems.graphenite, new ShrapnelBulletType() {
                             {
                                 this.length = 200;
                                 this.damage = 180;
@@ -155,7 +155,7 @@ class ModDefense implements ContentList {
                                 this.smokeEffect = Fx.sparkShoot;
                             }
                         },
-                        ModItems.odinum, new ShrapnelBulletType() {
+                        Items.plastanium, new ShrapnelBulletType() {
                             {
                                 this.length = 160;
                                 this.damage = 280;
@@ -174,7 +174,7 @@ class ModDefense implements ContentList {
                             }
                         }
                 );
-                this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.04f).optional(true, true);
+                this.consumes.liquid(ModLiquids.liquidMethane, 0.04f).optional(true, true);
             }
         };
         brain = new ItemTurret("brain") {
@@ -346,7 +346,7 @@ class ModDefense implements ContentList {
                         this.pierce = true;
                         this.hittable = true;
                         this.absorbable = false;
-                        this.damage = 3890;
+                        this.damage = 560;
                         this.shootEffect = Fx.railShoot;
                         this.despawnEffect = Fx.railHit;
                         this.knockback = 1;
@@ -624,7 +624,7 @@ class ModDefense implements ContentList {
                 firingMoveFract = 0.4f;
                 this.shootType = new ContinuousRainbowLaserBulletType(){
                     {
-                        damage = 4560f;
+                        damage = 860f;
                         length = 400f;
                         lifetime = 120f;
                         width = 30f;
@@ -664,7 +664,7 @@ class ModDefense implements ContentList {
             maxAmmo = 40;
             ammoPerShot = 10;
             rotateSpeed = 1.5f;
-            reloadTime = 11000f;
+            reloadTime = 8000f;
             ammoUseEffect = Fx.casing3Double;
             recoilAmount = 10f;
             restitution = 0.009f;

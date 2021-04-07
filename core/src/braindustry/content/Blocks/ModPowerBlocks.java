@@ -147,8 +147,8 @@ class ModPowerBlocks implements ContentList {
                 //this.itemCapacity = 120;
                 this.liquidCapacity = 100;
                 this.itemDuration = 240;
-                this.powerProduction = 420;
-                this.consumes.addGas(new ConsumeGasses(Gasses.methane, 1));
+                this.powerProduction = 220;
+                //this.consumes.addGas(new ConsumeGasses(Gasses.methane, 1));
                 this.consumes.power(46f);
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.5f);
                 this.consumes.item(ModItems.odinum, 12);

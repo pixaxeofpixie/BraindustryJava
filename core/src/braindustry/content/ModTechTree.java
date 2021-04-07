@@ -35,14 +35,14 @@ public class ModTechTree extends TechTreeManager implements ContentList {
             node(ModUnitTypes.ibis, () -> {
                 node(ModUnitTypes.aries, () -> {
                     node(ModUnitTypes.capra, () -> {
-                        node(ModUnitTypes.lacerta, () -> {
+                        node(ModUnitTypes.lacerta,Seq.with(new Objectives.Research(ModPlanets.osore)), () -> {
                             node(ModUnitTypes.aquila);
                         });
                     });
                 });
             });
         });
-        parentNode(Blocks.airFactory, ModBlocks.hyperAirFactory, () -> {
+        parentNode(Blocks.airFactory, ModBlocks.hyperAirFactory,Seq.with(new Objectives.Research(ModPlanets.osore)), () -> {
             node(ModUnitTypes.armor, () -> {
                 node(ModUnitTypes.shield, () -> {
                     node(ModUnitTypes.chestplate, () -> {
@@ -53,7 +53,7 @@ public class ModTechTree extends TechTreeManager implements ContentList {
                 });
             });
         });
-        parentNode(Blocks.navalFactory, ModBlocks.hyperNavalFactory, () -> {
+        parentNode(Blocks.navalFactory, ModBlocks.hyperNavalFactory,Seq.with(new Objectives.Research(ModPlanets.osore)), () -> {
             node(ModUnitTypes.venti, () -> {
                 node(ModUnitTypes.lyra, () -> {
                     node(ModUnitTypes.tropsy, () -> {
@@ -65,35 +65,36 @@ public class ModTechTree extends TechTreeManager implements ContentList {
 
         parentNode(Blocks.additiveReconstructor, ModBlocks.hyperAdditiveReconstructor);
         parentNode(Blocks.multiplicativeReconstructor, ModBlocks.hyperMultiplicativeReconstructor, Seq.with(new Objectives.Research(ModBlocks.hyperAdditiveReconstructor)));
-        parentNode(Blocks.exponentialReconstructor, ModBlocks.hyperExponentialReconstructor, Seq.with(new Objectives.Research(ModBlocks.hyperMultiplicativeReconstructor)));
-        parentNode(Blocks.tetrativeReconstructor, ModBlocks.hyperTetrativeReconstructor, Seq.with(new Objectives.Research(ModBlocks.hyperExponentialReconstructor)));
-        parentNode(Items.titanium, ModItems.chromium);
-        parentNode(Items.surgeAlloy, ModItems.exoticAlloy);
+        parentNode(Blocks.exponentialReconstructor, ModBlocks.hyperExponentialReconstructor, Seq.with(new Objectives.Research(ModBlocks.hyperMultiplicativeReconstructor), new Objectives.Research(ModPlanets.osore)));
+        parentNode(Blocks.tetrativeReconstructor, ModBlocks.hyperTetrativeReconstructor, Seq.with(new Objectives.Research(ModBlocks.hyperExponentialReconstructor),new Objectives.Research(ModPlanets.osore)));
+        parentNode(Items.titanium, ModItems.chromium, Seq.with(new Objectives.Research(ModPlanets.osore)));
+        parentNode(Items.surgeAlloy, ModItems.exoticAlloy, Seq.with(new Objectives.Research(ModPlanets.osore)));
         parentNode(Items.graphite, ModItems.graphenite);
-        parentNode(Items.thorium, ModItems.odinum);
-        parentNode(ModItems.exoticAlloy, ModItems.phaseAlloy);
-        parentNode(Items.plastanium, ModItems.plastic);
+        parentNode(Items.thorium, ModItems.odinum, Seq.with(new Objectives.Research(ModPlanets.osore)));
+        parentNode(ModItems.exoticAlloy, ModItems.phaseAlloy, Seq.with(new Objectives.Research(ModPlanets.osore)));
+        parentNode(Items.plastanium, ModItems.plastic, Seq.with(new Objectives.Research(ModPlanets.osore)));
+        parentNode(ModItems.phaseAlloy, ModItems.chloroAlloy, Seq.with(new Objectives.Research(ModPlanets.shinrin)));
         //=======
         //========
-        parentNode(Liquids.cryofluid, ModLiquids.thoriumRefrigerant);
+        parentNode(Liquids.cryofluid, ModLiquids.thoriumRefrigerant, Seq.with(new Objectives.Research(ModPlanets.osore)));
         //=======
 
         node(Blocks.blastDrill, () -> {
             node(ModBlocks.geothermicDrill);
             node(ModBlocks.quarryDrill);
         });
-        node(Blocks.surgeSmelter, () -> {
-            node(ModBlocks.hyperAlloySmelter);
+        node(Blocks.siliconSmelter, () -> {
             node(ModBlocks.grapheniteForge, () -> {
                 node(ModBlocks.grapheniteFluidizer,()->{
                     node(ModBlocks.refrigerantmixer);
+                    node(ModBlocks.chromiumForge,Seq.with(new Objectives.Research(ModPlanets.osore)),()->{
+                        node(ModBlocks.magmaMixer);
+                    });
+                    node(ModBlocks.grapheniteKiln);
+                    node(ModBlocks.odinumExtractor,Seq.with(new Objectives.Research(ModPlanets.osore)),()-> {
+                        node(ModBlocks.exoticAlloySmelter);
+                    });
                 });
-                node(ModBlocks.chromiumForge,()->{
-                    node(ModBlocks.magmaMixer);
-                });
-                node(ModBlocks.exoticAlloySmelter);
-                node(ModBlocks.grapheniteKiln);
-                node(ModBlocks.odinumExtractor);
             });
         });
         parentNode(Blocks.phaseWeaver, ModBlocks.hyperPhaseWeaver);
@@ -136,7 +137,7 @@ public class ModTechTree extends TechTreeManager implements ContentList {
             });
         });
         node(Blocks.thoriumReactor, () -> {
-            node(ModBlocks.odinumReactor,()->{
+            node(ModBlocks.odinumReactor,Seq.with(new Objectives.Research(ModPlanets.osore)), ()->{
                 node(ModBlocks.materialReactor,()->{
                     node(ModBlocks.blackHoleReactor);
                 });
@@ -153,11 +154,11 @@ public class ModTechTree extends TechTreeManager implements ContentList {
                 });
             });
         });
-        parentNode(Blocks.fuse, ModBlocks.blaze);
+        parentNode(Blocks.fuse, ModBlocks.blaze, Seq.with(new Objectives.Research(ModPlanets.osore)));
         parentNode(Blocks.segment, ModBlocks.fragment);
         node(Blocks.lancer, () -> {
-            node(ModBlocks.soul, () -> {
-                node(ModBlocks.mind);
+            node(ModBlocks.soul,Seq.with(new Objectives.Research(ModPlanets.osore)), () -> {
+                node(ModBlocks.mind, Seq.with(new Objectives.Research(ModPlanets.osore)));
             });
             node(ModBlocks.neuron);
         });

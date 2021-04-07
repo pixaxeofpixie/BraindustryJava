@@ -58,7 +58,7 @@ class ModUnitsBlocks implements ContentList {
                 this.consumes.power(3.2f);
                 this.consumes.items(ItemStack.with(Items.silicon, 55, ModItems.graphenite, 25, Items.thorium, 20));
                 this.constructTime = 900;
-                this.requirements(Category.units, ItemStack.with(Items.copper, 300, ModItems.odinum, 100, Items.titanium, 120, Items.silicon, 190, ModItems.plastic, 20));
+                this.requirements(Category.units, ItemStack.with(Items.copper, 300, ModItems.graphenite, 100, Items.titanium, 120, Items.silicon, 190, ModItems.plastic, 20));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.ibis, ModUnitTypes.aries},
                         new UnitType[]{ModUnitTypes.armor, ModUnitTypes.shield},
@@ -75,7 +75,7 @@ class ModUnitsBlocks implements ContentList {
                 this.consumes.liquid(ModLiquids.thoriumRefrigerant, 0.3f).optional(false, false);
                 this.consumes.items(ItemStack.with(Items.silicon, 120, ModItems.graphenite, 100, Items.titanium, 125, Items.plastanium, 75));
                 this.constructTime = 2100;
-                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 1200, Items.titanium, 900, ModItems.odinum, 500, Items.plastanium, 200, Items.phaseFabric, 300, Items.silicon, 130));
+                this.requirements(Category.units, ItemStack.with(ModItems.graphenite, 1200, Items.titanium, 900, Items.thorium, 500, Items.plastanium, 200, Items.phaseFabric, 300, Items.silicon, 130));
                 this.upgrades = Seq.with(
                         new UnitType[]{ModUnitTypes.capra, ModUnitTypes.lacerta},
                         new UnitType[]{ModUnitTypes.chestplate, ModUnitTypes.chainmail},

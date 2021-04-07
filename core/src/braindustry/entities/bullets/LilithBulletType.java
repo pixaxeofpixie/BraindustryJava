@@ -9,8 +9,8 @@ import mindustry.entities.bullet.MissileBulletType;
 public class LilithBulletType extends MissileBulletType {
     public LilithBulletType(){
         super();
-        this.width = 17;
-        this.height = 18;
+        this.width = 23;
+        this.height = 24;
         this.shrinkY = 0.1f;
         this.speed = 2.3f;
         this.drag = 0f;

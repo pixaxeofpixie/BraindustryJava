@@ -69,13 +69,13 @@ public class ModFx {
             float rot = e.rotation + 180.0F;
             float w = 20.0F * e.fout() * m;
             Drawf.tri(e.x, e.y, w, (30.0F + Mathf.randomSeedRange((long) e.id, 19.0F)) * m, rot);
-            Drawf.tri(e.x, e.y, w, 8.0F * m, rot + 90.0F);
+            Drawf.tri(e.x, e.y, w, 8.0F * m, rot);
         }
 
     }),
 
-    krakenShoot = new Effect(32.0F, (e) -> {
-        e.scaled(22.0F, (b) -> {
+    krakenShoot = new Effect(42.0F, (e) -> {
+        e.scaled(32.0F, (b) -> {
             Draw.color(Color.white, ModPal.krakenFrontColor, b.fin());
             Lines.stroke(b.fout() * 4.0F + 0.7F);
             Lines.circle(b.x, b.y, b.fin() * 50.0F);

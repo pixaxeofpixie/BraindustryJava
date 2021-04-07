@@ -24,7 +24,7 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
     public OsorePlanetGenerator() {
 
         arr = new Block[][]{
-                {ModBlocks.liquidMethaneFloor, ModBlocks.crimzesFloor, Blocks.snow, Blocks.snow, Blocks.mud, Blocks.ice, Blocks.ice, Blocks.iceSnow, ModBlocks.crimzesFloor, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt},
+                {ModBlocks.liquidMethaneFloor, ModBlocks.liquidMethaneFloor, Blocks.snow, Blocks.snow, Blocks.mud, Blocks.ice, Blocks.ice, Blocks.iceSnow, ModBlocks.crimzesFloor, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt},
                 {ModBlocks.liquidMethaneFloor, ModBlocks.liquidMethaneFloor, Blocks.mud, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt, Blocks.dirt},
                 {ModBlocks.magmaFloor, Blocks.dirt, Blocks.mud, Blocks.craters, Blocks.stone, ModBlocks.crimzesFloor, Blocks.dirt, Blocks.stone, Blocks.stone, ModBlocks.obsidianFloor, ModBlocks.crimzesFloor, Blocks.dirt, Blocks.dirt},
                 {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, ModBlocks.obsidianFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.dirt, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.dirt},
@@ -34,7 +34,7 @@ public class OsorePlanetGenerator extends ModPlanetGenerator{
                 {ModBlocks.magmaFloor, ModBlocks.obsidianFloor, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.stone, Blocks.mud, Blocks.stone, Blocks.stone, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.mud, Blocks.dirt},
                 {ModBlocks.magmaFloor, ModBlocks.magmaFloor, Blocks.mud, ModBlocks.crimzesFloor, ModBlocks.crimzesFloor, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.mud, Blocks.mud, Blocks.mud, Blocks.stone, Blocks.dirt, Blocks.dirt},
                 {ModBlocks.liquidMethaneFloor, ModBlocks.liquidMethaneFloor, Blocks.mud, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.dirt, Blocks.dirt},
-                {ModBlocks.liquidMethaneFloor, Blocks.iceSnow, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.snow, Blocks.snow, Blocks.stone},
+                {ModBlocks.liquidMethaneFloor, ModBlocks.magmaFloor, Blocks.mud, ModBlocks.obsidianFloor, Blocks.dirt, Blocks.dirt, Blocks.stone, Blocks.mud, Blocks.mud, Blocks.dirt, Blocks.snow, Blocks.snow, Blocks.stone},
                 {ModBlocks.liquidMethaneFloor, ModBlocks.liquidMethaneFloor, Blocks.mud, Blocks.dirt, Blocks.snow, Blocks.mud, Blocks.stone, Blocks.snow, Blocks.stone, Blocks.dirt, Blocks.dirt, ModBlocks.obsidianFloor, Blocks.dirt},
                 {ModBlocks.liquidMethaneFloor, ModBlocks.liquidMethaneFloor, Blocks.ice, Blocks.snow, Blocks.snow, Blocks.mud, Blocks.dirt, Blocks.ice, Blocks.snow, Blocks.stone, ModBlocks.crimzesFloor, Blocks.stone, Blocks.dirt}
         };
