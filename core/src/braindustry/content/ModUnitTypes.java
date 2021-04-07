@@ -1713,9 +1713,9 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("moray-rocket-launcher") {
                             {
-                                this.reload = 70;
+                                this.reload = 5;
                                 this.x = 14;
-                                this.y = -18f;
+                                this.y = 38f;
                                 this.shadow = 9;
                                 this.rotateSpeed = 0.6f;
                                 this.rotate = true;
@@ -1765,7 +1765,7 @@ public class ModUnitTypes implements ContentList {
                             shake = 6f;
                             shootY = 28f;
                             x = 0f;
-                            y = -4f;
+                            y = -12f;
                             rotate = true;
                             rotateSpeed = 0.9f;
 
@@ -1805,7 +1805,7 @@ public class ModUnitTypes implements ContentList {
                         }},
                         new ModWeapon("moray-voidwave") {{
                             top = true;
-                            y = -8f;
+                            y = 34f;
                             x = 23f;
                             reload = 40f;
                             recoil = 6f;
@@ -2065,7 +2065,7 @@ public class ModUnitTypes implements ContentList {
             engineSize = 7.3f;
             hitSize = 58f;
             destructibleWreck = false;
-            armor = 83f;
+            armor = 103f;
             weapons.add(
                     new ModWeapon("penumbra-laser-mount"){{
                         shake = 4f;
@@ -2124,7 +2124,7 @@ public class ModUnitTypes implements ContentList {
                     new ModWeapon("penumbra-shotgun"){{
                         y = -13f;
                         x = 18f;
-                        reload = 12f;
+                        reload = 2f;
                         ejectEffect = Fx.casing1;
                         rotateSpeed = 7f;
                         shake = 1f;
@@ -2135,15 +2135,15 @@ public class ModUnitTypes implements ContentList {
                             damage = 12;
                             speed = 11.4f;
                             pierce = true;
-                            pierceCap = 18;
+                            pierceCap = 3;
                             width = 14f;
                             height = 33f;
                             lifetime = 25f;
                             shootEffect = Fx.shootBig;
                             lightning = 8;
-                            lightningLength = 4;
+                            lightningLength = 16;
                             lightningColor = Pal.surge;
-                            lightningDamage = 31;
+                            lightningDamage = 51;
                             width = 14f;
                             height = 33f;
                             lifetime = 40f;
