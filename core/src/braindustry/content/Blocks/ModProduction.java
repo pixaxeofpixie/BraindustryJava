@@ -3,6 +3,7 @@ package braindustry.content.Blocks;
 import Gas.GasStack;
 import Gas.content.Gasses;
 import Gas.world.blocks.production.GasGenericCrafter;
+import Gas.world.blocks.production.GasGenericSmelter;
 import Gas.world.consumers.ConsumeGasses;
 import braindustry.content.ModFx;
 import braindustry.content.ModGasses;
@@ -332,7 +333,7 @@ class ModProduction implements ContentList {
                 this.updateEffectChance = 0.02f;
             }
         };
-        hyperDenseCompoiteSmelter = new GasGenericCrafter("hyper-dense-composite-smelter") {
+        hyperDenseCompoiteSmelter = new GasGenericSmelter("hyper-dense-composite-smelter") {
             {
                 this.localizedName = "Hyper Dense Composite Smelter";
                 this.description = "Upgraded version of Dense Composite smelter but consumes gas for more effective production.";

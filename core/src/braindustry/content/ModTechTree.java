@@ -3,10 +3,7 @@ package braindustry.content;
 import arc.struct.Seq;
 import ModVars.Classes.TechTreeManager;
 import braindustry.content.Blocks.ModBlocks;
-import mindustry.content.Blocks;
-import mindustry.content.Items;
-import mindustry.content.Liquids;
-import mindustry.content.TechTree;
+import mindustry.content.*;
 import mindustry.ctype.ContentList;
 import mindustry.game.Objectives;
 //import static mindustry.game.Objectives.*;
@@ -35,14 +32,14 @@ public class ModTechTree extends TechTreeManager implements ContentList {
             node(ModUnitTypes.ibis, () -> {
                 node(ModUnitTypes.aries, () -> {
                     node(ModUnitTypes.capra, () -> {
-                        node(ModUnitTypes.lacerta,Seq.with(new Objectives.Research(ModPlanets.osore)), () -> {
+                        node(ModUnitTypes.lacerta,Seq.with(new Objectives.Research(ModSectorPresets.spacePort)), () -> {
                             node(ModUnitTypes.aquila);
                         });
                     });
                 });
             });
         });
-        parentNode(Blocks.airFactory, ModBlocks.hyperAirFactory,Seq.with(new Objectives.Research(ModPlanets.osore)), () -> {
+        parentNode(Blocks.airFactory, ModBlocks.hyperAirFactory,Seq.with(new Objectives.Research(ModSectorPresets.spacePort)), () -> {
             node(ModUnitTypes.armor, () -> {
                 node(ModUnitTypes.shield, () -> {
                     node(ModUnitTypes.chestplate, () -> {
@@ -53,7 +50,7 @@ public class ModTechTree extends TechTreeManager implements ContentList {
                 });
             });
         });
-        parentNode(Blocks.navalFactory, ModBlocks.hyperNavalFactory,Seq.with(new Objectives.Research(ModPlanets.osore)), () -> {
+        parentNode(Blocks.navalFactory, ModBlocks.hyperNavalFactory,Seq.with(new Objectives.Research(ModSectorPresets.spacePort)), () -> {
             node(ModUnitTypes.venti, () -> {
                 node(ModUnitTypes.lyra, () -> {
                     node(ModUnitTypes.tropsy, () -> {
@@ -62,6 +59,9 @@ public class ModTechTree extends TechTreeManager implements ContentList {
                 });
             });
         });
+       /* node(SectorPresets.planetaryTerminal, () -> {
+            node(ModSectorPresets.spacePort);
+        });*/
 
         parentNode(Blocks.additiveReconstructor, ModBlocks.hyperAdditiveReconstructor);
         parentNode(Blocks.multiplicativeReconstructor, ModBlocks.hyperMultiplicativeReconstructor, Seq.with(new Objectives.Research(ModBlocks.hyperAdditiveReconstructor)));
@@ -70,13 +70,13 @@ public class ModTechTree extends TechTreeManager implements ContentList {
         parentNode(Items.titanium, ModItems.chromium, Seq.with(new Objectives.Research(ModPlanets.osore)));
         parentNode(Items.surgeAlloy, ModItems.exoticAlloy, Seq.with(new Objectives.Research(ModPlanets.osore)));
         parentNode(Items.graphite, ModItems.graphenite);
-        parentNode(Items.thorium, ModItems.odinum, Seq.with(new Objectives.Research(ModPlanets.osore)));
-        parentNode(ModItems.exoticAlloy, ModItems.phaseAlloy, Seq.with(new Objectives.Research(ModPlanets.osore)));
-        parentNode(Items.plastanium, ModItems.plastic, Seq.with(new Objectives.Research(ModPlanets.osore)));
-        parentNode(ModItems.phaseAlloy, ModItems.chloroAlloy, Seq.with(new Objectives.Research(ModPlanets.shinrin)));
+        parentNode(Items.thorium, ModItems.odinum, Seq.with(new Objectives.Research(ModSectorPresets.spacePort)));
+        parentNode(ModItems.exoticAlloy, ModItems.phaseAlloy, Seq.with(new Objectives.Research(ModSectorPresets.spacePort)));
+        parentNode(Items.plastanium, ModItems.plastic, Seq.with(new Objectives.Research(ModSectorPresets.spacePort)));
+        parentNode(ModItems.phaseAlloy, ModItems.chloroAlloy, Seq.with(new Objectives.Research(ModSectorPresets.jungleExplorationComplex)));
         //=======
         //========
-        parentNode(Liquids.cryofluid, ModLiquids.thoriumRefrigerant, Seq.with(new Objectives.Research(ModPlanets.osore)));
+        parentNode(Liquids.cryofluid, ModLiquids.thoriumRefrigerant, Seq.with(new Objectives.Research(ModSectorPresets.spacePort)));
         //=======
 
         node(Blocks.blastDrill, () -> {
@@ -87,11 +87,11 @@ public class ModTechTree extends TechTreeManager implements ContentList {
             node(ModBlocks.grapheniteForge, () -> {
                 node(ModBlocks.grapheniteFluidizer,()->{
                     node(ModBlocks.refrigerantmixer);
-                    node(ModBlocks.chromiumForge,Seq.with(new Objectives.Research(ModPlanets.osore)),()->{
+                    node(ModBlocks.chromiumForge,Seq.with(new Objectives.Research(ModSectorPresets.spacePort)),()->{
                         node(ModBlocks.magmaMixer);
                     });
                     node(ModBlocks.grapheniteKiln);
-                    node(ModBlocks.odinumExtractor,Seq.with(new Objectives.Research(ModPlanets.osore)),()-> {
+                    node(ModBlocks.odinumExtractor,Seq.with(new Objectives.Research(ModSectorPresets.spacePort)),()-> {
                         node(ModBlocks.exoticAlloySmelter);
                     });
                 });
@@ -137,7 +137,7 @@ public class ModTechTree extends TechTreeManager implements ContentList {
             });
         });
         node(Blocks.thoriumReactor, () -> {
-            node(ModBlocks.odinumReactor,Seq.with(new Objectives.Research(ModPlanets.osore)), ()->{
+            node(ModBlocks.odinumReactor,Seq.with(new Objectives.Research(ModSectorPresets.spacePort)), ()->{
                 node(ModBlocks.materialReactor,()->{
                     node(ModBlocks.blackHoleReactor);
                 });
@@ -154,11 +154,11 @@ public class ModTechTree extends TechTreeManager implements ContentList {
                 });
             });
         });
-        parentNode(Blocks.fuse, ModBlocks.blaze, Seq.with(new Objectives.Research(ModPlanets.osore)));
+        parentNode(Blocks.fuse, ModBlocks.blaze, Seq.with(new Objectives.Research(ModSectorPresets.spacePort)));
         parentNode(Blocks.segment, ModBlocks.fragment);
         node(Blocks.lancer, () -> {
-            node(ModBlocks.soul,Seq.with(new Objectives.Research(ModPlanets.osore)), () -> {
-                node(ModBlocks.mind, Seq.with(new Objectives.Research(ModPlanets.osore)));
+            node(ModBlocks.soul,Seq.with(new Objectives.Research(ModSectorPresets.spacePort)), () -> {
+                node(ModBlocks.mind, Seq.with(new Objectives.Research(ModSectorPresets.spacePort)));
             });
             node(ModBlocks.neuron);
         });

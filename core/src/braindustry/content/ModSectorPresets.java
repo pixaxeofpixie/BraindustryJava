@@ -15,7 +15,6 @@ public class ModSectorPresets implements ContentList {
         meltingPoint = new SectorPreset("melting-point", ModPlanets.osore, 20) {
             {
                 localizedName = "Melting point";
-                alwaysUnlocked = true;
                 difficulty = 3;
                 captureWave = 20;
             }
@@ -72,7 +71,7 @@ public class ModSectorPresets implements ContentList {
         spacePort= new SectorPreset("space-port", ModPlanets.osore, 25) {
             {
                 localizedName = "Space Port";
-                alwaysUnlocked = true;
+                alwaysUnlocked = false;
                 difficulty = 4;
                 captureWave = 30;
             }
@@ -81,7 +80,6 @@ public class ModSectorPresets implements ContentList {
         azureLandscape = new SectorPreset("azure-landscape", ModPlanets.shinrin, 85) {
             {
                 localizedName = "Azure Landscape";
-                alwaysUnlocked = true;
                 difficulty = 10;
                 captureWave = 35;
             }
@@ -89,7 +87,6 @@ public class ModSectorPresets implements ContentList {
         jungleExplorationComplex = new SectorPreset("jungle-explorer-complex", ModPlanets.shinrin, 42) {
             {
                 localizedName = "Jungle Exploration Complex";
-                alwaysUnlocked = true;
                 difficulty = 4;
                 captureWave = 35;
             }
