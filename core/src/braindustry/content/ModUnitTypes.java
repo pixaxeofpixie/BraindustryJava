@@ -1713,15 +1713,15 @@ public class ModUnitTypes implements ContentList {
                 this.weapons.add(
                         new ModWeapon("moray-rocket-launcher") {
                             {
-                                this.reload = 5;
+                                this.reload = 70;
                                 this.x = 14;
                                 this.y = 38f;
                                 this.shadow = 9;
                                 this.rotateSpeed = 0.6f;
                                 this.rotate = true;
-                                this.shots = 2;
-                                this.shotDelay = 20;
-                                this.inaccuracy = 0.3f;
+                                this.shots = 3;
+                                this.shotDelay = 10;
+                                this.inaccuracy = 7f;
                                 this.velocityRnd = 0.1f;
                                 this.shootSound = Sounds.missile;
                                 this.bullet = new LilithBulletType() {
@@ -2152,7 +2152,36 @@ public class ModUnitTypes implements ContentList {
                     new ModWeapon("penumbra-shotgun"){{
                         y = -13f;
                         x = 18f;
-                        reload = 2f;
+                        reload = 20f;
+                        ejectEffect = Fx.casing1;
+                        rotateSpeed = 7f;
+                        shake = 1f;
+                        shootSound = Sounds.shoot;
+                        rotate = true;
+                        shadow = 12f;
+                        bullet = new BasicBulletType(){{
+                            damage = 102;
+                            speed = 11.4f;
+                            pierce = true;
+                            pierceCap = 3;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 25f;
+                            shootEffect = Fx.shootBig;
+                            lightning = 4;
+                            lightningLength = 6;
+                            lightningColor = Pal.surge;
+                            lightningDamage = 12;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 40f;
+                            shootEffect = Fx.shootBig;
+                        }};
+                    }},
+                new ModWeapon("penumbra-shotgun"){{
+                        y = 25f;
+                        x = 11f;
+                        reload = 4f;
                         ejectEffect = Fx.casing1;
                         rotateSpeed = 7f;
                         shake = 1f;
@@ -2172,6 +2201,36 @@ public class ModUnitTypes implements ContentList {
                             lightningLength = 16;
                             lightningColor = Pal.surge;
                             lightningDamage = 51;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 40f;
+                            shootEffect = Fx.shootBig;
+                        }};
+                    }},
+                new ModWeapon("penumbra-shotgun"){{
+                        y = 25f;
+                        x = 11f;
+                        reload = 4f;
+                        ejectEffect = Fx.casing1;
+                        rotateSpeed = 7f;
+                        shake = 1f;
+                        firstShotDelay = 70;
+                        shootSound = Sounds.shoot;
+                        rotate = true;
+                        shadow = 12f;
+                        bullet = new BasicBulletType(){{
+                            damage = 162;
+                            speed = 11.7f;
+                            pierce = true;
+                            pierceCap = 3;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 25f;
+                            shootEffect = Fx.shootBig;
+                            lightning = 2;
+                            lightningLength = 6;
+                            lightningColor = Pal.surge;
+                            lightningDamage = 4;
                             width = 14f;
                             height = 33f;
                             lifetime = 40f;
