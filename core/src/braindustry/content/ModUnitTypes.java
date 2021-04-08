@@ -2148,7 +2148,7 @@ public class ModUnitTypes implements ContentList {
                                 lifetime = 40f;
                                 shootEffect = Fx.shootBig;
                         }};
-                        }},
+                      }},
                     new ModWeapon("penumbra-shotgun"){{
                         y = -13f;
                         x = 18f;
@@ -2209,7 +2209,7 @@ public class ModUnitTypes implements ContentList {
                     }},
                 new ModWeapon("penumbra-shotgun"){{
                         y = 25f;
-                        x = 11f;
+                        x = 12f;
                         reload = 4f;
                         ejectEffect = Fx.casing1;
                         rotateSpeed = 7f;
