@@ -47,6 +47,8 @@ public class GasImpactReactor extends GasPowerGenerator{
 
     public GasImpactReactor(String name){
         super(name);
+        update = true;
+        solid = true;
         hasPower = true;
         hasLiquids = true;
         liquidCapacity = 30f;

@@ -7,10 +7,14 @@ import arc.func.Floatp;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
+import arc.math.Interp;
 import arc.math.Mathf;
 import arc.scene.Element;
 import arc.scene.Group;
+import arc.scene.actions.Actions;
 import arc.scene.event.Touchable;
+import arc.scene.style.Drawable;
+import arc.scene.ui.Image;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.TextField;
 import arc.scene.ui.layout.Table;
@@ -23,7 +27,9 @@ import arc.util.Time;
 import arc.util.Tmp;
 import braindustry.gen.StealthUnitc;
 import braindustry.graphics.ModShaders;
+import mindustry.annotations.Annotations;
 import mindustry.core.GameState;
+import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.*;
@@ -83,46 +89,6 @@ public class ModHudFragment extends HudFragment {
     }
     @Override
     public void build(Group parent) {
-
-        //warn about guardian/boss waves
-        /*
-        Events.on(EventType.WaveEvent.class, e -> {
-            int max = 10;
-            int winWave = state.isCampaign() && state.rules.winWave > 0 ? state.rules.winWave : Integer.MAX_VALUE;
-            outer:
-            for (int i = state.wave - 1; i <= Math.min(state.wave + max, winWave - 2); i++) {
-                for (SpawnGroup group : state.rules.spawns) {
-                    if (group.effect == StatusEffects.boss && group.getSpawned(i) > 0) {
-                        int diff = (i + 2) - state.wave;
-
-                        //increments at which to warn about incoming guardian
-                        if (diff == 1 || diff == 2 || diff == 5 || diff == 10) {
-                            showToast(Icon.warning, Core.bundle.format("wave.guardianwarn" + (diff == 1 ? ".one" : ""), diff));
-                        }
-
-                        break outer;
-                    }
-                }
-            }
-        });
-
-        Events.on(EventType.SectorCaptureEvent.class, e -> {
-            showToast(Core.bundle.format("sector.captured", e.sector.isBeingPlayed() ? "" : e.sector.name() + " "));
-        });
-
-        Events.on(EventType.SectorLoseEvent.class, e -> {
-            showToast(Icon.warning, Core.bundle.format("sector.lost", e.sector.name()));
-        });
-
-        Events.on(EventType.SectorInvasionEvent.class, e -> {
-            showToast(Icon.warning, Core.bundle.format("sector.attacked", e.sector.name()));
-        });
-
-        Events.on(EventType.ResetEvent.class, e -> {
-            coreItems.resetUsed();
-            coreItems.clear();
-        });
-*/
         //paused table
         parent.fill(t -> {
             t.name = "paused";
@@ -152,7 +118,7 @@ public class ModHudFragment extends HudFragment {
             cont.name = "overlaymarker";
             cont.top().left();
 
-            if (mobile) {
+            if(mobile){
                 cont.table(select -> {
                     select.name = "mobile buttons";
                     select.left();
@@ -168,38 +134,38 @@ public class ModHudFragment extends HudFragment {
                             .name("schematics");
 
                     select.button(Icon.pause, style, () -> {
-                        if (net.active()) {
+                        if(net.active()){
                             ui.listfrag.toggle();
-                        } else {
+                        }else{
                             state.set(state.is(GameState.State.paused) ? GameState.State.playing : GameState.State.paused);
                         }
                     }).name("pause").update(i -> {
-                        if (net.active()) {
+                        if(net.active()){
                             i.getStyle().imageUp = Icon.players;
-                        } else {
+                        }else{
                             i.setDisabled(false);
                             i.getStyle().imageUp = state.is(GameState.State.paused) ? Icon.play : Icon.pause;
                         }
                     });
 
-                    select.button(Icon.chat, style, () -> {
-                        if (net.active() && mobile) {
-                            if (ui.chatfrag.shown()) {
+                    select.button(Icon.chat, style,() -> {
+                        if(net.active() && mobile){
+                            if(ui.chatfrag.shown()){
                                 ui.chatfrag.hide();
-                            } else {
+                            }else{
                                 ui.chatfrag.toggle();
                             }
-                        } else if (state.isCampaign()) {
+                        }else if(state.isCampaign()){
                             ui.research.show();
-                        } else {
+                        }else{
                             ui.database.show();
                         }
                     }).name("chat").update(i -> {
-                        if (net.active() && mobile) {
+                        if(net.active() && mobile){
                             i.getStyle().imageUp = Icon.chat;
-                        } else if (state.isCampaign()) {
+                        }else if(state.isCampaign()){
                             i.getStyle().imageUp = Icon.tree;
-                        } else {
+                        }else{
                             i.getStyle().imageUp = Icon.book;
                         }
                     });
@@ -213,9 +179,9 @@ public class ModHudFragment extends HudFragment {
             }
 
             cont.update(() -> {
-                if (Core.input.keyTap(Binding.toggle_menus) && !ui.chatfrag.shown() && !Core.scene.hasDialog() && !(Core.scene.getKeyboardFocus() instanceof TextField)) {
+                if(Core.input.keyTap(Binding.toggle_menus) && !ui.chatfrag.shown() && !Core.scene.hasDialog() && !(Core.scene.getKeyboardFocus() instanceof TextField)){
                     Core.settings.getBoolOnce("ui-hidden", () -> {
-                        ui.announce(Core.bundle.format("showui", Core.keybinds.get(Binding.toggle_menus).key.toString(), 11));
+                        ui.announce(Core.bundle.format("showui",  Core.keybinds.get(Binding.toggle_menus).key.toString(), 11));
                     });
                     toggleMenus();
                 }
@@ -235,9 +201,9 @@ public class ModHudFragment extends HudFragment {
 
                 //table with button to skip wave
                 s.button(Icon.play, Styles.righti, 30f, () -> {
-                    if (net.client() && player.admin) {
+                    if(net.client() && player.admin){
                         Call.adminRequest(player, Packets.AdminAction.wave);
-                    } else {
+                    }else{
                         logic.skipWave();
                     }
                 }).growY().fillX().right().width(40f).disabled(b -> !canSkipWave()).name("skip");
@@ -259,14 +225,14 @@ public class ModHudFragment extends HudFragment {
                 t.table(teams -> {
                     teams.left();
                     int i = 0;
-                    for (Team team : Team.baseTeams) {
+                    for(Team team : Team.baseTeams){
                         ImageButton button = teams.button(Tex.whiteui, Styles.clearTogglePartiali, 40f, () -> Call.setPlayerTeamEditor(player, team))
                                 .size(50f).margin(6f).get();
                         button.getImageCell().grow();
                         button.getStyle().imageUpColor = team.color;
                         button.update(() -> button.setChecked(player.team() == team));
 
-                        if (++i % 3 == 0) {
+                        if(++i % 3 == 0){
                             teams.row();
                         }
                     }
@@ -287,10 +253,10 @@ public class ModHudFragment extends HudFragment {
                 info.label(() -> fps.get(Core.graphics.getFramesPerSecond())).left().style(Styles.outlineLabel).name("fps");
                 info.row();
 
-                if (android) {
-                    info.label(() -> memnative.get((int) (Core.app.getJavaHeap() / 1024 / 1024), (int) (Core.app.getNativeHeap() / 1024 / 1024))).left().style(Styles.outlineLabel).name("memory2");
-                } else {
-                    info.label(() -> mem.get((int) (Core.app.getJavaHeap() / 1024 / 1024))).left().style(Styles.outlineLabel).name("memory");
+                if(android){
+                    info.label(() -> memnative.get((int)(Core.app.getJavaHeap() / 1024 / 1024), (int)(Core.app.getNativeHeap() / 1024 / 1024))).left().style(Styles.outlineLabel).name("memory2");
+                }else{
+                    info.label(() -> mem.get((int)(Core.app.getJavaHeap() / 1024 / 1024))).left().style(Styles.outlineLabel).name("memory");
                 }
                 info.row();
 
@@ -335,16 +301,16 @@ public class ModHudFragment extends HudFragment {
             });
 
             t.top().visible(() -> {
-                if (!shown) return false;
-                if (state.isMenu() || !state.teams.get(player.team()).hasCore()) {
+                if(!shown) return false;
+                if(state.isMenu() || !state.teams.get(player.team()).hasCore()){
                     coreAttackTime[0] = 0f;
                     return false;
                 }
 
                 t.color.a = coreAttackOpacity[0];
-                if (coreAttackTime[0] > 0) {
+                if(coreAttackTime[0] > 0){
                     coreAttackOpacity[0] = Mathf.lerpDelta(coreAttackOpacity[0], 1f, 0.1f);
-                } else {
+                }else{
                     coreAttackOpacity[0] = Mathf.lerpDelta(coreAttackOpacity[0], 0f, 0.1f);
                 }
 
@@ -369,7 +335,7 @@ public class ModHudFragment extends HudFragment {
                     .style(Styles.outlineLabel)).padTop(10).visible(p.color.a >= 0.001f);
             p.update(() -> {
                 p.color.a = Mathf.lerpDelta(p.color.a, Mathf.num(showHudText), 0.2f);
-                if (state.isMenu()) {
+                if(state.isMenu()){
                     p.color.a = 0f;
                     showHudText = false;
                 }
@@ -378,7 +344,7 @@ public class ModHudFragment extends HudFragment {
         });
 
         //TODO DEBUG: rate table
-        if (false)
+        if(false)
             parent.fill(t -> {
                 t.name = "rates";
                 t.bottom().left();
@@ -388,10 +354,10 @@ public class ModHudFragment extends HudFragment {
                     Runnable rebuild = () -> {
                         c.clearChildren();
 
-                        for (Item item : content.items()) {
-                            if (state.rules.sector != null && state.rules.sector.info.getExport(item) >= 1) {
+                        for(Item item : content.items()){
+                            if(state.rules.sector != null && state.rules.sector.info.getExport(item) >= 1){
                                 c.image(item.icon(Cicon.small));
-                                c.label(() -> (int) state.rules.sector.info.getExport(item) + " /s").color(Color.lightGray);
+                                c.label(() -> (int)state.rules.sector.info.getExport(item) + " /s").color(Color.lightGray);
                                 c.row();
                             }
                         }
@@ -399,14 +365,14 @@ public class ModHudFragment extends HudFragment {
 
                     c.update(() -> {
                         boolean wrong = false;
-                        for (Item item : content.items()) {
+                        for(Item item : content.items()){
                             boolean has = state.rules.sector != null && state.rules.sector.info.getExport(item) >= 1;
-                            if (used.get(item.id) != has) {
+                            if(used.get(item.id) != has){
                                 used.set(item.id, has);
                                 wrong = true;
                             }
                         }
-                        if (wrong) {
+                        if(wrong){
                             rebuild.run();
                         }
                     });
@@ -416,27 +382,200 @@ public class ModHudFragment extends HudFragment {
         blockfrag.build(parent);
     }
 
-    private void scheduleToast(Runnable run) {
-        long duration = (int) (3.5 * 1000);
+    @Annotations.Remote(targets = Annotations.Loc.both, forward = true, called = Annotations.Loc.both)
+    public static void setPlayerTeamEditor(Player player, Team team){
+        if(state.isEditor() && player != null){
+            player.team(team);
+        }
+    }
+
+    public void setHudText(String text){
+        showHudText = true;
+        hudText = text;
+    }
+
+    public void toggleHudText(boolean shown){
+        showHudText = shown;
+    }
+
+    private void scheduleToast(Runnable run){
+        long duration = (int)(3.5 * 1000);
         long since = Time.timeSinceMillis(lastToast);
-        if (since > duration) {
+        if(since > duration){
             lastToast = Time.millis();
             run.run();
-        } else {
+        }else{
             Time.runTask((duration - since) / 1000f * 60f, run);
             lastToast += duration;
         }
     }
 
-    private void toggleMenus() {
-        if (flip != null) {
+    public void showToast(String text){
+        showToast(Icon.ok, text);
+    }
+
+    public void showToast(Drawable icon, String text){
+        if(state.isMenu()) return;
+
+        scheduleToast(() -> {
+            Sounds.message.play();
+
+            Table table = new Table(Tex.button);
+            table.update(() -> {
+                if(state.isMenu() || !ui.hudfrag.shown){
+                    table.remove();
+                }
+            });
+            table.margin(12);
+            table.image(icon).pad(3);
+            table.add(text).wrap().width(280f).get().setAlignment(Align.center, Align.center);
+            table.pack();
+
+            //create container table which will align and move
+            Table container = Core.scene.table();
+            container.top().add(table);
+            container.setTranslation(0, table.getPrefHeight());
+            container.actions(Actions.translateBy(0, -table.getPrefHeight(), 1f, Interp.fade), Actions.delay(2.5f),
+                    //nesting actions() calls is necessary so the right prefHeight() is used
+                    Actions.run(() -> container.actions(Actions.translateBy(0, table.getPrefHeight(), 1f, Interp.fade), Actions.remove())));
+        });
+    }
+
+    /** Show unlock notification for a new recipe. */
+    public void showUnlock(UnlockableContent content){
+        //some content may not have icons... yet
+        //also don't play in the tutorial to prevent confusion
+        if(state.isMenu()) return;
+
+        Sounds.message.play();
+
+        //if there's currently no unlock notification...
+        if(lastUnlockTable == null){
+            scheduleToast(() -> {
+                Table table = new Table(Tex.button);
+                table.update(() -> {
+                    if(state.isMenu()){
+                        table.remove();
+                        lastUnlockLayout = null;
+                        lastUnlockTable = null;
+                    }
+                });
+                table.margin(12);
+
+                Table in = new Table();
+
+                //create texture stack for displaying
+                Image image = new Image(content.icon(Cicon.xlarge));
+                image.setScaling(Scaling.fit);
+
+                in.add(image).size(8 * 6).pad(2);
+
+                //add to table
+                table.add(in).padRight(8);
+                table.add("@unlocked");
+                table.pack();
+
+                //create container table which will align and move
+                Table container = Core.scene.table();
+                container.top().add(table);
+                container.setTranslation(0, table.getPrefHeight());
+                container.actions(Actions.translateBy(0, -table.getPrefHeight(), 1f, Interp.fade), Actions.delay(2.5f),
+                        //nesting actions() calls is necessary so the right prefHeight() is used
+                        Actions.run(() -> container.actions(Actions.translateBy(0, table.getPrefHeight(), 1f, Interp.fade), Actions.run(() -> {
+                            lastUnlockTable = null;
+                            lastUnlockLayout = null;
+                        }), Actions.remove())));
+
+                lastUnlockTable = container;
+                lastUnlockLayout = in;
+            });
+        }else{
+            //max column size
+            int col = 3;
+            //max amount of elements minus extra 'plus'
+            int cap = col * col - 1;
+
+            //get old elements
+            Seq<Element> elements = new Seq<>(lastUnlockLayout.getChildren());
+            int esize = elements.size;
+
+            //...if it's already reached the cap, ignore everything
+            if(esize > cap) return;
+
+            //get size of each element
+            float size = 48f / Math.min(elements.size + 1, col);
+
+            lastUnlockLayout.clearChildren();
+            lastUnlockLayout.defaults().size(size).pad(2);
+
+            for(int i = 0; i < esize; i++){
+                lastUnlockLayout.add(elements.get(i));
+
+                if(i % col == col - 1){
+                    lastUnlockLayout.row();
+                }
+            }
+
+            //if there's space, add it
+            if(esize < cap){
+
+                Image image = new Image(content.icon(Cicon.medium));
+                image.setScaling(Scaling.fit);
+
+                lastUnlockLayout.add(image);
+            }else{ //else, add a specific icon to denote no more space
+                lastUnlockLayout.image(Icon.add);
+            }
+
+            lastUnlockLayout.pack();
+        }
+    }
+
+    public void showLaunchDirect(){
+        Image image = new Image();
+        image.color.a = 0f;
+        image.setFillParent(true);
+        image.actions(Actions.fadeIn(launchDuration / 60f, Interp.pow2In), Actions.delay(8f / 60f), Actions.remove());
+        Core.scene.add(image);
+    }
+
+    public void showLaunch(){
+        Image image = new Image();
+        image.color.a = 0f;
+        image.setFillParent(true);
+        image.actions(Actions.fadeIn(40f / 60f));
+        image.update(() -> {
+            if(state.isMenu()){
+                image.remove();
+            }
+        });
+        Core.scene.add(image);
+    }
+
+    public void showLand(){
+        Image image = new Image();
+        image.color.a = 1f;
+        image.touchable = Touchable.disabled;
+        image.setFillParent(true);
+        image.actions(Actions.fadeOut(0.8f), Actions.remove());
+        image.update(() -> {
+            image.toFront();
+            if(state.isMenu()){
+                image.remove();
+            }
+        });
+        Core.scene.add(image);
+    }
+
+    private void toggleMenus(){
+        if(flip != null){
             flip.getStyle().imageUp = shown ? Icon.downOpen : Icon.upOpen;
         }
 
         shown = !shown;
     }
 
-    private Table makeStatusTable() {
+    private Table makeStatusTable(){
         Table table = new Table(Tex.wavepane);
 
         StringBuilder ibuild = new StringBuilder();
@@ -449,12 +588,12 @@ public class ModHudFragment extends HudFragment {
         IntFormat enemycsf = new IntFormat("wave.enemycores");
         IntFormat waitingf = new IntFormat("wave.waiting", i -> {
             ibuild.setLength(0);
-            int m = i / 60;
+            int m = i/60;
             int s = i % 60;
-            if (m > 0) {
+            if(m > 0){
                 ibuild.append(m);
                 ibuild.append(":");
-                if (s < 10) {
+                if(s < 10){
                     ibuild.append("0");
                 }
             }
@@ -470,14 +609,14 @@ public class ModHudFragment extends HudFragment {
 
         table.marginTop(0).marginBottom(4).marginLeft(4);
 
-        class SideBar extends Element {
+        class SideBar extends Element{
             public final Floatp amount;
             public final boolean flip;
             public final Boolp flash;
 
             float last, blink, value;
 
-            public SideBar(Floatp amount, Boolp flash, boolean flip) {
+            public SideBar(Floatp amount, Boolp flash, boolean flip){
                 this.amount = amount;
                 this.flip = flip;
                 this.flash = flash;
@@ -486,12 +625,12 @@ public class ModHudFragment extends HudFragment {
             }
 
             @Override
-            public void draw() {
+            public void draw(){
                 float next = amount.get();
 
-                if (Float.isNaN(next) || Float.isInfinite(next)) next = 1f;
+                if(Float.isNaN(next) || Float.isInfinite(next)) next = 1f;
 
-                if (next < last && flash.get()) {
+                if(next < last && flash.get()){
                     blink = 1f;
                 }
 
@@ -499,48 +638,49 @@ public class ModHudFragment extends HudFragment {
                 value = Mathf.lerpDelta(value, next, 0.15f);
                 last = next;
 
-                if (Float.isNaN(value) || Float.isInfinite(value)) value = 1f;
+                if(Float.isNaN(value) || Float.isInfinite(value)) value = 1f;
 
-                drawInner(Pal.darkishGray);
-
-                Draw.beginStencil();
-
-                Fill.crect(x, y, width, height * value);
-
-                Draw.beginStenciled();
-
-                drawInner(Tmp.c1.set(color).lerp(Color.white, blink));
-
-                Draw.endStencil();
+                drawInner(Pal.darkishGray, 1f);
+                drawInner(Tmp.c1.set(color).lerp(Color.white, blink), value);
             }
 
-            void drawInner(Color color) {
-                if (flip) {
+            void drawInner(Color color, float fract){
+                if(fract < 0) return;
+
+                fract = Mathf.clamp(fract);
+                if(flip){
                     x += width;
                     width = -width;
                 }
 
                 float stroke = width * 0.35f;
-                float bh = height / 2f;
+                float bh = height/2f;
                 Draw.color(color);
+
+                float f1 = Math.min(fract * 2f, 1f), f2 = (fract - 0.5f) * 2f;
+
+                float bo = -(1f - f1) * (width - stroke);
 
                 Fill.quad(
                         x, y,
                         x + stroke, y,
-                        x + width, y + bh,
-                        x + width - stroke, y + bh
+                        x + width + bo, y + bh * f1,
+                        x + width - stroke + bo, y + bh * f1
                 );
 
-                Fill.quad(
-                        x + width, y + bh,
-                        x + width - stroke, y + bh,
-                        x, y + height,
-                        x + stroke, y + height
-                );
+                if(f2 > 0){
+                    float bx = x + (width - stroke) * (1f - f2);
+                    Fill.quad(
+                            x + width, y + bh,
+                            x + width - stroke, y + bh,
+                            bx, y + height * fract,
+                            bx + stroke, y + height * fract
+                    );
+                }
 
                 Draw.reset();
 
-                if (flip) {
+                if(flip){
                     width = -width;
                     x -= width;
                 }
@@ -548,9 +688,9 @@ public class ModHudFragment extends HudFragment {
         }
 
         table.stack(
-                new Element() {
+                new Element(){
                     @Override
-                    public void draw() {
+                    public void draw(){
                         Draw.color(Pal.darkerGray);
                         float radius = height / Mathf.sqrt3;
                         Fill.poly(x + width/2f, y + height/2f, 6, radius);
@@ -574,7 +714,7 @@ public class ModHudFragment extends HudFragment {
                     float pad = -20;
                     t.margin(0);
                     t.clicked(() -> {
-                        if (!player.dead() && mobile) {
+                        if(!player.dead() && mobile){
                             Call.unitClear(player);
                             control.input.controlledType = null;
                         }
@@ -592,39 +732,39 @@ public class ModHudFragment extends HudFragment {
         table.labelWrap(() -> {
             builder.setLength(0);
 
-            if (!state.rules.waves && state.rules.attackMode) {
+            if(!state.rules.waves && state.rules.attackMode){
                 int sum = Math.max(state.teams.present.sum(t -> t.team != player.team() ? t.cores.size : 0), 1);
                 builder.append(sum > 1 ? enemycsf.get(sum) : enemycf.get(sum));
                 return builder;
             }
 
-            if (!state.rules.waves && state.isCampaign()) {
+            if(!state.rules.waves && state.isCampaign()){
                 builder.append("[lightgray]").append(Core.bundle.get("sector.curcapture"));
             }
 
-            if (!state.rules.waves) {
+            if(!state.rules.waves){
                 return builder;
             }
 
-            if (state.rules.winWave > 1 && state.rules.winWave >= state.wave && state.isCampaign()) {
+            if(state.rules.winWave > 1 && state.rules.winWave >= state.wave && state.isCampaign()){
                 builder.append(wavefc.get(state.wave, state.rules.winWave));
-            } else {
+            }else{
                 builder.append(wavef.get(state.wave));
             }
             builder.append("\n");
 
-            if (state.enemies > 0) {
-                if (state.enemies == 1) {
+            if(state.enemies > 0){
+                if(state.enemies == 1){
                     builder.append(enemyf.get(state.enemies));
-                } else {
+                }else{
                     builder.append(enemiesf.get(state.enemies));
                 }
                 builder.append("\n");
             }
 
-            if (state.rules.waveTimer) {
-                builder.append((logic.isWaitingWave() ? Core.bundle.get("wave.waveInProgress") : (waitingf.get((int) (state.wavetime / 60)))));
-            } else if (state.enemies == 0) {
+            if(state.rules.waveTimer){
+                builder.append((logic.isWaitingWave() ? Core.bundle.get("wave.waveInProgress") : (waitingf.get((int)(state.wavetime/60)))));
+            }else if(state.enemies == 0){
                 builder.append(Core.bundle.get("waiting"));
             }
 
@@ -635,13 +775,13 @@ public class ModHudFragment extends HudFragment {
 
         float[] count = new float[]{-1};
         table.table().update(t -> {
-            if (player.unit() instanceof Payloadc) {
-                Payloadc payload = player.unit().as();
-                if (count[0] != payload.payloadUsed()) {
+            if(player.unit() instanceof Payloadc){
+                Payloadc payload= (Payloadc) player.unit();
+                if(count[0] != payload.payloadUsed()){
                     payload.contentInfo(t, 8 * 2, 275f);
                     count[0] = payload.payloadUsed();
                 }
-            } else {
+            }else{
                 count[0] = -1;
                 t.clear();
             }
@@ -650,7 +790,8 @@ public class ModHudFragment extends HudFragment {
         return table;
     }
 
-    private boolean canSkipWave() {
+    private boolean canSkipWave(){
         return state.rules.waves && ((net.server() || player.admin) || !net.active()) && state.enemies == 0 && !spawner.isSpawning();
     }
+
 }
