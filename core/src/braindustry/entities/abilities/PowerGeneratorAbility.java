@@ -41,7 +41,7 @@ public abstract class PowerGeneratorAbility extends ModAbility {
     public final float laserRange;
     public Boolf2<Building, Unit> good = (building, unit) -> {
         if (building == null) return false;
-        return /*building.block.hasPower && */building.team == unit.team && building.block instanceof ReceivingPowerNode;
+        return building.block.hasPower && building.team == unit.team /*&& building.block instanceof ReceivingPowerNode*/;
     };
 
     public final float powerProduction;
