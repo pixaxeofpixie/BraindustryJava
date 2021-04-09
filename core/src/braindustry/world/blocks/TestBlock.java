@@ -25,11 +25,13 @@ import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.gen.Tex;
+import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.ui.Styles;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.Tile;
+import mindustryAddition.graphics.ModFill;
 import mindustryAddition.graphics.ModLines;
 import mindustryAddition.world.blocks.BuildingLabel;
 
@@ -111,9 +113,9 @@ public class TestBlock extends Block {
             table.table(Tex.buttonTrans,(t) -> {
                 t.button(Icon.up,ModStyles.alphai, () -> {
 //                    ModFx.fireworkTrail.at(x,y,rotdeg(),Color.purple);
-                    Tile tile = nearbyTile(rotation);
-                    tile.setFloor(Blocks.water.asFloor());
-                    floorRenderer.recacheTile(tile);
+//                    Tile tile = nearbyTile(rotation);
+//                    tile.setFloor(Blocks.water.asFloor());
+//                    floorRenderer.recacheTile(tile);
 //                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("2c5777"), Color.valueOf("11222d"), Couple.of(2f,4f));
 //                    ModDraw.teleportCircles(x,y,Mathf.random(8,16),Color.valueOf("6757d1"), Color.valueOf("9288cc"), Couple.of(2f,4f));
                 });
@@ -238,9 +240,16 @@ public class TestBlock extends Block {
             Draw.rect(region, x, y, size * 8, size * 8, 0.0F);
 //            Draw.rect(editorIcon(), x, y + size * 8, size * 8, size * 8, 0f);
 //            Draw.alpha(0.5f);
+
             Draw.reset();
             Lines.stroke(settingsStroke);
-            Draw.color(selectedColor);
+//            ModLines.crystal(x, y,8f, (size) * 8f, rotdeg(),(int) someVariable);
+//            ModFill.spikesSwirl(x, y, (size) * 8, 8, modVars.settings.getFloat("angle") / 360f, rotdeg(), someVariable);
+            Vars.renderer.lights.add(()->{
+                Draw.color(selectedColor.toFloatBits());
+                ModFill.crystal(x, y,8f, (size) * 8f, rotdeg(),(int) someVariable);
+                ModFill.doubleSwirl(x, y, (size) * 8f, 8f*(size+1f), modVars.settings.getFloat("angle") / 360f, rotdeg());
+            });
 //            ModLines.crystal(x, y,8f, (size) * 8f, rotdeg(),(int) someVariable);
 //            ModFill.spikesSwirl(x, y, (size) * 8, 8, modVars.settings.getFloat("angle") / 360f, rotdeg(), someVariable);
             Draw.reset();

@@ -1,5 +1,6 @@
 package braindustry.annotations.RulesEditDialog;
 
+import arc.graphics.Color;
 import arc.scene.ui.TextArea;
 import arc.scene.ui.TextField;
 import arc.scene.ui.layout.Table;
@@ -43,6 +44,13 @@ public class RulesProcessor extends ModBaseProcessor {
     protected  void setBuilder(CodeBlock.Builder builder){
         cashBuilder=builder;
     }
+
+    private void addColorEdit(CodeBlock.Builder builder, Svar field) {
+
+        String name = "rules."+field.name();
+        addCode("table.button(\"edit\",()-> mindustry.Vars.ui.picker.show(@,c->@=c))", name, name);
+
+    }
     protected void addSlider(CodeBlock.Builder builder,Svar field,String cast){
         builder.beginControlFlow(Strings.format("table.add(\"\").update(label->"));
         setBuilder(builder);
@@ -61,13 +69,17 @@ public class RulesProcessor extends ModBaseProcessor {
                 addSlider(builder,field,"(int)");
             } else if (is(field,Float.class)){
                 addSlider(builder,field,"");
+            } else if (is(field, Color.class)){
+                addColorEdit(builder,field);
             } else {
                 return;
             }
             builder.addStatement("table.row()");
         }
     }
-protected boolean is(Svar var,Class<?> c){
+
+
+    protected boolean is(Svar var,Class<?> c){
         return var.tname().box().toString().equals(c.getName());
 }
     protected boolean check(String c) {

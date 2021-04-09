@@ -73,7 +73,7 @@ public class ModPlanetRenderer extends PlanetRenderer {
         cam.up.set(Vec3.Y);
 
         cam.resize(Core.graphics.getWidth(), Core.graphics.getHeight());
-        camPos.setLength(planet.radius * camLength + (zoom - 1f) * planet.radius * 2);
+        camPos.setLength(planet.radius * camLength + (zoom<1?0.0001f:zoom - 1f) * planet.radius * 2);
         cam.position.set(planet.position).add(camPos);
         cam.lookAt(planet.position);
         cam.update();
@@ -188,7 +188,12 @@ public class ModPlanetRenderer extends PlanetRenderer {
             batch.flush(Gl.triangles);
         }
     }
-
+    public void drawPlane(Sector sector, Runnable run){
+        Draw.batch(projector, () -> {
+            setPlane(sector);
+            run.run();
+        });
+    }
     @Override
     public void setPlane(Sector sector) {
         float rotation = -planet.getRotation();
@@ -201,7 +206,7 @@ public class ModPlanetRenderer extends PlanetRenderer {
                 //face up
                 sector.plane.project(Tmp.v32.set(sector.tile.v).add(Vec3.Y)).sub(sector.tile.v).rotate(Vec3.Y, rotation).nor(),
                 //right vector
-                Tmp.v31.set(Tmp.v32).rotate(Vec3.Y, -rotation).add(sector.tile.v).rotate(sector.tile.v, 90).sub(sector.tile.v).rotate(Vec3.Y, rotation).nor()
+                Tmp.v31.set(Tmp.v32).rotate(Vec3.Y, -rotation).add(sector.tile.v).rotate(sector.tile.v, 90*(sector.planet.radius/PlanetRenderer.outlineRad)).sub(sector.tile.v).rotate(Vec3.Y, rotation).nor()
         );
     }
 

@@ -1,6 +1,9 @@
 package braindustry.ui.dialogs;
 
 import arc.Core;
+import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.math.geom.Vec3;
 import arc.scene.Action;
@@ -12,9 +15,13 @@ import arc.util.Time;
 import arc.util.Tmp;
 import braindustry.graphics.g3d.ModPlanetRenderer;
 import mindustry.content.TechTree;
+import mindustry.game.Team;
 import mindustry.gen.Iconc;
+import mindustry.graphics.Pal;
 import mindustry.graphics.g3d.PlanetRenderer;
+import mindustry.type.Planet;
 import mindustry.type.Sector;
+import mindustry.ui.Fonts;
 import mindustry.ui.dialogs.PlanetDialog;
 
 import static mindustry.Vars.mobile;
@@ -153,7 +160,7 @@ public class ModPlanetDialog extends PlanetDialog {
         }
 
         planets.zoom = Mathf.lerpDelta(planets.zoom, zoom, 0.4f);
-        selectAlpha = Mathf.lerpDelta(selectAlpha, Mathf.num(planets.zoom < 1.9f), 0.1f);
+        selectAlpha = Mathf.lerpDelta(selectAlpha, Mathf.num(planets.zoom < 0.73f + planets.planet.radius), 0.1f);
     }
     boolean canSelect(Sector sector) {
         if (this.mode == PlanetDialog.Mode.select) {
@@ -166,6 +173,49 @@ public class ModPlanetDialog extends PlanetDialog {
         } else {
             return sector.hasBase() || sector.near().contains(Sector::hasBase);
         }
+    }
+
+    @Override
+    public void renderProjections(Planet planet){
+        float iw = 48f/4f;
+
+        for(Sector sec : planet.sectors){
+            if(sec != hovered){
+                TextureRegion preficon = sec.icon();
+                TextureRegion icon =
+                        sec.isAttacked() ? Fonts.getLargeIcon("warning") :
+                                !sec.hasBase() && sec.preset != null && sec.preset.unlocked() && preficon == null ?
+                                        Fonts.getLargeIcon("terrain") :
+                                        sec.preset != null && sec.preset.locked() && sec.preset.node() != null && !sec.preset.node().parent.content.locked() ? Fonts.getLargeIcon("lock") :
+                                                preficon;
+                Color color = sec.preset != null && !sec.hasBase() ? Team.derelict.color : Team.sharded.color;
+
+                if(icon != null){
+                    planets.drawPlane(sec, () -> {
+                        Draw.color(color, selectAlpha);
+                        Draw.rect(icon, 0, 0, iw, iw * icon.height / icon.width);
+                    });
+                }
+            }
+        }
+
+        Draw.reset();
+
+        if(hovered != null){
+            planets.drawPlane(hovered, () -> {
+                Draw.color(hovered.isAttacked() ? Pal.remove : Color.white, Pal.accent, Mathf.absin(5f, 1f));
+
+                TextureRegion icon = hovered.locked() && !canSelect(hovered) ? Fonts.getLargeIcon("lock") : hovered.isAttacked() ? Fonts.getLargeIcon("warning") : hovered.icon();
+
+                if(icon != null){
+//                    Draw.rect(icon, 0, 0, iw, iw * icon.height / icon.width);
+                }
+
+                Draw.reset();
+            });
+        }
+
+        Draw.reset();
     }
     boolean showing() {
         return this.newPresets.any();
