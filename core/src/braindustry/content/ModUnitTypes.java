@@ -2119,8 +2119,39 @@ public class ModUnitTypes implements ContentList {
                         }};
                     }},
                 new ModWeapon("penumbra-shotgun"){{
+                        y = -25f;
+                        x = 9f;
+                        reload = 4f;
+                        ejectEffect = Fx.casing1;
+                        rotateSpeed = 7f;
+                        shake = 1f;
+                        shots = 3;
+                        inaccuracy = 4;
+                        shootSound = Sounds.shoot;
+                        rotate = true;
+                        shadow = 12f;
+                        bullet = new BasicBulletType(){{
+                            damage = 102;
+                            speed = 11.4f;
+                            pierce = true;
+                            pierceCap = 7;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 25f;
+                            shootEffect = Fx.shootBig;
+                            lightning = 3;
+                            lightningLength = 7;
+                            lightningColor = Pal.surge;
+                            lightningDamage = 21;
+                            width = 14f;
+                            height = 33f;
+                            lifetime = 40f;
+                            shootEffect = Fx.shootBig;
+                        }};
+                    }},
+                new ModWeapon("penumbra-shotgun"){{
                         y = 25f;
-                        x = 11f;
+                        x = 23f;
                         reload = 4f;
                         ejectEffect = Fx.casing1;
                         rotateSpeed = 7f;
@@ -2138,9 +2169,9 @@ public class ModUnitTypes implements ContentList {
                             lifetime = 25f;
                             shootEffect = Fx.shootBig;
                             lightning = 8;
-                            lightningLength = 16;
+                            lightningLength = 11;
                             lightningColor = Pal.surge;
-                            lightningDamage = 51;
+                            lightningDamage = 44;
                             width = 14f;
                             height = 33f;
                             lifetime = 40f;
@@ -2149,12 +2180,12 @@ public class ModUnitTypes implements ContentList {
                     }},
                 new ModWeapon("penumbra-shotgun"){{
                         y = 25f;
-                        x = 12f;
+                        x = 23f;
                         reload = 4f;
                         ejectEffect = Fx.casing1;
                         rotateSpeed = 7f;
                         shake = 1f;
-                        firstShotDelay = 70;
+                        firstShotDelay = 2;
                         shootSound = Sounds.shoot;
                         rotate = true;
                         shadow = 12f;
@@ -2164,7 +2195,7 @@ public class ModUnitTypes implements ContentList {
                             pierce = true;
                             pierceCap = 3;
                             width = 14f;
-                            height = 33f;
+                            height = 39f;
                             lifetime = 25f;
                             shootEffect = Fx.shootBig;
                             lightning = 2;
