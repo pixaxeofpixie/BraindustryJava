@@ -6,21 +6,21 @@ import arc.util.io.Writes;
 import braindustry.world.modules.PayloadModule;
 import mindustry.game.Team;
 import mindustry.gen.Building;
-import mindustry.type.Item;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.payloads.Payload;
-import mindustry.world.modules.ItemModule;
 
 public class PayloadBlock extends Block {
-    public boolean hasPayload=true;
-    public int payloadCapacity=2;
+    public boolean hasPayload = true;
+    public int payloadCapacity = 2;
+
     public PayloadBlock(String name) {
         super(name);
     }
-    public class PayloadBuild extends Building{
-     public    PayloadModule payloads;
-     public boolean blocked;
+
+    public class PayloadBuild extends Building {
+        public PayloadModule payloads;
+        public boolean blocked;
 
         @Override
         public Payload getPayload() {
@@ -29,7 +29,7 @@ public class PayloadBlock extends Block {
 
         @Override
         public boolean acceptPayload(Building source, Payload payload) {
-            return payloads.count()  < payloadCapacity;
+            return payloads.count() < payloadCapacity;
         }
 
         @Override
@@ -40,17 +40,25 @@ public class PayloadBlock extends Block {
         @Override
         public void onProximityUpdate() {
             super.onProximityUpdate();
-            int ntrns = 1 + size/2;
+            int ntrns = 1 + size / 2;
             Tile next = tile.nearby(Geometry.d4(rotation).x * ntrns, Geometry.d4(rotation).y * ntrns);
             blocked = (next != null && next.solid() && !next.block().outputsPayload);
         }
 
+        @Override
+        public void updateTile() {
+            super.updateTile();
+            payloads.update();
+        }
+
         public boolean dumpPayload() {
             Payload take = payloads.take();
-            boolean b = super.dumpPayload(take);
-            if (!b)payloads.add(take);else{
-                if (!blocked) {
-                    take.dump();
+            boolean b = !(take == null || !super.dumpPayload(take));
+            if (!b&& take!=null) {
+                payloads.add(take);
+                take.set(x, y, rotation * 60f);
+                if (!blocked &&  take.dump()) {
+
                     moved();
                 } else {
                     moveFailed();
@@ -58,13 +66,15 @@ public class PayloadBlock extends Block {
             }
             return b;
         }
-        public void moveFailed(){
+
+        public void moveFailed() {
 
         }
 
-        public void moved(){
+        public void moved() {
 
         }
+
         @Override
         public boolean movePayload(Payload todump) {
             return super.movePayload(todump);
@@ -74,11 +84,11 @@ public class PayloadBlock extends Block {
         public Building create(Block block, Team team) {
 
             Building building = super.create(block, team);
-            if (hasPayload) payloads=new PayloadModule();
+            if (hasPayload) payloads = new PayloadModule();
             return building;
         }
 
-        public boolean canDumpPayload(Building to, Payload payload){
+        public boolean canDumpPayload(Building to, Payload payload) {
             return true;
         }
 

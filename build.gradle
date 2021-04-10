@@ -90,8 +90,8 @@ allprojects {
         jcenter()
     }
     tasks.withType(JavaCompile){
-        targetCompatibility = 8
-        sourceCompatibility = 14
+        targetCompatibility = 14
+        sourceCompatibility = 8
         options.encoding = "UTF-8"
         options.compilerArgs += ["-Xlint:deprecation"]
     }
@@ -100,7 +100,7 @@ allprojects {
 configure(project(":annotations")) {
     tasks.withType(JavaCompile) {
         targetCompatibility = 8
-        sourceCompatibility = 8
+        sourceCompatibility = 14
     }
 }
 

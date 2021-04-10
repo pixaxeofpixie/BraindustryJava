@@ -2001,7 +2001,7 @@ public class ModUnitTypes implements ContentList {
                                     posses.add(new Vec2(point2.x,point2.y).scl(7.5f));
                             }
 
-                    Log.info("posses: @",posses.toString(", "));
+//                    Log.info("posses: @",posses.toString(", "));
                             return posses;
                         }).engineSize(6)
                 );

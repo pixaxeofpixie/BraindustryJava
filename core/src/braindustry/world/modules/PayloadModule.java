@@ -44,6 +44,14 @@ public class PayloadModule extends BlockModule {
         }
     }
 
+    public void update(){
+        Seq<Payload> copy = items.copy();
+items.clear();
+        for (Payload payload : copy) {
+            if (payload!=null && !items.contains(payload))items.add(payload);
+        }
+    }
+
     public boolean has(Payload item){
         return items.contains(item);
     }

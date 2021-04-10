@@ -19,7 +19,6 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import braindustry.annotations.ModAnnotations;
 import braindustry.world.PayloadBlock;
-import mindustry.annotations.Annotations;
 import mindustry.core.Renderer;
 import mindustry.entities.units.BuildPlan;
 import mindustry.gen.Building;
@@ -27,19 +26,15 @@ import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.input.Placement;
-import mindustry.type.Item;
-import mindustry.type.Liquid;
-import mindustry.world.Block;
+import mindustry.ui.Bar;
 import mindustry.world.Edges;
 import mindustry.world.Tile;
-import mindustry.world.blocks.distribution.ItemBridge;
 import mindustry.world.blocks.payloads.Payload;
 import mindustry.world.meta.BlockGroup;
 
-import static mindustry.Vars.tilesize;
-import static mindustry.Vars.world;
+import static mindustry.Vars.*;
 
-public class PayloadBridge  extends PayloadBlock {
+public class PayloadBridge extends PayloadBlock {
     private static BuildPlan otherReq;
 
     public final int timerTransport = timers++;
@@ -47,10 +42,13 @@ public class PayloadBridge  extends PayloadBlock {
     public float transportTime = 2f;
     public @ModAnnotations.Load("@-end")
     TextureRegion endRegion;
-    public @ModAnnotations.Load("@-bridge") TextureRegion bridgeRegion;
-    public @ModAnnotations.Load("@-arrow") TextureRegion arrowRegion;
+    public @ModAnnotations.Load("@-bridge")
+    TextureRegion bridgeRegion;
+    public @ModAnnotations.Load("@-arrow")
+    TextureRegion arrowRegion;
     public @Nullable
     PayloadBridgeBuild lastBuild;
+
     public PayloadBridge(String name) {
         super(name);
         update = true;
@@ -58,7 +56,8 @@ public class PayloadBridge  extends PayloadBlock {
         hasPower = true;
         expanded = true;
         payloadCapacity = 10;
-        outputsPayload=true;
+        outputsPayload = true;
+        hasPayload=true;
         configurable = true;
 //        hasItems = true;
         unloadable = false;
@@ -69,26 +68,28 @@ public class PayloadBridge  extends PayloadBlock {
         //integer is not
         config(Integer.class, (PayloadBridgeBuild tile, Integer i) -> tile.link = i);
     }
+
     @Override
-    public void drawRequestConfigTop(BuildPlan req, Eachable<BuildPlan> list){
+    public void drawRequestConfigTop(BuildPlan req, Eachable<BuildPlan> list) {
         otherReq = null;
         list.each(other -> {
-            if(other.block == this && req != other && req.config instanceof Point2 p && p.equals(other.x - req.x, other.y - req.y)){
+            if (other.block == this && req != other && req.config instanceof Point2 && ((Point2) req.config).equals(other.x - req.x, other.y - req.y)) {
                 otherReq = other;
             }
         });
 
-        if(otherReq != null){
+        if (otherReq != null) {
             drawBridge(req, otherReq.drawx(), otherReq.drawy(), 0);
         }
     }
 
     @Override
-    protected TextureRegion[] icons(){
+    protected TextureRegion[] icons() {
         return new TextureRegion[]{Core.atlas.find(name + "-icon")};
     }
-    public void drawBridge(BuildPlan req, float ox, float oy, float flip){
-        if(Mathf.zero(Renderer.bridgeOpacity)) return;
+
+    public void drawBridge(BuildPlan req, float ox, float oy, float flip) {
+        if (Mathf.zero(Renderer.bridgeOpacity)) return;
         Draw.alpha(Renderer.bridgeOpacity);
 
         Lines.stroke(8f);
@@ -110,13 +111,13 @@ public class PayloadBridge  extends PayloadBlock {
     }
 
     @Override
-    public void drawPlace(int x, int y, int rotation, boolean valid){
+    public void drawPlace(int x, int y, int rotation, boolean valid) {
         super.drawPlace(x, y, rotation, valid);
 
         Tile link = findLink(x, y);
 
         Lines.stroke(2f, Pal.placing);
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             Lines.dashLine(
                     x * tilesize + Geometry.d4[i].x * (tilesize / 2f + 2),
                     y * tilesize + Geometry.d4[i].y * (tilesize / 2f + 2),
@@ -128,7 +129,7 @@ public class PayloadBridge  extends PayloadBlock {
         Draw.reset();
         Draw.color(Pal.placing);
         Lines.stroke(1f);
-        if(link != null && Math.abs(link.x - x) + Math.abs(link.y - y) > 1){
+        if (link != null && Math.abs(link.x - x) + Math.abs(link.y - y) > 1) {
             int rot = link.absoluteRelativeTo(x, y);
             float w = (link.x == x ? tilesize : Math.abs(link.x - x) * tilesize - tilesize);
             float h = (link.y == y ? tilesize : Math.abs(link.y - y) * tilesize - tilesize);
@@ -139,52 +140,61 @@ public class PayloadBridge  extends PayloadBlock {
         Draw.reset();
     }
 
-    public boolean linkValid(Tile tile, Tile other){
+    public boolean linkValid(Tile tile, Tile other) {
         return linkValid(tile, other, true);
     }
 
-    public boolean linkValid(Tile tile, Tile other, boolean checkDouble){
-        if(other == null || tile == null || !positionsValid(tile.x, tile.y, other.x, other.y)) return false;
+    public boolean linkValid(Tile tile, Tile other, boolean checkDouble) {
+        if (other == null || tile == null || !positionsValid(tile.x, tile.y, other.x, other.y) || (tile.build!=null && tile.build==other.build)) return false;
 
-        return ((other.block() == tile.block() && tile.block() == this) || (!(tile.block() instanceof ItemBridge) && other.block() == this))
+        return ((other.block() == tile.block() && tile.block() == this) || (!(tile.block() instanceof PayloadBridge) && other.block() == this))
                && (other.team() == tile.team() || tile.block() != this)
-               && (!checkDouble || ((ItemBridge.ItemBridgeBuild)other.build).link != tile.pos());
+               && (!checkDouble || ((PayloadBridgeBuild) other.build).link != tile.pos());
     }
 
-    public boolean positionsValid(int x1, int y1, int x2, int y2){
-        if(x1 == x2){
+    public boolean positionsValid(int x1, int y1, int x2, int y2) {
+        if (x1 == x2) {
             return Math.abs(y1 - y2) <= range;
-        }else if(y1 == y2){
+        } else if (y1 == y2) {
             return Math.abs(x1 - x2) <= range;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public Tile findLink(int x, int y){
+    public Tile findLink(int x, int y) {
         Tile tile = world.tile(x, y);
-        if(tile != null && lastBuild != null && linkValid(tile, lastBuild.tile) && lastBuild.tile != tile && lastBuild.link == -1){
+        if (tile != null && lastBuild != null && linkValid(tile, lastBuild.tile) && lastBuild.tile != tile && lastBuild.link == -1) {
             return lastBuild.tile;
         }
         return null;
     }
 
     @Override
-    public void handlePlacementLine(Seq<BuildPlan> plans){
-        for(int i = 0; i < plans.size - 1; i++){
+    public void setBars() {
+        super.setBars();
+        bars.add("count",(PayloadBridgeBuild build)->new Bar(()->"stat.count", ()->Pal.bar, ()->{
+            return (float)build.payloads.count()/(float)payloadCapacity;
+        }).blink(Color.white));
+    }
+
+    @Override
+    public void handlePlacementLine(Seq<BuildPlan> plans) {
+        for (int i = 0; i < plans.size - 1; i++) {
             BuildPlan cur = plans.get(i);
             BuildPlan next = plans.get(i + 1);
-            if(positionsValid(cur.x, cur.y, next.x, next.y)){
+            if (positionsValid(cur.x, cur.y, next.x, next.y)) {
                 cur.config = new Point2(next.x - cur.x, next.y - cur.y);
             }
         }
     }
 
     @Override
-    public void changePlacementPath(Seq<Point2> points, int rotation){
+    public void changePlacementPath(Seq<Point2> points, int rotation) {
         Placement.calculateNodes(points, this, rotation, (point, other) -> Math.max(Math.abs(point.x - other.x), Math.abs(point.y - other.y)) <= range);
     }
-    public class PayloadBridgeBuild extends PayloadBuild{
+
+    public class PayloadBridgeBuild extends PayloadBuild {
         public int link = -1;
         public IntSet incoming = new IntSet();
         public float uptime;
@@ -193,11 +203,11 @@ public class PayloadBridge  extends PayloadBlock {
         public float cycleSpeed = 1f;
 
         @Override
-        public void playerPlaced(Object config){
+        public void playerPlaced(Object config) {
             super.playerPlaced(config);
 
             Tile link = findLink(tile.x, tile.y);
-            if(linkValid(tile, link) && !proximity.contains(link.build)){
+            if (linkValid(tile, link) && !proximity.contains(link.build)) {
                 link.build.configure(tile.pos());
             }
 
@@ -205,8 +215,8 @@ public class PayloadBridge  extends PayloadBlock {
         }
 
         @Override
-        public void drawSelect(){
-            if(linkValid(tile, world.tile(link))){
+        public void drawSelect() {
+            if (linkValid(tile, world.tile(link))) {
                 drawInput(world.tile(link));
             }
 
@@ -215,14 +225,14 @@ public class PayloadBridge  extends PayloadBlock {
             Draw.reset();
         }
 
-        private void drawInput(Tile other){
-            if(!linkValid(tile, other, false)) return;
+        private void drawInput(Tile other) {
+            if (!linkValid(tile, other, false)) return;
             boolean linked = other.pos() == link;
 
             Tmp.v2.trns(tile.angleTo(other), 2f);
             float tx = tile.drawx(), ty = tile.drawy();
             float ox = other.drawx(), oy = other.drawy();
-            float alpha = Math.abs((linked ? 100 : 0)- (Time.time * 2f) % 100f) / 100f;
+            float alpha = Math.abs((linked ? 100 : 0) - (Time.time * 2f) % 100f) / 100f;
             float x = Mathf.lerp(ox, tx, alpha);
             float y = Mathf.lerp(oy, ty, alpha);
 
@@ -249,35 +259,41 @@ public class PayloadBridge  extends PayloadBlock {
         }
 
         @Override
-        public void drawConfigure(){
+        public void drawConfigure() {
             Drawf.select(x, y, tile.block().size * tilesize / 2f + 2f, Pal.accent);
-
-            for(int i = 1; i <= range; i++){
-                for(int j = 0; j < 4; j++){
+            Seq<Building> marked = new Seq<>();
+            Building linkedBuild = world.build(link);
+            if (linkedBuild != null) marked.add(linkedBuild);
+            for (int i = 1; i <= range; i++) {
+                for (int j = 0; j < 4; j++) {
                     Tile other = tile.nearby(Geometry.d4[j].x * i, Geometry.d4[j].y * i);
-                    if(linkValid(tile, other)){
-                        boolean linked = other.pos() == link;
-
-                        Drawf.select(other.drawx(), other.drawy(),
-                                other.block().size * tilesize / 2f + 2f + (linked ? 0f : Mathf.absin(Time.time, 4f, 1f)), linked ? Pal.place : Pal.breakInvalid);
+                    if (linkValid(tile, other) && other.build != this && !marked.contains(other.build)) {
+                        marked.add(other.build);
                     }
                 }
+            }
+            for (Building build : marked) {
+                boolean linked = build.tile.pos() == link;
+
+                Drawf.select(build.x, build.y(),
+                        build.block().size * tilesize / 2f + 2f + (linked ? 0f : Mathf.absin(Time.time, 4f, 1f)), linked ? Pal.place : Pal.breakInvalid);
             }
         }
 
         @Override
-        public boolean onConfigureTileTapped(Building other){
+        public boolean onConfigureTileTapped(Building other) {
+            if (other==this)return true;
             //reverse connection
-            if(other instanceof PayloadBridgeBuild b && b.link == pos()){
+            if (other instanceof PayloadBridgeBuild && ((PayloadBridgeBuild) other).link == pos()) {
                 configure(other.pos());
                 other.configure(-1);
                 return true;
             }
 
-            if(linkValid(tile, other.tile)){
-                if(link == other.pos()){
+            if (linkValid(tile, other.tile)) {
+                if (link == other.pos()) {
                     configure(-1);
-                }else{
+                } else {
                     configure(other.pos());
                 }
                 return false;
@@ -285,34 +301,35 @@ public class PayloadBridge  extends PayloadBlock {
             return true;
         }
 
-        public void checkIncoming(){
+        public void checkIncoming() {
             IntSet.IntSetIterator it = incoming.iterator();
-            while(it.hasNext){
+            while (it.hasNext) {
                 int i = it.next();
                 Tile other = world.tile(i);
-                if(!linkValid(tile, other, false) || ((ItemBridge.ItemBridgeBuild)other.build).link != tile.pos()){
+                if (!linkValid(tile, other, false) || ((PayloadBridgeBuild) other.build).link != tile.pos()) {
                     it.remove();
                 }
             }
         }
 
         @Override
-        public void updateTile(){
+        public void updateTile() {
+            super.updateTile();
             time += cycleSpeed * delta();
             time2 += (cycleSpeed - 1f) * delta();
 
             checkIncoming();
 
             Tile other = world.tile(link);
-            if(!linkValid(tile, other)){
+            if (!linkValid(tile, other)) {
                 dumpPayload();
                 uptime = 0f;
-            }else{
-                ((ItemBridge.ItemBridgeBuild)other.build).incoming.add(tile.pos());
+            } else {
+                ((PayloadBridgeBuild) other.build).incoming.add(tile.pos());
 
-                if(consValid() && Mathf.zero(1f - efficiency())){
+                if (consValid() && Mathf.zero(1f - efficiency())) {
                     uptime = Mathf.lerpDelta(uptime, 1f, 0.04f);
-                }else{
+                } else {
                     uptime = Mathf.lerpDelta(uptime, 0f, 0.02f);
                 }
 
@@ -320,15 +337,15 @@ public class PayloadBridge  extends PayloadBlock {
             }
         }
 
-        public void updateTransport(Building other){
-            if(uptime >= 0.5f && timer(timerTransport, transportTime)){
+        public void updateTransport(Building other) {
+            if (uptime >= 0.5f && timer(timerTransport, transportTime)) {
                 Payload payload = payloads.take();
-                if(payload != null && other.acceptPayload(this, payload)){
+                if (payload != null && other.acceptPayload(this, payload)) {
                     other.handlePayload(this, payload);
                     cycleSpeed = Mathf.lerpDelta(cycleSpeed, 4f, 0.05f); //TODO this is kinda broken, because lerping only happens on a timer
-                }else{
+                } else {
                     cycleSpeed = Mathf.lerpDelta(cycleSpeed, 1f, 0.01f);
-                    if(payload != null){
+                    if (payload != null) {
                         payloads.add(payload);
                     }
                 }
@@ -336,15 +353,15 @@ public class PayloadBridge  extends PayloadBlock {
         }
 
         @Override
-        public void draw(){
+        public void draw() {
             super.draw();
 
             Draw.z(Layer.power);
 
             Tile other = world.tile(link);
-            if(!linkValid(tile, other)) return;
+            if (!linkValid(tile, other)) return;
 
-            if(Mathf.zero(Renderer.bridgeOpacity)) return;
+            if (Mathf.zero(Renderer.bridgeOpacity)) return;
 
             int i = relativeTo(other.x, other.y);
 
@@ -356,7 +373,7 @@ public class PayloadBridge  extends PayloadBlock {
 
             Lines.stroke(8f);
 
-            Tmp.v1.set(x, y).sub(other.worldx(), other.worldy()).setLength(tilesize/2f).scl(-1f);
+            Tmp.v1.set(x, y).sub(other.worldx(), other.worldy()).setLength(tilesize / 2f).scl(-1f);
 
             Lines.line(bridgeRegion,
                     x + Tmp.v1.x,
@@ -371,8 +388,8 @@ public class PayloadBridge  extends PayloadBlock {
 
             Draw.color();
 
-            for(int a = 0; a < arrows; a++){
-                Draw.alpha(Mathf.absin(a / (float)arrows - time / 100f, 0.1f, 1f) * uptime * Renderer.bridgeOpacity);
+            for (int a = 0; a < arrows; a++) {
+                Draw.alpha(Mathf.absin(a / (float) arrows - time / 100f, 0.1f, 1f) * uptime * Renderer.bridgeOpacity);
                 Draw.rect(arrowRegion,
                         x + Geometry.d4(i).x * (tilesize / 2f + a * 4f + time % 4f),
                         y + Geometry.d4(i).y * (tilesize / 2f + a * 4f + time % 4f), i * 90f);
@@ -381,16 +398,17 @@ public class PayloadBridge  extends PayloadBlock {
         }
 
         @Override
-        public boolean acceptPayload(Building source, Payload payload){
-            if(team != source.team) return false;
+        public boolean acceptPayload(Building source, Payload payload) {
+            if (true)return super.acceptPayload(source,payload);
+            if (team != source.team) return false;
 
             Tile other = world.tile(link);
 
-            if(payloads.count()>=payloadCapacity) return false;
+            if (payloads.count() >= payloadCapacity) return false;
 
-            if(linked(source)) return true;
+            if (linked(source)) return true;
 
-            if(linkValid(tile, other)){
+            if (linkValid(tile, other)) {
                 int rel = relativeTo(other);
                 int rel2 = relativeTo(Edges.getFacingEdge(source, this));
 
@@ -401,26 +419,26 @@ public class PayloadBridge  extends PayloadBlock {
         }
 
 
-        protected boolean linked(Building source){
-            return source instanceof ItemBridge.ItemBridgeBuild && linkValid(source.tile, tile) && ((ItemBridge.ItemBridgeBuild)source).link == pos();
+        protected boolean linked(Building source) {
+            return source instanceof PayloadBridgeBuild && linkValid(source.tile, tile) && ((PayloadBridgeBuild) source).link == pos();
         }
 
         @Override
-        public boolean canDumpPayload(Building to, Payload payload){
+        public boolean canDumpPayload(Building to, Payload payload) {
             return checkDump(to);
         }
 
-        protected boolean checkDump(Building to){
+        protected boolean checkDump(Building to) {
             Tile other = world.tile(link);
-            if(!linkValid(tile, other)){
+            if (!linkValid(tile, other)) {
                 Tile edge = Edges.getFacingEdge(to.tile, tile);
                 int i = relativeTo(edge.x, edge.y);
 
                 IntSet.IntSetIterator it = incoming.iterator();
 
-                while(it.hasNext){
+                while (it.hasNext) {
                     int v = it.next();
-                    if(relativeTo(Point2.x(v), Point2.y(v)) == i){
+                    if (relativeTo(Point2.x(v), Point2.y(v)) == i) {
                         return false;
                     }
                 }
@@ -434,17 +452,17 @@ public class PayloadBridge  extends PayloadBlock {
         }
 
         @Override
-        public boolean shouldConsume(){
+        public boolean shouldConsume() {
             return linkValid(tile, world.tile(link)) && enabled;
         }
 
         @Override
-        public Point2 config(){
+        public Point2 config() {
             return Point2.unpack(link).sub(tile.x, tile.y);
         }
 
         @Override
-        public void write(Writes write){
+        public void write(Writes write) {
             super.write(write);
             write.i(link);
             write.f(uptime);
@@ -452,18 +470,18 @@ public class PayloadBridge  extends PayloadBlock {
 
             IntSet.IntSetIterator it = incoming.iterator();
 
-            while(it.hasNext){
+            while (it.hasNext) {
                 write.i(it.next());
             }
         }
 
         @Override
-        public void read(Reads read, byte revision){
+        public void read(Reads read, byte revision) {
             super.read(read, revision);
             link = read.i();
             uptime = read.f();
             byte links = read.b();
-            for(int i = 0; i < links; i++){
+            for (int i = 0; i < links; i++) {
                 incoming.add(read.i());
             }
         }

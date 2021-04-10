@@ -90,8 +90,10 @@ public class ModBlocks implements ContentList {
             contentList.load();
         }
         examplePayloadBridge=new PayloadBridge("payload-bridge"){{
+range=80;
 
                 requirements(Category.distribution, with(Items.graphite, 10, Items.copper, 20));
+                size=3;
                 canOverdrive = false;
             }};
         testBlock = new TestBlock("test-block") {{
