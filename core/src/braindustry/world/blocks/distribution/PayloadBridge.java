@@ -170,13 +170,6 @@ public class PayloadBridge extends PayloadBlock {
         return null;
     }
 
-    @Override
-    public void setBars() {
-        super.setBars();
-        bars.add("count",(PayloadBridgeBuild build)->new Bar(()->"stat.count", ()->Pal.bar, ()->{
-            return (float)build.payloads.count()/(float)payloadCapacity;
-        }).blink(Color.white));
-    }
 
     @Override
     public void handlePlacementLine(Seq<BuildPlan> plans) {

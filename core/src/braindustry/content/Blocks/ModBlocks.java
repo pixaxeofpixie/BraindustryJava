@@ -1,18 +1,13 @@
 package braindustry.content.Blocks;
 
-import Gas.content.GasBasicBlocks;
-import Gas.content.Gasses;
 import Gas.world.blocks.distribution.GasRouter;
 import arc.graphics.Color;
 import arc.math.Mathf;
-import arc.struct.Seq;
 import arc.util.Time;
-import braindustry.content.*;
-import braindustry.content.Blocks.*;
 import braindustry.world.blocks.TestBlock;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
-import braindustry.world.blocks.distribution.PayloadBridge;
+import braindustry.world.blocks.distribution.BufferedPayloadBridge;
 import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.power.ReceivingPowerNode;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
@@ -72,7 +67,7 @@ public class ModBlocks implements ContentList {
 
     //experimental
     smartRouter, turretSwitcher, blockHealer, dpsMeter, unitGenerator, unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
-            examplePayloadBridge, testBlock,node1,node2;
+            examplePayloadBridge, testBlock, node1, node2;
 
     public static Block methaneBurner, hyperMethaneBurner;
     private ContentList[] blocksContent = {
@@ -85,46 +80,50 @@ public class ModBlocks implements ContentList {
             new ModLogicBlocks(),
             new ModSandBox(),
     };
+
     public void load() {
         for (ContentList contentList : blocksContent) {
             contentList.load();
         }
-        examplePayloadBridge=new PayloadBridge("payload-bridge"){{
-range=80;
+        examplePayloadBridge = new BufferedPayloadBridge("payload-bridge") {{
+            range = 10;
 
-                requirements(Category.distribution, with(Items.graphite, 10, Items.copper, 20));
-                size=3;
-                canOverdrive = false;
-            }};
+            requirements(Category.distribution, with(Items.graphite, 10, Items.copper, 20));
+            size = 3;
+            canOverdrive = false;
+        }};
         testBlock = new TestBlock("test-block") {{
-                this.size = 2;
-                this.requirements(Category.logic, ItemStack.with(), true);
-            }};
-        node1=new ReceivingPowerNode("unit-power-node"){{
-                size=3;
-                this.requirements(Category.logic, ItemStack.with(), true);
-            }};
-        node2=new ReceivingPowerNode("unit-power-node2"){{
-                size=3;
-                this.requirements(Category.logic, ItemStack.with(), true);
-            }};
+            this.size = 2;
+            this.requirements(Category.logic, ItemStack.with(), true);
+        }};
+        node1 = new ReceivingPowerNode("unit-power-node") {{
+            size = 3;
+            this.requirements(Category.logic, ItemStack.with(), true);
+        }};
+        node2 = new ReceivingPowerNode("unit-power-node2") {{
+            size = 3;
+            this.requirements(Category.logic, ItemStack.with(), true);
+        }};
+        
         unitSpawner = new UnitSpawner("unit-spawner") {{
-                localizedName = "Unit Spawner";
-                description = "Powerful sandbox block, can spawn and control any unit from game and mods.";
-                size = 2;
+            localizedName = "Unit Spawner";
+            description = "Powerful sandbox block, can spawn and control any unit from game and mods.";
+            size = 2;
 
-                requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.empty);
-            }};
+            requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.empty);
+        }};
         unitGenerator = new UnitPowerGenerator("unit-generator") {
             {
                 powerProduction = 10f;
                 buildVisibility = BuildVisibility.debugOnly;
-            }};
+            }
+        };
         unitNode = new UnitPowerNode("unit-node") {
             {
                 maxNodes = Integer.MAX_VALUE;
                 buildVisibility = BuildVisibility.debugOnly;
-            }};
+            }
+        };
 
         smartRouter = new SmartRouter("smart-router") {
             {
@@ -132,7 +131,8 @@ range=80;
                 size = 1;
                 requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 buildCostMultiplier = 4.0F;
-            }};
+            }
+        };
         turretSwitcher = new BlockSwitcher("turret-switcher") {
             {
                 /** custom block filter*/
@@ -149,13 +149,15 @@ range=80;
                     if (enable) {
                         build.enabledControlTime = 0f;
                         build.charging = false;
-                    }};
+                    }
+                };
                 size = 2;
                 laserRange = 6.0F;
                 health = 10000;
                 requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 buildCostMultiplier = 4.0F;
-            }};
+            }
+        };
         blockHealer = new BlockSwitcher("block-healer") {
             {
                 blockFilter = (build) -> {
@@ -173,7 +175,8 @@ range=80;
                 laserRange = 6.0F;
                 requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 buildCostMultiplier = 4.0F;
-            }};
+            }
+        };
         dpsMeter = new DpsMeter("dps-meter") {
             {
                 category = Category.effect;
@@ -182,7 +185,8 @@ range=80;
                 health = Integer.MAX_VALUE;
                 size = 3;
 //                requirements();
-            }};
+            }
+        };
 
         gasTank = new GasRouter("gas-tank") {
             {
@@ -192,6 +196,7 @@ range=80;
                 gasCapacity = 1500f;
                 health = 500;
                 requirements(Category.liquid, ItemStack.with(Items.titanium, 25, Items.metaglass, 25));
-            }};
+            }
+        };
     }
 }

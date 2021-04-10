@@ -43,6 +43,11 @@ public class PayloadModule extends BlockModule {
             cons.accept(item);
         }
     }
+    public void each(PayloadConsumer2 cons){
+        for (int i = 0; i < items.size; i++) {
+            cons.accept(items.get(i),i);
+        }
+    }
 
     public void update(){
         Seq<Payload> copy = items.copy();
@@ -138,8 +143,15 @@ items.clear();
 
     }
 
+    public int total() {
+        return count();
+    }
+
     public interface PayloadConsumer{
         void accept(Payload payload);
+    }
+    public interface PayloadConsumer2{
+        void accept(Payload payload,int index);
     }
 }
 

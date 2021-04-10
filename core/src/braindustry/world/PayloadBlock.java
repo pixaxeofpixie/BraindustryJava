@@ -13,6 +13,7 @@ import mindustry.world.blocks.payloads.Payload;
 public class PayloadBlock extends Block {
     public boolean hasPayload = true;
     public int payloadCapacity = 2;
+    public float payloadLimit = 2.5f;
 
     public PayloadBlock(String name) {
         super(name);
@@ -29,7 +30,11 @@ public class PayloadBlock extends Block {
 
         @Override
         public boolean acceptPayload(Building source, Payload payload) {
-            return payloads.count() < payloadCapacity;
+            return payloads.count() < realPayloadCapacity() && payload.fits(payloadLimit);
+        }
+
+        protected int realPayloadCapacity() {
+            return payloadCapacity;
         }
 
         @Override
