@@ -12,6 +12,7 @@ import braindustry.content.Blocks.*;
 import braindustry.world.blocks.TestBlock;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
 import braindustry.world.blocks.Unit.power.UnitPowerNode;
+import braindustry.world.blocks.distribution.PayloadBridge;
 import braindustry.world.blocks.distribution.SmartRouter;
 import braindustry.world.blocks.power.ReceivingPowerNode;
 import braindustry.world.blocks.sandbox.BlockSwitcher;
@@ -27,6 +28,8 @@ import mindustry.world.Block;
 import mindustry.world.blocks.ControlBlock;
 import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.meta.BuildVisibility;
+
+import static mindustry.type.ItemStack.with;
 
 public class ModBlocks implements ContentList {
     public static Block
@@ -86,45 +89,40 @@ public class ModBlocks implements ContentList {
         for (ContentList contentList : blocksContent) {
             contentList.load();
         }
-        testBlock = new TestBlock("test-block") {
-            {
+        examplePayloadBridge=new PayloadBridge("payload-bridge"){{
+
+                requirements(Category.distribution, with(Items.graphite, 10, Items.copper, 20));
+                canOverdrive = false;
+            }};
+        testBlock = new TestBlock("test-block") {{
                 this.size = 2;
                 this.requirements(Category.logic, ItemStack.with(), true);
-            }
-        };
-        node1=new ReceivingPowerNode("unit-power-node"){
-            {
+            }};
+        node1=new ReceivingPowerNode("unit-power-node"){{
                 size=3;
                 this.requirements(Category.logic, ItemStack.with(), true);
-            }
-        };
-        node2=new ReceivingPowerNode("unit-power-node2"){
-            {
+            }};
+        node2=new ReceivingPowerNode("unit-power-node2"){{
                 size=3;
                 this.requirements(Category.logic, ItemStack.with(), true);
-            }
-        };
-        unitSpawner = new UnitSpawner("unit-spawner") {
-            {
+            }};
+        unitSpawner = new UnitSpawner("unit-spawner") {{
                 localizedName = "Unit Spawner";
                 description = "Powerful sandbox block, can spawn and control any unit from game and mods.";
                 size = 2;
 
                 requirements(Category.effect, BuildVisibility.sandboxOnly, ItemStack.empty);
-            }
-        };
+            }};
         unitGenerator = new UnitPowerGenerator("unit-generator") {
             {
                 powerProduction = 10f;
                 buildVisibility = BuildVisibility.debugOnly;
-            }
-        };
+            }};
         unitNode = new UnitPowerNode("unit-node") {
             {
                 maxNodes = Integer.MAX_VALUE;
                 buildVisibility = BuildVisibility.debugOnly;
-            }
-        };
+            }};
 
         smartRouter = new SmartRouter("smart-router") {
             {
@@ -132,8 +130,7 @@ public class ModBlocks implements ContentList {
                 size = 1;
                 requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 buildCostMultiplier = 4.0F;
-            }
-        };
+            }};
         turretSwitcher = new BlockSwitcher("turret-switcher") {
             {
                 /** custom block filter*/
@@ -150,15 +147,13 @@ public class ModBlocks implements ContentList {
                     if (enable) {
                         build.enabledControlTime = 0f;
                         build.charging = false;
-                    }
-                };
+                    }};
                 size = 2;
                 laserRange = 6.0F;
                 health = 10000;
                 requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 buildCostMultiplier = 4.0F;
-            }
-        };
+            }};
         blockHealer = new BlockSwitcher("block-healer") {
             {
                 blockFilter = (build) -> {
@@ -176,8 +171,7 @@ public class ModBlocks implements ContentList {
                 laserRange = 6.0F;
                 requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 buildCostMultiplier = 4.0F;
-            }
-        };
+            }};
         dpsMeter = new DpsMeter("dps-meter") {
             {
                 category = Category.effect;
@@ -186,8 +180,7 @@ public class ModBlocks implements ContentList {
                 health = Integer.MAX_VALUE;
                 size = 3;
 //                requirements();
-            }
-        };
+            }};
 
         gasTank = new GasRouter("gas-tank") {
             {
@@ -197,7 +190,6 @@ public class ModBlocks implements ContentList {
                 gasCapacity = 1500f;
                 health = 500;
                 requirements(Category.liquid, ItemStack.with(Items.titanium, 25, Items.metaglass, 25));
-            }
-        };
+            }};
     }
 }

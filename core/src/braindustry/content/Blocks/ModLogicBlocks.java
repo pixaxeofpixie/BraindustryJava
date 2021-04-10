@@ -13,8 +13,7 @@ import static braindustry.content.Blocks.ModBlocks.*;
 
 class ModLogicBlocks  implements ContentList {
     public void load(){
-        advancedSwitcher=new AdvancedSwitcher("advanced-switcher"){
-            {
+        advancedSwitcher=new AdvancedSwitcher("advanced-switcher"){{
                 this.requirements(Category.logic, ItemStack.with(Items.graphite, 10));
             }
 
