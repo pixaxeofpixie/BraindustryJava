@@ -1,6 +1,5 @@
 package braindustry;
 
-import Gas.GasInit;
 import ModVars.Classes.ModAtlas;
 import ModVars.Classes.ModEventType;
 import ModVars.modVars;
@@ -12,7 +11,6 @@ import arc.graphics.g2d.TextureRegion;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import arc.util.CommandHandler;
-import arc.util.Log;
 import braindustry.audio.ModAudio;
 import braindustry.core.ModContentLoader;
 import braindustry.entities.bullets.ModLightningBulletType;
@@ -194,7 +192,6 @@ public class BraindustryMod extends Mod {
                 if (!headless) showException(e);
             }
         });
-        GasInit.init(true);
         Vars.content.each((c) -> {
             if (inPackage("braindustry", c)) {
                 modVars.addContent(c);

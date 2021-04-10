@@ -3,12 +3,13 @@ package Gas.content;
 import Gas.world.blocks.gas.*;
 import braindustry.content.ModItems;
 import mindustry.content.Items;
+import mindustry.ctype.ContentList;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.meta.BuildVisibility;
 
-public class BasicBlocks {
+public class GasBasicBlocks implements ContentList {
     public static Block gasSource;
     public static Block gasConduit;
 

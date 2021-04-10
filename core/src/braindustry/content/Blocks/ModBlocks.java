@@ -67,6 +67,7 @@ public class ModBlocks implements ContentList {
     smartRouter, turretSwitcher, blockHealer, dpsMeter, unitGenerator, unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
             exampleCrossItemBridge, exampleCrossPhaseBridge, testBlock,node1,node2;
 
+    public static Block methaneBurner, hyperMethaneBurner;
 
     public void load() {
         new ModEnvironmentBlocks().load();
