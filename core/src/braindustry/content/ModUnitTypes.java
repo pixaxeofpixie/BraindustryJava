@@ -704,7 +704,7 @@ public class ModUnitTypes implements ContentList {
                 this.constructor = Types.payload;
                 this.localizedName = "Quix";
                 this.description = "A colossal unit with ability to bombard, repair, defend, transport other units and shoot lasers.";
-                this.armor = 6 8;
+                this.armor = 68;
                 this.health = 11000;
                 this.speed = 0.5f;
                 this.rotateSpeed = 1;
