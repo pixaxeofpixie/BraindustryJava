@@ -388,6 +388,7 @@ class ModDefense implements ContentList {
                 this.shots = 1;
                 this.reloadTime = 30;
                 this.hasItems = true;
+                shootLength = -6;
                 this.hasLiquids = true;
                 this.range = 130;
                 this.localizedName = "Impulse";
@@ -622,6 +623,7 @@ class ModDefense implements ContentList {
                 shootSound = ModSounds.electronShoot;
                 loopSound = ModSounds.electronCharge;
                 firingMoveFract = 0.4f;
+                shootLength = -8;
                 this.shootType = new ContinuousRainbowLaserBulletType(){
                     {
                         damage = 860f;
