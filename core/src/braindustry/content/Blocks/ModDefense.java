@@ -623,7 +623,7 @@ class ModDefense implements ContentList {
                 shootSound = ModSounds.electronShoot;
                 loopSound = ModSounds.electronCharge;
                 firingMoveFract = 0.4f;
-                shootLength = -8
+                shootLength = -8;
                 this.shootType = new ContinuousRainbowLaserBulletType(){
                     {
                         damage = 860f;
