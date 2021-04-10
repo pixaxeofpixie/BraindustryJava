@@ -1,9 +1,13 @@
 package braindustry.content.Blocks;
 
+import Gas.content.GasBasicBlocks;
+import Gas.content.Gasses;
 import Gas.world.blocks.distribution.GasRouter;
 import arc.graphics.Color;
 import arc.math.Mathf;
+import arc.struct.Seq;
 import arc.util.Time;
+import braindustry.content.*;
 import braindustry.content.Blocks.*;
 import braindustry.world.blocks.TestBlock;
 import braindustry.world.blocks.Unit.power.UnitPowerGenerator;
@@ -65,19 +69,23 @@ public class ModBlocks implements ContentList {
 
     //experimental
     smartRouter, turretSwitcher, blockHealer, dpsMeter, unitGenerator, unitNode, multiCrafter, largeMultiCrafter, unitSpawner,
-            exampleCrossItemBridge, exampleCrossPhaseBridge, testBlock,node1,node2;
+            examplePayloadBridge, testBlock,node1,node2;
 
     public static Block methaneBurner, hyperMethaneBurner;
-
+    private ContentList[] blocksContent = {
+            new ModEnvironmentBlocks(),
+            new ModUnitsBlocks(),
+            new ModProduction(),
+            new ModPowerBlocks(),
+            new ModOtherBlocks(),
+            new ModDefense(),
+            new ModLogicBlocks(),
+            new ModSandBox(),
+    };
     public void load() {
-        new ModEnvironmentBlocks().load();
-        new ModUnitsBlocks().load();
-        new ModProduction().load();
-        new ModPowerBlocks().load();
-        new ModOtherBlocks().load();
-        new ModDefense().load();
-        new ModLogicBlocks().load();
-        new ModSandBox().load();
+        for (ContentList contentList : blocksContent) {
+            contentList.load();
+        }
         testBlock = new TestBlock("test-block") {
             {
                 this.size = 2;
@@ -96,66 +104,6 @@ public class ModBlocks implements ContentList {
                 this.requirements(Category.logic, ItemStack.with(), true);
             }
         };
-        /**
-         exampleCrossPhaseBridge = new CrossItemBridge("example-cross-phase-bridge-conveyor") {
-         {
-         this.localizedName = "Phase Alloy Conveyor";
-         this.requirements(Category.distribution, ItemStack.with(ModItems.phaseAlloy, 5, Items.silicon, 7, Items.lead, 10, Items.graphite, 10));
-         this.range = 12;
-         this.canOverdrive = false;
-         this.hasPower = true;
-         this.consumes.power(0.3F);
-         //   custom connect filter
-         connectFilter = (build) -> {
-         Block block = build.block;
-         return block.acceptsItems || block instanceof StorageBlock;
-         };
-         //end of block
-         ItemBridge bridge = (ItemBridge) Blocks.phaseConveyor;
-         range = bridge.range;
-         }
-
-         @Override public void load() {
-         ItemBridge bridge = (ItemBridge) Blocks.phaseConveyor;
-         Core.atlas.addRegion(this.name, Core.atlas.find(bridge.name));
-         super.load();
-         this.arrowRegion = bridge.arrowRegion;
-         this.bridgeRegion = bridge.bridgeRegion;
-         this.endRegion = bridge.endRegion;
-         this.region = bridge.region;
-         }
-         };
-         exampleCrossItemBridge = new CrossBufferedItemBridge("example-cross-bridge-conveyor") {
-         {
-         this.requirements(Category.distribution, ItemStack.with(Items.lead, 6, Items.copper, 6));
-         this.range = 4;
-         this.speed = 74.0F;
-         this.bufferCapacity = 14;
-         //* custom connect filter
-         connectFilter = (build) -> {
-         Block block = build.block;
-         return block.acceptsItems || block instanceof StorageBlock;
-         };
-         // default filter check blocks from connectBlocksGetter
-         connectBlocksGetter = () -> {
-         return Seq.with(Blocks.titaniumConveyor);
-         };
-         //end of block
-         BufferedItemBridge bridge = (BufferedItemBridge) Blocks.itemBridge;
-         range = bridge.range;
-         }
-
-         @Override public void load() {
-         BufferedItemBridge bridge = (BufferedItemBridge) Blocks.itemBridge;
-         Core.atlas.addRegion(this.name, Core.atlas.find(bridge.name));
-         super.load();
-         this.arrowRegion = bridge.arrowRegion;
-         this.bridgeRegion = bridge.bridgeRegion;
-         this.endRegion = bridge.endRegion;
-         this.region = bridge.region;
-         }
-         };
-          * */
         unitSpawner = new UnitSpawner("unit-spawner") {
             {
                 localizedName = "Unit Spawner";

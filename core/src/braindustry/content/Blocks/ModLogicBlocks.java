@@ -5,12 +5,13 @@ import arc.Core;
 import braindustry.world.blocks.logic.AdvancedSwitcher;
 import mindustry.content.Blocks;
 import mindustry.content.Items;
+import mindustry.ctype.ContentList;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 
 import static braindustry.content.Blocks.ModBlocks.*;
 
-class ModLogicBlocks {
+class ModLogicBlocks  implements ContentList {
     public void load(){
         advancedSwitcher=new AdvancedSwitcher("advanced-switcher"){
             {

@@ -4,13 +4,14 @@ import arc.graphics.g2d.TextureRegion;
 import braindustry.content.ModItems;
 import braindustry.content.ModLiquids;
 import mindustry.content.*;
+import mindustry.ctype.ContentList;
 import mindustry.graphics.CacheLayer;
 import mindustry.world.Tile;
 import mindustry.world.blocks.environment.*;
 
 import static braindustry.content.Blocks.ModBlocks.*;
 
-class ModEnvironmentBlocks {
+class ModEnvironmentBlocks implements ContentList {
     public void load(){
         magmaFloor = new Floor("magma-floor") {
             {
