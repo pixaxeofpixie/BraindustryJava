@@ -117,6 +117,7 @@ class ModUnitsBlocks implements ContentList {
                     new UnitType[]{ModUnitTypes.aquila, ModUnitTypes.griffon},
                     new UnitType[]{ModUnitTypes.vyvna, ModUnitTypes.moray},
                     new UnitType[]{ModUnitTypes.maverix, ModUnitTypes.litix}
+                    new UnitType[]{ModUnitTypes.broadsword, ModUnitTypes.penumbra}
             );
         }};
     }
