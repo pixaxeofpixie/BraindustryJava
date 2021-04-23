@@ -80,6 +80,7 @@ public class ModSectorPresets implements ContentList {
         azureLandscape = new SectorPreset("azure-landscape", ModPlanets.shinrin, 85) {
             {
                 localizedName = "Azure Landscape";
+                description = "WARNING!Impossible sector!Use this sector only for Chlorophylum farm and stay much longer";
                 difficulty = 10;
                 captureWave = 35;
             }
@@ -87,8 +88,33 @@ public class ModSectorPresets implements ContentList {
         jungleExplorationComplex = new SectorPreset("jungle-explorer-complex", ModPlanets.shinrin, 42) {
             {
                 localizedName = "Jungle Exploration Complex";
-                difficulty = 4;
-                captureWave = 35;
+                description = "WARNING!Impossible sector!Use this sector only for Chlorophylum farm and stay much longer";
+                difficulty = 5;
+                captureWave = 65;
+            }
+        };
+        icyDarkness= new SectorPreset("black-polus-oil-fabrics", ModPlanets.shinrin, 12) {
+            {
+                localizedName = "Frozen Valley";
+                description = "WARNING!Impossible sector!Use this sector only for Chlorophylum farm and stay much longer";
+                difficulty = 9;
+                captureWave = 65;
+            }
+        };
+        deentForest= new SectorPreset("deent-forest", ModPlanets.shinrin, 63) {
+            {
+                localizedName = "Deent Forest";
+                description = "WARNING!Impossible sector!Use this sector only for Chlorophylum farm and stay much longer";
+                difficulty = 9;
+                captureWave = 65;
+            }
+        };
+        emeraldSwamp= new SectorPreset("emerald-swamp", ModPlanets.shinrin, 98) {
+            {
+                localizedName = "Emerald Swamp";
+                description = "[red]WARNING!Impossible sector!Use this sector only for Chlorophylum farm and stay much longer";
+                difficulty = 9;
+                captureWave = 65;
             }
         };
     }

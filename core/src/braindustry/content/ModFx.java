@@ -45,6 +45,13 @@ public class ModFx {
 
             }),
 
+    chlorophiteDropping = new Effect(22.0F, e -> {
+        Angles.randLenVectors(e.id, 10, e.finpow() * 90f, (x, y) -> {
+            float size = e.fout() * 14f;
+            Draw.rect("chloro-alloy", e.x, e.y, 1f, 1f, 2.5f );
+        });
+    }),
+
     krakenRocketExplosion = new Effect(22.0F, e -> {
         Draw.color(ModPal.krakenFrontColor);
         e.scaled(6.0F, (i) -> {

@@ -44,14 +44,16 @@ public class ModBlocks implements ContentList {
     //production
     refrigerantReactor, chromiumForge, exoticAlloySmelter, grapheniteFluidizer, grapheniteForge,
             hydraulicDrill, hyperAlloySmelter, hyperPhaseWeaver, magmaMixer, odinumExtractor,
-            phaseAlloySmelter, plasticForge, quarryDrill, geothermicDrill, grapheniteKiln, refrigerantmixer, methaneGasifier, methaneLiquifier, hyperDenseCompoiteSmelter,
+            phaseAlloySmelter, plasticForge, quarryDrill, geothermicDrill, grapheniteKiln, refrigerantmixer, methaneGasifier, methaneLiquifier,
+            hyperDenseCompositeSmelter, hyperExoAlloySmelter, hyperOdinumExtractor, hyperChromiumKiln,
 
     //units
     hyperAdditiveReconstructor, hyperAirFactory, hyperExponentialReconstructor, hyperGroundFactory,
             hyperMultiplicativeReconstructor, hyperNavalFactory, hyperTetrativeReconstructor, ultraReconstructor,
 
     //turrets
-    axon, blaze, brain, electron, fragment, impulse, katana, mind, neuron, perlin, soul, stinger, synaps, gem, rapier, shinigami, voidwave,
+    axon, blaze, brain, electron, fragment, impulse, katana, mind, neuron,
+    perlin, soul, stinger, synaps, gem, rapier, shinigami, voidwave, spark,
 
     //walls
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge,

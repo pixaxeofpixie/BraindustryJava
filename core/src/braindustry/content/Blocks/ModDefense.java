@@ -663,27 +663,11 @@ class ModDefense implements ContentList {
             this.targetAir = true;
             this.targetGround = true;
             this.ammo(
-                    ModItems.plastic, new BasicBulletType() {/*public void draw(Bullet b)*/
-                        {
-                            /*float height = this.height * (1.0F - this.shrinkY + this.shrinkY * b.fout());
-                            float width = this.width * (1.0F - this.shrinkX + this.shrinkX * b.fout());
-                            float offset = -90.0F + (this.spin != 0.0F ? Mathf.randomSeed((long)b.id, 360.0F) + b.time * this.spin : 0.0F);
-                            Color mix = Tmp.c1.set(this.mixColorFrom).lerp(this.mixColorTo, b.fin());
-                            Draw.mixcol(mix, mix.a);
-                            Draw.color(this.backColor);
-//                                Draw.rect(this.backRegion, b.x, b.y, width, height, b.rotation() + offset);
-                            Draw.color(this.frontColor);
-//                            Draw.rect(this.frontRegion, b.x, b.y, width, height, b.rotation() + offset);
-                            Draw.color(this.backColor,this.frontColor,b.fin());
-                            Lines.swirl(b.x,b.y,width/height,90f/360f,b.rotation()-45f);
-                            Draw.reset();
-                        */
-                        }
-
+                    ModItems.plastic, new BasicBulletType() {
                         {
                             this.damage = 1260;
-                            this.width = 4;
-                            this.height = 6;
+                            this.width = 15;
+                            this.height = 18;
                             this.shrinkY = 0.1f;
                             this.shrinkX = 0.2f;
                             this.speed = 4;
@@ -693,12 +677,11 @@ class ModDefense implements ContentList {
                             this.statusDuration = 120;
                             //  this.bulletSprite = wave-shell;
                             this.pierce = true;
-                            this.width = 1;
                             this.buildingDamageMultiplier = 0.6f;
                             //   this.length = 4;
                             this.hittable = true;
                             this.ammoMultiplier = 1;
-                            trailChance = 100f;
+                            trailChance = 92f;
                             trailEffect = ModFx.fireworkTrail;
                             this.backColor = ModPal.blackHoleLaserBackColor;
                             this.frontColor = ModPal.blackHoleLaserColor;
@@ -709,6 +692,53 @@ class ModDefense implements ContentList {
             this.consumes.liquid(ModLiquids.liquidMethane, 0.1f).optional(false, true);
             this.requirements(Category.turret, ItemStack.with(ModItems.graphenite, 1000, Items.titanium, 600, ModItems.phaseAlloy, 400, Items.phaseFabric, 100, Items.silicon, 1400));
         }};
+        spark = new ItemTurret("spark"){
+            {
+                localizedName = "Spark";
+                description = "Upgraded Salvo with using high-tec Graphenite";
+                requirements(Category.turret, ItemStack.with(Items.copper, 130, Items.graphite, 90, Items.silicon, 70, ModItems.graphenite, 80));
+                ammo(
+                        ModItems.graphenite, new BasicBulletType() {
+                            {
+                                this.damage = 78;
+                                this.width = 10;
+                                this.height = 11;
+                                this.shrinkY = 0.1f;
+                                this.shrinkX = 0.2f;
+                                this.speed = 4.1f;
+                                this.hitSize = 10;
+                                this.lifetime = 190;
+                                this.status = StatusEffects.shocked;
+                                this.statusDuration = 60;
+                                //  this.bulletSprite = wave-shell;
+                                this.pierce = true;
+                                this.buildingDamageMultiplier = 0.8f;
+                                //   this.length = 4;
+                                this.hittable = true;
+                                this.ammoMultiplier = 1;
+                                trailChance = 2f;
+                                trailEffect = Fx.missileTrail;
+                                this.backColor = ModPal.amethyst;
+                                this.frontColor = ModPal.amethystLight;
+                                this.hitColor = this.trailColor = this.lightColor = this.lightningColor = Color.violet;
+                            }
+                        }
+                );
+
+                size = 3;
+                range = 180f;
+                reloadTime = 42f;
+                restitution = 0.04f;
+                ammoEjectBack = 3.2f;
+                cooldown = 0.08f;
+                recoilAmount = 3.2f;
+                shootShake = 1f;
+                burstSpacing = 2f;
+                shots = 5;
+                ammoUseEffect = ModFx.napalmShoot;
+                health = 360 * size * size;
+                shootSound = Sounds.bang;
+            }};
         exoticAlloyWallLarge = new Wall("dense-composite-wall-large") {{
             this.localizedName = "Dense Composite Wall Large";
             this.description = "A bigger Dense Composite Wall, creates lightings when shot.";

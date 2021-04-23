@@ -304,7 +304,7 @@ class ModProduction implements ContentList {
                 this.updateEffectChance = 0.02f;
             }
         };
-        hyperDenseCompoiteSmelter = new GasGenericSmelter("hyper-dense-composite-smelter") {{
+        hyperDenseCompositeSmelter = new GasGenericSmelter("hyper-dense-composite-smelter") {{
             this.localizedName = "Hyper Dense Composite Smelter";
             this.description = "Upgraded version of Dense Composite smelter but consumes gas for more effective production.";
             this.health = 510;

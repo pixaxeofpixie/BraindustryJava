@@ -16,14 +16,17 @@ public class ModPlanets implements ContentList {
     public void load() {
         zetsubo = new Planet("zetsubo", Planets.sun, 3, 2.4f) {
             {
-                hasAtmosphere = false;
-                meshLoader = () -> new SunMesh(this, 4, 5, 0.3f, 1.0f, 1.2f, 1, 1.3f, Color.valueOf("9FFCFFFF"), Color.valueOf("50DDE2FF"), Color.valueOf("4749C9FF"));
+                hasAtmosphere = true;
+                meshLoader = () -> new SunMesh(
+                        this, 4, 5, 0.3f, 1.0f, 1.2f, 1, 1.3f,
+                        Color.valueOf("5E94FF"), Color.valueOf("214CDF"), Color.valueOf("2DA9DF"), Color.valueOf("9CB5FF"),
+                        Color.valueOf("61729F"), Color.valueOf("3BB1CA"));
                 orbitRadius = 51.5f;
                 accessible = false;
                 bloom = true;
             }
         };
-        osore = new Planet("osore", zetsubo, 3, 0.8f) {
+        osore = new Planet("osore", zetsubo, 3, 1f) {
             {
                 generator = new OsorePlanetGenerator();
                 startSector = 25;
@@ -44,7 +47,7 @@ public class ModPlanets implements ContentList {
                 startSector = 42;
                 atmosphereColor = Color.valueOf("36af54");
                 atmosphereRadIn = 0.01f;
-                atmosphereRadOut = 0.3f;
+                atmosphereRadOut = 0.2f;
                 hasAtmosphere = true;
                 meshLoader = () -> new HexMesh(this, 6);
                 orbitRadius = 5.0f;
