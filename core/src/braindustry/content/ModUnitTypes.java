@@ -591,7 +591,7 @@ public class ModUnitTypes implements ContentList {
                                 this.inaccuracy = 7;
                                 this.ejectEffect = Fx.none;
                                 this.recoil = 2;
-                                this.shootSound = Sounds.laserblast;
+                                this.shootSound = Sounds.bang;
                                 this.rotate = true;
                                 this.mirror = false;
                                  this.bullet = new BasicBulletType(){{
@@ -671,7 +671,7 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 120;
                                 this.recoil = 4;
                                 this.shotDelay = 9;
-                                this.shootSound = Sounds.sap;
+                                this.shootSound = Sounds.bang;
                                 this.shots = 7;
                                 this.inaccuracy = 6.5f;
                                 this.velocityRnd = 0.2f;
@@ -764,7 +764,7 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 40;                                
                                 this.recoil = 3;
                                 this.rotate = true;
-                                this.shootSound = Sounds.sap;
+                                this.shootSound = Sounds.shotgun;
                                 this.shots = 12;
                                 this.inaccuracy = 5;
                                 this.velocityRnd = 0.1f;
@@ -2108,7 +2108,7 @@ public class ModUnitTypes implements ContentList {
                         rotate = true;
 
                         bullet = new LaserBulletType(){{
-                            damage = 600f;
+                            damage = 700f;
                             sideAngle = 20f;
                             sideWidth = 1.5f;
                             sideLength = 80f;
@@ -2140,7 +2140,7 @@ public class ModUnitTypes implements ContentList {
                             lightning = 8;
                             lightningLength = 16;
                             lightningColor = Pal.surge;
-                            lightningDamage = 51;
+                            lightningDamage = 31;
                             width = 14f;
                             height = 33f;
                             lifetime = 40f;
@@ -2159,7 +2159,7 @@ public class ModUnitTypes implements ContentList {
                         rotate = true;
                         shadow = 12f;
                         bullet = new BasicBulletType(){{
-                            damage = 162;
+                            damage = 42;
                             speed = 11.7f;
                             pierce = true;
                             pierceCap = 3;
