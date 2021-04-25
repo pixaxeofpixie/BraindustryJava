@@ -102,7 +102,7 @@ class ModProduction implements ContentList {
             this.craftTime = 90;
             this.updateEffect = Fx.plasticburn;
             this.consumes.power(1.2f);
-            this.consumes.items(ItemStack.with(Items.sporePod, 1, Items.thorium, 3, Items.titanium, 1));
+            this.consumes.items(ItemStack.with(ModItems.graphenite, 1, Items.thorium, 3, Items.titanium, 1));
             this.requirements(Category.crafting, ItemStack.with(Items.plastanium, 40, Items.lead, 100, Items.graphite, 80, ModItems.graphenite, 100, Items.metaglass, 80));
             this.outputItem = new ItemStack(ModItems.exoticAlloy, 2);
         }};
@@ -341,6 +341,24 @@ class ModProduction implements ContentList {
             this.consumes.addGas(new ConsumeGasses(Gasses.methane, 1));
             this.requirements(Category.crafting, ItemStack.with(ModItems.chromium, 150, Items.plastanium, 100, Items.metaglass, 150, ModItems.graphenite, 200));
             this.outputLiquid = new LiquidStack(ModLiquids.liquidMethane, 1f);
+        }};
+        hyperExoAlloySmelter = new GasGenericSmelter("hyper-exotic-alloy-smelter") {{
+            this.localizedName = "Hyper Exotic Alloy Smelter";
+            this.description = "More powerful and effective smelter of Exotic Alloy, consumes Methane.";
+            this.health = 420;
+            this.liquidCapacity = 16;
+            this.size = 6;
+            this.hasPower = true;
+            this.hasLiquids = false;
+            this.hasGas = true;
+            this.hasItems = true;
+            this.craftTime = 120;
+            this.updateEffect = Fx.impactsmoke;
+            this.consumes.power(5f);
+            this.consumes.items(ItemStack.with(Items.titanium, 5, Items.thorium, 4, ModItems.graphenite, 4));
+            this.consumes.addGas(new ConsumeGasses(Gasses.methane, 0.5f));
+            this.requirements(Category.crafting, ItemStack.with( Items.plastanium, 100, Items.thorium, 400, ModItems.exoticAlloy, 120, ModItems.graphenite, 290, Items.titanium, 300));
+            this.outputItem = new ItemStack(ModItems.exoticAlloy, 5);
         }};
     }
 }

@@ -132,7 +132,7 @@ public class BraindustryMod extends Mod {
         if (!loaded) return;
         modInfo = Vars.mods.getMod(this.getClass());
 
-        Seq.with(Blocks.blockForge, Blocks.blockLoader, Blocks.blockUnloader).each(b -> b.buildVisibility = BuildVisibility.shown);
+        //Seq.with(Blocks.blockForge, Blocks.blockLoader, Blocks.blockUnloader).each(b -> b.buildVisibility = BuildVisibility.shown);
         Blocks.interplanetaryAccelerator.buildVisibility = BuildVisibility.shown;
         Boolf<BulletType> replace = (b) -> (b instanceof LightningBulletType && !(b instanceof ModLightningBulletType));
         Func<BulletType, ModLightningBulletType> newBullet = (old) -> {

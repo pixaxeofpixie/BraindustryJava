@@ -31,6 +31,7 @@ import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.abilities.UnitSpawnAbility;
 import mindustry.entities.bullet.*;
 import mindustry.gen.*;
+import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.AmmoTypes;
 import mindustry.world.meta.BlockFlag;
@@ -199,7 +200,8 @@ public class ModUnitTypes implements ContentList {
                 this.armor = 5;
                 this.buildSpeed = 0.8f;
                 this.allowLegStep = true;
-                this.visualElevation = 75f;
+                visualElevation = 0.95f;
+                groundLayer = Layer.legUnit;
                 this.weapons.add(
                         new ModWeapon("capra-weapon") {
                             {
@@ -254,7 +256,8 @@ public class ModUnitTypes implements ContentList {
                 this.legMoveSpace = 3;
                 this.legBaseOffset = 2;
                 this.allowLegStep = true;
-                this.visualElevation = 75f;
+                visualElevation = 0.95f;
+                groundLayer = Layer.legUnit;
                 this.mechStepShake = 0.15f;
                 this.mechStepParticles = true;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
@@ -335,28 +338,34 @@ public class ModUnitTypes implements ContentList {
         aquila = new ModUnitType("aquila") {
             {
                 this.constructor = Types.legs;
-                this.groundLayer = 75.0F;
                 this.localizedName = "Firework";
                 this.description = "Fires a fireworks and big laser.";
                 this.drag = 0.1f;
                 this.speed = 0.5f;
                 this.hitSize = 48;
-                this.hovering = true;
                 this.health = 17000;
                 this.rotateSpeed = 2;
-                this.legCount = 8;
-                this.legMoveSpace = 0.8f;
-                this.legPairOffset = 3;
-                this.legLength = 75f;
-                this.legExtension = -20;
-                this.legBaseOffset = 8f;
-                this.landShake = 1f;
-                this.legSpeed = 0.1f;
-                this.rippleScale = 3;
-                this.legSplashDamage = 340;
-                this.legSplashRange = 40;
-                this.allowLegStep = true;
-                this.visualElevation = 75f;
+                legCount = 8;
+                legMoveSpace = 0.8f;
+                legPairOffset = 3;
+                legLength = 75f;
+                legExtension = -20;
+                legBaseOffset = 8f;
+                landShake = 1f;
+                legSpeed = 0.1f;
+                legLengthScl = 0.93f;
+                rippleScale = 3f;
+                legSpeed = 0.19f;
+                ammoType = AmmoTypes.powerHigh;
+                buildSpeed = 1f;
+
+                legSplashDamage = 80;
+                legSplashRange = 60;
+
+                hovering = true;
+                allowLegStep = true;
+                visualElevation = 0.95f;
+                groundLayer = Layer.legUnit;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
                         new ModWeapon("aquila-equip1") {
@@ -1880,6 +1889,7 @@ public class ModUnitTypes implements ContentList {
                 this.mineSpeed = 13F;
                 this.mineTier = 5;
                 stealthDuration = 15f * 60f;
+                hasAfterDeathLaser = true;
                 stealthCooldown = 10f * 60f;
                 abilities.add(new OrbitalPlatformAbility(4, 3f,
                                 new ModWeapon("litix-methane-shooter") {
@@ -2084,6 +2094,7 @@ public class ModUnitTypes implements ContentList {
             accel = 0.04f;
             drag = 0.04f;
             rotateSpeed = 1f;
+            hasAfterDeathLaser = true;
             flying = true;
             constructor = Types.payload;
             rotateShooting = false;
@@ -2141,36 +2152,6 @@ public class ModUnitTypes implements ContentList {
                             lightningLength = 16;
                             lightningColor = Pal.surge;
                             lightningDamage = 51;
-                            width = 14f;
-                            height = 33f;
-                            lifetime = 40f;
-                            shootEffect = Fx.shootBig;
-                        }};
-                    }},
-                new ModWeapon("penumbra-shotgun"){{
-                        y = 25f;
-                        x = 12f;
-                        reload = 4f;
-                        ejectEffect = Fx.casing1;
-                        rotateSpeed = 7f;
-                        shake = 1f;
-                        firstShotDelay = 70;
-                        shootSound = Sounds.shoot;
-                        rotate = true;
-                        shadow = 12f;
-                        bullet = new BasicBulletType(){{
-                            damage = 162;
-                            speed = 11.7f;
-                            pierce = true;
-                            pierceCap = 3;
-                            width = 14f;
-                            height = 33f;
-                            lifetime = 25f;
-                            shootEffect = Fx.shootBig;
-                            lightning = 2;
-                            lightningLength = 6;
-                            lightningColor = Pal.surge;
-                            lightningDamage = 4;
                             width = 14f;
                             height = 33f;
                             lifetime = 40f;

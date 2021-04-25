@@ -45,7 +45,7 @@ public class ModBlocks implements ContentList {
     refrigerantReactor, chromiumForge, exoticAlloySmelter, grapheniteFluidizer, grapheniteForge,
             hydraulicDrill, hyperAlloySmelter, hyperPhaseWeaver, magmaMixer, odinumExtractor,
             phaseAlloySmelter, plasticForge, quarryDrill, geothermicDrill, grapheniteKiln, refrigerantmixer, methaneGasifier, methaneLiquifier,
-            hyperDenseCompositeSmelter, hyperExoAlloySmelter, hyperOdinumExtractor, hyperChromiumKiln,
+            hyperDenseCompositeSmelter, hyperExoAlloySmelter,
 
     //units
     hyperAdditiveReconstructor, hyperAirFactory, hyperExponentialReconstructor, hyperGroundFactory,
@@ -87,7 +87,7 @@ public class ModBlocks implements ContentList {
         for (ContentList contentList : blocksContent) {
             contentList.load();
         }
-        examplePayloadBridge = new BufferedPayloadBridge("payload-bridge") {{
+        examplePayloadBridge = new BufferedPayloadBridge("payload-bridge-conveyor") {{
             range = 10;
 
             requirements(Category.distribution, with(Items.graphite, 10, Items.copper, 20));

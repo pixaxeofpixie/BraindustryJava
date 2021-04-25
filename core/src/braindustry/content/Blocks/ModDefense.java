@@ -716,11 +716,61 @@ class ModDefense implements ContentList {
                                 //   this.length = 4;
                                 this.hittable = true;
                                 this.ammoMultiplier = 1;
-                                trailChance = 2f;
+                                trailChance = 1.2f;
                                 trailEffect = Fx.missileTrail;
                                 this.backColor = ModPal.amethyst;
                                 this.frontColor = ModPal.amethystLight;
                                 this.hitColor = this.trailColor = this.lightColor = this.lightningColor = Color.violet;
+                            }
+                        },
+                        Items.copper, new BasicBulletType() {
+                            {
+                                this.damage = 27;
+                                this.width = 8;
+                                this.height = 9;
+                                this.shrinkY = 0.1f;
+                                this.shrinkX = 0.2f;
+                                this.speed = 3.1f;
+                                this.hitSize = 11;
+                                this.lifetime = 180;
+                                this.status = StatusEffects.shocked;
+                                this.statusDuration = 40;
+                                //  this.bulletSprite = wave-shell;
+                                this.pierce = true;
+                                this.buildingDamageMultiplier = 0.8f;
+                                //   this.length = 4;
+                                this.hittable = true;
+                                this.ammoMultiplier = 1;
+                                trailChance = 1.2f;
+                                trailEffect = Fx.missileTrail;
+                                this.backColor = ModPal.orangeBackColor;
+                                this.frontColor = ModPal.orangeFrontColor;
+                                this.hitColor = this.trailColor = this.lightColor = this.lightningColor = Color.orange;
+                            }
+                        },
+                        Items.titanium, new BasicBulletType() {
+                            {
+                                this.damage = 38;
+                                this.width = 9;
+                                this.height = 10;
+                                this.shrinkY = 0.1f;
+                                this.shrinkX = 0.2f;
+                                this.speed = 3.6f;
+                                this.hitSize = 10;
+                                this.lifetime = 190;
+                                this.status = StatusEffects.shocked;
+                                this.statusDuration = 50;
+                                //  this.bulletSprite = wave-shell;
+                                this.pierce = true;
+                                this.buildingDamageMultiplier = 0.9f;
+                                //   this.length = 4;
+                                this.hittable = true;
+                                this.ammoMultiplier = 1;
+                                trailChance = 1.2f;
+                                trailEffect = Fx.missileTrail;
+                                this.backColor = ModPal.NorthernLightsNoiseColor;
+                                this.frontColor = ModPal.NorthernLightsColor;
+                                this.hitColor = this.trailColor = this.lightColor = this.lightningColor = Color.cyan;
                             }
                         }
                 );
