@@ -116,7 +116,8 @@ class ModUnitsBlocks implements ContentList {
             this.upgrades = Seq.with(
                     new UnitType[]{ModUnitTypes.aquila, ModUnitTypes.griffon},
                     new UnitType[]{ModUnitTypes.vyvna, ModUnitTypes.moray},
-                    new UnitType[]{ModUnitTypes.maverix, ModUnitTypes.litix}
+                    new UnitType[]{ModUnitTypes.maverix, ModUnitTypes.litix},
+                    new UnitType[]{ModUnitTypes.broadsword, ModUnitTypes.penumbra}
             );
         }};
     }
