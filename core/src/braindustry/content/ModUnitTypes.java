@@ -60,7 +60,6 @@ public class ModUnitTypes implements ContentList {
         ibis = new ModUnitType("ibis") {
             {
                 this.constructor = Types.legs;
-                this.groundLayer = 60.0F;
                 this.localizedName = "Blast";
                 this.description = "Small spider unit with high speed and firework guns.";
                 this.health = 210;
@@ -79,7 +78,8 @@ public class ModUnitTypes implements ContentList {
                 this.legBaseOffset = 2;
                 this.buildSpeed = 0.8f;
                 this.allowLegStep = true;
-                this.visualElevation = 75f;
+                visualElevation = 0.85f;
+                groundLayer = Layer.legUnit;
                 this.ammoType = AmmoTypes.powerHigh;
                 this.mechStepShake = 0.15f;
                 this.mechStepParticles = true;
@@ -120,7 +120,6 @@ public class ModUnitTypes implements ContentList {
         aries = new ModUnitType("aries") {
             {
                 this.constructor = Types.legs;
-                this.groundLayer = 60.0F;
                 this.localizedName = "Firecracker";
                 this.description = "A small 4-leg unit with strong firework sap guns.";
                 this.speed = 0.6f;
@@ -142,7 +141,8 @@ public class ModUnitTypes implements ContentList {
                 this.legSplashDamage = 32;
                 this.legSplashRange = 30;
                 this.allowLegStep = true;
-                this.visualElevation = 75f;
+                visualElevation = 0.85f;
+                groundLayer = Layer.legUnit;
                 this.immunities.addAll(StatusEffects.burning);
                 this.weapons.add(
                         new ModWeapon("ibis-weapon") {
@@ -181,7 +181,6 @@ public class ModUnitTypes implements ContentList {
         capra = new ModUnitType("capra") {
             {
                 this.constructor = Types.legs;
-                this.groundLayer = 68.0F;
                 this.localizedName = "Irascibility";
                 this.itemCapacity = 200;
                 this.speed = 0.4f;
@@ -199,7 +198,8 @@ public class ModUnitTypes implements ContentList {
                 this.armor = 5;
                 this.buildSpeed = 0.8f;
                 this.allowLegStep = true;
-                this.visualElevation = 75f;
+                visualElevation = 0.85f;
+                groundLayer = Layer.legUnit;
                 this.weapons.add(
                         new ModWeapon("capra-weapon") {
                             {
@@ -236,7 +236,6 @@ public class ModUnitTypes implements ContentList {
         lacerta = new ModUnitType("lacerta") {
             {
                 this.constructor = Types.legs;
-                this.groundLayer = 75.0F;
                 this.localizedName = "Salute";
                 this.description = "A giant unit with 6 legs and super-powerful laser with lightnings!";
                 this.boostMultiplier = 2.1f;
@@ -254,7 +253,8 @@ public class ModUnitTypes implements ContentList {
                 this.legMoveSpace = 3;
                 this.legBaseOffset = 2;
                 this.allowLegStep = true;
-                this.visualElevation = 75f;
+                visualElevation = 0.90f;
+                groundLayer = Layer.legUnit;
                 this.mechStepShake = 0.15f;
                 this.mechStepParticles = true;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
@@ -335,7 +335,6 @@ public class ModUnitTypes implements ContentList {
         aquila = new ModUnitType("aquila") {
             {
                 this.constructor = Types.legs;
-                this.groundLayer = 75.0F;
                 this.localizedName = "Firework";
                 this.description = "Fires a fireworks and big laser.";
                 this.drag = 0.1f;
@@ -356,7 +355,8 @@ public class ModUnitTypes implements ContentList {
                 this.legSplashDamage = 340;
                 this.legSplashRange = 40;
                 this.allowLegStep = true;
-                this.visualElevation = 75f;
+                this.visualElevation = 0.95f;
+                this.groundLayer = Layer.legUnit;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
                         new ModWeapon("aquila-equip1") {
