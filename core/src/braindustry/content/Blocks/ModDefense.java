@@ -33,7 +33,6 @@ class ModDefense implements ContentList {
             this.localizedName = "Rapier";
             this.description = "Shots hedgehod-like frag bullets.";
             this.range = 200;
-//                this.recoilAmount = 28;
             this.reloadTime = 60;
             this.size = 4;
             this.shots = 4;
@@ -49,18 +48,15 @@ class ModDefense implements ContentList {
                             this.hitEffect = ModFx.circleSpikeHit;
                             this.ammoMultiplier = 4.0f;
                             this.despawnEffect = ModFx.circleSpikeHit;
-
                             this.smokeEffect = ModFx.spikeSmoke;
                             this.damage = 1300;
                             this.despawnShake = 2.3f;
                             this.hitShake = 4.8f;
                             this.speed = 2.8f;
-
                             this.absorbable = false;
                             this.reflectable = false;
                             this.hittable = false;
                             this.hitSize = 6.0f;
-
                             this.status = ModStatusEffects.speedMul.get(5);
                             this.statusDuration = 70.0f * 3.0f;
                         }
@@ -86,7 +82,6 @@ class ModDefense implements ContentList {
                             SubBullets.addLightning(b, this);
                             super.update(b);
                         }
-
                         {
                             this.backColor = Color.valueOf("c2cc37");
                             this.width = 14;
@@ -101,12 +96,12 @@ class ModDefense implements ContentList {
                             this.despawnEffect = Fx.railHit;
                             this.lifetime = 90;
                             this.knockback = 1;
-                            this.lightning = 3;//?????????? ??????
-                            this.lightningLength = 5;//????? ??????
-                            this.lightningLengthRand = 15;//????????? ????? ?? 0 ?? 50 ????? ???????????? ? ????? ??????, ?? ???? ???????????? ?????
-                            this.lightningDamage = 9;//???? ??????
-                            this.lightningAngle = 5;//???? ??????????? ?????? ???????????? ???? ????
-                            this.lightningCone = 45;//???????????? ???? ??????????? ??????
+                            this.lightning = 3;
+                            this.lightningLength = 5;
+                            this.lightningLengthRand = 15;
+                            this.lightningDamage = 9;
+                            this.lightningAngle = 5;
+                            this.lightningCone = 45;
                             this.lightningColor = Color.valueOf("f1fc58");
                         }
                     }
@@ -212,7 +207,6 @@ class ModDefense implements ContentList {
             );
             this.reloadTime = 120;
             this.shots = 3;
-//                this.shotDelay = 10;
             this.burstSpacing = 3;
             this.inaccuracy = 7;
             this.range = 240;
@@ -313,7 +307,6 @@ class ModDefense implements ContentList {
                     SubBullets.addLightning(b, this);
                     super.update(b);
                 }
-
                 {
                     this.hitSize = 14;
                     this.drawSize = 520;
@@ -334,7 +327,7 @@ class ModDefense implements ContentList {
                     this.shootEffect = Fx.railShoot;
                     this.despawnEffect = Fx.railHit;
                     this.knockback = 1;
-                    this.lightning = 4;//?????????? ??????
+                    this.lightning = 4;
                     this.lightningLength = 20;
                     this.lightningLengthRand = 20;
                     this.lightningDamage = 48;
@@ -379,7 +372,6 @@ class ModDefense implements ContentList {
                             SubBullets.addLightning(b, this);
                             super.update(b);
                         }
-
                         {
                             this.backColor = Color.valueOf("c2cc37");
                             this.width = 4;
@@ -550,7 +542,6 @@ class ModDefense implements ContentList {
                             SubBullets.addLightning(b, this);
                             super.update(b);
                         }
-
                         {
                             this.sapStrength = 0.48f;
                             this.length = 75;
@@ -567,7 +558,6 @@ class ModDefense implements ContentList {
                             this.lightningDamage = 9;
                             this.lightningAngle = 6;
                             this.lightningCone = 12;
-//                                this.largeHit = true;
                             this.lightColor = this.lightningColor = Color.valueOf("fbff9e");
                         }
                     }
@@ -596,7 +586,6 @@ class ModDefense implements ContentList {
                 hittable = false;
                 absorbable = false;
                 hitEffect = Fx.hitMeltHeal;
-                //    hitColor = colors[2];
                 despawnEffect = ModFx.curseEffect;
                 shootEffect = Fx.hitMeltdown;
                 smokeEffect = Fx.rocketSmokeLarge;
@@ -648,7 +637,6 @@ class ModDefense implements ContentList {
             this.localizedName = "Void Wave";
             this.description = "Turret with heavy and slow violet bullets, consumes liquid gas and Plastic";
             this.range = 660;
-//                this.recoilAmount = 28;
             this.reloadTime = 220;
             this.size = 8;
             this.shots = 10;
@@ -671,10 +659,8 @@ class ModDefense implements ContentList {
                             this.lifetime = 180;
                             this.status = StatusEffects.slow;
                             this.statusDuration = 120;
-                            //  this.bulletSprite = wave-shell;
                             this.pierce = true;
                             this.buildingDamageMultiplier = 0.6f;
-                            //   this.length = 4;
                             this.hittable = true;
                             this.ammoMultiplier = 1;
                             trailChance = 92f;
@@ -779,38 +765,6 @@ class ModDefense implements ContentList {
                 health = 360 * size * size;
                 shootSound = Sounds.bang;
             }};
-        /*archer = new PowerTurret("archer"){{
-            requirements(Category.turret, ItemStack.with(Items.copper, 60, Items.lead, 70, Items.silicon, 50));
-            range = 165f;
-            chargeTime = 40f;
-            chargeMaxDelay = 30f;
-            chargeEffects = 7;
-            recoilAmount = 2f;
-            reloadTime = 80f;
-            cooldown = 0.03f;
-            powerUse = 6f;
-            shootShake = 2f;
-            shootEffect = Fx.lancerLaserShoot;
-            smokeEffect = Fx.none;
-            chargeEffect = Fx.lancerLaserCharge;
-            chargeBeginEffect = Fx.lancerLaserChargeBegin;
-            heatColor = Color.red;
-            size = 2;
-            health = 280 * size * size;
-            targetAir = false;
-            shootSound = Sounds.laser;
-
-            shootType = new LaserBulletType(140){{
-                colors = new Color[]{Pal.lancerLaser.cpy().a(0.4f), Pal.lancerLaser, Color.white};
-                hitEffect = Fx.hitLancer;
-                despawnEffect = Fx.none;
-                hitSize = 4;
-                lifetime = 16f;
-                drawSize = 400f;
-                collidesAir = false;
-                length = 173f;
-            }};
-        }};*/
         exoticAlloyWallLarge = new Wall("dense-composite-wall-large") {{
             this.localizedName = "Dense Composite Wall Large";
             this.description = "A bigger Dense Composite Wall, creates lightings when shot.";
@@ -878,7 +832,6 @@ class ModDefense implements ContentList {
             this.insulated = true;
             this.absorbLasers = true;
         }};
-        //please add description :3 /*Zelaux: NO*/ /*PixaxeOfPixie: YEEAS*/
         largeChloroWall = new ReflectionWall("chloro-wall-large") {{
             laserReflect = true;
             lightningReflect = true;

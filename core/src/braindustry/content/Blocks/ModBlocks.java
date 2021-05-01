@@ -93,6 +93,7 @@ public class ModBlocks implements ContentList {
             requirements(Category.distribution, with(Items.graphite, 10, Items.copper, 20));
             size = 3;
             canOverdrive = false;
+            buildVisibility = BuildVisibility.debugOnly;
         }};
         testBlock = new TestBlock("test-block") {{
             this.size = 2;
@@ -158,7 +159,7 @@ public class ModBlocks implements ContentList {
                 size = 2;
                 laserRange = 6.0F;
                 health = 10000;
-                requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
+                requirements(Category.distribution, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 buildCostMultiplier = 4.0F;
                 buildVisibility = BuildVisibility.debugOnly;
             }
@@ -186,11 +187,9 @@ public class ModBlocks implements ContentList {
         dpsMeter = new DpsMeter("dps-meter") {
             {
                 category = Category.effect;
-//                alwaysUnlocked=true;
                 buildVisibility = BuildVisibility.debugOnly;
                 health = Integer.MAX_VALUE;
                 size = 3;
-//                requirements();
             }
         };
     }

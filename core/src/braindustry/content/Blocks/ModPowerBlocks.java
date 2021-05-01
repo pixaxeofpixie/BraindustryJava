@@ -21,7 +21,6 @@ class ModPowerBlocks implements ContentList {
     @Override
     public void load() {
         methaneBurner = new AllBurnerGenerator("methane-burner") {{
-//                Blocks.steamGenerator
             this.hasPower = true;
             this.hasGas = true;
             this.localizedName = "Methane Burner";
@@ -33,7 +32,6 @@ class ModPowerBlocks implements ContentList {
             this.requirements(Category.power, ItemStack.with(Items.silicon, 60, Items.titanium, 50, ModItems.chromium, 90));
         }};
         hyperMethaneBurner = new AllBurnerGenerator("hyper-methane-burner") {{
-//                Blocks.steamGenerator
             this.hasPower = true;
             this.hasGas = true;
             this.localizedName = "Hyper Methane Burner";
@@ -143,7 +141,6 @@ class ModPowerBlocks implements ContentList {
                 health = 8250;
                 requirements(Category.power, BuildVisibility.shown, ItemStack.with(
                         Items.silicon, 350,
-                        /*F.fi("cutol"), 400, F.fi("orbon"), 300,*/
                         Items.plastanium, 400, Items.surgeAlloy, 300, ModItems.graphenite, 375, ModItems.chloroAlloy, 210
                 ));
             }
@@ -158,7 +155,6 @@ class ModPowerBlocks implements ContentList {
             this.hasGas = true;
             this.gasCapacity = 100;
             this.itemCapacity = 60;
-            //this.itemCapacity = 120;
             this.liquidCapacity = 100;
             this.itemDuration = 240;
             this.powerProduction = 220;

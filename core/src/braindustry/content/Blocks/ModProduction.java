@@ -43,14 +43,10 @@ class ModProduction implements ContentList {
             dynamicLiquid = true;
             this.extraStorageLiquid = 3;
             this.extraStorageItem = 3;
-//                this.changeTexture = true;
-            //1st itemStack = выход, вход писать во втором itemStack
-
             recipes(Recipe.with(new ItemStack(ModItems.graphenite, 1), ItemStack.with(Items.graphite, 2, Items.silicon, 3, Items.titanium, 2, Items.lead, 2), ModLiquidStack.with(Liquids.slag, 1), 150),
                     Recipe.with(new ItemStack(ModItems.exoticAlloy, 1), ItemStack.with(Items.sporePod, 3, Items.titanium, 4, Items.thorium, 3), ModLiquidStack.with(Liquids.water, 2), 140)
             );
             this.requirements(this.category, ItemStack.with(Items.thorium, 200, ModItems.graphenite, 230, Items.lead, 500, Items.plastanium, 120));
-//                addResearch(Blocks.mechanicalDrill, this);
         }};
         largeMultiCrafter = new MultiCrafter("multi-kiln") {{
             this.size = 6;
@@ -64,14 +60,12 @@ class ModProduction implements ContentList {
             this.category = Category.crafting;
             dynamicItem = true;
             dynamicLiquid = true;
-//                this.changeTexture = true;
             recipes(Recipe.with(new ItemStack(ModItems.graphenite, 2), ItemStack.with(Items.graphite, 2, Items.silicon, 3, Items.titanium, 2, Items.lead, 2), ModLiquidStack.with(Liquids.slag, 1), 150),
                     Recipe.with(new ItemStack(ModItems.exoticAlloy, 2), ItemStack.with(Items.sporePod, 3, Items.titanium, 4, Items.thorium, 3), ModLiquidStack.with(Liquids.water, 2), 140),
                     Recipe.with(new ItemStack(ModItems.chromium, 1), ItemStack.with(Items.titanium, 3, Items.metaglass, 4), ModLiquidStack.with(Liquids.oil, 2), 125),
                     Recipe.with(new ItemStack(ModItems.odinum, 2), ItemStack.with(Items.thorium, 3, Items.titanium, 1, Items.plastanium, 3), ModLiquidStack.with(Liquids.water, 2), 155)
             );
             this.requirements(this.category, ItemStack.with(ModItems.odinum, 200, ModItems.graphenite, 230, ModItems.phaseAlloy, 500, ModItems.plastic, 220));
-//                addResearch(Blocks.mechanicalDrill, this);
         }};
 
         chromiumForge = new GenericSmelter("chromium-forge") {{
