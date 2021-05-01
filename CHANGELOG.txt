@@ -1,0 +1,143 @@
+-Mod fully rewritten in Java.
+
+-Logotype in main menu with "wave" effect.
+
+-New logo of mod
+	
+-New logo in main menu
+
+-New cheat menu
+
+-Mod settings for keybindings
+
+-More than 70 new effects
+
+-3 New tracks for game:
+	-Frozen Islands
+
+	-Stellar Sonata
+
+	-Harmony Of Darkness
+
+-New star system:
+	-Main blue star Zetsubo
+
+	-Planet Osore, unfriendly planet with magma and liquid methane, with custom environment blocks, 8 new maps of campaign:
+		-Space Port
+		-451F
+		-Melting Point
+		-Magmatic Electrostation
+		-Polar Rift
+		-Icy Beach
+		-Methane Production Complex
+		-Ritual
+
+	-Moon of Osore, Shinrin, forest planet with impossible sectors and last endgame content, 5 new maps of campaign:
+		-Azure Landscape
+		-Icy Darkness
+		-Deent Forest
+		-Emerald Swamp
+		-Jungle Exploration Complex
+
+New branch of units, grounds stealth with ability to invise:
+	-Tyzen
+	-Kryox
+	-Intelix
+	-Nemesis
+	-Maverix
+
+New TX units, unically heavy endgame tanks:
+	-Naval TX "Moray" with built-in blackhole reactor and weapons
+	-Spider TX "Griffon" with frag artillery and electric laser
+	-Air TX "Penumbra" with lasers, lightnings and shotguns
+	-Stealth TX "Litix" with railguns and orbitals
+
+New type of content, gasses:
+	-Methane
+
+New materials: 
+	-Chloro Alloy, unforgeable material, can only be obtained from TX units
+
+New liquids:
+	-Liquid Methane
+
+-New blocks:
+	-Fabrics:
+		-Hyper Dense Composite Smelter
+		-Multi Smelter
+		-Multi Kiln
+		-Methane Gasifier
+		-Methane Extractor
+
+	-Power Blocks: 
+		-Methane Burner
+		-Hyper Methane Burner
+		-Black Hole reactor
+		-Material Reactor
+	
+	-Turrets:
+	-Gem with rainbow laser
+	-Shinigami, railgun for defense from TX units
+	-Void Wave, shotgun for defense from TX units
+	-Rapier, turret with sharp frag bullet
+
+	-Logistics:
+		-Smart Router
+		-Payload Bridge Conveyor
+		-Gas Router
+		-Gas Conduit
+		
+	-Unit blocks:
+		-Ultra Reconstructor for TX Production
+		-Unit Spawner with tonne of abilities
+
+	-Storage:
+		-Gas Tank
+
+	-Walls:
+		-Chloro Wall, deflect lasers
+		-Large Chloro wall, too deflect lasers
+	
+	-Environment blocks:
+		-Crimson Walls
+		-Crimson Floor
+		-Liquid Methane Floor
+		-Black Ice
+		-Black Snow
+		-Black Shrubs
+		-Black Grass
+		-Black Ice Wall
+		-Black Snow wall
+		-Jungle Shrubs
+		-Gray Sand
+		-Jungle Tree
+		-Black Tree
+		-Dark Pine
+		-Metalic Pine
+
+Old content changes:
+	-Units:
+		-Spider branch, change decail to violet, less damage -> more saps, renaming
+		-Air branch, revamp of weapons saps -> shotguns, less armor, renaming
+		-Naval branch, sprite fixes by @GorillaGlue, renaming, T5 now have built-in impact reactor
+
+	-Items:
+		-Redesign of Phase Alloy -> Dense Composite
+		-Exotic Alloy resprite
+
+	-Blocks:
+		-Logistics:
+			-Phase Alloy Conveyor have unique type of connection
+			-Fix the speed of Plastic Conveyor
+
+		-General:
+			-Names with "Phase Alloy"->"Dense Composite"
+		
+		-Turrets:
+			Dendrite resprite and rebalance
+			
+		-Unit blocks:
+			-Decail color of Hyper Reconstructors changed to violet
+			-Cost little fixes
+
+	
