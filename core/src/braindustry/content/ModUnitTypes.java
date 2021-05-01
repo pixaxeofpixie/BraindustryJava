@@ -438,7 +438,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shootStatus = StatusEffects.unmoving;
                                 this.shootStatusDuration = 130;
                                 this.firstShotDelay = 20;
-                                this.shootSound = Sounds.lasershoot;
+                                this.shootSound = Sounds.explosionbig;
                                 this.mirror = false;
                                 this.bullet = new LaserBulletType() {
                                     {
@@ -2119,7 +2119,7 @@ public class ModUnitTypes implements ContentList {
                         rotate = true;
 
                         bullet = new LaserBulletType(){{
-                            damage = 600f;
+                            damage = 900f;
                             sideAngle = 20f;
                             sideWidth = 1.5f;
                             sideLength = 80f;
@@ -2148,10 +2148,10 @@ public class ModUnitTypes implements ContentList {
                             height = 33f;
                             lifetime = 25f;
                             shootEffect = Fx.shootBig;
-                            lightning = 8;
+                            lightning = 7;
                             lightningLength = 16;
                             lightningColor = Pal.surge;
-                            lightningDamage = 51;
+                            lightningDamage = 31;
                             width = 14f;
                             height = 33f;
                             lifetime = 40f;
