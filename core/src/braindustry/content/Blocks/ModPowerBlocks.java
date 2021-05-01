@@ -133,17 +133,18 @@ class ModPowerBlocks implements ContentList {
         materialReactor = new MaterialReactor("materia-reactor") {
             {
                 localizedName = "Material Reactor";
+                description = "Produce power from different type of matter, amount of power depends on the characteristics of matter ";
                 itemCapacity = 150;
                 liquidCapacity = 150;
                 hasPower = true;
                 hasItems = true;
                 hasLiquids = true;
-                size = 7;
+                size = 6;
                 health = 8250;
                 requirements(Category.power, BuildVisibility.shown, ItemStack.with(
                         Items.silicon, 350,
                         /*F.fi("cutol"), 400, F.fi("orbon"), 300,*/
-                        Items.plastanium, 400, Items.surgeAlloy, 300, Items.graphite, 375
+                        Items.plastanium, 400, Items.surgeAlloy, 300, ModItems.graphenite, 375, ModItems.chloroAlloy, 210
                 ));
             }
         };

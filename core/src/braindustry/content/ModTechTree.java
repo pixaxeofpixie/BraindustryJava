@@ -22,7 +22,6 @@ public class ModTechTree extends TechTreeManager implements ContentList {
         if (loaded) return;
         loaded = true;
 
-
          //osore sectors
         parentNode(SectorPresets.planetaryTerminal, Blocks.interplanetaryAccelerator, () -> {
             node(ModSectorPresets.spacePort, () -> {
@@ -131,8 +130,12 @@ public class ModTechTree extends TechTreeManager implements ContentList {
                     node(ModBlocks.grapheniteKiln);
                     node(ModBlocks.odinumExtractor,Seq.with(new Objectives.Research(ModSectorPresets.spacePort)),()-> {
                         node(ModBlocks.exoticAlloySmelter,()->{
+                            node(ModBlocks.multiCrafter, ()->{
+                                node(ModBlocks.largeMultiCrafter);
+                            });
+                            node(ModBlocks.hyperExoAlloySmelter);
                             node(ModBlocks.phaseAlloySmelter, ()->{
-                              node(ModBlocks.hyperDenseCompositeSmelter);
+                                node(ModBlocks.hyperDenseCompositeSmelter);
                             });
                             node(ModBlocks.plasticForge);
                         });
@@ -224,9 +227,9 @@ public class ModTechTree extends TechTreeManager implements ContentList {
         parentNode(Blocks.router, ModBlocks.smartRouter);
         parentNode(Blocks.segment, ModBlocks.fragment);
         parentNode(Blocks.plastaniumConveyor, ModBlocks.plasticConveyor);
+        parentNode(Blocks.armoredConveyor, ModBlocks.armoredPlastaniumConveyor);
         parentNode(Blocks.pulseConduit, ModBlocks.chromiumConduit);
         parentNode(Blocks.phaseConveyor, ModBlocks.phaseAlloyConveyor);
-
         parentNode(Blocks.additiveReconstructor, ModBlocks.hyperAdditiveReconstructor);
         parentNode(Blocks.multiplicativeReconstructor, ModBlocks.hyperMultiplicativeReconstructor, Seq.with(new Objectives.Research(ModBlocks.hyperAdditiveReconstructor)));
         parentNode(Blocks.exponentialReconstructor, ModBlocks.hyperExponentialReconstructor, Seq.with(new Objectives.Research(ModBlocks.hyperMultiplicativeReconstructor),
@@ -246,8 +249,7 @@ public class ModTechTree extends TechTreeManager implements ContentList {
         parentNode(ModBlocks.chromiumConduit, GasBasicBlocks.gasConduit, Seq.with(new Objectives.Research(ModSectorPresets.spacePort)));
         parentNode(Blocks.liquidTank, ModBlocks.gasTank);
         parentNode(Blocks.salvo, ModBlocks.spark);
-
-        //parentNode(Blocks.interplanetaryAccelerator, ModPlanets.osore);
+        parentNode(Blocks.liquidRouter, ModBlocks.gasRouter);
     }
 }
 

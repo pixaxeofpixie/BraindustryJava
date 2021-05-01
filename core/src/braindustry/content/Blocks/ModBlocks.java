@@ -53,13 +53,13 @@ public class ModBlocks implements ContentList {
 
     //turrets
     axon, blaze, brain, electron, fragment, impulse, katana, mind, neuron,
-    perlin, soul, stinger, synaps, gem, rapier, shinigami, voidwave, spark,
+    perlin, soul, stinger, synaps, gem, rapier, shinigami, voidwave, spark, archer,
 
     //walls
     exoticAlloyWallLarge, exoticAlloyWall, grapheniteWallLarge, grapheniteWall, odinumWallLarge, odinumWall, plasticWallLarge,
             plasticWall, chloroWall, largeChloroWall,
     //gas
-    gasTank,
+    gasTank, gasRouter,
 
     //logic
     advancedSwitcher,
@@ -101,10 +101,12 @@ public class ModBlocks implements ContentList {
         node1 = new ReceivingPowerNode("unit-power-node") {{
             size = 3;
             this.requirements(Category.logic, ItemStack.with(), true);
+            buildVisibility = BuildVisibility.debugOnly;
         }};
         node2 = new ReceivingPowerNode("unit-power-node2") {{
             size = 3;
             this.requirements(Category.logic, ItemStack.with(), true);
+            buildVisibility = BuildVisibility.debugOnly;
         }};
         
         unitSpawner = new UnitSpawner("unit-spawner") {{
@@ -158,6 +160,7 @@ public class ModBlocks implements ContentList {
                 health = 10000;
                 requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 buildCostMultiplier = 4.0F;
+                buildVisibility = BuildVisibility.debugOnly;
             }
         };
         blockHealer = new BlockSwitcher("block-healer") {
@@ -175,29 +178,19 @@ public class ModBlocks implements ContentList {
                 size = 2;
                 health = 10000;
                 laserRange = 6.0F;
-                requirements(Category.distribution, BuildVisibility.sandboxOnly, ItemStack.with(Items.copper, 3, Items.silicon, 10));
+                requirements(Category.distribution,  ItemStack.with(Items.copper, 3, Items.silicon, 10));
                 buildCostMultiplier = 4.0F;
+                buildVisibility = BuildVisibility.debugOnly;
             }
         };
         dpsMeter = new DpsMeter("dps-meter") {
             {
                 category = Category.effect;
 //                alwaysUnlocked=true;
-                buildVisibility = BuildVisibility.sandboxOnly;
+                buildVisibility = BuildVisibility.debugOnly;
                 health = Integer.MAX_VALUE;
                 size = 3;
 //                requirements();
-            }
-        };
-
-        gasTank = new GasRouter("gas-tank") {
-            {
-                localizedName = "Gas Tank";
-                description = "Storage gas";
-                size = 3;
-                gasCapacity = 1500f;
-                health = 500;
-                requirements(Category.liquid, ItemStack.with(Items.titanium, 25, Items.metaglass, 25));
             }
         };
     }

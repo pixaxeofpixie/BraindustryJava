@@ -15,13 +15,11 @@ import mindustry.ctype.ContentList;
 import mindustry.entities.bullet.*;
 import mindustry.gen.Bullet;
 import mindustry.gen.Sounds;
+import mindustry.graphics.Pal;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.blocks.defense.Wall;
-import mindustry.world.blocks.defense.turrets.ItemTurret;
-import mindustry.world.blocks.defense.turrets.LaserTurret;
-import mindustry.world.blocks.defense.turrets.PointDefenseTurret;
-import mindustry.world.blocks.defense.turrets.TractorBeamTurret;
+import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.consumers.ConsumeLiquidFilter;
 
 import static braindustry.content.Blocks.ModBlocks.*;
@@ -337,11 +335,11 @@ class ModDefense implements ContentList {
                     this.despawnEffect = Fx.railHit;
                     this.knockback = 1;
                     this.lightning = 4;//?????????? ??????
-                    this.lightningLength = 20;//????? ??????
-                    this.lightningLengthRand = 20;//????????? ????? ?? 0 ?? 50 ????? ???????????? ? ????? ??????, ?? ???? ???????????? ?????
-                    this.lightningDamage = 48;//???? ??????
-                    this.lightningAngle = 15;//???? ??????????? ?????? ???????????? ???? ????
-                    this.lightningCone = 50;//???????????? ???? ??????????? ??????
+                    this.lightningLength = 20;
+                    this.lightningLengthRand = 20;
+                    this.lightningDamage = 48;
+                    this.lightningAngle = 15;
+                    this.lightningCone = 50;
                     this.lightningColor = Color.valueOf("f1fc58");
                 }
             };
@@ -523,14 +521,11 @@ class ModDefense implements ContentList {
             this.localizedName = "Stinger";
             this.description = "A huge, powerful rocket launcher. Doesn't require expensive ammo to fire. May be a better Ripple.";
             this.range = 280;
-//                this.recoil = 18;
-
             this.reloadTime = 60;
             this.size = 4;
             this.shots = 4;
             this.health = 1400;
             this.inaccuracy = 0.4f;
-//                this.rotatespeed = 1.3f;
             this.targetAir = true;
             this.targetGround = true;
             this.ammo(
@@ -583,9 +578,10 @@ class ModDefense implements ContentList {
 
         gem = new LaserTurret("gem") {{
             localizedName = "Gem";
+            description = "Endgame turret with rainbow laser, consumes much liquids and power";
             requirements(Category.turret, ItemStack.with(ModItems.chloroAlloy, 480, ModItems.phaseAlloy, 960, ModItems.graphenite, 2250, Items.silicon, 2230, Items.phaseFabric, 830));
             size = 14;
-            health = 240 * size * size;
+            health = 280 * size * size;
             range = 240f;
             reloadTime = 210;
             shootSound = ModSounds.electronShoot;
@@ -613,7 +609,7 @@ class ModDefense implements ContentList {
             description = "Railgun turret to defense from higher tiers of units, consumes Dense Composite to shoot, don't use this turret to attack buildings. ";
             requirements(Category.turret, ItemStack.with(ModItems.graphenite, 3000, Items.metaglass, 800, ModItems.phaseAlloy, 400, Items.plastanium, 900, Items.silicon, 2400));
             ammo(
-                    ModItems.phaseAlloy, new PointBulletType() {{
+                    ModItems.plastic, new PointBulletType() {{
                         shootEffect = Fx.lightningShoot;
                         hitEffect = Fx.instHit;
                         smokeEffect = Fx.reactorsmoke;
@@ -650,7 +646,7 @@ class ModDefense implements ContentList {
 
         voidwave = new ItemTurret("void-wave") {{
             this.localizedName = "Void Wave";
-            this.description = "";
+            this.description = "Turret with heavy and slow violet bullets, consumes liquid gas and Plastic";
             this.range = 660;
 //                this.recoilAmount = 28;
             this.reloadTime = 220;
@@ -663,7 +659,7 @@ class ModDefense implements ContentList {
             this.targetAir = true;
             this.targetGround = true;
             this.ammo(
-                    ModItems.plastic, new BasicBulletType() {
+                    ModItems.phaseAlloy, new BasicBulletType() {
                         {
                             this.damage = 1260;
                             this.width = 15;
@@ -710,10 +706,8 @@ class ModDefense implements ContentList {
                                 this.lifetime = 190;
                                 this.status = StatusEffects.shocked;
                                 this.statusDuration = 60;
-                                //  this.bulletSprite = wave-shell;
                                 this.pierce = true;
                                 this.buildingDamageMultiplier = 0.8f;
-                                //   this.length = 4;
                                 this.hittable = true;
                                 this.ammoMultiplier = 1;
                                 trailChance = 1.2f;
@@ -735,10 +729,8 @@ class ModDefense implements ContentList {
                                 this.lifetime = 180;
                                 this.status = StatusEffects.shocked;
                                 this.statusDuration = 40;
-                                //  this.bulletSprite = wave-shell;
                                 this.pierce = true;
                                 this.buildingDamageMultiplier = 0.8f;
-                                //   this.length = 4;
                                 this.hittable = true;
                                 this.ammoMultiplier = 1;
                                 trailChance = 1.2f;
@@ -760,10 +752,8 @@ class ModDefense implements ContentList {
                                 this.lifetime = 190;
                                 this.status = StatusEffects.shocked;
                                 this.statusDuration = 50;
-                                //  this.bulletSprite = wave-shell;
                                 this.pierce = true;
                                 this.buildingDamageMultiplier = 0.9f;
-                                //   this.length = 4;
                                 this.hittable = true;
                                 this.ammoMultiplier = 1;
                                 trailChance = 1.2f;
@@ -775,7 +765,7 @@ class ModDefense implements ContentList {
                         }
                 );
 
-                size = 3;
+                size = 4;
                 range = 180f;
                 reloadTime = 42f;
                 restitution = 0.04f;
@@ -789,6 +779,38 @@ class ModDefense implements ContentList {
                 health = 360 * size * size;
                 shootSound = Sounds.bang;
             }};
+        /*archer = new PowerTurret("archer"){{
+            requirements(Category.turret, ItemStack.with(Items.copper, 60, Items.lead, 70, Items.silicon, 50));
+            range = 165f;
+            chargeTime = 40f;
+            chargeMaxDelay = 30f;
+            chargeEffects = 7;
+            recoilAmount = 2f;
+            reloadTime = 80f;
+            cooldown = 0.03f;
+            powerUse = 6f;
+            shootShake = 2f;
+            shootEffect = Fx.lancerLaserShoot;
+            smokeEffect = Fx.none;
+            chargeEffect = Fx.lancerLaserCharge;
+            chargeBeginEffect = Fx.lancerLaserChargeBegin;
+            heatColor = Color.red;
+            size = 2;
+            health = 280 * size * size;
+            targetAir = false;
+            shootSound = Sounds.laser;
+
+            shootType = new LaserBulletType(140){{
+                colors = new Color[]{Pal.lancerLaser.cpy().a(0.4f), Pal.lancerLaser, Color.white};
+                hitEffect = Fx.hitLancer;
+                despawnEffect = Fx.none;
+                hitSize = 4;
+                lifetime = 16f;
+                drawSize = 400f;
+                collidesAir = false;
+                length = 173f;
+            }};
+        }};*/
         exoticAlloyWallLarge = new Wall("dense-composite-wall-large") {{
             this.localizedName = "Dense Composite Wall Large";
             this.description = "A bigger Dense Composite Wall, creates lightings when shot.";

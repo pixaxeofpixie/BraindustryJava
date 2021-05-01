@@ -1,5 +1,6 @@
 package braindustry.content.Blocks;
 
+import Gas.world.blocks.distribution.GasRouter;
 import arc.math.geom.Vec2;
 import braindustry.content.ModItems;
 import braindustry.content.ModLiquids;
@@ -24,6 +25,26 @@ import static braindustry.content.Blocks.ModBlocks.*;
 class ModOtherBlocks implements ContentList {
     @Override
     public void load() {
+        gasRouter = new GasRouter("gas-router"){
+            {
+                this.localizedName = "Gas Router";
+                this.description = "Simple router for gasses.";
+                this.health = 50;
+                this.hasGas = true;
+                this.gasCapacity = 20;
+                this.requirements(Category.liquid, ItemStack.with(Items.titanium, 1, ModItems.graphenite, 1, Items.metaglass, 3));
+            }
+        };
+        gasTank = new GasRouter("gas-tank") {
+            {
+                localizedName = "Gas Tank";
+                description = "Storage gas";
+                size = 3;
+                gasCapacity = 1500f;
+                health = 500;
+                requirements(Category.liquid, ItemStack.with(Items.titanium, 25, Items.metaglass, 25));
+            }
+        };
         armoredPlastaniumConveyor = new ArmoredConveyor("armored-plastanium-conveyor") {{
             this.localizedName = "Armored Plastanium Conveyor";
             this.description = "Wonderful and strong Plastanium Conveyor.";

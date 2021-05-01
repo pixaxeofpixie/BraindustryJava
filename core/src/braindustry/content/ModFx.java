@@ -130,15 +130,15 @@ public class ModFx {
         });
     }),
 
-            fireworkTrail = new Effect(28f, e -> {
+            fireworkTrail = new Effect(22f, e -> {
                 Draw.color(e.color, Color.white, e.fin());
-                Angles.randLenVectors(e.id, 2, 8 + 15 * e.finpow(), e.rotation, 360, (x, y) -> {
+                Angles.randLenVectors(e.id, 1, 8 + 15 * e.finpow(), e.rotation, 340, (x, y) -> {
                     Drawf.tri(e.x + x, e.y + y, 4 * e.fout(), 8 * e.fout(), Mathf.angle(x, y));
                     Drawf.tri(e.x + x, e.y + y, 4 * e.fout(), 8 * e.fout(), Mathf.angle(x, y) + 90);
                     Drawf.tri(e.x + x, e.y + y, 4 * e.fout(), 8 * e.fout(), Mathf.angle(x, y) + 180);
                     Drawf.tri(e.x + x, e.y + y, 4 * e.fout(), 8 * e.fout(), Mathf.angle(x, y) + 270);
                 });
-                Angles.randLenVectors(e.id + 1, 3, 15, e.rotation, 360, (x, y) -> {
+                Angles.randLenVectors(e.id + 1, 2, 15, e.rotation, 360, (x, y) -> {
                     Fill.circle(e.x + x, e.y + y, e.fout() * 4);
                 });
             }),

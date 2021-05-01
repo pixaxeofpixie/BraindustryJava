@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class ModUnitType extends UnitType {
     public ItemStack[] dropItems=ItemStack.with(ModItems.chloroAlloy, 320);
-    public boolean hasAfterDeathLaser;
+    public boolean hasAfterDeathLaser = false;
     public int afterDeathLaserCount=5;
     public ModUnitType(String name) {
         super(name);

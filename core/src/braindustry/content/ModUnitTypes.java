@@ -70,20 +70,17 @@ public class ModUnitTypes implements ContentList {
                 this.hitSize = 5;
                 this.rotateSpeed = 4;
                 this.armor = 0.5f;
-                this.hovering = true;
-                this.landShake = 0.1f;
-                this.commandLimit = 8;
-                this.legCount = 4;
-                this.legLength = 8;
-                this.legTrns = 0.8f;
-                this.legMoveSpace = 1.5f;
-                this.legBaseOffset = 2;
-                this.buildSpeed = 0.8f;
-                this.allowLegStep = true;
-                this.visualElevation = 75f;
-                this.ammoType = AmmoTypes.powerHigh;
-                this.mechStepShake = 0.15f;
-                this.mechStepParticles = true;
+                legCount = 4;
+                legMoveSpace = 0.7f;
+                legLength = 8f;
+                legTrns = 0.4f;
+                legMoveSpace = 1.1f;
+                hovering = true;
+                armor = 3f;
+
+                allowLegStep = true;
+                visualElevation = 0.2f;
+                groundLayer = Layer.legUnit - 1f;
                 this.speed = 1;
                 this.weapons.add(
                         new ModWeapon("ibis-weapon") {
@@ -130,20 +127,16 @@ public class ModUnitTypes implements ContentList {
                 this.targetAir = false;
                 this.hovering = true;
                 this.health = 800;
-                this.legCount = 4;
-                this.legMoveSpace = 1;
-                this.legPairOffset = 2;
-                this.legLength = 7;
-                this.legExtension = -4f;
-                this.legBaseOffset = 5;
-                this.landShake = 0.1f;
-                this.legSpeed = 0.2f;
-                this.legLengthScl = 1;
-                this.rippleScale = 2;
-                this.legSplashDamage = 32;
-                this.legSplashRange = 30;
-                this.allowLegStep = true;
-                this.visualElevation = 75f;
+                legCount = 4;
+                legLength = 9f;
+                legTrns = 0.7f;
+                legMoveSpace = 1.5f;
+                hovering = true;
+                armor = 3f;
+
+                allowLegStep = true;
+                visualElevation = 0.25f;
+                groundLayer = Layer.legUnit;
                 this.immunities.addAll(StatusEffects.burning);
                 this.weapons.add(
                         new ModWeapon("ibis-weapon") {
@@ -192,15 +185,25 @@ public class ModUnitTypes implements ContentList {
                 this.health = 3600;
                 this.hovering = true;
                 this.immunities.addAll(StatusEffects.burning, StatusEffects.melting);
-                this.legCount = 4;
-                this.legLength = 15;
-                this.legTrns = 0.8f;
-                this.legMoveSpace = 1.5f;
-                this.legBaseOffset = 2;
-                this.armor = 5;
-                this.buildSpeed = 0.8f;
-                this.allowLegStep = true;
-                visualElevation = 0.95f;
+                legCount = 4;
+                legMoveSpace = 1f;
+                legPairOffset = 3;
+                legLength = 30f;
+                legExtension = -15;
+                legBaseOffset = 10f;
+                landShake = 1f;
+                legLengthScl = 0.96f;
+                rippleScale = 2f;
+                legSpeed = 0.2f;
+                ammoType = AmmoTypes.power;
+                buildSpeed = 1f;
+
+                legSplashDamage = 32;
+                legSplashRange = 30;
+
+                hovering = true;
+                allowLegStep = true;
+                visualElevation = 0.65f;
                 groundLayer = Layer.legUnit;
                 this.weapons.add(
                         new ModWeapon("capra-weapon") {
@@ -248,18 +251,18 @@ public class ModUnitTypes implements ContentList {
                 this.rotateSpeed = 1.6f;
                 this.health = 9000;
                 this.armor = 7;
-                this.hovering = true;
-                this.commandLimit = 8;
-                this.legCount = 4;
-                this.legLength = 19;
-                this.legTrns = 1;
-                this.legMoveSpace = 3;
-                this.legBaseOffset = 2;
-                this.allowLegStep = true;
-                visualElevation = 0.95f;
+                legCount = 4;
+                legLength = 14f;
+                legBaseOffset = 11f;
+                legMoveSpace = 1.5f;
+                legTrns = 0.58f;
+                hovering = true;
+                visualElevation = 0.2f;
+                allowLegStep = true;
+                ammoType = AmmoTypes.powerHigh;
                 groundLayer = Layer.legUnit;
-                this.mechStepShake = 0.15f;
-                this.mechStepParticles = true;
+
+                speed = 0.35f;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 this.weapons.add(
                         new ModWeapon("lacerta-weapon") {
@@ -343,14 +346,15 @@ public class ModUnitTypes implements ContentList {
                 this.drag = 0.1f;
                 this.speed = 0.5f;
                 this.hitSize = 48;
-                this.health = 17000;
+                this.health = 18000;
                 this.rotateSpeed = 2;
+
                 legCount = 8;
-                legMoveSpace = 0.8f;
+                legMoveSpace = 0.85f;
                 legPairOffset = 3;
-                legLength = 75f;
-                legExtension = -20;
-                legBaseOffset = 8f;
+                legLength = 80f;
+                legExtension = -22;
+                legBaseOffset = 9f;
                 landShake = 1f;
                 legSpeed = 0.1f;
                 legLengthScl = 0.93f;
@@ -1737,7 +1741,7 @@ public class ModUnitTypes implements ContentList {
                                     {
 
                                     fragLifeMin = 0.3f;
-                                    fragBullets = 13;
+                                    fragBullets = 7;
 
                                     fragBullet = new MissileBulletType(){{
                                         this.width = 14;
@@ -1784,7 +1788,7 @@ public class ModUnitTypes implements ContentList {
                                 {
                                     hitEffect = ModFx.adamExplosion;
                                     knockback = 1.2f;
-                                    lifetime = 110f;
+                                    lifetime = 80f;
                                     width = 19f;
                                     height = 21f;
                                     collides = true;
@@ -1808,25 +1812,25 @@ public class ModUnitTypes implements ContentList {
 
                             firstShotDelay = ModFx.blackHoleLaserCharge.lifetime - 1f;
 
-                            reload = 440f;
+                            reload = 240f;
                             recoil = 0f;
-                            chargeSound = ModSounds.electronCharge;
-                            shootSound = ModSounds.electronShoot;
+                            chargeSound = ModSounds.dendriteCharge;
+                            shootSound = ModSounds.dendriteShoot;
                             continuous = true;
                             cooldownTime = 210f;
 
                             bullet = new ContinuousLaserBulletType() {
                                 {
                                     damage = 238f;
-                                    length = 410f;
+                                    length = 300f;
                                     hitEffect = Fx.hitMeltHeal;
                                     drawSize = 450f;
-                                    lifetime = 880f;
+                                    lifetime = 390f;
                                     shake = 1f;
                                     despawnEffect = Fx.smokeCloud;
                                     smokeEffect = Fx.none;
 
-                                    shootEffect = ModFx.thunderShoot;
+                                    shootEffect = ModFx.magicShootEffectBig;
 
                                     incendChance = 0.08f;
                                     incendSpread = 5f;
@@ -2037,7 +2041,7 @@ public class ModUnitTypes implements ContentList {
                                 this.reload = 220;
                                 this.ejectEffect = ModFx.magicShootEffectBig;
                                 this.recoil = 6;
-                                this.shootSound = Sounds.laserblast;
+                                this.shootSound = ModSounds.railgun3;
                                 this.rotate = true;
                                 this.rotateSpeed = 0.5f;
                                 this.mirror = false;
@@ -2070,7 +2074,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shots = 7;
                                 this.inaccuracy = 14.0f;
                                 this.rotate = false;
-                                this.shootSound = Sounds.flame;
+                                this.shootSound = ModSounds.shooting1;
                                 this.alternate = true;
                                 this.bullet = new LiquidBulletType(ModLiquids.liquidMethane) {
                                     {
@@ -2196,8 +2200,8 @@ public class ModUnitTypes implements ContentList {
                         new ModWeapon("kraken-launcher") {
                             {
                                 this.reload = 70;
-                                this.x = 14;
-                                this.y = -18f;
+                                this.x = 32;
+                                this.y = -24f;
                                 this.shadow = 9;
                                 this.rotateSpeed = 0.6f;
                                 this.rotate = true;
@@ -2205,6 +2209,7 @@ public class ModUnitTypes implements ContentList {
                                 this.shotDelay = 20;
                                 this.inaccuracy = 0.3f;
                                 this.velocityRnd = 0.1f;
+                                this.mirror = true;
                                 this.shootSound = Sounds.missile;
                                 this.bullet = new MissileBulletType() {{
                                     this.width = 23;
@@ -2214,17 +2219,17 @@ public class ModUnitTypes implements ContentList {
                                     this.drag = 0f;
                                     this.splashDamageRadius = 40f;
                                     this.splashDamage = 62f;
-                                    this.hitEffect =this.despawnEffect = ModFx.lilithExplosion;
-                                    this.homingPower = 0.3f;
-                                    this.lightningDamage = 10f;
-                                    this.lightning = 7;
-                                    this.lightningLength = 7;
+                                    this.hitEffect =this.despawnEffect = ModFx.krakenRocketExplosion;
+                                    this.homingPower = 0.5f;
+                                    this.lightningDamage = 18f;
+                                    this.lightning = 9;
+                                    this.lightningLength = 12;
                                     this.makeFire = true;
                                     this.status = StatusEffects.disarmed;
-                                    this.lifetime = 90f;
-                                    this.trailColor = ModPal.lilithTrailColor;
-                                    this.backColor = ModPal.lilithBackColor;
-                                    this.frontColor = ModPal.lilithFrontColor;
+                                    this.lifetime = 120f;
+                                    this.trailColor = ModPal.krakenTrailColor;
+                                    this.backColor = ModPal.krakenBackColor;
+                                    this.frontColor = ModPal.krakenFrontColor;
                                     this.lightningColor=this.backColor;
                                     this.weaveScale = 2f;
                                     this.weaveMag = 5f;
@@ -2232,38 +2237,39 @@ public class ModUnitTypes implements ContentList {
                                 };
                             }
                         },
-                  new ModWeapon("kraken-canon"){
-                      {
-                          this.x = 0f;
-                          this.y = -30f;
-                          this.shootY = -3f;
-                          this.reload = 125f;
-                          this.ejectEffect = Fx.none;
-                          this.recoil = 5f;
-                          this.rotate = true;
-                          this.shadow = 50;
-                          this.mirror = false;
-                          this.rotateSpeed = 0.5f;
-                          this.shootSound = Sounds.plasmaboom;
-                          this.alternate = true;
-                          this.bullet = new RailBulletType() {
-                              {
-                                  this.shootEffect = ModFx.krakenShoot;
-                                  this.length = 720.0F;
-                                  this.updateEffectSeg = 60.0F;
-                                  this.pierceEffect = this.hitEffect = ModFx.krakenHit;
-                                  this.updateEffect = this.trailEffect = ModFx.krakenTrail;
-                                  this.smokeEffect = ModFx.rapierSmoke;
-                                  this.damage = 8650.0F;
-                                  this.pierceDamageFactor = 0.8F;
-                                  this.despawnEffect = Fx.instBomb;
-                                  this.buildingDamageMultiplier = 0.8f;
-                                  this.speed = brange;
-                                  this.hitShake = 8f;
-                              }
-                          };
+                      new ModWeapon("kraken-canon"){
+                          {
+                              this.x = 20f;
+                              this.y = -30f;
+                              this.shootY = -3f;
+                              this.reload = 125f;
+                              this.ejectEffect = Fx.none;
+                              this.recoil = 5f;
+                              this.rotate = true;
+                              this.shadow = 50;
+                              this.mirror = true;
+                              this.rotateSpeed = 0.42f;
+                              this.shootSound = ModSounds.railgun2;
+                              this.alternate = true;
+                              this.bullet = new RailBulletType() {
+                                  {
+                                      this.shootEffect = ModFx.krakenShoot;
+                                      this.length = 720.0F;
+                                      this.updateEffectSeg = 60.0F;
+                                      this.pierceEffect = this.hitEffect = ModFx.krakenHit;
+                                      this.updateEffect = this.trailEffect = ModFx.krakenTrail;
+                                      this.smokeEffect = ModFx.rapierSmoke;
+                                      this.damage = 8650.0F;
+                                      this.pierceDamageFactor = 0.8F;
+                                      this.despawnEffect = Fx.instBomb;
+                                      this.buildingDamageMultiplier = 0.8f;
+                                      this.speed = brange;
+                                      this.hitShake = 8f;
+                                  }
+                              };
+                          }
                       }
-                  }
+
                 );
             }};
     }
