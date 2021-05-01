@@ -22,7 +22,7 @@
 -New star system:
 	-Main blue star Zetsubo
 
-	-Planet Osore, unfriendly planet with magma and liquid methane, with custom 		 environment blocks, 8 new maps of campaign:
+	-Planet Osore, unfriendly planet with magma and liquid methane, with custom environment blocks, 8 new maps of campaign:
 		-Space Port
 		-451F
 		-Melting Point
@@ -32,7 +32,7 @@
 		-Methane Production Complex
 		-Ritual
 
-	-Moon of Osore, Shinrin, forest planet with impossible sectors and last endgame 	 content, 5 new maps of campaign:
+	-Moon of Osore, Shinrin, forest planet with impossible sectors and last endgame content, 5 new maps of campaign:
 		-Azure Landscape
 		-Icy Darkness
 		-Deent Forest
@@ -117,9 +117,9 @@ New liquids:
 
 Old content changes:
 	-Units:
-		-Spider branch, change decail to violet, less damage -> more saps, 			 renaming
+		-Spider branch, change decail to violet, less damage -> more saps, renaming
 		-Air branch, revamp of weapons saps -> shotguns, less armor, renaming
-		-Naval branch, sprite fixes by @GorillaGlue, renaming, T5 now have built- 		 in impact reactor
+		-Naval branch, sprite fixes by @GorillaGlue, renaming, T5 now have built-in impact reactor
 
 	-Items:
 		-Redesign of Phase Alloy -> Dense Composite
