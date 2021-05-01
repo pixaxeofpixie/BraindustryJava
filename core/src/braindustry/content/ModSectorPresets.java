@@ -32,7 +32,7 @@ public class ModSectorPresets implements ContentList {
         icyBeach = new SectorPreset("icy-beach", ModPlanets.osore, 70) {
             {
                 localizedName = "Icy Beach";
-                description = "Earlier, the most important space port, now, the ruins that are captured";
+                description = "Earlier, the most important Space Dock, now, the ruins that are captured and flooded";
                 difficulty = 7;
                 captureWave = 35;
             }
@@ -48,7 +48,7 @@ public class ModSectorPresets implements ContentList {
             {
                 localizedName = "Magmatic Electrostation";
                 description = "One of the largest stations that fed research bases. " +
-                        "Unfortunaly, the scale and bad architcture ruined it, and together the entire civilization";
+                        "Unfortunaly, the scale and bad architcture ruined it, and together the entire Civilization";
                 difficulty = 6;
                 captureWave = 40;
             }
@@ -56,7 +56,8 @@ public class ModSectorPresets implements ContentList {
         ritual = new SectorPreset("ritual", ModPlanets.osore, 86) {
             {
                 localizedName = "Ritual";
-                description = "A place to which enemies could not reach for a long time, a place of meeting of survivors...";
+                description = "A place that the enemies could not reach for a long time, it was the only refuge for the survivors." +
+                        "But when the enemies got there they sprayed a crimson terror that infected and eradicated most of the life...";
                 difficulty = 9;
                 captureWave = 15;
             }
@@ -72,7 +73,7 @@ public class ModSectorPresets implements ContentList {
         spacePort= new SectorPreset("space-port", ModPlanets.osore, 25) {
             {
                 localizedName = "Space Port";
-                description = "The most important point of the planet was destroyed and devastated in a moment. " +
+                description = "The most important point of the planet was destroyed and devastated in a moment, it was from here that the crimson terror was brought to the Serpulo  " +
                         "But now eternal night reigns here";
                 alwaysUnlocked = false;
                 difficulty = 4;
@@ -83,7 +84,8 @@ public class ModSectorPresets implements ContentList {
         azureLandscape = new SectorPreset("azure-landscape", ModPlanets.shinrin, 85) {
             {
                 localizedName = "Azure Landscape";
-                description = "WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
+                description = "The first weapon testing port that civilization was able to build on another celestial body was captured first. "
+                            + "[red]WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
                 difficulty = 9;
                 captureWave = 85;
             }
@@ -91,7 +93,8 @@ public class ModSectorPresets implements ContentList {
         jungleExplorationComplex = new SectorPreset("jungle-explorer-complex", ModPlanets.shinrin, 42) {
             {
                 localizedName = "Jungle Exploration Complex";
-                description = "WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
+                description = "Another testing ground, was built by Civilization in the unfavorable jungle and for the extraction of the newly discovered Chlorophyllum, crimson terror was developed in these labs "
+                        +   "[red]WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
                 difficulty = 9;
                 captureWave = 85;
             }
@@ -99,7 +102,8 @@ public class ModSectorPresets implements ContentList {
         icyDarkness= new SectorPreset("black-polus-oil-fabrics", ModPlanets.shinrin, 12) {
             {
                 localizedName = "Frozen Valley";
-                description = "WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
+                description = "The ice cave to which the enemies reached the last, but it was from here that they wanted to start an attack on Civilization" +
+                            "[red]WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
                 difficulty = 9;
                 captureWave = 85;
             }
@@ -107,7 +111,7 @@ public class ModSectorPresets implements ContentList {
         deentForest= new SectorPreset("deent-forest", ModPlanets.shinrin, 63) {
             {
                 localizedName = "Deent Forest";
-                description = "WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
+                description = "Strange forest with interesting flora"+"[red]WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
                 difficulty = 9;
                 captureWave = 85;
             }
@@ -115,7 +119,7 @@ public class ModSectorPresets implements ContentList {
         emeraldSwamp= new SectorPreset("emerald-swamp", ModPlanets.shinrin, 98) {
             {
                 localizedName = "Emerald Swamp";
-                description = "[red]WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
+                description = "The sector from which the war with Ozore was controlled"+"[red]WARNING!Impossible sector!Use this sector only for Chlorophylum farm from TX units";
                 difficulty = 9;
                 captureWave = 85;
             }

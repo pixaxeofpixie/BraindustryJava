@@ -531,11 +531,10 @@ class ModDefense implements ContentList {
         synaps = new ItemTurret("synaps") {{
             this.localizedName = "Synaps";
             this.health = 1260;
-            this.size = 2;
+            this.size = 3;
             this.hasItems = true;
             this.hasLiquids = true;
             this.description = "Electrical Sap turret, can shoot a sap bullet with mane lightnings.";
-
             this.ammo(
                     Items.plastanium, new SapBulletType() {
                         public void update(Bullet b) {
@@ -568,7 +567,7 @@ class ModDefense implements ContentList {
 
         gem = new LaserTurret("gem") {{
             localizedName = "Gem";
-            description = "Endgame turret with rainbow laser, consumes much liquids and power";
+            description = "Endgame turret with rainbow laser, consumes much liquids and power.";
             requirements(Category.turret, ItemStack.with(ModItems.chloroAlloy, 480, ModItems.phaseAlloy, 960, ModItems.graphenite, 2250, Items.silicon, 2230, Items.phaseFabric, 830));
             size = 14;
             health = 280 * size * size;
@@ -635,7 +634,7 @@ class ModDefense implements ContentList {
 
         voidwave = new ItemTurret("void-wave") {{
             this.localizedName = "Void Wave";
-            this.description = "Turret with heavy and slow violet bullets, consumes liquid gas and Plastic";
+            this.description = "Turret with heavy and slow violet bullets, consumes liquid gas and Plastic.";
             this.range = 660;
             this.reloadTime = 220;
             this.size = 8;
@@ -677,7 +676,7 @@ class ModDefense implements ContentList {
         spark = new ItemTurret("spark"){
             {
                 localizedName = "Spark";
-                description = "Upgraded Salvo with using high-tec Graphenite";
+                description = "Upgraded Salvo with using high-tec Graphenite.";
                 requirements(Category.turret, ItemStack.with(Items.copper, 130, Items.graphite, 90, Items.silicon, 70, ModItems.graphenite, 80));
                 ammo(
                         ModItems.graphenite, new BasicBulletType() {

@@ -1545,8 +1545,8 @@ public class ModUnitTypes implements ContentList {
 
                 this.constructor = Types.legs;
                 this.groundLayer = 60.0F;
-                this.localizedName = "Griffon";
-                this.description = "Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
+                this.localizedName = "[yellow]Griffon";
+                this.description = "[yellow]Ground unit with high characteristics of armor and damage, shoot an electric laser and frag bullets.";
                 this.health = 52000;
                 this.speed = 0.4f;
                 this.mechSideSway = 0.25f;
@@ -1696,8 +1696,8 @@ public class ModUnitTypes implements ContentList {
             {
                 this.range = 620;
                 this.constructor = Types.naval;
-                this.localizedName = "Moray";
-                this.description = "Naval terror with Black Hole Reactor, built-in unit factories, lasers and rocket launchers.";
+                this.localizedName = "[yellow]Moray";
+                this.description = "[yellow]Naval terror with Black Hole Reactor, built-in unit factories, lasers and rocket launchers.";
                 this.health = 62000;
                 this.speed = 0.6f;
                 this.accel = 0.12f;
@@ -2030,8 +2030,8 @@ public class ModUnitTypes implements ContentList {
                 this.canDrown = false;
                 this.immunities = ObjectSet.with(StatusEffects.burning, StatusEffects.melting);
                 int brange = 1;
-                this.localizedName = "Litix";
-                this.description = "Heavy attack unit with orbital magma guns,railguns and sap guns.";
+                this.localizedName = "[yellow]Litix";
+                this.description = "[yellow]Heavy attack unit with orbital magma guns,railguns and sap guns.";
                  this.weapons.add(
                         new ModWeapon("litix-striker") {
                             {
@@ -2092,8 +2092,8 @@ public class ModUnitTypes implements ContentList {
             }
         };
         penumbra = new ModUnitType("penumbra"){{
-            localizedName = "Penumbra";
-            description = "Flying unit with long range shotguns, used for reactors destruction";
+            localizedName = "[yellow]Penumbra";
+            description = "[yellow]Flying unit with long range shotguns, used for reactors destruction";
             speed = 0.52f;
             accel = 0.04f;
             drag = 0.04f;

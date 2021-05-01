@@ -86,7 +86,7 @@ public class ModItems implements ContentList {
         chloroAlloy  = new Item("chloro-alloy") {
             {
                 this.localizedName="Chlorophilum Bar";
-                this.description="Super light, strong and organical material.";
+                this.description="[green]Super light, strong and organical material.";
                 this.cost = 1.5f;
                 this.alwaysUnlocked = true;
                 this.explosiveness = 0.7f;
