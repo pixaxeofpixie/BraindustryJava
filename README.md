@@ -1,6 +1,8 @@
 ![alt tag]( https://github.com/pixaxeofpixie/pictures/blob/main/btposter.png?raw=true)
 ## Java Mod By Braindustry Team
 
+
+
 # Installation Guide
 ## 1.Via .jar File
 * 1.Go to [releases]( https://github.com/pixaxeofpixie/Braindustry-Mod/releases ).
@@ -45,3 +47,5 @@ gradlew jar | ./gradlew jar | gradlew jar
 # Mod Screenshots
 
 ![a](https://github.com/pixaxeofpixie/pictures/blob/main/screen2.png?raw=true)
+
+Dai sanji wa, tōku no uchū kūkan kara kita tekitai-tekina bunmei ni yotte hikiokosa remashita.
